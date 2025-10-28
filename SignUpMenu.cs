@@ -16,5 +16,7 @@ namespace MdiLoginSystem
         {
             InitializeComponent();
         }
+
+        
     }
 }

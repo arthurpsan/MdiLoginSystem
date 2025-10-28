@@ -30,12 +30,12 @@
         {
             pnlLogin = new Panel();
             grpLogin = new GroupBox();
+            btnLogin = new Button();
             lblErrorAlert = new Label();
             lblPassword = new Label();
             lblUser = new Label();
             txtPassword = new TextBox();
             txtUser = new TextBox();
-            btnLogin = new Button();
             pnlLogin.SuspendLayout();
             grpLogin.SuspendLayout();
             SuspendLayout();
@@ -66,6 +66,16 @@
             grpLogin.TabStop = false;
             grpLogin.Text = "Login";
             grpLogin.Enter += grpLogin_Enter;
+            // 
+            // btnLogin
+            // 
+            btnLogin.Location = new Point(464, 378);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(300, 36);
+            btnLogin.TabIndex = 5;
+            btnLogin.Text = "Login";
+            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click;
             // 
             // lblErrorAlert
             // 
@@ -104,6 +114,7 @@
             txtPassword.Font = new Font("Segoe UI", 12F);
             txtPassword.Location = new Point(6, 109);
             txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '●';
             txtPassword.Size = new Size(758, 29);
             txtPassword.TabIndex = 1;
             // 
@@ -115,23 +126,14 @@
             txtUser.Size = new Size(758, 29);
             txtUser.TabIndex = 0;
             // 
-            // btnLogin
-            // 
-            btnLogin.Location = new Point(464, 378);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(300, 36);
-            btnLogin.TabIndex = 5;
-            btnLogin.Text = "Login";
-            btnLogin.UseVisualStyleBackColor = true;
-            // 
-            // Form1
+            // LoginMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlLogin);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "LoginMenu";
+            Text = "Login";
             pnlLogin.ResumeLayout(false);
             grpLogin.ResumeLayout(false);
             grpLogin.PerformLayout();
@@ -145,8 +147,9 @@
         private Label lblErrorAlert;
         private Label lblPassword;
         private Label lblUser;
-        private TextBox txtPassword;
         private TextBox txtUser;
         private Button btnLogin;
+        private MaskedTextBox maskedTextBox1;
+        private TextBox txtPassword;
     }
 }

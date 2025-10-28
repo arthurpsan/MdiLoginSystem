@@ -69,5 +69,20 @@ namespace MdiLoginSystem
 
             }
         }
+
+        private Credential _credential;
+        public Credential Credential
+        {
+            get
+            {
+                return _credential;
+            }
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+
+                value = _credential;
+            }
+        }
     }
 }

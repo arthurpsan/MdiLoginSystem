@@ -30,13 +30,13 @@
         {
             menuStrip1 = new MenuStrip();
             fIleToolStripMenuItem = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
             registerToolStripMenuItem = new ToolStripMenuItem();
+            userToolStripMenuItem = new ToolStripMenuItem();
             reporToolStripMenuItem = new ToolStripMenuItem();
+            usersToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
-            usersToolStripMenuItem = new ToolStripMenuItem();
-            userToolStripMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -56,6 +56,12 @@
             fIleToolStripMenuItem.Size = new Size(37, 20);
             fIleToolStripMenuItem.Text = "FIle";
             // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            // 
             // registerToolStripMenuItem
             // 
             registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem });
@@ -63,13 +69,24 @@
             registerToolStripMenuItem.Size = new Size(61, 20);
             registerToolStripMenuItem.Text = "Register";
             // 
+            // userToolStripMenuItem
+            // 
+            userToolStripMenuItem.Name = "userToolStripMenuItem";
+            userToolStripMenuItem.Size = new Size(180, 22);
+            userToolStripMenuItem.Text = "User";
+            // 
             // reporToolStripMenuItem
             // 
             reporToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usersToolStripMenuItem });
             reporToolStripMenuItem.Name = "reporToolStripMenuItem";
             reporToolStripMenuItem.Size = new Size(54, 20);
             reporToolStripMenuItem.Text = "Report";
-            reporToolStripMenuItem.Click += this.reporToolStripMenuItem_Click;
+            // 
+            // usersToolStripMenuItem
+            // 
+            usersToolStripMenuItem.Name = "usersToolStripMenuItem";
+            usersToolStripMenuItem.Size = new Size(180, 22);
+            usersToolStripMenuItem.Text = "Users";
             // 
             // helpToolStripMenuItem
             // 
@@ -81,26 +98,8 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
-            // 
-            // usersToolStripMenuItem
-            // 
-            usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(180, 22);
-            usersToolStripMenuItem.Text = "Users";
-            // 
-            // userToolStripMenuItem
-            // 
-            userToolStripMenuItem.Name = "userToolStripMenuItem";
-            userToolStripMenuItem.Size = new Size(180, 22);
-            userToolStripMenuItem.Text = "User";
-            // 
-            // exitToolStripMenuItem
-            // 
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
-            exitToolStripMenuItem.Text = "Exit";
             // 
             // SystemMenu
             // 
@@ -110,7 +109,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "SystemMenu";
-            Text = "Form2";
+            Text = "System - Main Menu - [ALPHA 0.1]";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
