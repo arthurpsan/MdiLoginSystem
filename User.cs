@@ -9,7 +9,7 @@ namespace MdiLoginSystem
 {
     public class User
     {
-        public UInt32 Id { get; set; }
+        public UInt64 Id { get; set; }
 
         [Required]
         private String? _name;
@@ -81,7 +81,7 @@ namespace MdiLoginSystem
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                value = _credential;
+                _credential = value;
             }
         }
     }

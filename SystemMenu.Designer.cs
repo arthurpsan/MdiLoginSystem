@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            menuStrip1 = new MenuStrip();
+            mnuSystem = new MenuStrip();
             fIleToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             registerToolStripMenuItem = new ToolStripMenuItem();
@@ -37,17 +37,17 @@
             usersToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
-            menuStrip1.SuspendLayout();
+            mnuSystem.SuspendLayout();
             SuspendLayout();
             // 
-            // menuStrip1
+            // mnuSystem
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fIleToolStripMenuItem, registerToolStripMenuItem, reporToolStripMenuItem, helpToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
-            menuStrip1.TabIndex = 0;
-            menuStrip1.Text = "menuStrip1";
+            mnuSystem.Items.AddRange(new ToolStripItem[] { fIleToolStripMenuItem, registerToolStripMenuItem, reporToolStripMenuItem, helpToolStripMenuItem });
+            mnuSystem.Location = new Point(0, 0);
+            mnuSystem.Name = "mnuSystem";
+            mnuSystem.Size = new Size(800, 24);
+            mnuSystem.TabIndex = 0;
+            mnuSystem.Text = "menuStrip1";
             // 
             // fIleToolStripMenuItem
             // 
@@ -72,7 +72,7 @@
             // userToolStripMenuItem
             // 
             userToolStripMenuItem.Name = "userToolStripMenuItem";
-            userToolStripMenuItem.Size = new Size(180, 22);
+            userToolStripMenuItem.Size = new Size(97, 22);
             userToolStripMenuItem.Text = "User";
             // 
             // reporToolStripMenuItem
@@ -85,7 +85,7 @@
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(180, 22);
+            usersToolStripMenuItem.Size = new Size(102, 22);
             usersToolStripMenuItem.Text = "Users";
             // 
             // helpToolStripMenuItem
@@ -106,19 +106,19 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
+            Controls.Add(mnuSystem);
+            MainMenuStrip = mnuSystem;
             Name = "SystemMenu";
             Text = "System - Main Menu - [ALPHA 0.1]";
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            mnuSystem.ResumeLayout(false);
+            mnuSystem.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private MenuStrip menuStrip1;
+        private MenuStrip mnuSystem;
         private ToolStripMenuItem fIleToolStripMenuItem;
         private ToolStripMenuItem registerToolStripMenuItem;
         private ToolStripMenuItem reporToolStripMenuItem;
