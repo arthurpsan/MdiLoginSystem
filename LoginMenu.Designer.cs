@@ -117,6 +117,7 @@
             txtPassword.PasswordChar = '●';
             txtPassword.Size = new Size(758, 29);
             txtPassword.TabIndex = 1;
+            txtPassword.KeyUp += txtPassword_KeyUp;
             // 
             // txtUser
             // 

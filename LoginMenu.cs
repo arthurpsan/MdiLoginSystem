@@ -54,5 +54,13 @@ namespace MdiLoginSystem
                 SystemMenu.GetInstance(_user).Show();
             }
         }
+
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnLogin.PerformClick();
+            }
+        }
     }
 }

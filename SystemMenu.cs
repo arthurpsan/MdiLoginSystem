@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Org.BouncyCastle.Tls;
 
@@ -13,7 +7,7 @@ namespace MdiLoginSystem
 {
     public partial class SystemMenu : Form
     {
-        private static SystemMenu _intance;
+        private static SystemMenu? _instance;
         private SystemMenu(User user)
         {
             InitializeComponent();
@@ -22,22 +16,21 @@ namespace MdiLoginSystem
 
             mnuSystem.Enabled = user.Credential.Manager;
         }
-
-        public static SystemMenu GetInstance(User user)
-        {
-            if (_intance == null)
-            {
-                _intance = new SystemMenu();
-            }
-
-            return _intance;
-
-            // return new SystemMenu(user);
-        }
-
         public SystemMenu()
         {
             InitializeComponent();
+        }
+
+        public static SystemMenu GetInstance(User user)
+        {
+            if (_instance == null)
+            {
+                _instance = new SystemMenu();
+            }
+
+            return _instance;
+
+            // return new SystemMenu(user);
         }
 
         private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)
