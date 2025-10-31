@@ -23,7 +23,7 @@ namespace MdiLoginSystem
 
         public static SystemMenu GetInstance(User user)
         {
-            if (_instance == null)
+            if (_instance == null || _instance.IsDisposed)
             {
                 _instance = new SystemMenu();
             }
@@ -38,5 +38,16 @@ namespace MdiLoginSystem
             LoginMenu.GetInstance().Show();
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            LoginMenu.GetInstance().Show();
+        }
     }
 }

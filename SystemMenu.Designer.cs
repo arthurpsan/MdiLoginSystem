@@ -59,8 +59,9 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // registerToolStripMenuItem
             // 
@@ -98,8 +99,9 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(107, 22);
+            aboutToolStripMenuItem.Size = new Size(180, 22);
             aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // SystemMenu
             // 
@@ -109,6 +111,7 @@
             Controls.Add(mnuSystem);
             MainMenuStrip = mnuSystem;
             Name = "SystemMenu";
+            ShowIcon = false;
             Text = "System - Main Menu - [ALPHA 0.1]";
             mnuSystem.ResumeLayout(false);
             mnuSystem.PerformLayout();

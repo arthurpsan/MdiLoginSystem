@@ -30,6 +30,7 @@
         {
             pnlRegister = new Panel();
             grpSignUp = new GroupBox();
+            btnSave = new Button();
             textBox1 = new TextBox();
             lblPhone = new Label();
             txtRepeatPassword = new TextBox();
@@ -41,7 +42,6 @@
             label2 = new Label();
             label1 = new Label();
             lblUser = new Label();
-            btnSave = new Button();
             pnlRegister.SuspendLayout();
             grpSignUp.SuspendLayout();
             SuspendLayout();
@@ -75,6 +75,16 @@
             grpSignUp.TabIndex = 0;
             grpSignUp.TabStop = false;
             grpSignUp.Text = "Sign Up";
+            // 
+            // btnSave
+            // 
+            btnSave.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSave.Location = new Point(670, 382);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(94, 32);
+            btnSave.TabIndex = 11;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
@@ -177,16 +187,6 @@
             lblUser.TabIndex = 0;
             lblUser.Text = "User";
             // 
-            // btnSave
-            // 
-            btnSave.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSave.Location = new Point(670, 382);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(94, 32);
-            btnSave.TabIndex = 11;
-            btnSave.Text = "Save";
-            btnSave.UseVisualStyleBackColor = true;
-            // 
             // SignUpMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -194,7 +194,9 @@
             ClientSize = new Size(800, 450);
             Controls.Add(pnlRegister);
             Name = "SignUpMenu";
+            ShowIcon = false;
             Text = "SignUpMenu";
+            Load += SignUpMenu_Load;
             pnlRegister.ResumeLayout(false);
             grpSignUp.ResumeLayout(false);
             grpSignUp.PerformLayout();

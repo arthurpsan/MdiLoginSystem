@@ -30,7 +30,7 @@ namespace MdiLoginSystem
 
         public static LoginMenu GetInstance()
         {
-            if (_instance == null)
+            if (_instance == null || _instance.IsDisposed)
             {
                 _instance = new LoginMenu();
             }
@@ -44,7 +44,10 @@ namespace MdiLoginSystem
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (txtUser.Text == _user.Name && txtPassword.Text == _user.Credential.Password)
+            // Hash the input password
+            string inputPasswordHash = Credential.ComputeSHA256(txtPassword.Text, Credential.SALT);
+
+            if (txtUser.Text == _user.Name && inputPasswordHash == _user.Credential.Password)
             {
                 txtUser.Clear();
                 txtPassword.Clear();
@@ -52,6 +55,10 @@ namespace MdiLoginSystem
                 Hide();
 
                 SystemMenu.GetInstance(_user).Show();
+            }
+            else
+            {
+                lblErrorAlert.Visible = true;
             }
         }
 
