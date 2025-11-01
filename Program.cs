@@ -31,7 +31,7 @@ namespace MdiLoginSystem
                     User adminUser = new User
                     {
                         Name = "Admin",
-                        PhoneNumber = "0000000000",
+                        PhoneNumber = 10000000000,
                         Email = "admin@system.com"
                     };
 

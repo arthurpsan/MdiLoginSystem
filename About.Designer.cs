@@ -29,65 +29,49 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             pnlAbout = new TableLayoutPanel();
-            logoPictureBox = new PictureBox();
             lblProductName = new Label();
             labelVersion = new Label();
             labelCopyright = new Label();
             labelCompanyName = new Label();
             textBoxDescription = new TextBox();
-            okButton = new Button();
+            pctLogo = new PictureBox();
             pnlAbout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pctLogo).BeginInit();
             SuspendLayout();
             // 
             // pnlAbout
             // 
             pnlAbout.ColumnCount = 2;
-            pnlAbout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            pnlAbout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67F));
-            pnlAbout.Controls.Add(logoPictureBox, 0, 0);
+            pnlAbout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26F));
+            pnlAbout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 74F));
             pnlAbout.Controls.Add(lblProductName, 1, 0);
             pnlAbout.Controls.Add(labelVersion, 1, 1);
             pnlAbout.Controls.Add(labelCopyright, 1, 2);
             pnlAbout.Controls.Add(labelCompanyName, 1, 3);
             pnlAbout.Controls.Add(textBoxDescription, 1, 4);
-            pnlAbout.Controls.Add(okButton, 1, 5);
+            pnlAbout.Controls.Add(pctLogo, 0, 0);
             pnlAbout.Dock = DockStyle.Fill;
             pnlAbout.Location = new Point(10, 10);
             pnlAbout.Margin = new Padding(4, 3, 4, 3);
             pnlAbout.Name = "pnlAbout";
-            pnlAbout.RowCount = 6;
-            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlAbout.RowCount = 3;
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 55.5555573F));
             pnlAbout.Size = new Size(487, 307);
             pnlAbout.TabIndex = 0;
-            // 
-            // logoPictureBox
-            // 
-            logoPictureBox.Dock = DockStyle.Fill;
-            logoPictureBox.Image = (Image)resources.GetObject("logoPictureBox.Image");
-            logoPictureBox.Location = new Point(4, 3);
-            logoPictureBox.Margin = new Padding(4, 3, 4, 3);
-            logoPictureBox.Name = "logoPictureBox";
-            pnlAbout.SetRowSpan(logoPictureBox, 6);
-            logoPictureBox.Size = new Size(152, 301);
-            logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            logoPictureBox.TabIndex = 12;
-            logoPictureBox.TabStop = false;
             // 
             // lblProductName
             // 
             lblProductName.Dock = DockStyle.Fill;
             lblProductName.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblProductName.Location = new Point(167, 0);
+            lblProductName.Location = new Point(133, 0);
             lblProductName.Margin = new Padding(7, 0, 4, 0);
             lblProductName.MaximumSize = new Size(0, 20);
             lblProductName.Name = "lblProductName";
-            lblProductName.Size = new Size(316, 20);
+            lblProductName.Size = new Size(350, 20);
             lblProductName.TabIndex = 19;
             lblProductName.Text = "User Management System";
             lblProductName.TextAlign = ContentAlignment.MiddleLeft;
@@ -96,11 +80,11 @@
             // 
             labelVersion.Dock = DockStyle.Fill;
             labelVersion.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            labelVersion.Location = new Point(167, 30);
+            labelVersion.Location = new Point(133, 34);
             labelVersion.Margin = new Padding(7, 0, 4, 0);
             labelVersion.MaximumSize = new Size(0, 20);
             labelVersion.Name = "labelVersion";
-            labelVersion.Size = new Size(316, 20);
+            labelVersion.Size = new Size(350, 20);
             labelVersion.TabIndex = 0;
             labelVersion.Text = "v0.0.1";
             labelVersion.TextAlign = ContentAlignment.MiddleLeft;
@@ -109,11 +93,11 @@
             // 
             labelCopyright.Dock = DockStyle.Fill;
             labelCopyright.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            labelCopyright.Location = new Point(167, 60);
+            labelCopyright.Location = new Point(133, 68);
             labelCopyright.Margin = new Padding(7, 0, 4, 0);
             labelCopyright.MaximumSize = new Size(0, 20);
             labelCopyright.Name = "labelCopyright";
-            labelCopyright.Size = new Size(316, 20);
+            labelCopyright.Size = new Size(350, 20);
             labelCopyright.TabIndex = 21;
             labelCopyright.Text = "Creative Commons (CC)";
             labelCopyright.TextAlign = ContentAlignment.MiddleLeft;
@@ -122,11 +106,11 @@
             // 
             labelCompanyName.Dock = DockStyle.Fill;
             labelCompanyName.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            labelCompanyName.Location = new Point(167, 90);
+            labelCompanyName.Location = new Point(133, 102);
             labelCompanyName.Margin = new Padding(7, 0, 4, 0);
             labelCompanyName.MaximumSize = new Size(0, 20);
             labelCompanyName.Name = "labelCompanyName";
-            labelCompanyName.Size = new Size(316, 20);
+            labelCompanyName.Size = new Size(350, 20);
             labelCompanyName.TabIndex = 22;
             labelCompanyName.Text = "IFNMG, Arthur Santos, Maria Luisa";
             labelCompanyName.TextAlign = ContentAlignment.MiddleLeft;
@@ -135,31 +119,31 @@
             // 
             textBoxDescription.BorderStyle = BorderStyle.FixedSingle;
             textBoxDescription.Dock = DockStyle.Fill;
-            textBoxDescription.Location = new Point(167, 123);
+            textBoxDescription.Location = new Point(133, 139);
             textBoxDescription.Margin = new Padding(7, 3, 4, 3);
             textBoxDescription.Multiline = true;
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.ReadOnly = true;
-            textBoxDescription.Size = new Size(316, 147);
-            textBoxDescription.TabIndex = 23;
+            textBoxDescription.Size = new Size(350, 165);
+            textBoxDescription.TabIndex = 25;
             textBoxDescription.TabStop = false;
             textBoxDescription.Text = resources.GetString("textBoxDescription.Text");
             // 
-            // okButton
+            // pctLogo
             // 
-            okButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            okButton.DialogResult = DialogResult.Cancel;
-            okButton.Location = new Point(395, 277);
-            okButton.Margin = new Padding(4, 3, 4, 3);
-            okButton.Name = "okButton";
-            okButton.Size = new Size(88, 27);
-            okButton.TabIndex = 24;
-            okButton.Text = "&OK";
-            okButton.MouseClick += okButton_MouseClick;
+            pctLogo.BackgroundImageLayout = ImageLayout.None;
+            pctLogo.Dock = DockStyle.Fill;
+            pctLogo.Image = UserManagementSystem.Properties.Resources.montes_claros_vertical_verde_jpg;
+            pctLogo.Location = new Point(3, 3);
+            pctLogo.Name = "pctLogo";
+            pnlAbout.SetRowSpan(pctLogo, 4);
+            pctLogo.Size = new Size(120, 130);
+            pctLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            pctLogo.TabIndex = 26;
+            pctLogo.TabStop = false;
             // 
             // About
             // 
-            AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(507, 327);
@@ -177,7 +161,7 @@
             Load += About_Load;
             pnlAbout.ResumeLayout(false);
             pnlAbout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pctLogo).EndInit();
             ResumeLayout(false);
 
         }
@@ -185,12 +169,11 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel pnlAbout;
-        private System.Windows.Forms.PictureBox logoPictureBox;
-        private System.Windows.Forms.Label lblProductName;
-        private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Label labelCopyright;
-        private System.Windows.Forms.Label labelCompanyName;
-        private System.Windows.Forms.TextBox textBoxDescription;
-        private System.Windows.Forms.Button okButton;
+        private Label lblProductName;
+        private Label labelVersion;
+        private Label labelCopyright;
+        private Label labelCompanyName;
+        private TextBox textBoxDescription;
+        private PictureBox pctLogo;
     }
 }

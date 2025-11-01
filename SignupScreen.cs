@@ -24,35 +24,67 @@ namespace MdiLoginSystem
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            User newUser = new User();
+            // Collect data from the form.
+            string name = txtUsername.Text;
+            string email = txtEmail.Text;
+            string password = txtPassword.Text;
+            string repeatPassword = txtRepeatPassword.Text;
+            bool isManager = chkIsManager.Checked;
 
-            if (txtUsername.Text == "" || txtEmail.Text == "" || txtPassword.Text == "" || mskPhoneNumber.Text == "")
+            // Validating the data from the form (UI-Specific)
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
+                lblErrorAlert.Text = "Name, Email and password are mandatory fields!";
                 lblErrorAlert.Visible = true;
+
+                return;
             }
-            
 
-            newUser.Name = txtUsername.Text;
-            newUser.Email = txtEmail.Text;
-            newUser.Credential = new Credential
+            if (password != repeatPassword)
             {
-                Email = txtEmail.Text,
-                Password = Credential.ComputeSHA256(txtPassword.Text, Credential.SALT),
-                Manager = chkIsManager.Checked
-            };
+                lblErrorAlert.Text = "The passwords do not match!";
+                lblErrorAlert.Visible = true;
 
-            String phoneNumber = mskPhoneNumber.Text;
-            UInt64 phoneNumerical = Convert.ToUInt64(phoneNumber);
-
-            newUser.PhoneNumber = phoneNumerical;
-
-            if (chkIsManager.Checked)
-            {
-                newUser.Credential.Manager = true;
+                return;
             }
-            else
+
+            // Mandatory excession treatment
+            try
             {
-                newUser.Credential.Manager = false;
+                string phoneText = mskPhoneNumber.Text;
+                string phoneOnlyNumbers = new string(phoneText.Where(char.IsDigit).ToArray());
+                UInt64? phoneNumeric = null;
+
+                // Tryparse conversion method
+                if (UInt64.TryParse(phoneOnlyNumbers, out UInt64 correctValue))
+                {
+                    phoneNumeric = correctValue;
+                }
+
+                User newUser = new User
+                {
+                    Name = name,
+                    Email = email,
+                    PhoneNumber = phoneNumeric
+                };
+
+                Credential newCredential = new Credential
+                {
+                    Email = email,
+                    Password = password,
+                    Manager = isManager,
+                    User = newUser
+                };
+
+                CredentialRepository.SaveorUpdate(newCredential);
+
+                MessageBox.Show("User registered succefully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblErrorAlert.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                lblErrorAlert.Text = $"Error while saving the user: {ex.Message}";
+                lblErrorAlert.Visible = true;
             }
         }
     }
