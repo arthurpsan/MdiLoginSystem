@@ -1,6 +1,6 @@
 ﻿namespace MdiLoginSystem
 {
-    partial class LoginMenu
+    partial class LoginScreen
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginMenu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginScreen));
             pnlLogin = new Panel();
             grpLogin = new GroupBox();
             btnLogin = new Button();
@@ -94,13 +94,15 @@
             resources.ApplyResources(txtUser, "txtUser");
             txtUser.Name = "txtUser";
             // 
-            // LoginMenu
+            // LoginScreen
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlLogin);
-            Name = "LoginMenu";
+            MaximizeBox = false;
+            Name = "LoginScreen";
             ShowIcon = false;
+            Load += LoginScreen_Load;
             pnlLogin.ResumeLayout(false);
             grpLogin.ResumeLayout(false);
             grpLogin.PerformLayout();

@@ -1,12 +1,11 @@
 namespace MdiLoginSystem
 {
-    public partial class LoginMenu : Form
+    public partial class LoginScreen : Form
     {
-
-        private static LoginMenu _instance;
         private User _user;
+        private static LoginScreen? _instance;
 
-        private LoginMenu()
+        private LoginScreen()
         {
             InitializeComponent();
 
@@ -28,12 +27,13 @@ namespace MdiLoginSystem
 
         }
 
-        public static LoginMenu GetInstance()
+        public static LoginScreen GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new LoginMenu();
+                _instance = new LoginScreen();
             }
+
             return _instance;
         }
 
@@ -52,13 +52,15 @@ namespace MdiLoginSystem
                 txtUser.Clear();
                 txtPassword.Clear();
 
-                Hide();
+                this.Hide();
 
                 SystemMenu.GetInstance(_user).Show();
             }
             else
             {
                 lblErrorAlert.Visible = true;
+                txtUser.Clear();
+                txtPassword.Clear();
             }
         }
 
@@ -68,6 +70,11 @@ namespace MdiLoginSystem
             {
                 btnLogin.PerformClick();
             }
+        }
+
+        private void LoginScreen_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

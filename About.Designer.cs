@@ -102,7 +102,7 @@
             labelVersion.Name = "labelVersion";
             labelVersion.Size = new Size(316, 20);
             labelVersion.TabIndex = 0;
-            labelVersion.Text = "0.0.1";
+            labelVersion.Text = "v0.0.1";
             labelVersion.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // labelCopyright
@@ -133,13 +133,13 @@
             // 
             // textBoxDescription
             // 
+            textBoxDescription.BorderStyle = BorderStyle.FixedSingle;
             textBoxDescription.Dock = DockStyle.Fill;
             textBoxDescription.Location = new Point(167, 123);
             textBoxDescription.Margin = new Padding(7, 3, 4, 3);
             textBoxDescription.Multiline = true;
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.ReadOnly = true;
-            textBoxDescription.ScrollBars = ScrollBars.Both;
             textBoxDescription.Size = new Size(316, 147);
             textBoxDescription.TabIndex = 23;
             textBoxDescription.TabStop = false;
@@ -173,6 +173,7 @@
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "About";
+            Load += About_Load;
             tableLayoutPanel.ResumeLayout(false);
             tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();

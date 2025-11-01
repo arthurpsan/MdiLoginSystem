@@ -14,7 +14,7 @@ namespace MdiLoginSystem
 
             Text = "Sys - User Management - [v0.0.1]";
 
-            mnuSystem.Enabled = user.Credential.Manager;
+            managerToolStripMenuItem.Enabled = user.Credential.Manager;
         }
         public SystemMenu()
         {
@@ -35,19 +35,19 @@ namespace MdiLoginSystem
 
         private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LoginMenu.GetInstance().Show();
+            LoginScreen.GetInstance().Show();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            About about = new About();
-            about.ShowDialog();
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
-            LoginMenu.GetInstance().Show();
+            LoginScreen.GetInstance().Show();
         }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MdiLoginSystem
 {
-    partial class SignUpMenu
+    partial class SignupScreen
     {
         /// <summary>
         /// Required designer variable.
@@ -187,16 +187,16 @@
             lblUser.TabIndex = 0;
             lblUser.Text = "User";
             // 
-            // SignUpMenu
+            // SignupScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlRegister);
-            Name = "SignUpMenu";
+            MaximizeBox = false;
+            Name = "SignupScreen";
             ShowIcon = false;
-            Text = "SignUpMenu";
-            Load += SignUpMenu_Load;
+            Text = "System - Sign Up ";
             pnlRegister.ResumeLayout(false);
             grpSignUp.ResumeLayout(false);
             grpSignUp.PerformLayout();

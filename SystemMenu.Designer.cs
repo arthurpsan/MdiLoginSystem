@@ -33,6 +33,7 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             registerToolStripMenuItem = new ToolStripMenuItem();
             userToolStripMenuItem = new ToolStripMenuItem();
+            managerToolStripMenuItem = new ToolStripMenuItem();
             reporToolStripMenuItem = new ToolStripMenuItem();
             usersToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
@@ -59,13 +60,13 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(92, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // registerToolStripMenuItem
             // 
-            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem });
+            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem, managerToolStripMenuItem });
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             registerToolStripMenuItem.Size = new Size(61, 20);
             registerToolStripMenuItem.Text = "Register";
@@ -73,8 +74,14 @@
             // userToolStripMenuItem
             // 
             userToolStripMenuItem.Name = "userToolStripMenuItem";
-            userToolStripMenuItem.Size = new Size(97, 22);
+            userToolStripMenuItem.Size = new Size(180, 22);
             userToolStripMenuItem.Text = "User";
+            // 
+            // managerToolStripMenuItem
+            // 
+            managerToolStripMenuItem.Name = "managerToolStripMenuItem";
+            managerToolStripMenuItem.Size = new Size(180, 22);
+            managerToolStripMenuItem.Text = "Manager";
             // 
             // reporToolStripMenuItem
             // 
@@ -86,7 +93,7 @@
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(102, 22);
+            usersToolStripMenuItem.Size = new Size(180, 22);
             usersToolStripMenuItem.Text = "Users";
             // 
             // helpToolStripMenuItem
@@ -109,10 +116,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(mnuSystem);
+            IsMdiContainer = true;
             MainMenuStrip = mnuSystem;
             Name = "SystemMenu";
             ShowIcon = false;
-            Text = "System - Main Menu - [ALPHA 0.1]";
+            Text = "System - Main Menu - [v 0.0.1]";
+            WindowState = FormWindowState.Maximized;
             mnuSystem.ResumeLayout(false);
             mnuSystem.PerformLayout();
             ResumeLayout(false);
@@ -130,5 +139,6 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem userToolStripMenuItem;
         private ToolStripMenuItem usersToolStripMenuItem;
+        private ToolStripMenuItem managerToolStripMenuItem;
     }
 }
