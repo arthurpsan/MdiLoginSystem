@@ -2,28 +2,11 @@ namespace MdiLoginSystem
 {
     public partial class LoginScreen : Form
     {
-        private User _user;
         private static LoginScreen? _instance;
 
         private LoginScreen()
         {
             InitializeComponent();
-
-            _user = new User()
-            {
-                Id = 1,
-                Name = "abc"
-            };
-
-            Credential credential = new Credential()
-            {
-                Id = 1,
-                Password = "123",
-                Manager = true,
-                User = _user
-            };
-
-            _user.Credential = credential;
 
         }
 
@@ -44,23 +27,49 @@ namespace MdiLoginSystem
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Hash the input password
-            string inputPasswordHash = Credential.ComputeSHA256(txtPassword.Text, Credential.SALT);
+            // Get email and password from text boxes
+            String email = txtEmail.Text;
+            String password = txtPassword.Text;
 
-            if (txtUser.Text == _user.Name && inputPasswordHash == _user.Credential.Password)
+            // Search for the model in the database (Credential)
+
+            Credential? dbCredential = CredentialRepository.FindByEmail(email);
+
+            // Verify if the credential exists
+
+            if (dbCredential == null)
             {
-                txtUser.Clear();
+                lblErrorAlert.Visible = true;
+                txtEmail.Clear();
                 txtPassword.Clear();
+                txtEmail.Focus();
+                return;
+            }
+
+            // If the user exists, verify the password
+
+            string hashedInputPassword = Credential.ComputeSHA256(password, Credential.SALT);
+
+            // Compare the hashed password with the stored hashed password
+
+            if (dbCredential.Password == hashedInputPassword)
+            {
+                // Sucessful login!
+                txtEmail.Clear();
+                txtPassword.Clear();
+                lblErrorAlert.Visible = false;
 
                 this.Hide();
 
-                SystemMenu.GetInstance(_user).Show();
+                // Pass the model User to the System Menu
+                SystemMenu.GetInstance(dbCredential.User).Show();
             }
             else
             {
+                // Invalid password
                 lblErrorAlert.Visible = true;
-                txtUser.Clear();
                 txtPassword.Clear();
+                txtPassword.Focus();
             }
         }
 

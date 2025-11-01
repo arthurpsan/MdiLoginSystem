@@ -9,7 +9,7 @@ namespace MdiLoginSystem
 {
     public class User
     {
-        public UInt64 Id { get; set; }
+        public Int64 Id { get; set; }
 
         [Required]
         private String? _name;

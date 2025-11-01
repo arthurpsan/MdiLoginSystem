@@ -47,6 +47,22 @@ namespace MdiLoginSystem
             }
         }
 
+        public static Credential? FindByEmail(string email)
+        {
+            try
+            {
+                using (Repository DbContext = new Repository())
+                {
+                    return DbContext.Credentials
+                        .FirstOrDefault(c => c.Email == email);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static List<Credential> FindAll()
         {
             try

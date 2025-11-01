@@ -34,9 +34,9 @@
             btnLogin = new Button();
             lblErrorAlert = new Label();
             lblPassword = new Label();
-            lblUser = new Label();
+            lblEmail = new Label();
             txtPassword = new TextBox();
-            txtUser = new TextBox();
+            txtEmail = new TextBox();
             pnlLogin.SuspendLayout();
             grpLogin.SuspendLayout();
             SuspendLayout();
@@ -53,9 +53,9 @@
             grpLogin.Controls.Add(btnLogin);
             grpLogin.Controls.Add(lblErrorAlert);
             grpLogin.Controls.Add(lblPassword);
-            grpLogin.Controls.Add(lblUser);
+            grpLogin.Controls.Add(lblEmail);
             grpLogin.Controls.Add(txtPassword);
-            grpLogin.Controls.Add(txtUser);
+            grpLogin.Controls.Add(txtEmail);
             grpLogin.Name = "grpLogin";
             grpLogin.TabStop = false;
             grpLogin.Enter += grpLogin_Enter;
@@ -78,10 +78,10 @@
             resources.ApplyResources(lblPassword, "lblPassword");
             lblPassword.Name = "lblPassword";
             // 
-            // lblUser
+            // lblEmail
             // 
-            resources.ApplyResources(lblUser, "lblUser");
-            lblUser.Name = "lblUser";
+            resources.ApplyResources(lblEmail, "lblEmail");
+            lblEmail.Name = "lblEmail";
             // 
             // txtPassword
             // 
@@ -89,10 +89,10 @@
             txtPassword.Name = "txtPassword";
             txtPassword.KeyUp += txtPassword_KeyUp;
             // 
-            // txtUser
+            // txtEmail
             // 
-            resources.ApplyResources(txtUser, "txtUser");
-            txtUser.Name = "txtUser";
+            resources.ApplyResources(txtEmail, "txtEmail");
+            txtEmail.Name = "txtEmail";
             // 
             // LoginScreen
             // 
@@ -115,8 +115,8 @@
         private GroupBox grpLogin;
         private Label lblErrorAlert;
         private Label lblPassword;
-        private Label lblUser;
-        private TextBox txtUser;
+        private Label lblEmail;
+        private TextBox txtEmail;
         private Button btnLogin;
         private MaskedTextBox maskedTextBox1;
         private TextBox txtPassword;

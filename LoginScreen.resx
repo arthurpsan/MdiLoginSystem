@@ -124,17 +124,137 @@
   <data name="grpLogin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
+  <data name="&gt;&gt;btnLogin.Name" xml:space="preserve">
+    <value>btnLogin</value>
+  </data>
+  <data name="&gt;&gt;btnLogin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnLogin.Parent" xml:space="preserve">
+    <value>grpLogin</value>
+  </data>
+  <data name="&gt;&gt;btnLogin.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblErrorAlert.Name" xml:space="preserve">
+    <value>lblErrorAlert</value>
+  </data>
+  <data name="&gt;&gt;lblErrorAlert.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblErrorAlert.Parent" xml:space="preserve">
+    <value>grpLogin</value>
+  </data>
+  <data name="&gt;&gt;lblErrorAlert.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.Name" xml:space="preserve">
+    <value>lblPassword</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.Parent" xml:space="preserve">
+    <value>grpLogin</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lblEmail.Name" xml:space="preserve">
+    <value>lblEmail</value>
+  </data>
+  <data name="&gt;&gt;lblEmail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblEmail.Parent" xml:space="preserve">
+    <value>grpLogin</value>
+  </data>
+  <data name="&gt;&gt;lblEmail.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txtPassword.Name" xml:space="preserve">
+    <value>txtPassword</value>
+  </data>
+  <data name="&gt;&gt;txtPassword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtPassword.Parent" xml:space="preserve">
+    <value>grpLogin</value>
+  </data>
+  <data name="&gt;&gt;txtPassword.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;txtEmail.Name" xml:space="preserve">
+    <value>txtEmail</value>
+  </data>
+  <data name="&gt;&gt;txtEmail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtEmail.Parent" xml:space="preserve">
+    <value>grpLogin</value>
+  </data>
+  <data name="&gt;&gt;txtEmail.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="grpLogin.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 14.25pt, style=Bold</value>
+  </data>
+  <data name="grpLogin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="grpLogin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>770, 420</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="grpLogin.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="grpLogin.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="&gt;&gt;grpLogin.Name" xml:space="preserve">
+    <value>grpLogin</value>
+  </data>
+  <data name="&gt;&gt;grpLogin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpLogin.Parent" xml:space="preserve">
+    <value>pnlLogin</value>
+  </data>
+  <data name="&gt;&gt;grpLogin.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pnlLogin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="pnlLogin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>776, 426</value>
+  </data>
+  <data name="pnlLogin.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;pnlLogin.Name" xml:space="preserve">
+    <value>pnlLogin</value>
+  </data>
+  <data name="&gt;&gt;pnlLogin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlLogin.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlLogin.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="btnLogin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnLogin.Location" type="System.Drawing.Point, System.Drawing">
     <value>464, 378</value>
   </data>
   <data name="btnLogin.Size" type="System.Drawing.Size, System.Drawing">
     <value>300, 36</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnLogin.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
@@ -222,37 +342,37 @@
   <data name="&gt;&gt;lblPassword.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="lblUser.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblEmail.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lblUser.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="lblEmail.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI Semibold, 12pt, style=Bold</value>
   </data>
-  <data name="lblUser.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lblEmail.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblUser.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblEmail.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 29</value>
   </data>
-  <data name="lblUser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 21</value>
+  <data name="lblEmail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 21</value>
   </data>
-  <data name="lblUser.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblEmail.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="lblUser.Text" xml:space="preserve">
-    <value>User</value>
+  <data name="lblEmail.Text" xml:space="preserve">
+    <value>E-mail</value>
   </data>
-  <data name="&gt;&gt;lblUser.Name" xml:space="preserve">
-    <value>lblUser</value>
+  <data name="&gt;&gt;lblEmail.Name" xml:space="preserve">
+    <value>lblEmail</value>
   </data>
-  <data name="&gt;&gt;lblUser.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblEmail.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblUser.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblEmail.Parent" xml:space="preserve">
     <value>grpLogin</value>
   </data>
-  <data name="&gt;&gt;lblUser.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblEmail.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="txtPassword.Font" type="System.Drawing.Font, System.Drawing">
@@ -282,77 +402,29 @@
   <data name="&gt;&gt;txtPassword.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="txtUser.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="txtEmail.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
-  <data name="txtUser.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtEmail.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 53</value>
   </data>
-  <data name="txtUser.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtEmail.Size" type="System.Drawing.Size, System.Drawing">
     <value>758, 29</value>
   </data>
-  <data name="txtUser.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtEmail.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;txtUser.Name" xml:space="preserve">
-    <value>txtUser</value>
+  <data name="&gt;&gt;txtEmail.Name" xml:space="preserve">
+    <value>txtEmail</value>
   </data>
-  <data name="&gt;&gt;txtUser.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtEmail.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtUser.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtEmail.Parent" xml:space="preserve">
     <value>grpLogin</value>
   </data>
-  <data name="&gt;&gt;txtUser.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtEmail.ZOrder" xml:space="preserve">
     <value>5</value>
-  </data>
-  <data name="grpLogin.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 14.25pt, style=Bold</value>
-  </data>
-  <data name="grpLogin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="grpLogin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>770, 420</value>
-  </data>
-  <data name="grpLogin.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="grpLogin.Text" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="&gt;&gt;grpLogin.Name" xml:space="preserve">
-    <value>grpLogin</value>
-  </data>
-  <data name="&gt;&gt;grpLogin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpLogin.Parent" xml:space="preserve">
-    <value>pnlLogin</value>
-  </data>
-  <data name="&gt;&gt;grpLogin.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pnlLogin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="pnlLogin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>776, 426</value>
-  </data>
-  <data name="pnlLogin.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pnlLogin.Name" xml:space="preserve">
-    <value>pnlLogin</value>
-  </data>
-  <data name="&gt;&gt;pnlLogin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlLogin.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pnlLogin.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

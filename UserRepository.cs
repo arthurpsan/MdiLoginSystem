@@ -18,8 +18,7 @@ namespace MdiLoginSystem
                     }
                     else
                     {
-                        dbContext.Entry(user).State
-                            = EntityState.Modified;
+                        dbContext.Entry(user).State = EntityState.Modified;
                     }
 
                     dbContext.SaveChanges();

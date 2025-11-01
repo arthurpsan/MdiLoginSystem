@@ -9,7 +9,7 @@ namespace MdiLoginSystem
 {
     public class Repository : DbContext
     {
-        private static readonly String _connectionsParams = @"server=127.0.0.1;port=3307;uid=root;pwd=;database=sistemaprotob";
+        private static readonly String _connectionsParams = @"server=127.0.0.1;port=3307;uid=root;pwd=;database=UserManagementSystem";
 
         public DbSet<User> Users { get; set; }
         public DbSet<Credential> Credentials { get; set; }
@@ -20,6 +20,21 @@ namespace MdiLoginSystem
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseMySQL(_connectionsParams);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Define the one-to-one relationship between User and Credential
+
+            modelBuilder.Entity<User>(user =>
+            {
+                user.HasOne(u => u.Credential)
+                    .WithOne(c => c.User)
+                    .HasForeignKey<Credential>(c => c.Id);
+            }
+            );
         }
     }
 }
