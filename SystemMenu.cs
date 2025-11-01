@@ -8,7 +8,7 @@ namespace MdiLoginSystem
     public partial class SystemMenu : Form
     {
         private static SystemMenu? _instance;
-        private SystemMenu(User user)
+        public SystemMenu(User user)
         {
             InitializeComponent();
 
@@ -40,7 +40,10 @@ namespace MdiLoginSystem
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
+            About aboutForm = About.GetInstance();
+            aboutForm.MdiParent = this;
+            aboutForm.Show();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

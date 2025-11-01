@@ -28,7 +28,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
-            tableLayoutPanel = new TableLayoutPanel();
+            pnlAbout = new TableLayoutPanel();
             logoPictureBox = new PictureBox();
             lblProductName = new Label();
             labelVersion = new Label();
@@ -36,35 +36,35 @@
             labelCompanyName = new Label();
             textBoxDescription = new TextBox();
             okButton = new Button();
-            tableLayoutPanel.SuspendLayout();
+            pnlAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             SuspendLayout();
             // 
-            // tableLayoutPanel
+            // pnlAbout
             // 
-            tableLayoutPanel.ColumnCount = 2;
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67F));
-            tableLayoutPanel.Controls.Add(logoPictureBox, 0, 0);
-            tableLayoutPanel.Controls.Add(lblProductName, 1, 0);
-            tableLayoutPanel.Controls.Add(labelVersion, 1, 1);
-            tableLayoutPanel.Controls.Add(labelCopyright, 1, 2);
-            tableLayoutPanel.Controls.Add(labelCompanyName, 1, 3);
-            tableLayoutPanel.Controls.Add(textBoxDescription, 1, 4);
-            tableLayoutPanel.Controls.Add(okButton, 1, 5);
-            tableLayoutPanel.Dock = DockStyle.Fill;
-            tableLayoutPanel.Location = new Point(10, 10);
-            tableLayoutPanel.Margin = new Padding(4, 3, 4, 3);
-            tableLayoutPanel.Name = "tableLayoutPanel";
-            tableLayoutPanel.RowCount = 6;
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.Size = new Size(487, 307);
-            tableLayoutPanel.TabIndex = 0;
+            pnlAbout.ColumnCount = 2;
+            pnlAbout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            pnlAbout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67F));
+            pnlAbout.Controls.Add(logoPictureBox, 0, 0);
+            pnlAbout.Controls.Add(lblProductName, 1, 0);
+            pnlAbout.Controls.Add(labelVersion, 1, 1);
+            pnlAbout.Controls.Add(labelCopyright, 1, 2);
+            pnlAbout.Controls.Add(labelCompanyName, 1, 3);
+            pnlAbout.Controls.Add(textBoxDescription, 1, 4);
+            pnlAbout.Controls.Add(okButton, 1, 5);
+            pnlAbout.Dock = DockStyle.Fill;
+            pnlAbout.Location = new Point(10, 10);
+            pnlAbout.Margin = new Padding(4, 3, 4, 3);
+            pnlAbout.Name = "pnlAbout";
+            pnlAbout.RowCount = 6;
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pnlAbout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlAbout.Size = new Size(487, 307);
+            pnlAbout.TabIndex = 0;
             // 
             // logoPictureBox
             // 
@@ -73,7 +73,7 @@
             logoPictureBox.Location = new Point(4, 3);
             logoPictureBox.Margin = new Padding(4, 3, 4, 3);
             logoPictureBox.Name = "logoPictureBox";
-            tableLayoutPanel.SetRowSpan(logoPictureBox, 6);
+            pnlAbout.SetRowSpan(logoPictureBox, 6);
             logoPictureBox.Size = new Size(152, 301);
             logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             logoPictureBox.TabIndex = 12;
@@ -155,6 +155,7 @@
             okButton.Size = new Size(88, 27);
             okButton.TabIndex = 24;
             okButton.Text = "&OK";
+            okButton.MouseClick += okButton_MouseClick;
             // 
             // About
             // 
@@ -162,7 +163,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(507, 327);
-            Controls.Add(tableLayoutPanel);
+            Controls.Add(pnlAbout);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
@@ -174,8 +175,8 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "About";
             Load += About_Load;
-            tableLayoutPanel.ResumeLayout(false);
-            tableLayoutPanel.PerformLayout();
+            pnlAbout.ResumeLayout(false);
+            pnlAbout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
             ResumeLayout(false);
 
@@ -183,7 +184,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel pnlAbout;
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label lblProductName;
         private System.Windows.Forms.Label labelVersion;

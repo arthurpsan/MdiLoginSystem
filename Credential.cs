@@ -23,13 +23,13 @@ namespace MdiLoginSystem
 
         [Required] // Added [Required] back based on common usage for email
         [StringLength(250)]
-        public String Email { get; set; }
+        public String? Email { get; set; }
 
-        private String _password;
+        private String? _password;
 
         [Required]
         [StringLength(64)]
-        public String Password
+        public String? Password
         {
             get
             {
@@ -45,7 +45,7 @@ namespace MdiLoginSystem
         public bool Manager { get; set; }
         
         [Required]
-        public User User { get; set; }
+        public User? User { get; set; }
 
         public DateTime LastSession { get; set; }
 

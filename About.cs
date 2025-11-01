@@ -6,9 +6,9 @@ namespace MdiLoginSystem
     partial class About : Form
     {
         private static About? _instance;
-        public About GetInstance()
+        public static About GetInstance()
         {
-            if (_instance == null)
+            if (_instance == null || _instance.IsDisposed)
             {
                 _instance = new About();
             }
@@ -16,7 +16,7 @@ namespace MdiLoginSystem
             return _instance;
         }
 
-        public About()
+        private About()
         {
             InitializeComponent();
 
@@ -27,5 +27,9 @@ namespace MdiLoginSystem
 
         }
 
+        private void okButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

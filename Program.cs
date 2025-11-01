@@ -46,6 +46,8 @@ namespace MdiLoginSystem
                     // Ask the Repository to save the new admin.
                     /* As the Credential has the reference to the User, 
                     MS Entity Framework (DbContext) should be able to save both models. */
+
+                    CredentialRepository.SaveorUpdate(adminCredential);
                 }
             }
         }

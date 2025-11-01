@@ -619,6 +619,6 @@
 </value>
   </data>
   <data name="textBoxDescription.Text" xml:space="preserve">
-    <value>This C# WinForms application is a login system that validates hardcoded user credentials to grant access. Upon successful login, it hides the login form and opens a main MDI container screen (System) which displays the user's name and admin status. This main screen controls access to an "Admin" registration menu based on the user's permissions and can open a separate form for user registration.</value>
+    <value>This C# WinForms application is a login system that validates database-embed user credentials to grant access. Upon successful login, it hides the login form and opens a main MDI container screen (System) which displays the user's name and admin status. This main screen controls access to an "Admin" registration menu based on the user's permissions and can open a separate form for user registration.</value>
   </data>
 </root>

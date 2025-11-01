@@ -81,9 +81,33 @@ namespace MdiLoginSystem
             }
         }
 
-        private void LoginScreen_Load(object sender, EventArgs e)
+        private void txtEmail_Enter(object sender, EventArgs e)
         {
+            txtEmail.BackColor = Color.LightCyan;
+        }
 
+        private void txtEmail_Leave(object sender, EventArgs e)
+        {
+            txtEmail.BackColor = Color.White;
+        }
+
+        private void grpPassword_Enter(object sender, EventArgs e)
+        {
+            txtPassword.BackColor = Color.LightCyan;
+        }
+
+        private void txtPassword_Leave(object sender, EventArgs e)
+        {
+            txtPassword.BackColor = Color.White;
+        }
+
+        private void txtEmail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                txtPassword.Focus();
+                e.Handled = true;
+            }
         }
     }
 }

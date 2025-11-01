@@ -9,7 +9,7 @@ namespace MdiLoginSystem
 {
     public class Repository : DbContext
     {
-        private static readonly String _connectionsParams = @"server=127.0.0.1;port=3307;uid=root;pwd=;database=UserManagementSystem";
+        private static readonly String _connectionsParams = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=UserManagementSystem";
 
         public DbSet<User> Users { get; set; }
         public DbSet<Credential> Credentials { get; set; }

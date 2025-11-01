@@ -31,7 +31,6 @@
             pnlRegister = new Panel();
             grpSignUp = new GroupBox();
             btnSave = new Button();
-            textBox1 = new TextBox();
             lblPhone = new Label();
             txtRepeatPassword = new TextBox();
             lblRepeatPassword = new Label();
@@ -42,6 +41,7 @@
             label2 = new Label();
             label1 = new Label();
             lblUser = new Label();
+            mskPhoneNumber = new MaskedTextBox();
             pnlRegister.SuspendLayout();
             grpSignUp.SuspendLayout();
             SuspendLayout();
@@ -49,15 +49,16 @@
             // pnlRegister
             // 
             pnlRegister.Controls.Add(grpSignUp);
-            pnlRegister.Location = new Point(12, 12);
+            pnlRegister.Dock = DockStyle.Fill;
+            pnlRegister.Location = new Point(0, 0);
             pnlRegister.Name = "pnlRegister";
-            pnlRegister.Size = new Size(776, 426);
+            pnlRegister.Size = new Size(800, 450);
             pnlRegister.TabIndex = 0;
             // 
             // grpSignUp
             // 
+            grpSignUp.Controls.Add(mskPhoneNumber);
             grpSignUp.Controls.Add(btnSave);
-            grpSignUp.Controls.Add(textBox1);
             grpSignUp.Controls.Add(lblPhone);
             grpSignUp.Controls.Add(txtRepeatPassword);
             grpSignUp.Controls.Add(lblRepeatPassword);
@@ -69,9 +70,9 @@
             grpSignUp.Controls.Add(label1);
             grpSignUp.Controls.Add(lblUser);
             grpSignUp.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            grpSignUp.Location = new Point(3, 3);
+            grpSignUp.Location = new Point(12, 12);
             grpSignUp.Name = "grpSignUp";
-            grpSignUp.Size = new Size(770, 420);
+            grpSignUp.Size = new Size(776, 426);
             grpSignUp.TabIndex = 0;
             grpSignUp.TabStop = false;
             grpSignUp.Text = "Sign Up";
@@ -79,26 +80,18 @@
             // btnSave
             // 
             btnSave.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSave.Location = new Point(670, 382);
+            btnSave.Location = new Point(670, 381);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(94, 32);
+            btnSave.Size = new Size(94, 29);
             btnSave.TabIndex = 11;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(6, 165);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(758, 29);
-            textBox1.TabIndex = 10;
             // 
             // lblPhone
             // 
             lblPhone.AutoSize = true;
             lblPhone.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPhone.Location = new Point(6, 141);
+            lblPhone.Location = new Point(6, 157);
             lblPhone.Name = "lblPhone";
             lblPhone.Size = new Size(120, 21);
             lblPhone.TabIndex = 9;
@@ -107,7 +100,7 @@
             // txtRepeatPassword
             // 
             txtRepeatPassword.Font = new Font("Segoe UI", 12F);
-            txtRepeatPassword.Location = new Point(6, 277);
+            txtRepeatPassword.Location = new Point(6, 313);
             txtRepeatPassword.Name = "txtRepeatPassword";
             txtRepeatPassword.Size = new Size(758, 29);
             txtRepeatPassword.TabIndex = 8;
@@ -116,7 +109,7 @@
             // 
             lblRepeatPassword.AutoSize = true;
             lblRepeatPassword.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            lblRepeatPassword.Location = new Point(6, 253);
+            lblRepeatPassword.Location = new Point(6, 285);
             lblRepeatPassword.Name = "lblRepeatPassword";
             lblRepeatPassword.Size = new Size(135, 21);
             lblRepeatPassword.TabIndex = 7;
@@ -126,7 +119,7 @@
             // 
             chkManager.AutoSize = true;
             chkManager.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chkManager.Location = new Point(670, 312);
+            chkManager.Location = new Point(670, 349);
             chkManager.Name = "chkManager";
             chkManager.Size = new Size(94, 25);
             chkManager.TabIndex = 6;
@@ -136,7 +129,7 @@
             // txtEmail
             // 
             txtEmail.Font = new Font("Segoe UI", 12F);
-            txtEmail.Location = new Point(6, 109);
+            txtEmail.Location = new Point(6, 121);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(758, 29);
             txtEmail.TabIndex = 5;
@@ -144,7 +137,7 @@
             // txtUser
             // 
             txtUser.Font = new Font("Segoe UI", 12F);
-            txtUser.Location = new Point(6, 53);
+            txtUser.Location = new Point(6, 57);
             txtUser.Name = "txtUser";
             txtUser.Size = new Size(758, 29);
             txtUser.TabIndex = 4;
@@ -152,7 +145,7 @@
             // txtPassword
             // 
             txtPassword.Font = new Font("Segoe UI", 12F);
-            txtPassword.Location = new Point(6, 221);
+            txtPassword.Location = new Point(6, 249);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(758, 29);
             txtPassword.TabIndex = 3;
@@ -161,7 +154,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            label2.Location = new Point(6, 197);
+            label2.Location = new Point(6, 221);
             label2.Name = "label2";
             label2.Size = new Size(79, 21);
             label2.TabIndex = 2;
@@ -171,7 +164,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            label1.Location = new Point(6, 85);
+            label1.Location = new Point(6, 93);
             label1.Name = "label1";
             label1.Size = new Size(54, 21);
             label1.TabIndex = 1;
@@ -186,6 +179,15 @@
             lblUser.Size = new Size(43, 21);
             lblUser.TabIndex = 0;
             lblUser.Text = "User";
+            // 
+            // mskPhoneNumber
+            // 
+            mskPhoneNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            mskPhoneNumber.Location = new Point(6, 185);
+            mskPhoneNumber.Mask = "(99) 00000-0000";
+            mskPhoneNumber.Name = "mskPhoneNumber";
+            mskPhoneNumber.Size = new Size(758, 29);
+            mskPhoneNumber.TabIndex = 12;
             // 
             // SignupScreen
             // 
@@ -213,11 +215,11 @@
         private TextBox txtEmail;
         private TextBox txtUser;
         private TextBox txtPassword;
-        private TextBox textBox1;
         private Label lblPhone;
         private TextBox txtRepeatPassword;
         private Label lblRepeatPassword;
         private CheckBox chkManager;
         private Button btnSave;
+        private MaskedTextBox mskPhoneNumber;
     }
 }

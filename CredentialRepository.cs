@@ -54,6 +54,7 @@ namespace MdiLoginSystem
                 using (Repository DbContext = new Repository())
                 {
                     return DbContext.Credentials
+                        .Include(c => c.User)
                         .FirstOrDefault(c => c.Email == email);
                 }
             }

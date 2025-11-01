@@ -31,34 +31,56 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginScreen));
             pnlLogin = new Panel();
             grpLogin = new GroupBox();
-            btnLogin = new Button();
-            lblErrorAlert = new Label();
-            lblPassword = new Label();
-            lblEmail = new Label();
+            grpPassword = new GroupBox();
             txtPassword = new TextBox();
+            lblErrorAlert = new Label();
+            btnLogin = new Button();
+            grpEmail = new GroupBox();
             txtEmail = new TextBox();
             pnlLogin.SuspendLayout();
             grpLogin.SuspendLayout();
+            grpPassword.SuspendLayout();
+            grpEmail.SuspendLayout();
             SuspendLayout();
             // 
             // pnlLogin
             // 
-            resources.ApplyResources(pnlLogin, "pnlLogin");
             pnlLogin.Controls.Add(grpLogin);
+            resources.ApplyResources(pnlLogin, "pnlLogin");
             pnlLogin.Name = "pnlLogin";
             // 
             // grpLogin
             // 
             resources.ApplyResources(grpLogin, "grpLogin");
+            grpLogin.Controls.Add(grpPassword);
             grpLogin.Controls.Add(btnLogin);
-            grpLogin.Controls.Add(lblErrorAlert);
-            grpLogin.Controls.Add(lblPassword);
-            grpLogin.Controls.Add(lblEmail);
-            grpLogin.Controls.Add(txtPassword);
-            grpLogin.Controls.Add(txtEmail);
+            grpLogin.Controls.Add(grpEmail);
             grpLogin.Name = "grpLogin";
             grpLogin.TabStop = false;
             grpLogin.Enter += grpLogin_Enter;
+            // 
+            // grpPassword
+            // 
+            grpPassword.Controls.Add(txtPassword);
+            grpPassword.Controls.Add(lblErrorAlert);
+            resources.ApplyResources(grpPassword, "grpPassword");
+            grpPassword.Name = "grpPassword";
+            grpPassword.TabStop = false;
+            grpPassword.Enter += grpPassword_Enter;
+            // 
+            // txtPassword
+            // 
+            txtPassword.BackColor = Color.White;
+            resources.ApplyResources(txtPassword, "txtPassword");
+            txtPassword.Name = "txtPassword";
+            txtPassword.KeyUp += txtPassword_KeyUp;
+            txtPassword.Leave += txtPassword_Leave;
+            // 
+            // lblErrorAlert
+            // 
+            resources.ApplyResources(lblErrorAlert, "lblErrorAlert");
+            lblErrorAlert.ForeColor = Color.Crimson;
+            lblErrorAlert.Name = "lblErrorAlert";
             // 
             // btnLogin
             // 
@@ -67,32 +89,21 @@
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
-            // lblErrorAlert
+            // grpEmail
             // 
-            resources.ApplyResources(lblErrorAlert, "lblErrorAlert");
-            lblErrorAlert.ForeColor = Color.Crimson;
-            lblErrorAlert.Name = "lblErrorAlert";
-            // 
-            // lblPassword
-            // 
-            resources.ApplyResources(lblPassword, "lblPassword");
-            lblPassword.Name = "lblPassword";
-            // 
-            // lblEmail
-            // 
-            resources.ApplyResources(lblEmail, "lblEmail");
-            lblEmail.Name = "lblEmail";
-            // 
-            // txtPassword
-            // 
-            resources.ApplyResources(txtPassword, "txtPassword");
-            txtPassword.Name = "txtPassword";
-            txtPassword.KeyUp += txtPassword_KeyUp;
+            grpEmail.Controls.Add(txtEmail);
+            resources.ApplyResources(grpEmail, "grpEmail");
+            grpEmail.Name = "grpEmail";
+            grpEmail.TabStop = false;
             // 
             // txtEmail
             // 
+            txtEmail.BackColor = Color.White;
             resources.ApplyResources(txtEmail, "txtEmail");
             txtEmail.Name = "txtEmail";
+            txtEmail.Enter += txtEmail_Enter;
+            txtEmail.KeyPress += txtEmail_KeyPress;
+            txtEmail.Leave += txtEmail_Leave;
             // 
             // LoginScreen
             // 
@@ -102,10 +113,12 @@
             MaximizeBox = false;
             Name = "LoginScreen";
             ShowIcon = false;
-            Load += LoginScreen_Load;
             pnlLogin.ResumeLayout(false);
             grpLogin.ResumeLayout(false);
-            grpLogin.PerformLayout();
+            grpPassword.ResumeLayout(false);
+            grpPassword.PerformLayout();
+            grpEmail.ResumeLayout(false);
+            grpEmail.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -113,12 +126,13 @@
 
         private Panel pnlLogin;
         private GroupBox grpLogin;
-        private Label lblErrorAlert;
-        private Label lblPassword;
-        private Label lblEmail;
         private TextBox txtEmail;
         private Button btnLogin;
-        private MaskedTextBox maskedTextBox1;
         private TextBox txtPassword;
+        private GroupBox groupBox2;
+        private TextBox textBox1;
+        private GroupBox grpPassword;
+        private Label lblErrorAlert;
+        private GroupBox grpEmail;
     }
 }
