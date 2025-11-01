@@ -36,7 +36,6 @@ namespace MdiLoginSystem
             {
                 lblErrorAlert.Text = "Name, Email and password are mandatory fields!";
                 lblErrorAlert.Visible = true;
-
                 return;
             }
 

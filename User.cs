@@ -18,11 +18,11 @@ namespace MdiLoginSystem
             get => _name;
             set
             {
-                ArgumentNullException.ThrowIfNull(value, nameof(Name));
+                ArgumentNullException.ThrowIfNull(nameof(value), "Username cannot be null or empty.");
 
                 if (value.Length >= 80)
                 {
-                    throw new ArgumentOutOfRangeException("Name cannot contain more than 80 characters");
+                    throw new ArgumentOutOfRangeException("Name cannot contain more than 80 characters.");
                 }
 
                 _name = value;
