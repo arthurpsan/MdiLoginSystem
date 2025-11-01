@@ -6,6 +6,12 @@ namespace MdiLoginSystem
     partial class About : Form
     {
         private static About? _instance;
+        private About()
+        {
+            InitializeComponent();
+
+        }
+
         public static About GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
@@ -14,12 +20,6 @@ namespace MdiLoginSystem
             }
 
             return _instance;
-        }
-
-        private About()
-        {
-            InitializeComponent();
-
         }
 
         private void About_Load(object sender, EventArgs e)

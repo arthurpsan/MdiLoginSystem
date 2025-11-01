@@ -13,63 +13,46 @@ namespace MdiLoginSystem
 
         [Required]
         private String? _name;
-
         public String? Name
         {
-            get
-            {
-                return _name;
-            }
+            get => _name;
             set
             {
-                ArgumentNullException.ThrowIfNullOrEmpty(value);
+                ArgumentNullException.ThrowIfNull(value, nameof(Name));
 
-                if (value.Length > 45)
+                if (value.Length >= 80)
                 {
-                    throw new ArgumentException("Nome não pode ter mais que 45 caracteres");
+                    throw new ArgumentOutOfRangeException("Name cannot contain more than 80 characters");
                 }
+
                 _name = value;
             }
         }
 
-        private String? _phone;
-        public String? Phone
+        private UInt64? _phoneNumber;
+        public UInt64? PhoneNumber
         {
-            get
-            {
-                return _phone;
-            }
+            get => _phoneNumber;
             set
             {
-                ArgumentNullException.ThrowIfNullOrEmpty(value);
-
-                if (value.Length > 11)
+                if (value < 10000000000 || value > 99999999999)
                 {
-                    throw new ArgumentException("Telefone Inválido");
+                    throw new ArgumentOutOfRangeException("Phone number must be a valid number.");
                 }
 
-                _phone = value;
+                _phoneNumber = value;
             }
-
         }
 
         private String? _email;
         public String? Email
         {
-            get
-            {
-                return _email;
-            }
+            get => _email;
             set
             {
-                ArgumentNullException.ThrowIfNullOrEmpty(value);
+                ArgumentNullException.ThrowIfNull(value, nameof(Email));
 
-                if (value.Length > 74)
-                {
-                    throw new ArgumentException("Email inválido");
-                }
                 _email = value;
-
             }
         }
 

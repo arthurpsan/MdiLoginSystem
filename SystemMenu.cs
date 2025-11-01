@@ -14,16 +14,12 @@ namespace MdiLoginSystem
 
             managerToolStripMenuItem.Enabled = user.Credential.Manager;
         }
-        public SystemMenu()
-        {
-            InitializeComponent();
-        }
 
         public static SystemMenu GetInstance(User user)
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new SystemMenu();
+                _instance = new SystemMenu(user);
             }
 
             return _instance;
@@ -42,6 +38,7 @@ namespace MdiLoginSystem
             About aboutForm = About.GetInstance();
             aboutForm.MdiParent = this;
             aboutForm.Show();
+            aboutForm.BringToFront();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -55,6 +52,7 @@ namespace MdiLoginSystem
             ReportScreen reportForm = ReportScreen.GetInstance();
             reportForm.MdiParent = this;
             reportForm.Show();
+            reportForm.BringToFront();
         }
 
         private void userToolStripMenuItem_Click(object sender, EventArgs e)

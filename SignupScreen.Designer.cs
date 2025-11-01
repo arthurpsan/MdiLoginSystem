@@ -30,18 +30,19 @@
         {
             pnlRegister = new Panel();
             grpSignUp = new GroupBox();
+            mskPhoneNumber = new MaskedTextBox();
             btnSave = new Button();
             lblPhone = new Label();
             txtRepeatPassword = new TextBox();
             lblRepeatPassword = new Label();
-            chkManager = new CheckBox();
+            chkIsManager = new CheckBox();
             txtEmail = new TextBox();
-            txtUser = new TextBox();
+            txtUsername = new TextBox();
             txtPassword = new TextBox();
             label2 = new Label();
             label1 = new Label();
-            lblUser = new Label();
-            mskPhoneNumber = new MaskedTextBox();
+            lblUsername = new Label();
+            lblErrorAlert = new Label();
             pnlRegister.SuspendLayout();
             grpSignUp.SuspendLayout();
             SuspendLayout();
@@ -57,18 +58,19 @@
             // 
             // grpSignUp
             // 
+            grpSignUp.Controls.Add(lblErrorAlert);
             grpSignUp.Controls.Add(mskPhoneNumber);
             grpSignUp.Controls.Add(btnSave);
             grpSignUp.Controls.Add(lblPhone);
             grpSignUp.Controls.Add(txtRepeatPassword);
             grpSignUp.Controls.Add(lblRepeatPassword);
-            grpSignUp.Controls.Add(chkManager);
+            grpSignUp.Controls.Add(chkIsManager);
             grpSignUp.Controls.Add(txtEmail);
-            grpSignUp.Controls.Add(txtUser);
+            grpSignUp.Controls.Add(txtUsername);
             grpSignUp.Controls.Add(txtPassword);
             grpSignUp.Controls.Add(label2);
             grpSignUp.Controls.Add(label1);
-            grpSignUp.Controls.Add(lblUser);
+            grpSignUp.Controls.Add(lblUsername);
             grpSignUp.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             grpSignUp.Location = new Point(12, 12);
             grpSignUp.Name = "grpSignUp";
@@ -76,6 +78,15 @@
             grpSignUp.TabIndex = 0;
             grpSignUp.TabStop = false;
             grpSignUp.Text = "Sign Up";
+            // 
+            // mskPhoneNumber
+            // 
+            mskPhoneNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            mskPhoneNumber.Location = new Point(6, 185);
+            mskPhoneNumber.Mask = "(99) 00000-0000";
+            mskPhoneNumber.Name = "mskPhoneNumber";
+            mskPhoneNumber.Size = new Size(758, 29);
+            mskPhoneNumber.TabIndex = 12;
             // 
             // btnSave
             // 
@@ -86,6 +97,7 @@
             btnSave.TabIndex = 11;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // lblPhone
             // 
@@ -115,16 +127,16 @@
             lblRepeatPassword.TabIndex = 7;
             lblRepeatPassword.Text = "Repeat Password";
             // 
-            // chkManager
+            // chkIsManager
             // 
-            chkManager.AutoSize = true;
-            chkManager.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chkManager.Location = new Point(670, 349);
-            chkManager.Name = "chkManager";
-            chkManager.Size = new Size(94, 25);
-            chkManager.TabIndex = 6;
-            chkManager.Text = "Manager";
-            chkManager.UseVisualStyleBackColor = true;
+            chkIsManager.AutoSize = true;
+            chkIsManager.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            chkIsManager.Location = new Point(670, 349);
+            chkIsManager.Name = "chkIsManager";
+            chkIsManager.Size = new Size(94, 25);
+            chkIsManager.TabIndex = 6;
+            chkIsManager.Text = "Manager";
+            chkIsManager.UseVisualStyleBackColor = true;
             // 
             // txtEmail
             // 
@@ -134,13 +146,13 @@
             txtEmail.Size = new Size(758, 29);
             txtEmail.TabIndex = 5;
             // 
-            // txtUser
+            // txtUsername
             // 
-            txtUser.Font = new Font("Segoe UI", 12F);
-            txtUser.Location = new Point(6, 57);
-            txtUser.Name = "txtUser";
-            txtUser.Size = new Size(758, 29);
-            txtUser.TabIndex = 4;
+            txtUsername.Font = new Font("Segoe UI", 12F);
+            txtUsername.Location = new Point(6, 57);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(758, 29);
+            txtUsername.TabIndex = 4;
             // 
             // txtPassword
             // 
@@ -170,24 +182,28 @@
             label1.TabIndex = 1;
             label1.Text = "E-mail";
             // 
-            // lblUser
+            // lblUsername
             // 
-            lblUser.AutoSize = true;
-            lblUser.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblUser.Location = new Point(6, 29);
-            lblUser.Name = "lblUser";
-            lblUser.Size = new Size(43, 21);
-            lblUser.TabIndex = 0;
-            lblUser.Text = "User";
+            lblUsername.AutoSize = true;
+            lblUsername.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblUsername.Location = new Point(6, 29);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(83, 21);
+            lblUsername.TabIndex = 0;
+            lblUsername.Text = "Username";
             // 
-            // mskPhoneNumber
+            // lblErrorAlert
             // 
-            mskPhoneNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            mskPhoneNumber.Location = new Point(6, 185);
-            mskPhoneNumber.Mask = "(99) 00000-0000";
-            mskPhoneNumber.Name = "mskPhoneNumber";
-            mskPhoneNumber.Size = new Size(758, 29);
-            mskPhoneNumber.TabIndex = 12;
+            lblErrorAlert.AutoSize = true;
+            lblErrorAlert.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            lblErrorAlert.ForeColor = Color.Crimson;
+            lblErrorAlert.ImeMode = ImeMode.NoControl;
+            lblErrorAlert.Location = new Point(6, 353);
+            lblErrorAlert.Name = "lblErrorAlert";
+            lblErrorAlert.Size = new Size(229, 21);
+            lblErrorAlert.TabIndex = 13;
+            lblErrorAlert.Text = "Invalid fields. Please try again!";
+            lblErrorAlert.Visible = false;
             // 
             // SignupScreen
             // 
@@ -211,15 +227,16 @@
         private GroupBox grpSignUp;
         private Label label2;
         private Label label1;
-        private Label lblUser;
+        private Label lblUsername;
         private TextBox txtEmail;
-        private TextBox txtUser;
+        private TextBox txtUsername;
         private TextBox txtPassword;
         private Label lblPhone;
         private TextBox txtRepeatPassword;
         private Label lblRepeatPassword;
-        private CheckBox chkManager;
+        private CheckBox chkIsManager;
         private Button btnSave;
         private MaskedTextBox mskPhoneNumber;
+        private Label lblErrorAlert;
     }
 }
