@@ -76,6 +76,7 @@
             userToolStripMenuItem.Name = "userToolStripMenuItem";
             userToolStripMenuItem.Size = new Size(180, 22);
             userToolStripMenuItem.Text = "User";
+            userToolStripMenuItem.Click += userToolStripMenuItem_Click;
             // 
             // managerToolStripMenuItem
             // 
@@ -93,8 +94,9 @@
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(180, 22);
+            usersToolStripMenuItem.Size = new Size(102, 22);
             usersToolStripMenuItem.Text = "Users";
+            usersToolStripMenuItem.Click += usersToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -106,7 +108,7 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -122,6 +124,7 @@
             ShowIcon = false;
             Text = "System - Main Menu - [v 0.0.1]";
             WindowState = FormWindowState.Maximized;
+            FormClosing += SystemMenu_FormClosing_1;
             mnuSystem.ResumeLayout(false);
             mnuSystem.PerformLayout();
             ResumeLayout(false);

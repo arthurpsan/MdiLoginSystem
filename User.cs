@@ -32,8 +32,8 @@ namespace MdiLoginSystem
             }
         }
 
-        private String _phone;
-        public String Phone
+        private String? _phone;
+        public String? Phone
         {
             get
             {
@@ -41,17 +41,20 @@ namespace MdiLoginSystem
             }
             set
             {
+                ArgumentNullException.ThrowIfNullOrEmpty(value);
+
                 if (value.Length > 11)
                 {
                     throw new ArgumentException("Telefone Inválido");
                 }
+
                 _phone = value;
             }
 
         }
 
-        private String _email;
-        public String Email
+        private String? _email;
+        public String? Email
         {
             get
             {
@@ -70,8 +73,8 @@ namespace MdiLoginSystem
             }
         }
 
-        private Credential _credential;
-        public Credential Credential
+        private Credential? _credential;
+        public Credential? Credential
         {
             get
             {

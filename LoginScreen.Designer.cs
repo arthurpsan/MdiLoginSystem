@@ -129,8 +129,6 @@
         private TextBox txtEmail;
         private Button btnLogin;
         private TextBox txtPassword;
-        private GroupBox groupBox2;
-        private TextBox textBox1;
         private GroupBox grpPassword;
         private Label lblErrorAlert;
         private GroupBox grpEmail;

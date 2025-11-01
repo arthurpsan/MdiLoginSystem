@@ -42,12 +42,12 @@ namespace MdiLoginSystem
             }
         }
 
-        public bool Manager { get; set; }
-        
+        public bool Manager { get; set; } = false;
+
         [Required]
         public User? User { get; set; }
 
-        public DateTime LastSession { get; set; }
+        public DateTime? LastSession { get; set; }
 
         #region Hashing
         // ... (Hashing methods remain the same) ...
@@ -56,7 +56,7 @@ namespace MdiLoginSystem
             return ComputeSHA256(input, null);
         }
 
-        public static String ComputeSHA256(String input, String salt)
+        public static String ComputeSHA256(String? input, String? salt)
         {
             String hash = String.Empty;
 

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Org.BouncyCastle.Tls;
+using UserManagementSystem;
 
 namespace MdiLoginSystem
 {
     public partial class SystemMenu : Form
     {
         private static SystemMenu? _instance;
-        public SystemMenu(User user)
+        public SystemMenu(User? user)
         {
             InitializeComponent();
 
@@ -40,7 +38,7 @@ namespace MdiLoginSystem
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             About aboutForm = About.GetInstance();
             aboutForm.MdiParent = this;
             aboutForm.Show();
@@ -52,5 +50,23 @@ namespace MdiLoginSystem
             LoginScreen.GetInstance().Show();
         }
 
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportScreen reportForm = ReportScreen.GetInstance();
+            reportForm.MdiParent = this;
+            reportForm.Show();
+        }
+
+        private void userToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SignupScreen signupForm = SignupScreen.GetInstance();
+            signupForm.MdiParent = this;
+            signupForm.Show();
+        }
+
+        private void SystemMenu_FormClosing_1(object sender, FormClosingEventArgs e)
+        {
+            LoginScreen.GetInstance().Show();
+        }
     }
 }

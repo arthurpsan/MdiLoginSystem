@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace UserManagementSystem
 {
     public partial class ReportScreen : Form
     {
+        private static ReportScreen? _instance;
+        public static ReportScreen GetInstance()
+        {
+            if (_instance == null || _instance.IsDisposed)
+            {
+                _instance = new ReportScreen();
+            }
+            return _instance;
+        }
+
         public ReportScreen()
         {
             InitializeComponent();
