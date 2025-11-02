@@ -47,7 +47,7 @@ namespace MdiLoginSystem
         [Required]
         public User? User { get; set; }
 
-        public DateTime? LastSession { get; set; }
+        public DateTime? LastAccess { get; set; }
 
         #region Hashing
         // ... (Hashing methods remain the same) ...

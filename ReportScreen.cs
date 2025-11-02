@@ -58,9 +58,9 @@ namespace UserManagementSystem
 
                     line.SubItems.Add(credential.User.Name);
                     line.SubItems.Add(credential.Email);
-
                     string level = credential.Manager ? "Admin" : "Regular";
                     line.SubItems.Add(level);
+                    line.SubItems.Add(credential.LastAccess?.ToString() ?? "Never");
 
                     lstReports.Items.Add(line);
                 }
@@ -71,7 +71,7 @@ namespace UserManagementSystem
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
             LoadReportData();
         }

@@ -20,11 +20,6 @@ namespace MdiLoginSystem
             return _instance;
         }
 
-        private void grpLogin_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnLogin_Click(object sender, EventArgs e)
         {
             // Get email and password from text boxes
@@ -55,10 +50,23 @@ namespace MdiLoginSystem
             if (dbCredential.Password == hashedInputPassword)
             {
                 // Sucessful login!
-                txtEmail.Clear();
-                txtPassword.Clear();
                 lblErrorAlert.Visible = false;
 
+                //  Save or Update the last access time
+                try
+                {
+                    dbCredential.LastAccess = DateTime.Now;
+                    CredentialRepository.SaveorUpdate(dbCredential);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error updating last access time: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                dbCredential.User.Credential = dbCredential;
+
+                txtEmail.Clear();
+                txtPassword.Clear();
                 this.Hide();
 
                 // Pass the model User to the System Menu
@@ -70,14 +78,6 @@ namespace MdiLoginSystem
                 lblErrorAlert.Visible = true;
                 txtPassword.Clear();
                 txtPassword.Focus();
-            }
-        }
-
-        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                btnLogin.PerformClick();
             }
         }
 
@@ -101,12 +101,23 @@ namespace MdiLoginSystem
             txtPassword.BackColor = Color.White;
         }
 
-        private void txtEmail_KeyPress(object sender, KeyPressEventArgs e)
+        private void LoginScreen_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                txtPassword.Focus();
-                e.Handled = true;
+                if (txtEmail.Focused)
+                {
+                    txtPassword.Focus();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (txtPassword.Focused)
+                {
+                    btnLogin.PerformClick();
+
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
             }
         }
     }

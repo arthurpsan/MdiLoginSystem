@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using UserManagementSystem;
 
 namespace MdiLoginSystem
@@ -10,9 +11,19 @@ namespace MdiLoginSystem
         {
             InitializeComponent();
 
-            Text = "Sys - User Management - [v0.0.1]";
+            Text = $"System - User Management - User: {user.Name} - [v0.0.1]";
 
-            managerToolStripMenuItem.Enabled = user.Credential.Manager;
+            if (user != null && user.Credential != null)
+            {
+                userToolStripMenuItem.Enabled = user.Credential.Manager;
+
+                lblLastAccess.Text = $"Last Access: {user.Credential.LastAccess?.ToString("g") ?? "First Access!"}";
+            }
+            else
+            {
+                lblLastAccess.Text = "Error while loading session data!";
+            }
+
         }
 
         public static SystemMenu GetInstance(User user)
@@ -25,11 +36,6 @@ namespace MdiLoginSystem
             return _instance;
 
             // return new SystemMenu(user);
-        }
-
-        private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            LoginScreen.GetInstance().Show();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,7 +68,7 @@ namespace MdiLoginSystem
             signupForm.Show();
         }
 
-        private void SystemMenu_FormClosing_1(object sender, FormClosingEventArgs e)
+        private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
             LoginScreen.GetInstance().Show();
         }

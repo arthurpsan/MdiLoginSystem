@@ -156,7 +156,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(507, 327);
             Controls.Add(pnlAbout);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             Name = "About";

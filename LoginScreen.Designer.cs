@@ -57,7 +57,6 @@
             grpLogin.Controls.Add(grpEmail);
             grpLogin.Name = "grpLogin";
             grpLogin.TabStop = false;
-            grpLogin.Enter += grpLogin_Enter;
             // 
             // grpPassword
             // 
@@ -73,7 +72,6 @@
             txtPassword.BackColor = Color.White;
             resources.ApplyResources(txtPassword, "txtPassword");
             txtPassword.Name = "txtPassword";
-            txtPassword.KeyUp += txtPassword_KeyUp;
             txtPassword.Leave += txtPassword_Leave;
             // 
             // lblErrorAlert
@@ -102,7 +100,6 @@
             resources.ApplyResources(txtEmail, "txtEmail");
             txtEmail.Name = "txtEmail";
             txtEmail.Enter += txtEmail_Enter;
-            txtEmail.KeyPress += txtEmail_KeyPress;
             txtEmail.Leave += txtEmail_Leave;
             // 
             // LoginScreen
@@ -111,9 +108,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlLogin);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             MaximizeBox = false;
             Name = "LoginScreen";
             ShowIcon = false;
+            KeyDown += LoginScreen_KeyDown;
             pnlLogin.ResumeLayout(false);
             grpLogin.ResumeLayout(false);
             grpPassword.ResumeLayout(false);

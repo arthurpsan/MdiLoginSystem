@@ -35,27 +35,26 @@
             columnHeaderUsername = new ColumnHeader();
             columnHeaderEmail = new ColumnHeader();
             columnHeaderLevel = new ColumnHeader();
-            button1 = new Button();
+            btnRefresh = new Button();
+            columnHeaderLastAccess = new ColumnHeader();
             pnlReports.SuspendLayout();
             SuspendLayout();
             // 
             // pnlReports
             // 
-            pnlReports.ColumnCount = 2;
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            pnlReports.ColumnCount = 3;
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 66.6666641F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 103F));
             pnlReports.Controls.Add(lblReports, 0, 0);
             pnlReports.Controls.Add(lstReports, 0, 1);
-            pnlReports.Controls.Add(button1, 1, 0);
+            pnlReports.Controls.Add(btnRefresh, 2, 0);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
             pnlReports.RowCount = 2;
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 0;
             // 
@@ -74,8 +73,8 @@
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLevel });
-            pnlReports.SetColumnSpan(lstReports, 2);
+            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLastAccess, columnHeaderLevel });
+            pnlReports.SetColumnSpan(lstReports, 3);
             lstReports.Dock = DockStyle.Fill;
             lstReports.FullRowSelect = true;
             lstReports.GridLines = true;
@@ -102,7 +101,7 @@
             // 
             columnHeaderEmail.Text = "E-mail";
             columnHeaderEmail.TextAlign = HorizontalAlignment.Center;
-            columnHeaderEmail.Width = 390;
+            columnHeaderEmail.Width = 300;
             // 
             // columnHeaderLevel
             // 
@@ -110,18 +109,23 @@
             columnHeaderLevel.TextAlign = HorizontalAlignment.Center;
             columnHeaderLevel.Width = 100;
             // 
-            // button1
+            // btnRefresh
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(700, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(97, 84);
-            button1.TabIndex = 3;
-            button1.Text = "Refresh";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnRefresh.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRefresh.Location = new Point(699, 3);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(98, 84);
+            btnRefresh.TabIndex = 3;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
+            // 
+            // columnHeaderLastAccess
+            // 
+            columnHeaderLastAccess.Text = "Last Access";
+            columnHeaderLastAccess.TextAlign = HorizontalAlignment.Center;
+            columnHeaderLastAccess.Width = 90;
             // 
             // ReportScreen
             // 
@@ -129,7 +133,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlReports);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "ReportScreen";
             ShowIcon = false;
@@ -149,6 +153,7 @@
         private ColumnHeader columnHeaderUsername;
         private ColumnHeader columnHeaderEmail;
         private ColumnHeader columnHeaderLevel;
-        private Button button1;
+        private Button btnRefresh;
+        private ColumnHeader columnHeaderLastAccess;
     }
 }
