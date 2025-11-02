@@ -18,7 +18,7 @@ namespace UserManagementSystem
             get => _name;
             set
             {
-                ArgumentNullException.ThrowIfNull(nameof(value), "Username cannot be null or empty.");
+                ArgumentNullException.ThrowIfNull(value, nameof(Email));
 
                 if (value.Length >= 80)
                 {
@@ -37,7 +37,7 @@ namespace UserManagementSystem
             {
                 ArgumentNullException.ThrowIfNull(nameof(value), "Nickname cannot be null or empty.");
 
-                if (value.Length >= 20)
+                if (value.Length <= 1 || value.Length >= 20)
                 {
                     throw new ArgumentOutOfRangeException("Nickname cannot contain more than 20 characters.");
                 }
@@ -46,7 +46,7 @@ namespace UserManagementSystem
         }
 
         private String? _email;
-        public String Email
+        public String? Email
         {
             get => _email;
             set
@@ -57,6 +57,8 @@ namespace UserManagementSystem
                 {
                     throw new ArgumentOutOfRangeException("Email cannot contain more than 80 characters. ");
                 }
+
+                _email = value;
             }
         }
 
