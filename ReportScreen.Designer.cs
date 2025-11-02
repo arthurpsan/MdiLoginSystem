@@ -31,6 +31,7 @@
             pnlReports = new TableLayoutPanel();
             lblReports = new Label();
             lstReports = new ListView();
+            columnHeaderGhost = new ColumnHeader();
             columnHeaderId = new ColumnHeader();
             columnHeaderUsername = new ColumnHeader();
             columnHeaderEmail = new ColumnHeader();
@@ -73,7 +74,7 @@
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLevel, columnHeaderLastAccess });
+            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLevel, columnHeaderLastAccess });
             pnlReports.SetColumnSpan(lstReports, 3);
             lstReports.Dock = DockStyle.Fill;
             lstReports.FullRowSelect = true;
@@ -85,6 +86,11 @@
             lstReports.TabIndex = 2;
             lstReports.UseCompatibleStateImageBehavior = false;
             lstReports.View = View.Details;
+            // 
+            // columnHeaderGhost
+            // 
+            columnHeaderGhost.Text = "";
+            columnHeaderGhost.Width = 0;
             // 
             // columnHeaderId
             // 
@@ -156,5 +162,6 @@
         private ColumnHeader columnHeaderLevel;
         private Button btnRefresh;
         private ColumnHeader columnHeaderLastAccess;
+        private ColumnHeader columnHeaderGhost;
     }
 }

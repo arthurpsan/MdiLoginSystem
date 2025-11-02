@@ -54,12 +54,17 @@ namespace UserManagementSystem
 
                 foreach (Credential credential in credentials)
                 {
-                    ListViewItem line = new ListViewItem(credential.Id.ToString());
+                    // Creates a "ghost line" in order to avoid clashing alignment with the first column rule
 
+                    ListViewItem line = new ListViewItem(string.Empty);
+
+                    line.SubItems.Add(credential.User?.Id.ToString() ?? "N/A");
                     line.SubItems.Add(credential.User.Name);
                     line.SubItems.Add(credential.Email);
+
                     string level = credential.Manager ? "Admin" : "Regular";
                     line.SubItems.Add(level);
+
                     line.SubItems.Add(credential.LastAccess?.ToString() ?? "Never");
 
                     lstReports.Items.Add(line);
