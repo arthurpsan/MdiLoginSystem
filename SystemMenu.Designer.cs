@@ -74,14 +74,14 @@
             // userToolStripMenuItem
             // 
             userToolStripMenuItem.Name = "userToolStripMenuItem";
-            userToolStripMenuItem.Size = new Size(180, 22);
+            userToolStripMenuItem.Size = new Size(121, 22);
             userToolStripMenuItem.Text = "User";
             userToolStripMenuItem.Click += userToolStripMenuItem_Click;
             // 
             // managerToolStripMenuItem
             // 
             managerToolStripMenuItem.Name = "managerToolStripMenuItem";
-            managerToolStripMenuItem.Size = new Size(180, 22);
+            managerToolStripMenuItem.Size = new Size(121, 22);
             managerToolStripMenuItem.Text = "Manager";
             // 
             // reporToolStripMenuItem
@@ -118,8 +118,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(mnuSystem);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             IsMdiContainer = true;
             MainMenuStrip = mnuSystem;
+            MaximizeBox = false;
             Name = "SystemMenu";
             ShowIcon = false;
             Text = "System - Main Menu - [v 0.0.1]";

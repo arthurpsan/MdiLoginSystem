@@ -81,10 +81,9 @@ namespace MdiLoginSystem
         public override String ToString()
         {
             return Id
+                + ", User: " + User?.Id
                 + ", " + Email
-                + ", " + Password
-                + ", " + (Manager ? "Administrador" : "Usuário comum")
-                + ", Usuário: " + User?.Id;
+                + ", " + (Manager ? "Admin User" : "Regular User");
         }
     }
 }

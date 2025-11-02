@@ -29,47 +29,99 @@
         private void InitializeComponent()
         {
             pnlReports = new TableLayoutPanel();
-            lstReports = new ListBox();
-            lblReportsTitle = new Label();
+            lblReports = new Label();
+            lstReports = new ListView();
+            columnHeaderId = new ColumnHeader();
+            columnHeaderUsername = new ColumnHeader();
+            columnHeaderEmail = new ColumnHeader();
+            columnHeaderLevel = new ColumnHeader();
+            button1 = new Button();
             pnlReports.SuspendLayout();
             SuspendLayout();
             // 
             // pnlReports
             // 
-            pnlReports.ColumnCount = 1;
+            pnlReports.ColumnCount = 2;
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 103F));
+            pnlReports.Controls.Add(lblReports, 0, 0);
             pnlReports.Controls.Add(lstReports, 0, 1);
-            pnlReports.Controls.Add(lblReportsTitle, 0, 0);
+            pnlReports.Controls.Add(button1, 1, 0);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
             pnlReports.RowCount = 2;
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 0;
             // 
+            // lblReports
+            // 
+            lblReports.AutoSize = true;
+            lblReports.Dock = DockStyle.Left;
+            lblReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblReports.Location = new Point(3, 0);
+            lblReports.Name = "lblReports";
+            lblReports.Size = new Size(292, 90);
+            lblReports.TabIndex = 1;
+            lblReports.Text = "User Data Reports";
+            lblReports.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // lstReports
             // 
+            lstReports.BackColor = Color.LightGray;
+            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLevel });
+            pnlReports.SetColumnSpan(lstReports, 2);
             lstReports.Dock = DockStyle.Fill;
-            lstReports.FormattingEnabled = true;
-            lstReports.ItemHeight = 15;
+            lstReports.FullRowSelect = true;
+            lstReports.GridLines = true;
+            lstReports.LabelWrap = false;
             lstReports.Location = new Point(3, 93);
             lstReports.Name = "lstReports";
             lstReports.Size = new Size(794, 354);
-            lstReports.TabIndex = 0;
+            lstReports.TabIndex = 2;
+            lstReports.UseCompatibleStateImageBehavior = false;
+            lstReports.View = View.Details;
             // 
-            // lblReportsTitle
+            // columnHeaderId
             // 
-            lblReportsTitle.AutoSize = true;
-            lblReportsTitle.Dock = DockStyle.Left;
-            lblReportsTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblReportsTitle.Location = new Point(3, 0);
-            lblReportsTitle.Name = "lblReportsTitle";
-            lblReportsTitle.Size = new Size(137, 90);
-            lblReportsTitle.TabIndex = 1;
-            lblReportsTitle.Text = "Reports";
-            lblReportsTitle.TextAlign = ContentAlignment.MiddleCenter;
+            columnHeaderId.Text = "ID";
+            columnHeaderId.Width = 100;
+            // 
+            // columnHeaderUsername
+            // 
+            columnHeaderUsername.Text = "Username";
+            columnHeaderUsername.TextAlign = HorizontalAlignment.Center;
+            columnHeaderUsername.Width = 200;
+            // 
+            // columnHeaderEmail
+            // 
+            columnHeaderEmail.Text = "E-mail";
+            columnHeaderEmail.TextAlign = HorizontalAlignment.Center;
+            columnHeaderEmail.Width = 390;
+            // 
+            // columnHeaderLevel
+            // 
+            columnHeaderLevel.Text = "Level";
+            columnHeaderLevel.TextAlign = HorizontalAlignment.Center;
+            columnHeaderLevel.Width = 100;
+            // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.Location = new Point(700, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(97, 84);
+            button1.TabIndex = 3;
+            button1.Text = "Refresh";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // ReportScreen
             // 
@@ -77,11 +129,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlReports);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
-            MinimizeBox = false;
             Name = "ReportScreen";
             ShowIcon = false;
             Text = "System - User Reports";
+            Load += ReportScreen_Load;
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
             ResumeLayout(false);
@@ -90,7 +143,12 @@
         #endregion
 
         private TableLayoutPanel pnlReports;
-        private ListBox lstReports;
-        private Label lblReportsTitle;
+        private Label lblReports;
+        private ListView lstReports;
+        private ColumnHeader columnHeaderId;
+        private ColumnHeader columnHeaderUsername;
+        private ColumnHeader columnHeaderEmail;
+        private ColumnHeader columnHeaderLevel;
+        private Button button1;
     }
 }

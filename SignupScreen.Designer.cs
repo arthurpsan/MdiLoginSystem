@@ -30,6 +30,7 @@
         {
             pnlRegister = new Panel();
             grpSignUp = new GroupBox();
+            lblErrorAlert = new Label();
             mskPhoneNumber = new MaskedTextBox();
             btnSave = new Button();
             lblPhone = new Label();
@@ -42,7 +43,6 @@
             label2 = new Label();
             label1 = new Label();
             lblUsername = new Label();
-            lblErrorAlert = new Label();
             pnlRegister.SuspendLayout();
             grpSignUp.SuspendLayout();
             SuspendLayout();
@@ -79,6 +79,19 @@
             grpSignUp.TabStop = false;
             grpSignUp.Text = "Sign Up";
             // 
+            // lblErrorAlert
+            // 
+            lblErrorAlert.AutoSize = true;
+            lblErrorAlert.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            lblErrorAlert.ForeColor = Color.Crimson;
+            lblErrorAlert.ImeMode = ImeMode.NoControl;
+            lblErrorAlert.Location = new Point(6, 353);
+            lblErrorAlert.Name = "lblErrorAlert";
+            lblErrorAlert.Size = new Size(229, 21);
+            lblErrorAlert.TabIndex = 13;
+            lblErrorAlert.Text = "Invalid fields. Please try again!";
+            lblErrorAlert.Visible = false;
+            // 
             // mskPhoneNumber
             // 
             mskPhoneNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -87,6 +100,8 @@
             mskPhoneNumber.Name = "mskPhoneNumber";
             mskPhoneNumber.Size = new Size(758, 29);
             mskPhoneNumber.TabIndex = 12;
+            mskPhoneNumber.Enter += mskPhoneNumber_Enter;
+            mskPhoneNumber.Leave += mskPhoneNumber_Leave;
             // 
             // btnSave
             // 
@@ -116,6 +131,8 @@
             txtRepeatPassword.Name = "txtRepeatPassword";
             txtRepeatPassword.Size = new Size(758, 29);
             txtRepeatPassword.TabIndex = 8;
+            txtRepeatPassword.Enter += txtRepeatPassword_Enter;
+            txtRepeatPassword.Leave += txtRepeatPassword_Leave;
             // 
             // lblRepeatPassword
             // 
@@ -145,6 +162,8 @@
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(758, 29);
             txtEmail.TabIndex = 5;
+            txtEmail.Enter += txtEmail_Enter;
+            txtEmail.Leave += txtEmail_Leave;
             // 
             // txtUsername
             // 
@@ -153,6 +172,8 @@
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(758, 29);
             txtUsername.TabIndex = 4;
+            txtUsername.Enter += txtUsername_Enter;
+            txtUsername.Leave += txtUsername_Leave;
             // 
             // txtPassword
             // 
@@ -161,6 +182,8 @@
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(758, 29);
             txtPassword.TabIndex = 3;
+            txtPassword.Enter += txtPassword_Enter;
+            txtPassword.Leave += txtPassword_Leave;
             // 
             // label2
             // 
@@ -192,25 +215,13 @@
             lblUsername.TabIndex = 0;
             lblUsername.Text = "Username";
             // 
-            // lblErrorAlert
-            // 
-            lblErrorAlert.AutoSize = true;
-            lblErrorAlert.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            lblErrorAlert.ForeColor = Color.Crimson;
-            lblErrorAlert.ImeMode = ImeMode.NoControl;
-            lblErrorAlert.Location = new Point(6, 353);
-            lblErrorAlert.Name = "lblErrorAlert";
-            lblErrorAlert.Size = new Size(229, 21);
-            lblErrorAlert.TabIndex = 13;
-            lblErrorAlert.Text = "Invalid fields. Please try again!";
-            lblErrorAlert.Visible = false;
-            // 
             // SignupScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlRegister);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
             Name = "SignupScreen";
             ShowIcon = false;

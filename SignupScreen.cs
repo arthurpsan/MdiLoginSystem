@@ -22,6 +22,22 @@ namespace MdiLoginSystem
             InitializeComponent();
         }
 
+        // Method to clear all input fields & put the focus back to the username field
+        private void ClearFields()
+        {
+            txtUsername.Clear();
+            txtEmail.Clear();
+            mskPhoneNumber.Clear();
+            txtPassword.Clear();
+            txtRepeatPassword.Clear();
+
+            chkIsManager.Checked = false;
+            lblErrorAlert.Visible = false;
+
+            txtUsername.Focus();
+        }
+
+        // Event handler for the Save button click
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Collect data from the form.
@@ -79,6 +95,8 @@ namespace MdiLoginSystem
 
                 MessageBox.Show("User registered succefully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lblErrorAlert.Visible = false;
+
+                ClearFields();
             }
             catch (Exception ex)
             {
@@ -86,5 +104,59 @@ namespace MdiLoginSystem
                 lblErrorAlert.Visible = true;
             }
         }
+
+        #region TextBox Enter and Leave Events - Change BackColor
+
+        private void txtUsername_Enter(object sender, EventArgs e)
+        {
+            txtUsername.BackColor = Color.LightCyan;
+        }
+
+        private void txtUsername_Leave(object sender, EventArgs e)
+        {
+            txtUsername.BackColor = Color.White;
+        }
+
+        private void txtEmail_Enter(object sender, EventArgs e)
+        {
+            txtEmail.BackColor = Color.LightCyan;
+        }
+
+        private void txtEmail_Leave(object sender, EventArgs e)
+        {
+            txtEmail.BackColor = Color.White;
+        }
+
+        private void mskPhoneNumber_Enter(object sender, EventArgs e)
+        {
+            mskPhoneNumber.BackColor = Color.LightCyan;
+        }
+
+        private void mskPhoneNumber_Leave(object sender, EventArgs e)
+        {
+            mskPhoneNumber.BackColor = Color.White;
+        }
+
+        private void txtPassword_Enter(object sender, EventArgs e)
+        {
+            txtPassword.BackColor = Color.LightCyan;
+        }
+
+        private void txtPassword_Leave(object sender, EventArgs e)
+        {
+            txtPassword.BackColor = Color.White;
+        }
+
+        private void txtRepeatPassword_Enter(object sender, EventArgs e)
+        {
+            txtRepeatPassword.BackColor = Color.LightCyan;
+        }
+
+        private void txtRepeatPassword_Leave(object sender, EventArgs e)
+        {
+            txtRepeatPassword.BackColor = Color.White;
+        }
+
+        #endregion
     }
 }

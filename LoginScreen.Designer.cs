@@ -61,9 +61,9 @@
             // 
             // grpPassword
             // 
+            resources.ApplyResources(grpPassword, "grpPassword");
             grpPassword.Controls.Add(txtPassword);
             grpPassword.Controls.Add(lblErrorAlert);
-            resources.ApplyResources(grpPassword, "grpPassword");
             grpPassword.Name = "grpPassword";
             grpPassword.TabStop = false;
             grpPassword.Enter += grpPassword_Enter;
@@ -91,8 +91,8 @@
             // 
             // grpEmail
             // 
-            grpEmail.Controls.Add(txtEmail);
             resources.ApplyResources(grpEmail, "grpEmail");
+            grpEmail.Controls.Add(txtEmail);
             grpEmail.Name = "grpEmail";
             grpEmail.TabStop = false;
             // 
@@ -110,6 +110,7 @@
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlLogin);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "LoginScreen";
             ShowIcon = false;

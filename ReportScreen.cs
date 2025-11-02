@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MdiLoginSystem;
+using System;
 
 namespace UserManagementSystem
 {
@@ -17,6 +18,62 @@ namespace UserManagementSystem
         public ReportScreen()
         {
             InitializeComponent();
+        }
+
+        private void ReportScreen_Load(object sender, EventArgs e)
+        {
+            SetupListView();
+            LoadReportData();
+        }
+
+        private void SetupListView()
+        {
+            lstReports.View = View.Details;
+            lstReports.GridLines = true;
+            lstReports.FullRowSelect = true;
+
+            lstReports.ColumnWidthChanging += lstReports_ColumnWidthChanging;
+        }
+
+        private void lstReports_ColumnWidthChanging(object? sender, ColumnWidthChangingEventArgs e)
+        {
+            e.Cancel = true;
+
+            e.NewWidth = lstReports.Columns[e.ColumnIndex].Width;
+        }
+
+        // Method to load user report
+        private void LoadReportData()
+        {
+            // Implementation for loading user report
+            try
+            {
+                lstReports.Items.Clear();
+
+                List<Credential> credentials = CredentialRepository.FindAll();
+
+                foreach (Credential credential in credentials)
+                {
+                    ListViewItem line = new ListViewItem(credential.Id.ToString());
+
+                    line.SubItems.Add(credential.User.Name);
+                    line.SubItems.Add(credential.Email);
+
+                    string level = credential.Manager ? "Admin" : "Regular";
+                    line.SubItems.Add(level);
+
+                    lstReports.Items.Add(line);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading user report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadReportData();
         }
     }
 }

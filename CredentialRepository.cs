@@ -70,7 +70,9 @@ namespace MdiLoginSystem
             {
                 using (Repository DbContext = new Repository())
                 {
-                    return DbContext.Credentials.ToList();
+                    return DbContext.Credentials
+                        .Include(c => c.User)
+                        .ToList();
                 }
 
             }

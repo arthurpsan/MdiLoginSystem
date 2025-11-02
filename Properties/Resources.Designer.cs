@@ -69,5 +69,15 @@ namespace UserManagementSystem.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap montes_claros_vertical_verde_jpg1 {
+            get {
+                object obj = ResourceManager.GetObject("montes_claros_vertical_verde_jpg1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
