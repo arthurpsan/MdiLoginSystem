@@ -30,6 +30,8 @@
         {
             pnlRegister = new Panel();
             grpSignUp = new GroupBox();
+            lblNickname = new Label();
+            txtNickname = new TextBox();
             lblErrorAlert = new Label();
             mskPhoneNumber = new MaskedTextBox();
             btnSave = new Button();
@@ -58,6 +60,8 @@
             // 
             // grpSignUp
             // 
+            grpSignUp.Controls.Add(lblNickname);
+            grpSignUp.Controls.Add(txtNickname);
             grpSignUp.Controls.Add(lblErrorAlert);
             grpSignUp.Controls.Add(mskPhoneNumber);
             grpSignUp.Controls.Add(btnSave);
@@ -78,6 +82,26 @@
             grpSignUp.TabIndex = 0;
             grpSignUp.TabStop = false;
             grpSignUp.Text = "Sign Up";
+            // 
+            // lblNickname
+            // 
+            lblNickname.AutoSize = true;
+            lblNickname.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblNickname.Location = new Point(405, 29);
+            lblNickname.Name = "lblNickname";
+            lblNickname.Size = new Size(82, 21);
+            lblNickname.TabIndex = 15;
+            lblNickname.Text = "Nickname";
+            // 
+            // txtNickname
+            // 
+            txtNickname.Font = new Font("Segoe UI", 12F);
+            txtNickname.Location = new Point(405, 57);
+            txtNickname.Name = "txtNickname";
+            txtNickname.Size = new Size(359, 29);
+            txtNickname.TabIndex = 14;
+            txtNickname.Enter += txtNickname_Enter;
+            txtNickname.Leave += txtNickname_Leave;
             // 
             // lblErrorAlert
             // 
@@ -170,7 +194,7 @@
             txtUsername.Font = new Font("Segoe UI", 12F);
             txtUsername.Location = new Point(6, 57);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(758, 29);
+            txtUsername.Size = new Size(359, 29);
             txtUsername.TabIndex = 4;
             txtUsername.Enter += txtUsername_Enter;
             txtUsername.Leave += txtUsername_Leave;
@@ -251,5 +275,7 @@
         private Button btnSave;
         private MaskedTextBox mskPhoneNumber;
         private Label lblErrorAlert;
+        private Label lblNickname;
+        private TextBox txtNickname;
     }
 }

@@ -11,7 +11,7 @@ namespace MdiLoginSystem
         {
             InitializeComponent();
 
-            Text = $"System - User Management - User: {user.Name} - [v0.0.1]";
+            Text = $"System - User Management - User level: {user.Name} - [v0.0.1]";
 
             if (user != null && user.Credential != null)
             {

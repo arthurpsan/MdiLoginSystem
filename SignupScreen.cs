@@ -42,6 +42,7 @@ namespace MdiLoginSystem
         {
             // Collect data from the form.
             string name = txtUsername.Text;
+            string nickname = txtNickname.Text;
             string email = txtEmail.Text;
             string password = txtPassword.Text;
             string repeatPassword = txtRepeatPassword.Text;
@@ -79,6 +80,7 @@ namespace MdiLoginSystem
                 User newUser = new User
                 {
                     Name = name,
+                    Nickname = nickname,
                     Email = email,
                     PhoneNumber = phoneNumeric
                 };
@@ -115,6 +117,16 @@ namespace MdiLoginSystem
         private void txtUsername_Leave(object sender, EventArgs e)
         {
             txtUsername.BackColor = Color.White;
+        }
+
+        private void txtNickname_Enter(object sender, EventArgs e)
+        {
+            txtNickname.BackColor = Color.LightCyan;
+        }
+
+        private void txtNickname_Leave(object sender, EventArgs e)
+        {
+            txtNickname.BackColor = Color.White;
         }
 
         private void txtEmail_Enter(object sender, EventArgs e)
@@ -164,6 +176,12 @@ namespace MdiLoginSystem
             if (e.KeyCode == Keys.Enter)
             {
                 if (txtUsername.Focused)
+                {
+                    txtNickname.Focus();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (txtNickname.Focused)
                 {
                     txtEmail.Focus();
                     e.Handled = true;

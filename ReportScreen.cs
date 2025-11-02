@@ -60,7 +60,9 @@ namespace UserManagementSystem
 
                     line.SubItems.Add(credential.User?.Id.ToString() ?? "N/A");
                     line.SubItems.Add(credential.User.Name);
+                    line.SubItems.Add(credential.User.Nickname);
                     line.SubItems.Add(credential.Email);
+                    line.SubItems.Add(credential.User.PhoneNumber?.ToString() ?? "N/A");
 
                     string level = credential.Manager ? "Admin" : "Regular";
                     line.SubItems.Add(level);

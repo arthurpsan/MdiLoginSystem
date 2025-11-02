@@ -30,8 +30,9 @@ namespace MdiLoginSystem
                     // Creating the models.
                     User adminUser = new User
                     {
-                        Name = "Admin",
-                        PhoneNumber = 10000000000,
+                        Name = "Administrator",
+                        Nickname = "Admin",
+                        PhoneNumber = 38998103030,
                         Email = "admin@system.com"
                     };
 

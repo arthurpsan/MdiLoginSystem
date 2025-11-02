@@ -34,7 +34,9 @@
             columnHeaderGhost = new ColumnHeader();
             columnHeaderId = new ColumnHeader();
             columnHeaderUsername = new ColumnHeader();
+            columnHeaderNickname = new ColumnHeader();
             columnHeaderEmail = new ColumnHeader();
+            columnHeaderPhone = new ColumnHeader();
             columnHeaderLevel = new ColumnHeader();
             columnHeaderLastAccess = new ColumnHeader();
             btnRefresh = new Button();
@@ -74,7 +76,7 @@
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLevel, columnHeaderLastAccess });
+            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderUsername, columnHeaderNickname, columnHeaderEmail, columnHeaderPhone, columnHeaderLevel, columnHeaderLastAccess });
             pnlReports.SetColumnSpan(lstReports, 3);
             lstReports.Dock = DockStyle.Fill;
             lstReports.FullRowSelect = true;
@@ -104,11 +106,23 @@
             columnHeaderUsername.TextAlign = HorizontalAlignment.Center;
             columnHeaderUsername.Width = 200;
             // 
+            // columnHeaderNickname
+            // 
+            columnHeaderNickname.Text = "Nickname";
+            columnHeaderNickname.TextAlign = HorizontalAlignment.Center;
+            columnHeaderNickname.Width = 100;
+            // 
             // columnHeaderEmail
             // 
             columnHeaderEmail.Text = "E-mail";
             columnHeaderEmail.TextAlign = HorizontalAlignment.Center;
             columnHeaderEmail.Width = 300;
+            // 
+            // columnHeaderPhone
+            // 
+            columnHeaderPhone.Text = "Phone";
+            columnHeaderPhone.TextAlign = HorizontalAlignment.Center;
+            columnHeaderPhone.Width = 100;
             // 
             // columnHeaderLevel
             // 
@@ -163,5 +177,7 @@
         private Button btnRefresh;
         private ColumnHeader columnHeaderLastAccess;
         private ColumnHeader columnHeaderGhost;
+        private ColumnHeader columnHeaderNickname;
+        private ColumnHeader columnHeaderPhone;
     }
 }

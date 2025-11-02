@@ -29,6 +29,22 @@ namespace MdiLoginSystem
             }
         }
 
+        private String? _nickname;
+        public String? Nickname
+        {
+            get => _nickname;
+            set
+            {
+                ArgumentNullException.ThrowIfNull(nameof(value), "Nickname cannot be null or empty.");
+
+                if (value.Length >= 20)
+                {
+                    throw new ArgumentOutOfRangeException("Nickname cannot contain more than 20 characters.");
+                }
+                _nickname = value;
+            }
+        }
+
         private UInt64? _phoneNumber;
         public UInt64? PhoneNumber
         {
