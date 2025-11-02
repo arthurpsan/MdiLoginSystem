@@ -222,10 +222,12 @@
             ClientSize = new Size(800, 450);
             Controls.Add(pnlRegister);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             MaximizeBox = false;
             Name = "SignupScreen";
             ShowIcon = false;
             Text = "System - Sign Up ";
+            KeyDown += SignupScreen_KeyDown;
             pnlRegister.ResumeLayout(false);
             grpSignUp.ResumeLayout(false);
             grpSignUp.PerformLayout();

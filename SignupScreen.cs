@@ -158,5 +158,43 @@ namespace MdiLoginSystem
         }
 
         #endregion
+
+        private void SignupScreen_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (txtUsername.Focused)
+                {
+                    txtEmail.Focus();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (txtEmail.Focused)
+                {
+                    mskPhoneNumber.Focus();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (mskPhoneNumber.Focused)
+                {
+                    txtPassword.Focus();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (txtPassword.Focused)
+                {
+                    txtRepeatPassword.Focus();
+
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (txtRepeatPassword.Focused)
+                {
+                    btnSave.PerformClick();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
     }
 }

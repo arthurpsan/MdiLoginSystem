@@ -52,6 +52,11 @@ namespace MdiLoginSystem
             {
                 ArgumentNullException.ThrowIfNull(value, nameof(Email));
 
+                if (value.Length >= 150 || value.Length < 1)
+                {
+                    throw new ArgumentOutOfRangeException("Email must contain between 1 and 150 characters.");
+                }
+
                 _email = value;
             }
         }

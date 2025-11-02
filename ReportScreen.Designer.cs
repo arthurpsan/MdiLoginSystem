@@ -35,8 +35,8 @@
             columnHeaderUsername = new ColumnHeader();
             columnHeaderEmail = new ColumnHeader();
             columnHeaderLevel = new ColumnHeader();
-            btnRefresh = new Button();
             columnHeaderLastAccess = new ColumnHeader();
+            btnRefresh = new Button();
             pnlReports.SuspendLayout();
             SuspendLayout();
             // 
@@ -73,7 +73,7 @@
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLastAccess, columnHeaderLevel });
+            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderId, columnHeaderUsername, columnHeaderEmail, columnHeaderLevel, columnHeaderLastAccess });
             pnlReports.SetColumnSpan(lstReports, 3);
             lstReports.Dock = DockStyle.Fill;
             lstReports.FullRowSelect = true;
@@ -89,6 +89,7 @@
             // columnHeaderId
             // 
             columnHeaderId.Text = "ID";
+            columnHeaderId.TextAlign = HorizontalAlignment.Center;
             columnHeaderId.Width = 100;
             // 
             // columnHeaderUsername
@@ -107,7 +108,13 @@
             // 
             columnHeaderLevel.Text = "Level";
             columnHeaderLevel.TextAlign = HorizontalAlignment.Center;
-            columnHeaderLevel.Width = 100;
+            columnHeaderLevel.Width = 90;
+            // 
+            // columnHeaderLastAccess
+            // 
+            columnHeaderLastAccess.Text = "Last Access";
+            columnHeaderLastAccess.TextAlign = HorizontalAlignment.Center;
+            columnHeaderLastAccess.Width = 100;
             // 
             // btnRefresh
             // 
@@ -120,12 +127,6 @@
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = true;
             btnRefresh.Click += btnRefresh_Click;
-            // 
-            // columnHeaderLastAccess
-            // 
-            columnHeaderLastAccess.Text = "Last Access";
-            columnHeaderLastAccess.TextAlign = HorizontalAlignment.Center;
-            columnHeaderLastAccess.Width = 90;
             // 
             // ReportScreen
             // 
