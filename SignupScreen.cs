@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     public partial class SignupScreen : Form
     {

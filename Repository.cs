@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     public class Repository : DbContext
     {

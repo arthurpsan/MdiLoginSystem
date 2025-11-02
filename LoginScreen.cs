@@ -1,4 +1,4 @@
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     public partial class LoginScreen : Form
     {

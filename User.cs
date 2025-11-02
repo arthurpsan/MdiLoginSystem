@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     public class User
     {

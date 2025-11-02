@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     public class CredentialRepository
     {

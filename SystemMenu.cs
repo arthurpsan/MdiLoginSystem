@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using UserManagementSystem;
 
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     public partial class SystemMenu : Form
     {

@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore; // Needed for [Index] when used on a class
 
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     // The [Index] attribute for columns should be placed on the class in EF Core 
     // to configure the database index.

@@ -1,4 +1,4 @@
-namespace MdiLoginSystem
+namespace UserManagementSystem
 {
     internal static class Program
     {
