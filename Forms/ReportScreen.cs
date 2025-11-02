@@ -1,4 +1,5 @@
-﻿using System;
+﻿using UserManagementSystem.Data;
+using UserManagementSystem.Models;
 
 namespace UserManagementSystem
 {

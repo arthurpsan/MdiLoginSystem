@@ -134,7 +134,7 @@
             // 
             columnHeaderLastAccess.Text = "Last Access";
             columnHeaderLastAccess.TextAlign = HorizontalAlignment.Center;
-            columnHeaderLastAccess.Width = 100;
+            columnHeaderLastAccess.Width = 160;
             // 
             // btnRefresh
             // 

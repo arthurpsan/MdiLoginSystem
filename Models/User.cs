@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace UserManagementSystem
+namespace UserManagementSystem.Models
 {
     public class User
     {
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
-        private String? _name;
-        public String? Name
+        private string? _name;
+        public string? Name
         {
             get => _name;
             set
@@ -29,8 +24,8 @@ namespace UserManagementSystem
             }
         }
 
-        private String? _nickname;
-        public String? Nickname
+        private string? _nickname;
+        public string? Nickname
         {
             get => _nickname;
             set
@@ -45,13 +40,13 @@ namespace UserManagementSystem
             }
         }
 
-        private String? _email;
-        public String? Email
+        private string? _email;
+        public string? Email
         {
             get => _email;
             set
             {
-                ArgumentNullException.ThrowIfNullOrWhiteSpace(value, nameof(Email));
+                ArgumentException.ThrowIfNullOrWhiteSpace(value, nameof(Email));
 
                 if (value.Length >= 80)
                 {
@@ -62,8 +57,8 @@ namespace UserManagementSystem
             }
         }
 
-        private UInt64? _phoneNumber;
-        public UInt64? PhoneNumber
+        private ulong? _phoneNumber;
+        public ulong? PhoneNumber
         {
             get => _phoneNumber;
             set

@@ -1,3 +1,6 @@
+using UserManagementSystem.Data;
+using UserManagementSystem.Models;
+
 namespace UserManagementSystem
 {
     public partial class LoginScreen : Form
@@ -35,7 +38,6 @@ namespace UserManagementSystem
             if (dbCredential == null)
             {
                 lblErrorAlert.Visible = true;
-                txtEmail.Clear();
                 txtPassword.Clear();
                 txtEmail.Focus();
                 return;
@@ -81,6 +83,17 @@ namespace UserManagementSystem
             }
         }
 
+        // Method to Clear fields and error messages
+        public void ClearFieldsAndShow()
+        {
+            txtEmail.Clear();
+            txtPassword.Clear();
+            lblErrorAlert.Visible = false;
+            this.Show();
+            txtEmail.Focus();
+        }
+
+        #region Input Field Highlighting Methods
         private void txtEmail_Enter(object sender, EventArgs e)
         {
             txtEmail.BackColor = Color.LightCyan;
@@ -100,7 +113,9 @@ namespace UserManagementSystem
         {
             txtPassword.BackColor = Color.White;
         }
+        #endregion 
 
+        // Method to handle Enter key navigation
         private void LoginScreen_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

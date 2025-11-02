@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using UserManagementSystem.Models;
 
-namespace UserManagementSystem
+namespace UserManagementSystem.Data
 {
     public class CredentialRepository
     {
@@ -31,7 +30,7 @@ namespace UserManagementSystem
             }
         }
 
-        public static Credential? FindById(Int64 id)
+        public static Credential? FindById(long id)
         {
             try
             {

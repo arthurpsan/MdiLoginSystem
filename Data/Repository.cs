@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using UserManagementSystem.Models;
 
-namespace UserManagementSystem
+namespace UserManagementSystem.Data
 {
     public class Repository : DbContext
     {
-        private static readonly String _connectionsParams = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=UserManagementSystem";
+        private static readonly string _connectionsParams = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=UserManagementSystem";
 
         public DbSet<User> Users { get; set; }
         public DbSet<Credential> Credentials { get; set; }

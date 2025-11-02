@@ -1,8 +1,7 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using UserManagementSystem.Models;
 
-namespace UserManagementSystem
+namespace UserManagementSystem.Data
 {
     public class UserRepository
     {
@@ -30,7 +29,7 @@ namespace UserManagementSystem
             }
         }
 
-        public static User? FindById(Int64 id)
+        public static User? FindById(long id)
         {
             try
             {

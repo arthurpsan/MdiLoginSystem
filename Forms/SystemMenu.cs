@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using UserManagementSystem.Models;
 
 namespace UserManagementSystem
 {
@@ -49,7 +48,7 @@ namespace UserManagementSystem
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
-            LoginScreen.GetInstance().Show();
+            LoginScreen.GetInstance().ClearFieldsAndShow();
         }
 
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,7 +68,7 @@ namespace UserManagementSystem
 
         private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LoginScreen.GetInstance().Show();
+            LoginScreen.GetInstance().ClearFieldsAndShow();
         }
     }
 }

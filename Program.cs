@@ -1,3 +1,6 @@
+using UserManagementSystem.Data;
+using UserManagementSystem.Models;
+
 namespace UserManagementSystem
 {
     internal static class Program

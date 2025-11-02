@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.EntityFrameworkCore; // Needed for [Index] when used on a class
 
-namespace UserManagementSystem
+namespace UserManagementSystem.Models
 {
     // The [Index] attribute for columns should be placed on the class in EF Core 
     // to configure the database index.
@@ -17,19 +16,19 @@ namespace UserManagementSystem
         // You cannot reference a non-static field like User.Id in a field initializer.
         // You must initialize Id to a default value (like 0) and configure the 
         // one-to-one relationship and foreign key mapping in your DbContext.
-        public Int64 Id { get; set; } = 0;
+        public long Id { get; set; } = 0;
 
-        public const String SALT = "1FnM6_";
+        public const string SALT = "1FnM6_";
 
         [Required] // Added [Required] back based on common usage for email
         [StringLength(250)]
-        public String? Email { get; set; }
+        public string? Email { get; set; }
 
-        private String? _password;
+        private string? _password;
 
         [Required]
         [StringLength(64)]
-        public String? Password
+        public string? Password
         {
             get
             {
@@ -51,19 +50,19 @@ namespace UserManagementSystem
 
         #region Hashing
         // ... (Hashing methods remain the same) ...
-        public static String ComputeSHA256(String input)
+        public static string ComputeSHA256(string input)
         {
             return ComputeSHA256(input, null);
         }
 
-        public static String ComputeSHA256(String? input, String? salt)
+        public static string ComputeSHA256(string? input, string? salt)
         {
-            String hash = String.Empty;
+            string hash = string.Empty;
 
             using (SHA256 sha256 = SHA256.Create())
             {
                 // Ensure the salt is prepended even if it's null (it will be an empty string).
-                string inputWithSalt = (salt ?? String.Empty) + input;
+                string inputWithSalt = (salt ?? string.Empty) + input;
 
                 byte[] hashValue = sha256.ComputeHash(
                     Encoding.UTF8.GetBytes(inputWithSalt));
@@ -78,7 +77,7 @@ namespace UserManagementSystem
         }
         #endregion
 
-        public override String ToString()
+        public override string ToString()
         {
             return Id
                 + ", User: " + User?.Id
