@@ -45,6 +45,21 @@ namespace UserManagementSystem
             }
         }
 
+        private String? _email;
+        public String Email
+        {
+            get => _email;
+            set
+            {
+                ArgumentNullException.ThrowIfNullOrWhiteSpace(value, nameof(Email));
+
+                if (value.Length >= 80)
+                {
+                    throw new ArgumentOutOfRangeException("Email cannot contain more than 80 characters. ");
+                }
+            }
+        }
+
         private UInt64? _phoneNumber;
         public UInt64? PhoneNumber
         {
@@ -57,23 +72,6 @@ namespace UserManagementSystem
                 }
 
                 _phoneNumber = value;
-            }
-        }
-
-        private String? _email;
-        public String? Email
-        {
-            get => _email;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value, nameof(Email));
-
-                if (value.Length >= 150 || value.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("Email must contain between 1 and 150 characters.");
-                }
-
-                _email = value;
             }
         }
 
