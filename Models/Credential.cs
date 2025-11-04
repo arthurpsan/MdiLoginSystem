@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserManagementSystem.Models
 {
@@ -16,19 +16,19 @@ namespace UserManagementSystem.Models
         // You cannot reference a non-static field like User.Id in a field initializer.
         // You must initialize Id to a default value (like 0) and configure the 
         // one-to-one relationship and foreign key mapping in your DbContext.
-        public long Id { get; set; } = 0;
+        public UInt64 Id { get; set; } = 0;
 
-        public const string SALT = "1FnM6_";
+        public const String SALT = "1FnM6_";
 
         [Required] // Added [Required] back based on common usage for email
         [StringLength(250)]
-        public string? Email { get; set; }
+        public String? Email { get; set; }
 
-        private string? _password;
+        private String? _password;
 
         [Required]
         [StringLength(64)]
-        public string? Password
+        public String? Password
         {
             get
             {
@@ -41,7 +41,7 @@ namespace UserManagementSystem.Models
             }
         }
 
-        public bool Manager { get; set; } = false;
+        public Boolean Manager { get; set; } = false;
 
         [Required]
         public User? User { get; set; }
@@ -77,7 +77,7 @@ namespace UserManagementSystem.Models
         }
         #endregion
 
-        public override string ToString()
+        public override String ToString()
         {
             return Id
                 + ", User: " + User?.Id

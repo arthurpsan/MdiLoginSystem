@@ -1,4 +1,5 @@
-﻿using UserManagementSystem.Models;
+﻿using UserManagementSystem.Forms;
+using UserManagementSystem.Models;
 
 namespace UserManagementSystem
 {
@@ -53,10 +54,10 @@ namespace UserManagementSystem
 
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReportScreen reportForm = ReportScreen.GetInstance();
-            reportForm.MdiParent = this;
-            reportForm.Show();
-            reportForm.BringToFront();
+            UserReportScreen userReportForm = UserReportScreen.GetInstance();
+            userReportForm.MdiParent = this;
+            userReportForm.Show();
+            userReportForm.BringToFront();
         }
 
         private void userToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,6 +70,14 @@ namespace UserManagementSystem
         private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
             LoginScreen.GetInstance().ClearFieldsAndShow();
+        }
+
+        private void salesDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaleReportScreen saleReportForm = SaleReportScreen.GetInstance();
+            saleReportForm.MdiParent = this;
+            saleReportForm.Show();
+            saleReportForm.BringToFront();
         }
     }
 }

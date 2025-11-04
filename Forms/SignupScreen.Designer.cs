@@ -45,6 +45,7 @@
             label2 = new Label();
             label1 = new Label();
             lblUsername = new Label();
+            mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             pnlRegister.SuspendLayout();
             grpSignUp.SuspendLayout();
             SuspendLayout();
@@ -172,11 +173,11 @@
             // 
             chkIsManager.AutoSize = true;
             chkIsManager.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chkIsManager.Location = new Point(670, 349);
+            chkIsManager.Location = new Point(634, 353);
             chkIsManager.Name = "chkIsManager";
-            chkIsManager.Size = new Size(94, 25);
+            chkIsManager.Size = new Size(130, 25);
             chkIsManager.TabIndex = 6;
-            chkIsManager.Text = "Manager";
+            chkIsManager.Text = "Administrator";
             chkIsManager.UseVisualStyleBackColor = true;
             // 
             // txtEmail
@@ -239,6 +240,13 @@
             lblUsername.TabIndex = 0;
             lblUsername.Text = "Username";
             // 
+            // mySqlCommand1
+            // 
+            mySqlCommand1.CacheAge = 0;
+            mySqlCommand1.Connection = null;
+            mySqlCommand1.EnableCaching = false;
+            mySqlCommand1.Transaction = null;
+            // 
             // SignupScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -277,5 +285,6 @@
         private Label lblErrorAlert;
         private Label lblNickname;
         private TextBox txtNickname;
+        private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
     }
 }

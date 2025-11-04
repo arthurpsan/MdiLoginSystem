@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem
 {
-    partial class ReportScreen
+    partial class UserReportScreen
     {
         /// <summary>
         /// Required designer variable.

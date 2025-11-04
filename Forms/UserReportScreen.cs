@@ -3,19 +3,20 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem
 {
-    public partial class ReportScreen : Form
+    public partial class UserReportScreen : Form
     {
-        private static ReportScreen? _instance;
-        public static ReportScreen GetInstance()
+        private static UserReportScreen? _instance;
+        public static UserReportScreen GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new ReportScreen();
+                _instance = new UserReportScreen();
             }
+
             return _instance;
         }
 
-        public ReportScreen()
+        public UserReportScreen()
         {
             InitializeComponent();
         }

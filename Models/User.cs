@@ -4,11 +4,11 @@ namespace UserManagementSystem.Models
 {
     public class User
     {
-        public long Id { get; set; }
+        public UInt64 Id { get; set; }
 
         [Required]
-        private string? _name;
-        public string? Name
+        private String? _name;
+        public String? Name
         {
             get => _name;
             set
@@ -24,8 +24,8 @@ namespace UserManagementSystem.Models
             }
         }
 
-        private string? _nickname;
-        public string? Nickname
+        private String? _nickname;
+        public String? Nickname
         {
             get => _nickname;
             set
@@ -40,8 +40,8 @@ namespace UserManagementSystem.Models
             }
         }
 
-        private string? _email;
-        public string? Email
+        private String? _email;
+        public String? Email
         {
             get => _email;
             set
@@ -57,8 +57,8 @@ namespace UserManagementSystem.Models
             }
         }
 
-        private ulong? _phoneNumber;
-        public ulong? PhoneNumber
+        private UInt64? _phoneNumber;
+        public UInt64? PhoneNumber
         {
             get => _phoneNumber;
             set
