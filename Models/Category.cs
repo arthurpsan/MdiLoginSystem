@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace UserManagementSystem.Models
 {
-    public class Client
+    public class Category
     {
+        public UInt64 Id { get; set; }
+        public String? Name { get; set; }
+        public List<Product>? Products { get; set; }
     }
 }

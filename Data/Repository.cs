@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI;
 using UserManagementSystem.Models;
+using System.Collections.Generic;
 
 namespace UserManagementSystem.Data
 {
@@ -9,6 +11,13 @@ namespace UserManagementSystem.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Credential> Credentials { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Product> Products { get; set; } 
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Seller> Sellers { get; set; }
+        public DbSet<Item> Itens { get; set; }
 
         public Repository() => Database.EnsureCreated();
 
