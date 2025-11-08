@@ -9,7 +9,21 @@ namespace UserManagementSystem.Models
     public class Payment
     {
         public DateTime? ExpirationDate { get; set; }
-        public DateTime? DatePayment { get; set; }
+
+        private DateTime? _datePayment;
+        public DateTime? DatePayment
+        {
+            get => _datePayment;
+            set
+            {
+                if (value != null && ExpirationDate != null && value > DateTime.Now)
+                {
+                    throw new ArgumentOutOfRangeException("Payment date cannot be in the future.");
+                }
+
+                _datePayment = value;
+            }
+        }
 
         private Decimal? _paymentFine;
         public Decimal? PaymentFine

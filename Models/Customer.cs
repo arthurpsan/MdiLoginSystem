@@ -10,18 +10,28 @@ namespace UserManagementSystem.Models
     {
         public UInt64 Id { get; set; }
 
-        public List<Purchase>? Purchases { get; set; }
-
-        private Boolean _delayedPayment;
+        private List<Purchase>? _purchases;
+        public List<Purchase>? Purchases
+        {
+            get => _purchases;
+            set
+            {
+                _purchases = value;
+            }
+        }
         
-        public Boolean PodeRealizarCompra()
+        public Boolean CanBuy()
         {
             if (Purchases == null || Purchases.Count == 0)
             {
                 return true;
             }
-            
-            return false;
+            else if (Purchases.Any(purchase => purchase.Payments != null && purchase.Payments.Any(payment => DateTime.Now > payment.ExpirationDate && payment.DatePayment is null)))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
