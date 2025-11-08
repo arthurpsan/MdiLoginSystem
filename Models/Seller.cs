@@ -10,6 +10,8 @@ namespace UserManagementSystem.Models
     {
         public UInt32? Enrollment { get; set; }
         public Boolean? IsCashier { get; set; } = false;
+
+        // Relationship with Purchase class
         public List<Purchase>? IssuePurchases { get; set; }
     }
 }

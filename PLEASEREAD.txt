@@ -1,0 +1,11 @@
+﻿PLEASE READ BEFORE USING THE SYSTEM:
+
+-- The program's default login has the following fields:
+
+Default login:
+	// Email: admin@system.com
+	// Password: Admin@123
+
+-- To access the system for the first time, use the default login above.
+-- It holds administrator permissions and can create new users with different access levels.
+- Without these credentials, the first access to the system will not be possible.

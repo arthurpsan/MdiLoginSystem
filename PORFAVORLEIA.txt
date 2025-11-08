@@ -1,0 +1,11 @@
+﻿POR FAVOR, LEIA ANTES DE USAR O SISTEMA:
+
+-- O login padrão do programa tem os seguintes campos:
+
+	Login padrão:
+		// Email: admin@system.com
+		// Senha: Admin@123
+
+- Para acessar o sistema pela primeira vez, utilize o login padrão acima.
+- O mesmo detém permissão de administrador e pode criar novos usuários com diferentes níveis de acesso.
+- Sem estas credenciais, o primeiro acesso ao sistema não será possível.
