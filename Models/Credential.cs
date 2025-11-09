@@ -12,10 +12,7 @@ namespace UserManagementSystem.Models
     [Table("tbl_credencial")]
     public class Credential
     {
-        // Primary key equal to User's foreign key - One-To-One Relationship.
-        // You cannot reference a non-static field like User.Id in a field initializer.
-        // You must initialize Id to a default value (like 0) and configure the 
-        // one-to-one relationship and foreign key mapping in your DbContext.
+        [Key]
         public UInt64 Id { get; set; } = 0;
 
         public const String SALT = "1FnM6_";

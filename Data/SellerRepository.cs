@@ -4,23 +4,22 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Data
 {
-    public class UserRepository
+    public class SellerRepository
     {
-        public static void SaveOrUpdate(User user)
+        public static void SaveOrUpdate(Seller seller)
         {
             try
             {
                 using (Repository dbContext = new Repository())
                 {
-                    if (user.Id == 0)
+                    if (seller.Id == 0)
                     {
-                        dbContext.Users.Add(user);
+                        dbContext.Sellers.Add(seller);
                     }
                     else
                     {
-                        dbContext.Entry(user).State = EntityState.Modified;
+                        dbContext.Entry(seller).State = EntityState.Modified;
                     }
-
                     dbContext.SaveChanges();
                 }
             }
@@ -29,14 +28,13 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
-
-        public static User? FindById(UInt64 id)
+        public static Seller? FindById(UInt64 id)
         {
             try
             {
                 using (Repository dbContext = new Repository())
                 {
-                    return dbContext.Users.Find(id);
+                    return dbContext.Sellers.Find(id);
                 }
             }
             catch (Exception)
@@ -44,14 +42,13 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
-
-        public static List<User> FindAll()
+        public static List<Seller> FindAll()
         {
             try
             {
                 using (Repository dbContext = new Repository())
                 {
-                    return dbContext.Users.ToList();
+                    return dbContext.Sellers.ToList();
                 }
             }
             catch (Exception)
@@ -59,7 +56,5 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
-
     }
 }
-

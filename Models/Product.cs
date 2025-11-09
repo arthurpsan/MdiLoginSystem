@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace UserManagementSystem.Models
 {
     public class Product
     {
+        [Key]
         public UInt64? Id { get; set; }
 
+        [Required]
         public String? Name { get; set; }
         public Decimal? Price { get; set; }
         public UInt32? Stockpile { get; set; }

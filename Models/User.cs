@@ -4,6 +4,7 @@ namespace UserManagementSystem.Models
 {
     public class User
     {
+        [Key]
         public UInt64 Id { get; set; }
 
         [Required]

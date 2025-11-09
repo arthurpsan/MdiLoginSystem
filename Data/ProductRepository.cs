@@ -4,24 +4,22 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Data
 {
-    public class CredentialRepository
+    public class ProductRepository
     {
-        public static void SaveorUpdate(Credential credential)
+        public static void SaveOrUpdate(Product product)
         {
             try
             {
                 using (Repository dbContext = new Repository())
                 {
-                    if (credential.Id == 0)
+                    if (product.Id == 0)
                     {
-                        dbContext.Credentials.Add(credential);
+                        dbContext.Products.Add(product);
                     }
                     else
                     {
-                        dbContext.Entry(credential).State
-                            = EntityState.Modified;
+                        dbContext.Entry(product).State = EntityState.Modified;
                     }
-
                     dbContext.SaveChanges();
                 }
             }
@@ -31,14 +29,14 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static Credential? FindById(long id)
+        public static void Delete(Product product)
         {
             try
             {
-                using (Repository DbContext = new Repository())
+                using (Repository dbContext = new Repository())
                 {
-                    return DbContext.Credentials.Find(id);
-
+                    dbContext.Products.Remove(product);
+                    dbContext.SaveChanges();
                 }
             }
             catch (Exception)
@@ -47,15 +45,13 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static Credential? FindByEmail(string email)
+        public static Product? FindById(UInt64 id)
         {
             try
             {
-                using (Repository DbContext = new Repository())
+                using (Repository dbContext = new Repository())
                 {
-                    return DbContext.Credentials
-                        .Include(c => c.User)
-                        .FirstOrDefault(c => c.Email == email);
+                    return dbContext.Products.Find(id);
                 }
             }
             catch (Exception)
@@ -64,17 +60,14 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static List<Credential> FindAll()
+        public static List<Product> FindAll()
         {
             try
             {
-                using (Repository DbContext = new Repository())
+                using (Repository dbContext = new Repository())
                 {
-                    return DbContext.Credentials
-                        .Include(c => c.User)
-                        .ToList();
+                    return dbContext.Products.ToList();
                 }
-
             }
             catch (Exception)
             {

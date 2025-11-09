@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace UserManagementSystem.Models
 {
     public class Customer
     {
+        [Key]
         public UInt64 Id { get; set; }
+
+        [Required]
 
         private List<Purchase>? _purchases;
         public List<Purchase>? Purchases
@@ -26,7 +27,7 @@ namespace UserManagementSystem.Models
             {
                 return true;
             }
-            else if (Purchases.Any(purchase => purchase.Payments != null && purchase.Payments.Any(payment => DateTime.Now > payment.ExpirationDate && payment.DatePayment is null)))
+            else if (Purchases.Any(purchase => purchase != null && purchase.Payments.Any(payment => DateTime.Now > payment.ExpirationDate && payment.DatePayment is null)))
             {
                 return false;
             }

@@ -4,7 +4,7 @@
 
 Default login:
 	// Email: admin@system.com
-	// Password: Admin@123
+	// Password: admin123
 
 -- To access the system for the first time, use the default login above.
 -- It holds administrator permissions and can create new users with different access levels.

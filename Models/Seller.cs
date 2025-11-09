@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace UserManagementSystem.Models
 {
     public class Seller : User
     {
+        [Required]
         public UInt32? Enrollment { get; set; }
         public Boolean? IsCashier { get; set; } = false;
 

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace UserManagementSystem.Models
 {
     public class Item
     {
+        [Key]
         public UInt64 Id { get; set; }
+
+        [Required]
         public UInt32? Quantity { get; set; }
         public Decimal? UnitPrice { get; set; }
         public Decimal? Discount { get; set; }

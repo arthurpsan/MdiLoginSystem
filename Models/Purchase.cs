@@ -1,15 +1,12 @@
-﻿using Org.BouncyCastle.Crypto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UserManagementSystem.Models
 {
     public class Purchase
     {
+        [Key]
         public UInt64? Id { get; set; }
 
         [Required]
@@ -19,27 +16,35 @@ namespace UserManagementSystem.Models
         public Decimal? Comission { get; set; }
 
         // State relationship
+        [Required]
         public State State { get; set; } = State.PENDENT;
 
         // Relationships with other classes
+        [Required]
         public Seller? Seller { get; set; }
         public Customer? Customer { get; set; }
-        public List<Product>? Products { get; set; }
+        public List<Item>? Items { get; set; }
         public List<Payment>? Payments { get; set; }
 
 
         #region Methods to calculate totals and comissions
         public Decimal? CalcTotal()
         {
-            if (Products == null || Products.Count == 0)
+            decimal? total = 0;
+
+            foreach (Item item in Items)
             {
-                return 0;
+                if (item.CalcTotal() == null)
+                {
+                    return 0;
+                }
+                else if (item.CalcTotal() != null)
+                {
+                    total += item.CalcTotal();
+                    return total;
+                }
             }
-            Decimal? total = 0;
-            foreach (var product in Products)
-            {
-                total += product.Price;
-            }
+
             return total;
         }
 

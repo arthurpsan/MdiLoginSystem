@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace UserManagementSystem.Models
 {
     public class Payment
     {
+        [Key]
+        public UInt64 Id { get; set; }
+
+        [Required]
         public DateTime? ExpirationDate { get; set; }
 
         private DateTime? _datePayment;

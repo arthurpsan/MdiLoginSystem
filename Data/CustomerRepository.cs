@@ -4,24 +4,22 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Data
 {
-    public class CredentialRepository
+    public class CustomerRepository
     {
-        public static void SaveorUpdate(Credential credential)
+        public static void SaveOrUpdate(Customer customer)
         {
             try
             {
                 using (Repository dbContext = new Repository())
                 {
-                    if (credential.Id == 0)
+                    if (customer.Id == 0)
                     {
-                        dbContext.Credentials.Add(credential);
+                        dbContext.Customers.Add(customer);
                     }
                     else
                     {
-                        dbContext.Entry(credential).State
-                            = EntityState.Modified;
+                        dbContext.Entry(customer).State = EntityState.Modified;
                     }
-
                     dbContext.SaveChanges();
                 }
             }
@@ -31,14 +29,14 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static Credential? FindById(long id)
+        public static void Delete(Customer customer)
         {
             try
             {
-                using (Repository DbContext = new Repository())
+                using (Repository dbContext = new Repository())
                 {
-                    return DbContext.Credentials.Find(id);
-
+                    dbContext.Customers.Remove(customer);
+                    dbContext.SaveChanges();
                 }
             }
             catch (Exception)
@@ -47,15 +45,13 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static Credential? FindByEmail(string email)
+        public static Customer? FindById(UInt64 id)
         {
             try
             {
-                using (Repository DbContext = new Repository())
+                using (Repository dbContext = new Repository())
                 {
-                    return DbContext.Credentials
-                        .Include(c => c.User)
-                        .FirstOrDefault(c => c.Email == email);
+                    return dbContext.Customers.Find(id);
                 }
             }
             catch (Exception)
@@ -64,17 +60,14 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static List<Credential> FindAll()
+        public static List<Customer> FindAll()
         {
             try
             {
-                using (Repository DbContext = new Repository())
+                using (Repository dbContext = new Repository())
                 {
-                    return DbContext.Credentials
-                        .Include(c => c.User)
-                        .ToList();
+                    return dbContext.Customers.ToList();
                 }
-
             }
             catch (Exception)
             {

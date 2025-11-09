@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Models;
-using System.Collections.Generic;
 
 namespace UserManagementSystem.Data
 {
@@ -38,6 +37,12 @@ namespace UserManagementSystem.Data
                 user.HasOne(u => u.Credential)
                     .WithOne(c => c.User)
                     .HasForeignKey<Credential>(c => c.Id);
+            }
+            );
+
+            modelBuilder.Entity<Purchase>(purchase =>
+            {
+                purchase.HasMany(p => p.Payments);
             }
             );
         }
