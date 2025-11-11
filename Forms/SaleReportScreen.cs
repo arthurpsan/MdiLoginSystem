@@ -26,5 +26,15 @@ namespace UserManagementSystem.Forms
         {
             InitializeComponent();
         }
+
+        private void pnlReports_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lstReports_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace UserManagementSystem.Models
         public Decimal? Discount { get; set; }
 
         // Relationship with Purchase and Product class
+        [Required]
         public Purchase? Purchase { get; set; }
         public Product? Product { get; set; }
 

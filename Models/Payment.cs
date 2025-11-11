@@ -12,6 +12,7 @@ namespace UserManagementSystem.Models
         [Required]
         public DateTime? ExpirationDate { get; set; }
 
+        [Required]
         private DateTime? _datePayment;
         public DateTime? DatePayment
         {
@@ -27,6 +28,7 @@ namespace UserManagementSystem.Models
             }
         }
 
+        [Required]
         private Decimal? _paymentFine;
         public Decimal? PaymentFine
         {

@@ -10,6 +10,7 @@ namespace UserManagementSystem.Models
         public Boolean? IsCashier { get; set; } = false;
 
         // Relationship with Purchase class
+        [Required]
         public List<Purchase>? IssuePurchases { get; set; }
     }
 }

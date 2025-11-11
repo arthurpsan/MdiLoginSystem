@@ -17,6 +17,7 @@ namespace UserManagementSystem.Models
         public Boolean Active { get; set; } = true;
 
         // Relationship with category
+        [Required]
         public Category? Category { get; set; }
     }
 }

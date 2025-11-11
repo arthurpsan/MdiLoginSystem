@@ -20,7 +20,7 @@ namespace UserManagementSystem.Models
                 _purchases = value;
             }
         }
-        
+
         public Boolean CanBuy()
         {
             if (Purchases == null || Purchases.Count == 0)
