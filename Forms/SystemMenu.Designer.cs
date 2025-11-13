@@ -67,7 +67,7 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(93, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -81,7 +81,7 @@
             // userToolStripMenuItem
             // 
             userToolStripMenuItem.Name = "userToolStripMenuItem";
-            userToolStripMenuItem.Size = new Size(180, 22);
+            userToolStripMenuItem.Size = new Size(106, 22);
             userToolStripMenuItem.Text = "User...";
             userToolStripMenuItem.Click += userToolStripMenuItem_Click;
             // 
@@ -111,12 +111,14 @@
             clientsDataToolStripMenuItem.Name = "clientsDataToolStripMenuItem";
             clientsDataToolStripMenuItem.Size = new Size(180, 22);
             clientsDataToolStripMenuItem.Text = "Client Data...";
+            clientsDataToolStripMenuItem.Click += clientsDataToolStripMenuItem_Click;
             // 
             // comissionDataToolStripMenuItem
             // 
             comissionDataToolStripMenuItem.Name = "comissionDataToolStripMenuItem";
             comissionDataToolStripMenuItem.Size = new Size(180, 22);
             comissionDataToolStripMenuItem.Text = "Comission Data...";
+            comissionDataToolStripMenuItem.Click += comissionDataToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -128,7 +130,7 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Size = new Size(116, 22);
             aboutToolStripMenuItem.Text = "About...";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 

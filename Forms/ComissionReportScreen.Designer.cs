@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class SaleReportScreen
+    partial class ComissionReportScreen
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             pnlReports = new TableLayoutPanel();
-            lblSalesReports = new Label();
+            lblComissionReports = new Label();
             btnRefresh = new Button();
             lstReports = new ListView();
             columnHeaderGhost = new ColumnHeader();
             columnHeaderId = new ColumnHeader();
-            columnHeaderPeriod = new ColumnHeader();
-            columnHeaderSales = new ColumnHeader();
-            columnHeaderSeller = new ColumnHeader();
+            columnHeaderDate = new ColumnHeader();
+            columnHeaderSale = new ColumnHeader();
+            columnHeaderSellerName = new ColumnHeader();
             lblTimePeriod = new Label();
             label2 = new Label();
             label1 = new Label();
@@ -52,7 +52,7 @@
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            pnlReports.Controls.Add(lblSalesReports, 0, 1);
+            pnlReports.Controls.Add(lblComissionReports, 0, 1);
             pnlReports.Controls.Add(btnRefresh, 2, 5);
             pnlReports.Controls.Add(lstReports, 0, 3);
             pnlReports.Controls.Add(lblTimePeriod, 2, 0);
@@ -72,20 +72,19 @@
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 54.5454559F));
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
             pnlReports.Size = new Size(800, 450);
-            pnlReports.TabIndex = 1;
-            pnlReports.Paint += pnlReports_Paint;
+            pnlReports.TabIndex = 2;
             // 
-            // lblSalesReports
+            // lblComissionReports
             // 
-            lblSalesReports.AutoSize = true;
-            lblSalesReports.Dock = DockStyle.Fill;
-            lblSalesReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSalesReports.Location = new Point(3, 40);
-            lblSalesReports.Name = "lblSalesReports";
-            lblSalesReports.Size = new Size(554, 40);
-            lblSalesReports.TabIndex = 1;
-            lblSalesReports.Text = "Sales Data Reports";
-            lblSalesReports.TextAlign = ContentAlignment.MiddleCenter;
+            lblComissionReports.AutoSize = true;
+            lblComissionReports.Dock = DockStyle.Fill;
+            lblComissionReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblComissionReports.Location = new Point(3, 40);
+            lblComissionReports.Name = "lblComissionReports";
+            lblComissionReports.Size = new Size(554, 40);
+            lblComissionReports.TabIndex = 1;
+            lblComissionReports.Text = "Comission Data Reports";
+            lblComissionReports.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // btnRefresh
             // 
@@ -101,7 +100,7 @@
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderPeriod, columnHeaderSales, columnHeaderSeller });
+            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderDate, columnHeaderSale, columnHeaderSellerName });
             pnlReports.SetColumnSpan(lstReports, 3);
             lstReports.Dock = DockStyle.Fill;
             lstReports.FullRowSelect = true;
@@ -114,7 +113,6 @@
             lstReports.TabIndex = 12;
             lstReports.UseCompatibleStateImageBehavior = false;
             lstReports.View = View.Details;
-            lstReports.SelectedIndexChanged += lstReports_SelectedIndexChanged;
             // 
             // columnHeaderGhost
             // 
@@ -123,27 +121,27 @@
             // 
             // columnHeaderId
             // 
-            columnHeaderId.Text = "Sale ID";
+            columnHeaderId.Text = "Seller ID";
             columnHeaderId.TextAlign = HorizontalAlignment.Center;
             columnHeaderId.Width = 80;
             // 
-            // columnHeaderPeriod
+            // columnHeaderDate
             // 
-            columnHeaderPeriod.Text = "Period";
-            columnHeaderPeriod.TextAlign = HorizontalAlignment.Center;
-            columnHeaderPeriod.Width = 180;
+            columnHeaderDate.Text = "Date";
+            columnHeaderDate.TextAlign = HorizontalAlignment.Center;
+            columnHeaderDate.Width = 180;
             // 
-            // columnHeaderSales
+            // columnHeaderSale
             // 
-            columnHeaderSales.Text = "Sale";
-            columnHeaderSales.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSales.Width = 295;
+            columnHeaderSale.Text = "Sale";
+            columnHeaderSale.TextAlign = HorizontalAlignment.Center;
+            columnHeaderSale.Width = 295;
             // 
-            // columnHeaderSeller
+            // columnHeaderSellerName
             // 
-            columnHeaderSeller.Text = "Seller";
-            columnHeaderSeller.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSeller.Width = 235;
+            columnHeaderSellerName.Text = "Seller Name";
+            columnHeaderSellerName.TextAlign = HorizontalAlignment.Center;
+            columnHeaderSellerName.Width = 235;
             // 
             // lblTimePeriod
             // 
@@ -214,19 +212,19 @@
             label3.Name = "label3";
             label3.Size = new Size(554, 21);
             label3.TabIndex = 14;
-            label3.Text = "Total sales:";
+            label3.Text = "Total comissions:";
             label3.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // SaleReportScreen
+            // ComissionReportScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlReports);
             MaximizeBox = false;
-            Name = "SaleReportScreen";
+            Name = "ComissionReportScreen";
             ShowIcon = false;
-            Text = "SaleReportScreen";
+            Text = "ComissionReport";
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
             ResumeLayout(false);
@@ -235,19 +233,19 @@
         #endregion
 
         private TableLayoutPanel pnlReports;
-        private Label lblSalesReports;
-        private MaskedTextBox mskDateBegin;
-        private Label lblTimePeriod;
-        private Label label1;
-        private Label label2;
-        private MaskedTextBox mskEndDate;
+        private Label lblComissionReports;
+        private Button btnRefresh;
         private ListView lstReports;
         private ColumnHeader columnHeaderGhost;
         private ColumnHeader columnHeaderId;
-        private ColumnHeader columnHeaderPeriod;
-        private ColumnHeader columnHeaderSales;
-        private ColumnHeader columnHeaderSeller;
-        private Button btnRefresh;
+        private ColumnHeader columnHeaderDate;
+        private ColumnHeader columnHeaderSale;
+        private ColumnHeader columnHeaderSellerName;
+        private Label lblTimePeriod;
+        private Label label2;
+        private Label label1;
+        private MaskedTextBox mskDateBegin;
+        private MaskedTextBox mskEndDate;
         private Label label3;
     }
 }

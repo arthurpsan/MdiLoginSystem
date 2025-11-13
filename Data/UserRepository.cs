@@ -45,6 +45,31 @@ namespace UserManagementSystem.Data
             }
         }
 
+        public static User? FindByName(String name)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Users.Find(name);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static List<User> FindByPartialName(String partialName)
+        {
+            using (Repository dbContext = new Repository())
+            {
+                return dbContext.Users
+                    .Where(u => u.Name.ToLower().Contains(partialName.ToLower()))
+                    .ToList();
+            }
+        }
+
         public static List<User> FindAll()
         {
             try

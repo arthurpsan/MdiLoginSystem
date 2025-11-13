@@ -60,6 +60,19 @@ namespace UserManagementSystem.Data
             }
         }
 
+        /* public static List<Customer>? ListByCompliance()
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    
+                }
+            }
+        }
+
+        */
+
         public static List<Customer> FindAll()
         {
             try

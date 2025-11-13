@@ -60,21 +60,6 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static List<Category> FindAll()
-        {
-            try
-            {
-                using (Repository dbContext = new Repository())
-                {
-                    return dbContext.Categories.ToList();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public static List<Category> FindByName(string name)
         {
             try
@@ -91,5 +76,31 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
+
+        public static List<Category>? FindByPartialName(string partialName)
+        {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Categories
+                        .Where(c => c.Name.ToLower().Contains(partialName.ToLower()))
+                        .ToList();
+                }
+        }
+
+        public static List<Category> FindAll()
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Categories.ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

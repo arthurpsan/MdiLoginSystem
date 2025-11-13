@@ -60,6 +60,31 @@ namespace UserManagementSystem.Data
             }
         }
 
+        public static Product? FindByName(String name)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Products.Find(name);
+                }
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public static List<Product>? FindByPartialName(String partialName)
+        {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Products
+                        .Where(p => p.Name.ToLower().Contains(partialName.ToLower()))
+                        .ToList();
+                }
+        }
+
         public static List<Product> FindAll()
         {
             try

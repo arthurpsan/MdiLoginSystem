@@ -3,20 +3,20 @@ using System.Windows.Forms;
 
 namespace UserManagementSystem
 {
-    partial class About : Form
+    partial class AboutScreen : Form
     {
-        private static About? _instance;
-        private About()
+        private static AboutScreen? _instance;
+        private AboutScreen()
         {
             InitializeComponent();
 
         }
 
-        public static About GetInstance()
+        public static AboutScreen GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new About();
+                _instance = new AboutScreen();
             }
 
             return _instance;

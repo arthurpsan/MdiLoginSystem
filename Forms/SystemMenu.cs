@@ -40,7 +40,7 @@ namespace UserManagementSystem
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            About aboutForm = About.GetInstance();
+            AboutScreen aboutForm = AboutScreen.GetInstance();
             aboutForm.MdiParent = this;
             aboutForm.Show();
             aboutForm.BringToFront();
@@ -78,6 +78,22 @@ namespace UserManagementSystem
             saleReportForm.MdiParent = this;
             saleReportForm.Show();
             saleReportForm.BringToFront();
+        }
+
+        private void comissionDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ComissionReportScreen comissionReportForm = ComissionReportScreen.GetInstance();
+            comissionReportForm.MdiParent = this;
+            comissionReportForm.Show();
+            comissionReportForm.BringToFront();
+        }
+
+        private void clientsDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomerPurchasesReport customerReportForm = CustomerPurchasesReport.GetInstance();
+            customerReportForm.MdiParent = this;
+            customerReportForm.Show();
+            customerReportForm.BringToFront();
         }
     }
 }

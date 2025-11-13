@@ -28,6 +28,24 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
+
+        public static void Delete(Seller seller)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    dbContext.Attach(seller);
+                    dbContext.Sellers.Remove(seller);
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static Seller? FindById(UInt64 id)
         {
             try
@@ -42,6 +60,37 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
+
+        public static Seller? FindByName(String name)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Sellers.Find(name);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static Seller? FindByEnrollment(UInt32 enrollment)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Sellers.Find(enrollment);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static List<Seller> FindAll()
         {
             try
