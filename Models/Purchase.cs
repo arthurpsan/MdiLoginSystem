@@ -13,7 +13,6 @@ namespace UserManagementSystem.Models
         public UInt64? Number { get; set; }
         public DateTime? Beggining { get; set; }
         public DateTime? Implementation { get; set; }
-        public Decimal? Comission { get; set; }
 
         // State relationship
         [Required]
@@ -23,8 +22,8 @@ namespace UserManagementSystem.Models
         [Required]
         public Salesperson? Seller { get; set; }
         public Customer? Customer { get; set; }
-        public List<Item>? Items { get; set; }
-        public List<Payment>? Payments { get; set; }
+        public List<Item> Items { get; set; } = new List<Item>();
+        public List<Payment> Payments { get; set; } = new List<Payment>();
 
 
         #region Methods to calculate totals and comissions
@@ -52,16 +51,18 @@ namespace UserManagementSystem.Models
             return total;
         }
 
+        private const Decimal ComissionTax = 0.01m; // 5% comission
+
         public Decimal? CalcComission()
         {
             decimal? total = CalcTotal();
 
-            if (Comission == null || total == null)
+            if (ComissionTax == null || total == null)
             {
                 return 0;
             }
 
-            return (total * Comission) / 100;
+            return (total * ComissionTax);
         }
 
         #endregion

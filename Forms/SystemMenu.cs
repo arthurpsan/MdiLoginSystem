@@ -6,9 +6,11 @@ namespace UserManagementSystem
     public partial class SystemMenu : Form
     {
         private static SystemMenu? _instance;
+        private User? _loggedInUser;
         public SystemMenu(User? user)
         {
             InitializeComponent();
+            _loggedInUser = user;
 
             Text = $"System - User Management - User level: {user.Name} - [v0.0.1]";
 
@@ -33,8 +35,6 @@ namespace UserManagementSystem
             }
 
             return _instance;
-
-            // return new SystemMenu(user);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,6 +94,14 @@ namespace UserManagementSystem
             customerReportForm.MdiParent = this;
             customerReportForm.Show();
             customerReportForm.BringToFront();
+        }
+
+        private void saleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewSaleScreen saleForm = NewSaleScreen.GetInstance(_loggedInUser);
+            saleForm.MdiParent = this;
+            saleForm.Show();
+            saleForm.BringToFront();
         }
     }
 }

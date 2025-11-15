@@ -10,6 +10,11 @@ namespace UserManagementSystem.Models
         public UInt64 Id { get; set; }
 
         [Required]
+        public Purchase? Purchase { get; set; }
+
+        private const Decimal _paymentMonthTax = 0.02m; // 2% monthly tax for late payments
+
+        [Required]
         public DateTime? ExpirationDate { get; set; }
 
         [Required]
@@ -29,27 +34,36 @@ namespace UserManagementSystem.Models
         }
 
         [Required]
-        private Decimal? _paymentFine;
-        public Decimal? PaymentFine
+        public Decimal? PaymentFine { get; set; } = 0;
+
+        public Decimal? CalcTotalPayment()
         {
-            get => _paymentFine;
-            set
+
+            if (DatePayment == null || ExpirationDate == null || Purchase.CalcTotal == null)
             {
-                if ( DatePayment < DateTime.Now)
-                {
-                    value = 0;
-                }
-                else if (ExpirationDate != null && DatePayment != null && DatePayment > ExpirationDate)
-                {
-                    TimeSpan delay = DateTime.Now - ExpirationDate.Value;
-                    int monthsDelayed = (delay.Days / 30);
-                    decimal fineRate = 0.02m; // 2% fine per month
-
-                    value = monthsDelayed * fineRate;
-                }
-
-                    _paymentFine = value;
+                return 0;
             }
+
+            if (DatePayment != null && DatePayment > ExpirationDate)
+            {
+                TimeSpan delay = DatePayment.Value - ExpirationDate.Value;
+                int delayedMonths = (int)Math.Ceiling(delay.TotalDays / 30);
+
+                Decimal? totalPurchase = Purchase.CalcTotal();
+                return totalPurchase * _paymentMonthTax * delayedMonths;
+            }
+
+            // In case the payment is still not made and is past due (today)
+            else if (DatePayment != null && DateTime.Now > ExpirationDate)
+            { 
+                TimeSpan delay = DateTime.Now - ExpirationDate.Value;
+                int delayedMonths = (int)Math.Ceiling(delay.TotalDays / 30);
+
+                Decimal? totalPurchase = Purchase.CalcTotal();
+                return totalPurchase * _paymentMonthTax * delayedMonths;
+            }
+            
+            return 0;
         }
 
     }

@@ -43,6 +43,7 @@
             statusStrip1 = new StatusStrip();
             staAccess = new ToolStripStatusLabel();
             lblLastAccess = new ToolStripStatusLabel();
+            saleToolStripMenuItem = new ToolStripMenuItem();
             mnuSystem.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -67,13 +68,13 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Size = new Size(92, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // registerToolStripMenuItem
             // 
-            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem });
+            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem, saleToolStripMenuItem });
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             registerToolStripMenuItem.Size = new Size(61, 20);
             registerToolStripMenuItem.Text = "Register";
@@ -81,7 +82,7 @@
             // userToolStripMenuItem
             // 
             userToolStripMenuItem.Name = "userToolStripMenuItem";
-            userToolStripMenuItem.Size = new Size(106, 22);
+            userToolStripMenuItem.Size = new Size(180, 22);
             userToolStripMenuItem.Text = "User...";
             userToolStripMenuItem.Click += userToolStripMenuItem_Click;
             // 
@@ -156,6 +157,13 @@
             lblLastAccess.Size = new Size(131, 17);
             lblLastAccess.Text = "toolStripStatusLabel1";
             // 
+            // saleToolStripMenuItem
+            // 
+            saleToolStripMenuItem.Name = "saleToolStripMenuItem";
+            saleToolStripMenuItem.Size = new Size(180, 22);
+            saleToolStripMenuItem.Text = "Sale...";
+            saleToolStripMenuItem.Click += saleToolStripMenuItem_Click;
+            // 
             // SystemMenu
             // 
             AutoScaleDimensions = new SizeF(8F, 17F);
@@ -198,5 +206,6 @@
         private ToolStripMenuItem salesDataToolStripMenuItem;
         private ToolStripMenuItem clientsDataToolStripMenuItem;
         private ToolStripMenuItem comissionDataToolStripMenuItem;
+        private ToolStripMenuItem saleToolStripMenuItem;
     }
 }

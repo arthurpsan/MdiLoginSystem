@@ -40,27 +40,28 @@
             lblTimePeriod = new Label();
             label2 = new Label();
             label1 = new Label();
-            mskDateBegin = new MaskedTextBox();
-            mskEndDate = new MaskedTextBox();
             label3 = new Label();
+            dtpStartDate = new DateTimePicker();
+            dtpEndDate = new DateTimePicker();
             pnlReports.SuspendLayout();
             SuspendLayout();
             // 
             // pnlReports
             // 
-            pnlReports.ColumnCount = 3;
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
+            pnlReports.ColumnCount = 4;
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             pnlReports.Controls.Add(lblSalesReports, 0, 1);
-            pnlReports.Controls.Add(btnRefresh, 2, 5);
+            pnlReports.Controls.Add(btnRefresh, 3, 5);
             pnlReports.Controls.Add(lstReports, 0, 3);
             pnlReports.Controls.Add(lblTimePeriod, 2, 0);
             pnlReports.Controls.Add(label2, 1, 2);
             pnlReports.Controls.Add(label1, 1, 1);
-            pnlReports.Controls.Add(mskDateBegin, 2, 1);
-            pnlReports.Controls.Add(mskEndDate, 2, 2);
             pnlReports.Controls.Add(label3, 0, 5);
+            pnlReports.Controls.Add(dtpStartDate, 2, 1);
+            pnlReports.Controls.Add(dtpEndDate, 2, 2);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
@@ -82,7 +83,7 @@
             lblSalesReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSalesReports.Location = new Point(3, 40);
             lblSalesReports.Name = "lblSalesReports";
-            lblSalesReports.Size = new Size(554, 40);
+            lblSalesReports.Size = new Size(474, 40);
             lblSalesReports.TabIndex = 1;
             lblSalesReports.Text = "Sales Data Reports";
             lblSalesReports.TextAlign = ContentAlignment.MiddleCenter;
@@ -97,12 +98,13 @@
             btnRefresh.TabIndex = 13;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
             lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderPeriod, columnHeaderSales, columnHeaderSeller });
-            pnlReports.SetColumnSpan(lstReports, 3);
+            pnlReports.SetColumnSpan(lstReports, 4);
             lstReports.Dock = DockStyle.Fill;
             lstReports.FullRowSelect = true;
             lstReports.GridLines = true;
@@ -148,11 +150,12 @@
             // lblTimePeriod
             // 
             lblTimePeriod.AutoSize = true;
+            pnlReports.SetColumnSpan(lblTimePeriod, 2);
             lblTimePeriod.Dock = DockStyle.Fill;
             lblTimePeriod.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTimePeriod.Location = new Point(683, 0);
+            lblTimePeriod.Location = new Point(563, 0);
             lblTimePeriod.Name = "lblTimePeriod";
-            lblTimePeriod.Size = new Size(114, 40);
+            lblTimePeriod.Size = new Size(234, 40);
             lblTimePeriod.TabIndex = 6;
             lblTimePeriod.Text = "Time Period";
             lblTimePeriod.TextAlign = ContentAlignment.MiddleCenter;
@@ -162,9 +165,9 @@
             label2.AutoSize = true;
             label2.Dock = DockStyle.Fill;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(563, 80);
+            label2.Location = new Point(483, 80);
             label2.Name = "label2";
-            label2.Size = new Size(114, 40);
+            label2.Size = new Size(74, 40);
             label2.TabIndex = 8;
             label2.Text = "End";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -174,36 +177,12 @@
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(563, 40);
+            label1.Location = new Point(483, 40);
             label1.Name = "label1";
-            label1.Size = new Size(114, 40);
+            label1.Size = new Size(74, 40);
             label1.TabIndex = 7;
             label1.Text = "Begin";
             label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // mskDateBegin
-            // 
-            mskDateBegin.Dock = DockStyle.Fill;
-            mskDateBegin.Font = new Font("Segoe UI", 12F);
-            mskDateBegin.Location = new Point(683, 43);
-            mskDateBegin.Mask = "00/00/0000";
-            mskDateBegin.Name = "mskDateBegin";
-            mskDateBegin.Size = new Size(114, 29);
-            mskDateBegin.TabIndex = 5;
-            mskDateBegin.TextAlign = HorizontalAlignment.Center;
-            mskDateBegin.ValidatingType = typeof(DateTime);
-            // 
-            // mskEndDate
-            // 
-            mskEndDate.Dock = DockStyle.Fill;
-            mskEndDate.Font = new Font("Segoe UI", 12F);
-            mskEndDate.Location = new Point(683, 83);
-            mskEndDate.Mask = "00/00/0000";
-            mskEndDate.Name = "mskEndDate";
-            mskEndDate.Size = new Size(114, 29);
-            mskEndDate.TabIndex = 11;
-            mskEndDate.TextAlign = HorizontalAlignment.Center;
-            mskEndDate.ValidatingType = typeof(DateTime);
             // 
             // label3
             // 
@@ -212,10 +191,32 @@
             label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(3, 417);
             label3.Name = "label3";
-            label3.Size = new Size(554, 21);
+            label3.Size = new Size(474, 21);
             label3.TabIndex = 14;
             label3.Text = "Total sales:";
             label3.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // dtpStartDate
+            // 
+            dtpStartDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            dtpStartDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            pnlReports.SetColumnSpan(dtpStartDate, 2);
+            dtpStartDate.Location = new Point(563, 48);
+            dtpStartDate.Name = "dtpStartDate";
+            dtpStartDate.Size = new Size(234, 23);
+            dtpStartDate.TabIndex = 5;
+            dtpStartDate.Format = DateTimePickerFormat.Short;
+            // 
+            // dtpEndDate
+            // 
+            dtpEndDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            dtpEndDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            pnlReports.SetColumnSpan(dtpEndDate, 2);
+            dtpEndDate.Location = new Point(563, 88);
+            dtpEndDate.Name = "dtpEndDate";
+            dtpEndDate.Size = new Size(234, 23);
+            dtpEndDate.TabIndex = 11;
+            dtpEndDate.Format = DateTimePickerFormat.Short;
             // 
             // SaleReportScreen
             // 
@@ -236,11 +237,9 @@
 
         private TableLayoutPanel pnlReports;
         private Label lblSalesReports;
-        private MaskedTextBox mskDateBegin;
         private Label lblTimePeriod;
         private Label label1;
         private Label label2;
-        private MaskedTextBox mskEndDate;
         private ListView lstReports;
         private ColumnHeader columnHeaderGhost;
         private ColumnHeader columnHeaderId;
@@ -249,5 +248,7 @@
         private ColumnHeader columnHeaderSeller;
         private Button btnRefresh;
         private Label label3;
+        private DateTimePicker dtpStartDate;
+        private DateTimePicker dtpEndDate;
     }
 }

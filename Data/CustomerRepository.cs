@@ -60,18 +60,23 @@ namespace UserManagementSystem.Data
             }
         }
 
-        /* public static List<Customer>? ListByCompliance()
+        public static Customer? FindByIdWithPurchases(UInt64 id)
         {
             try
             {
                 using (Repository dbContext = new Repository())
                 {
-                    
+                    return dbContext.Customers
+                        .Include(c => c.Purchases)
+                        .ThenInclude(p => p.Payments)
+                        .FirstOrDefault(c => c.Id == id);
                 }
             }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-
-        */
 
         public static List<Customer> FindAll()
         {

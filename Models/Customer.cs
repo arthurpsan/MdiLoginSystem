@@ -46,8 +46,8 @@ namespace UserManagementSystem.Models
 
         [Required]
 
-        private List<Purchase>? _purchases;
-        public List<Purchase>? Purchases
+        private List<Purchase> _purchases = new List<Purchase>();
+        public List<Purchase> Purchases
         {
             get => _purchases;
             set

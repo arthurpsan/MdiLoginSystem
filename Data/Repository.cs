@@ -49,6 +49,12 @@ namespace UserManagementSystem.Data
                 purchase.HasMany(p => p.Payments);
             }
             );
+
+            modelBuilder.Entity<Payment>(payment => 
+            { 
+                payment.HasOne(p => p.Purchase).WithMany(pu => pu.Payments); 
+            }
+            );
         }
     }
 }

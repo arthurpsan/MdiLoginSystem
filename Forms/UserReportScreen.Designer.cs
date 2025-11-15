@@ -46,29 +46,33 @@
             // pnlReports
             // 
             pnlReports.ColumnCount = 3;
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 66.6666641F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 103F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             pnlReports.Controls.Add(lblReports, 0, 0);
-            pnlReports.Controls.Add(lstReports, 0, 1);
-            pnlReports.Controls.Add(btnRefresh, 2, 0);
+            pnlReports.Controls.Add(lstReports, 0, 2);
+            pnlReports.Controls.Add(btnRefresh, 2, 3);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
-            pnlReports.RowCount = 2;
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            pnlReports.RowCount = 4;
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 0;
             // 
             // lblReports
             // 
             lblReports.AutoSize = true;
+            pnlReports.SetColumnSpan(lblReports, 2);
             lblReports.Dock = DockStyle.Fill;
             lblReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblReports.Location = new Point(3, 0);
             lblReports.Name = "lblReports";
-            lblReports.Size = new Size(458, 90);
+            lblReports.Size = new Size(526, 45);
             lblReports.TabIndex = 1;
             lblReports.Text = "General Employee Dashboard";
             // 
@@ -84,7 +88,7 @@
             lstReports.LabelWrap = false;
             lstReports.Location = new Point(3, 93);
             lstReports.Name = "lstReports";
-            lstReports.Size = new Size(794, 354);
+            lstReports.Size = new Size(794, 309);
             lstReports.TabIndex = 2;
             lstReports.UseCompatibleStateImageBehavior = false;
             lstReports.View = View.Details;
@@ -140,9 +144,9 @@
             // 
             btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnRefresh.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRefresh.Location = new Point(699, 3);
+            btnRefresh.Location = new Point(535, 408);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(98, 84);
+            btnRefresh.Size = new Size(262, 39);
             btnRefresh.TabIndex = 3;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = true;
