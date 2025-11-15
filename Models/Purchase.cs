@@ -21,7 +21,7 @@ namespace UserManagementSystem.Models
 
         // Relationships with other classes
         [Required]
-        public Seller? Seller { get; set; }
+        public Salesperson? Seller { get; set; }
         public Customer? Customer { get; set; }
         public List<Item>? Items { get; set; }
         public List<Payment>? Payments { get; set; }
@@ -32,17 +32,21 @@ namespace UserManagementSystem.Models
         {
             decimal? total = 0;
 
+            if (Items == null || Items.Count == 0)
+            {
+                return 0;
+            }
+
             foreach (Item item in Items)
             {
-                if (item.CalcTotal() == null)
+                decimal? itemValue = item.CalcTotal();
+
+                if (itemValue == null)
                 {
                     return 0;
                 }
-                else if (item.CalcTotal() != null)
-                {
-                    total += item.CalcTotal();
-                    return total;
-                }
+                    
+                total += itemValue;
             }
 
             return total;

@@ -6,7 +6,7 @@ namespace UserManagementSystem.Data
 {
     public class Repository : DbContext
     {
-        private static readonly string _connectionsParams = @"server=127.0.0.1;port=3307;uid=root;pwd=;database=UserManagementSystem";
+        private static readonly string _connectionsParams = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=UserManagementSystem";
         
         // Define DbSets for each model
         public DbSet<User> Users { get; set; }
@@ -16,8 +16,9 @@ namespace UserManagementSystem.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; } 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Seller> Sellers { get; set; }
+        public DbSet<Salesperson> Sellers { get; set; }
         public DbSet<Item> Itens { get; set; }
+        public DbSet<Cashier> Cashiers { get; set; }
 
         public Repository() => Database.EnsureCreated();
 

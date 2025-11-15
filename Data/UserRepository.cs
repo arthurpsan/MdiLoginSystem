@@ -30,6 +30,23 @@ namespace UserManagementSystem.Data
             }
         }
 
+        public static void Delete(User user)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    dbContext.Attach(user);
+                    dbContext.Users.Remove(user);
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static User? FindById(UInt64 id)
         {
             try

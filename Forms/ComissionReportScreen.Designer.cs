@@ -28,89 +28,76 @@
         /// </summary>
         private void InitializeComponent()
         {
+            lblTitle = new Label();
             pnlReports = new TableLayoutPanel();
-            lblComissionReports = new Label();
-            btnRefresh = new Button();
             lstReports = new ListView();
             columnHeaderGhost = new ColumnHeader();
-            columnHeaderId = new ColumnHeader();
-            columnHeaderDate = new ColumnHeader();
-            columnHeaderSale = new ColumnHeader();
-            columnHeaderSellerName = new ColumnHeader();
-            lblTimePeriod = new Label();
-            label2 = new Label();
-            label1 = new Label();
-            mskDateBegin = new MaskedTextBox();
-            mskEndDate = new MaskedTextBox();
-            label3 = new Label();
+            columnHeaderSalespersonId = new ColumnHeader();
+            columnHeaderPurchaseId = new ColumnHeader();
+            columnHeaderComission = new ColumnHeader();
+            columnHeaderSalesperson = new ColumnHeader();
+            lblSalesperson = new Label();
+            lblPeriod = new Label();
+            cboSalesperson = new ComboBox();
+            dtpFinalDate = new DateTimePicker();
+            dtpInitialDate = new DateTimePicker();
             pnlReports.SuspendLayout();
             SuspendLayout();
             // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            pnlReports.SetColumnSpan(lblTitle, 4);
+            lblTitle.Dock = DockStyle.Fill;
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.Location = new Point(3, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(794, 45);
+            lblTitle.TabIndex = 15;
+            lblTitle.Text = "Commission Analytics";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // pnlReports
             // 
-            pnlReports.ColumnCount = 3;
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            pnlReports.Controls.Add(lblComissionReports, 0, 1);
-            pnlReports.Controls.Add(btnRefresh, 2, 5);
-            pnlReports.Controls.Add(lstReports, 0, 3);
-            pnlReports.Controls.Add(lblTimePeriod, 2, 0);
-            pnlReports.Controls.Add(label2, 1, 2);
-            pnlReports.Controls.Add(label1, 1, 1);
-            pnlReports.Controls.Add(mskDateBegin, 2, 1);
-            pnlReports.Controls.Add(mskEndDate, 2, 2);
-            pnlReports.Controls.Add(label3, 0, 5);
+            pnlReports.ColumnCount = 4;
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.Controls.Add(lstReports, 0, 2);
+            pnlReports.Controls.Add(lblTitle, 0, 0);
+            pnlReports.Controls.Add(lblSalesperson, 0, 4);
+            pnlReports.Controls.Add(lblPeriod, 2, 4);
+            pnlReports.Controls.Add(cboSalesperson, 0, 5);
+            pnlReports.Controls.Add(dtpFinalDate, 3, 5);
+            pnlReports.Controls.Add(dtpInitialDate, 2, 5);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
             pnlReports.RowCount = 6;
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 54.5454559F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 2;
-            // 
-            // lblComissionReports
-            // 
-            lblComissionReports.AutoSize = true;
-            lblComissionReports.Dock = DockStyle.Fill;
-            lblComissionReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblComissionReports.Location = new Point(3, 40);
-            lblComissionReports.Name = "lblComissionReports";
-            lblComissionReports.Size = new Size(554, 40);
-            lblComissionReports.TabIndex = 1;
-            lblComissionReports.Text = "Comission Data Reports";
-            lblComissionReports.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnRefresh
-            // 
-            btnRefresh.Dock = DockStyle.Fill;
-            btnRefresh.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRefresh.Location = new Point(683, 408);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(114, 39);
-            btnRefresh.TabIndex = 13;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.UseVisualStyleBackColor = true;
             // 
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderDate, columnHeaderSale, columnHeaderSellerName });
-            pnlReports.SetColumnSpan(lstReports, 3);
+            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderSalespersonId, columnHeaderPurchaseId, columnHeaderComission, columnHeaderSalesperson });
+            pnlReports.SetColumnSpan(lstReports, 4);
             lstReports.Dock = DockStyle.Fill;
             lstReports.FullRowSelect = true;
             lstReports.GridLines = true;
             lstReports.LabelWrap = false;
-            lstReports.Location = new Point(3, 123);
+            lstReports.Location = new Point(3, 93);
             lstReports.Name = "lstReports";
-            pnlReports.SetRowSpan(lstReports, 2);
-            lstReports.Size = new Size(794, 279);
-            lstReports.TabIndex = 12;
+            lstReports.Size = new Size(794, 219);
+            lstReports.TabIndex = 18;
             lstReports.UseCompatibleStateImageBehavior = false;
             lstReports.View = View.Details;
             // 
@@ -119,101 +106,90 @@
             columnHeaderGhost.Text = "";
             columnHeaderGhost.Width = 0;
             // 
-            // columnHeaderId
+            // columnHeaderSalespersonId
             // 
-            columnHeaderId.Text = "Seller ID";
-            columnHeaderId.TextAlign = HorizontalAlignment.Center;
-            columnHeaderId.Width = 80;
+            columnHeaderSalespersonId.Text = "Salesperson ID";
+            columnHeaderSalespersonId.TextAlign = HorizontalAlignment.Center;
+            columnHeaderSalespersonId.Width = 100;
             // 
-            // columnHeaderDate
+            // columnHeaderPurchaseId
             // 
-            columnHeaderDate.Text = "Date";
-            columnHeaderDate.TextAlign = HorizontalAlignment.Center;
-            columnHeaderDate.Width = 180;
+            columnHeaderPurchaseId.Text = "Purchase Number";
+            columnHeaderPurchaseId.TextAlign = HorizontalAlignment.Center;
+            columnHeaderPurchaseId.Width = 296;
             // 
-            // columnHeaderSale
+            // columnHeaderComission
             // 
-            columnHeaderSale.Text = "Sale";
-            columnHeaderSale.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSale.Width = 295;
+            columnHeaderComission.Text = "Comission";
+            columnHeaderComission.TextAlign = HorizontalAlignment.Center;
+            columnHeaderComission.Width = 200;
             // 
-            // columnHeaderSellerName
+            // columnHeaderSalesperson
             // 
-            columnHeaderSellerName.Text = "Seller Name";
-            columnHeaderSellerName.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSellerName.Width = 235;
+            columnHeaderSalesperson.Text = "Salesperson Name";
+            columnHeaderSalesperson.TextAlign = HorizontalAlignment.Center;
+            columnHeaderSalesperson.Width = 194;
             // 
-            // lblTimePeriod
+            // lblSalesperson
             // 
-            lblTimePeriod.AutoSize = true;
-            lblTimePeriod.Dock = DockStyle.Fill;
-            lblTimePeriod.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTimePeriod.Location = new Point(683, 0);
-            lblTimePeriod.Name = "lblTimePeriod";
-            lblTimePeriod.Size = new Size(114, 40);
-            lblTimePeriod.TabIndex = 6;
-            lblTimePeriod.Text = "Time Period";
-            lblTimePeriod.TextAlign = ContentAlignment.MiddleCenter;
+            lblSalesperson.AutoSize = true;
+            lblSalesperson.Dock = DockStyle.Fill;
+            lblSalesperson.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSalesperson.Location = new Point(3, 360);
+            lblSalesperson.Name = "lblSalesperson";
+            lblSalesperson.Size = new Size(194, 45);
+            lblSalesperson.TabIndex = 17;
+            lblSalesperson.Text = "Salesperson:";
+            lblSalesperson.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label2
+            // lblPeriod
             // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Fill;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(563, 80);
-            label2.Name = "label2";
-            label2.Size = new Size(114, 40);
-            label2.TabIndex = 8;
-            label2.Text = "End";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
+            lblPeriod.AutoSize = true;
+            pnlReports.SetColumnSpan(lblPeriod, 2);
+            lblPeriod.Dock = DockStyle.Fill;
+            lblPeriod.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPeriod.Location = new Point(403, 360);
+            lblPeriod.Name = "lblPeriod";
+            lblPeriod.Size = new Size(394, 45);
+            lblPeriod.TabIndex = 19;
+            lblPeriod.Text = "Timeframe:";
+            lblPeriod.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label1
+            // cboSalesperson
             // 
-            label1.AutoSize = true;
-            label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(563, 40);
-            label1.Name = "label1";
-            label1.Size = new Size(114, 40);
-            label1.TabIndex = 7;
-            label1.Text = "Begin";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            cboSalesperson.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            pnlReports.SetColumnSpan(cboSalesperson, 2);
+            cboSalesperson.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cboSalesperson.FormattingEnabled = true;
+            cboSalesperson.Location = new Point(3, 413);
+            cboSalesperson.Name = "cboSalesperson";
+            cboSalesperson.Size = new Size(394, 29);
+            cboSalesperson.TabIndex = 16;
             // 
-            // mskDateBegin
+            // dtpFinalDate
             // 
-            mskDateBegin.Dock = DockStyle.Fill;
-            mskDateBegin.Font = new Font("Segoe UI", 12F);
-            mskDateBegin.Location = new Point(683, 43);
-            mskDateBegin.Mask = "00/00/0000";
-            mskDateBegin.Name = "mskDateBegin";
-            mskDateBegin.Size = new Size(114, 29);
-            mskDateBegin.TabIndex = 5;
-            mskDateBegin.TextAlign = HorizontalAlignment.Center;
-            mskDateBegin.ValidatingType = typeof(DateTime);
+            dtpFinalDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            dtpFinalDate.CalendarFont = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpFinalDate.Font = new Font("Segoe UI", 12F);
+            dtpFinalDate.Location = new Point(603, 413);
+            dtpFinalDate.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
+            dtpFinalDate.MinDate = new DateTime(2000, 1, 1, 0, 0, 0, 0);
+            dtpFinalDate.Name = "dtpFinalDate";
+            dtpFinalDate.Size = new Size(194, 29);
+            dtpFinalDate.TabIndex = 21;
+            dtpFinalDate.ValueChanged += dateTimePicker2_ValueChanged;
             // 
-            // mskEndDate
+            // dtpInitialDate
             // 
-            mskEndDate.Dock = DockStyle.Fill;
-            mskEndDate.Font = new Font("Segoe UI", 12F);
-            mskEndDate.Location = new Point(683, 83);
-            mskEndDate.Mask = "00/00/0000";
-            mskEndDate.Name = "mskEndDate";
-            mskEndDate.Size = new Size(114, 29);
-            mskEndDate.TabIndex = 11;
-            mskEndDate.TextAlign = HorizontalAlignment.Center;
-            mskEndDate.ValidatingType = typeof(DateTime);
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(3, 417);
-            label3.Name = "label3";
-            label3.Size = new Size(554, 21);
-            label3.TabIndex = 14;
-            label3.Text = "Total comissions:";
-            label3.TextAlign = ContentAlignment.MiddleLeft;
+            dtpInitialDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            dtpInitialDate.CalendarFont = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpInitialDate.Font = new Font("Segoe UI", 12F);
+            dtpInitialDate.Location = new Point(403, 413);
+            dtpInitialDate.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
+            dtpInitialDate.MinDate = new DateTime(2000, 1, 1, 0, 0, 0, 0);
+            dtpInitialDate.Name = "dtpInitialDate";
+            dtpInitialDate.Size = new Size(194, 29);
+            dtpInitialDate.TabIndex = 20;
             // 
             // ComissionReportScreen
             // 
@@ -224,7 +200,7 @@
             MaximizeBox = false;
             Name = "ComissionReportScreen";
             ShowIcon = false;
-            Text = "ComissionReport";
+            Text = "Comission Analytics";
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
             ResumeLayout(false);
@@ -232,20 +208,18 @@
 
         #endregion
 
+        private Label lblTitle;
         private TableLayoutPanel pnlReports;
-        private Label lblComissionReports;
-        private Button btnRefresh;
+        private ComboBox cboSalesperson;
+        private Label lblSalesperson;
         private ListView lstReports;
         private ColumnHeader columnHeaderGhost;
-        private ColumnHeader columnHeaderId;
-        private ColumnHeader columnHeaderDate;
-        private ColumnHeader columnHeaderSale;
-        private ColumnHeader columnHeaderSellerName;
-        private Label lblTimePeriod;
-        private Label label2;
-        private Label label1;
-        private MaskedTextBox mskDateBegin;
-        private MaskedTextBox mskEndDate;
-        private Label label3;
+        private ColumnHeader columnHeaderSalespersonId;
+        private ColumnHeader columnHeaderPurchaseId;
+        private ColumnHeader columnHeaderComission;
+        private ColumnHeader columnHeaderSalesperson;
+        private Label lblPeriod;
+        private DateTimePicker dtpInitialDate;
+        private DateTimePicker dtpFinalDate;
     }
 }

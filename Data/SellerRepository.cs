@@ -6,7 +6,7 @@ namespace UserManagementSystem.Data
 {
     public class SellerRepository
     {
-        public static void SaveOrUpdate(Seller seller)
+        public static void SaveOrUpdate(Salesperson seller)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static void Delete(Seller seller)
+        public static void Delete(Salesperson seller)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static Seller? FindById(UInt64 id)
+        public static Salesperson? FindById(UInt64 id)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static Seller? FindByName(String name)
+        public static Salesperson? FindByName(String name)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static Seller? FindByEnrollment(UInt32 enrollment)
+        public static Salesperson? FindByEnrollment(UInt32 enrollment)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static List<Seller> FindAll()
+        public static List<Salesperson> FindAll()
         {
             try
             {
