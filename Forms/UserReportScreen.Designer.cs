@@ -64,18 +64,18 @@
             // lblReports
             // 
             lblReports.AutoSize = true;
-            lblReports.Dock = DockStyle.Left;
+            lblReports.Dock = DockStyle.Fill;
             lblReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblReports.Location = new Point(3, 0);
             lblReports.Name = "lblReports";
-            lblReports.Size = new Size(292, 90);
+            lblReports.Size = new Size(458, 90);
             lblReports.TabIndex = 1;
-            lblReports.Text = "User Data Reports";
-            lblReports.TextAlign = ContentAlignment.MiddleCenter;
+            lblReports.Text = "General Employee Dashboard";
             // 
             // lstReports
             // 
             lstReports.BackColor = Color.LightGray;
+            lstReports.CheckBoxes = true;
             lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderUsername, columnHeaderNickname, columnHeaderEmail, columnHeaderPhone, columnHeaderLevel, columnHeaderLastAccess });
             pnlReports.SetColumnSpan(lstReports, 3);
             lstReports.Dock = DockStyle.Fill;
@@ -148,7 +148,7 @@
             btnRefresh.UseVisualStyleBackColor = true;
             btnRefresh.Click += btnRefresh_Click;
             // 
-            // ReportScreen
+            // UserReportScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -156,7 +156,7 @@
             Controls.Add(pnlReports);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "ReportScreen";
+            Name = "UserReportScreen";
             ShowIcon = false;
             Text = "System - User Reports";
             Load += ReportScreen_Load;

@@ -6,7 +6,7 @@ namespace UserManagementSystem.Data
 {
     public class CredentialRepository
     {
-        public static void SaveorUpdate(Credential credential)
+        public static void SaveOrUpdate(Credential credential)
         {
             try
             {

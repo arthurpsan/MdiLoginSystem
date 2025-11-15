@@ -77,14 +77,14 @@ namespace UserManagementSystem.Data
             }
         }
 
-        public static List<Category>? FindByPartialName(string partialName)
+        public static List<Category> FindByPartialName(string partialName)
         {
-                using (Repository dbContext = new Repository())
-                {
-                    return dbContext.Categories
-                        .Where(c => c.Name.ToLower().Contains(partialName.ToLower()))
-                        .ToList();
-                }
+            using (Repository dbContext = new Repository())
+            {
+                return dbContext.Categories
+                    .Where(c => EF.Functions.Like(c.Name, $"%{partialName}%"))
+                    .ToList();
+            }
         }
 
         public static List<Category> FindAll()

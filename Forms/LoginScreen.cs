@@ -58,7 +58,7 @@ namespace UserManagementSystem
                 try
                 {
                     dbCredential.LastAccess = DateTime.Now;
-                    CredentialRepository.SaveorUpdate(dbCredential);
+                    CredentialRepository.SaveOrUpdate(dbCredential);
                 }
                 catch (Exception ex)
                 {

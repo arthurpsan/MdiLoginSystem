@@ -91,7 +91,7 @@ namespace UserManagementSystem
                     User = newUser
                 };
 
-                CredentialRepository.SaveorUpdate(newCredential);
+                CredentialRepository.SaveOrUpdate(newCredential);
 
                 MessageBox.Show("User registered succefully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lblErrorAlert.Visible = false;

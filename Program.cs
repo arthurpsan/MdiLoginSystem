@@ -1,3 +1,4 @@
+using System;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
 
@@ -51,34 +52,24 @@ namespace UserManagementSystem
                     /* As the Credential has the reference to the User, 
                     MS Entity Framework (DbContext) should be able to save both models. */
 
-                    CredentialRepository.SaveorUpdate(adminCredential);
+                    CredentialRepository.SaveOrUpdate(adminCredential);
 
                     // Create default customer user.
 
-                    User customerUser = new User
+                    Customer customerUser = new Customer
                     {
                         Name = "Default Customer",
-                        Nickname = "Customer",
-                        PhoneNumber = 38991234567,
-                        Email = "customer@system.com"
-
-                    };
-
-                    Credential customerCredential = new Credential
-                    {
-                        Email = customerUser.Email,
-                        Password = "customer123",
-                        Manager = false,
-                        User = customerUser
+                        Email = "customer@system.com",
+                        Purchases = new List<Purchase>()
                     };
 
                     // Ask the Repository to save the new customer.
 
-                    CredentialRepository.SaveorUpdate(customerCredential);
+                    CustomerRepository.SaveOrUpdate(customerUser);
 
                     // Create a default seller user.
 
-                    User sellerUser = new User
+                    User salespersonUser = new Salesperson
                     {
                         Name = "Default Seller",
                         Nickname = "Seller",
@@ -88,14 +79,32 @@ namespace UserManagementSystem
 
                     Credential sellerCredential = new Credential
                     {
-                        Email = sellerUser.Email,
+                        Email = salespersonUser.Email,
                         Password = "seller123",
                         Manager = false,
-                        User = sellerUser
+                        User = salespersonUser
                     };
 
                     // Ask the Repository to save the new seller.
-                    CredentialRepository.SaveorUpdate(sellerCredential);
+                    CredentialRepository.SaveOrUpdate(sellerCredential);
+
+                    // Create a default cashier user.
+
+                    User cashierUser = new Cashier
+                    {
+                        Name = "Default Cashier",
+                        Nickname = "Cashier",
+                        PhoneNumber = 38993456789,
+                        Email = "cashier@system.com"
+                    };
+
+                    Credential cashierCredential = new Credential
+                    {
+                        Email = cashierUser.Email,
+                        Password = "cashier123",
+                        Manager = false,
+                        User = cashierUser
+                    };
                 }
             }
         }

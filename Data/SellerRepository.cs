@@ -76,6 +76,24 @@ namespace UserManagementSystem.Data
             }
         }
 
+        public static List<Salesperson> FindByPartialName(String partialName)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    // Agora o .ToList() está correto para o tipo de retorno
+                    return dbContext.Sellers
+                        .Where(s => EF.Functions.Like(s.Name, $"%{partialName}%"))
+                        .ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static Salesperson? FindByEnrollment(UInt32 enrollment)
         {
             try

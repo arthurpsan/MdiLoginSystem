@@ -46,5 +46,46 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
+
+        public static List<Cashier> FindAll()
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Cashiers.ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static Cashier? FindById(UInt64 id)
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Cashiers.Find(id);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static List<Cashier> FindByPartialName(string partialName)
+        {
+            using (Repository dbContext = new Repository())
+            {
+                return dbContext.Cashiers
+                    .Where(c => EF.Functions.Like(c.Name, $"%{partialName}%"))
+                    .ToList();
+            }
+        }
+
     }
 }
