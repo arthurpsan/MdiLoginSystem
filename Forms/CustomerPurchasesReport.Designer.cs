@@ -82,15 +82,15 @@
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            pnlMainLayout.SetColumnSpan(lblTitle, 2);
+            pnlMainLayout.SetColumnSpan(lblTitle, 4);
             lblTitle.Dock = DockStyle.Fill;
-            lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitle.Location = new Point(3, 0);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(394, 45);
+            lblTitle.Size = new Size(794, 45);
             lblTitle.TabIndex = 2;
             lblTitle.Text = "Customer Data Reports";
-            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lstPurchasesReport
             // 
@@ -163,6 +163,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlMainLayout);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "CustomerPurchasesReport";
             ShowIcon = false;

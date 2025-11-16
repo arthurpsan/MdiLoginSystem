@@ -50,7 +50,7 @@
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
             pnlReports.Controls.Add(lblReports, 0, 0);
-            pnlReports.Controls.Add(lstReports, 0, 2);
+            pnlReports.Controls.Add(lstReports, 0, 1);
             pnlReports.Controls.Add(btnRefresh, 2, 3);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
@@ -67,14 +67,15 @@
             // lblReports
             // 
             lblReports.AutoSize = true;
-            pnlReports.SetColumnSpan(lblReports, 2);
+            pnlReports.SetColumnSpan(lblReports, 3);
             lblReports.Dock = DockStyle.Fill;
-            lblReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblReports.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblReports.Location = new Point(3, 0);
             lblReports.Name = "lblReports";
-            lblReports.Size = new Size(526, 45);
+            lblReports.Size = new Size(794, 45);
             lblReports.TabIndex = 1;
             lblReports.Text = "General Employee Dashboard";
+            lblReports.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lstReports
             // 
@@ -86,9 +87,10 @@
             lstReports.FullRowSelect = true;
             lstReports.GridLines = true;
             lstReports.LabelWrap = false;
-            lstReports.Location = new Point(3, 93);
+            lstReports.Location = new Point(3, 48);
             lstReports.Name = "lstReports";
-            lstReports.Size = new Size(794, 309);
+            pnlReports.SetRowSpan(lstReports, 2);
+            lstReports.Size = new Size(794, 354);
             lstReports.TabIndex = 2;
             lstReports.UseCompatibleStateImageBehavior = false;
             lstReports.View = View.Details;

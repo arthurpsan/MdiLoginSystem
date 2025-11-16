@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblErrorAlert.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 64</value>
+    <value>6, 76</value>
   </data>
   <data name="lblErrorAlert.Size" type="System.Drawing.Size, System.Drawing">
     <value>316, 21</value>

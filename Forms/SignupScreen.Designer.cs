@@ -108,7 +108,7 @@
             // 
             lblErrorAlert.AutoSize = true;
             lblErrorAlert.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            lblErrorAlert.ForeColor = Color.Crimson;
+            lblErrorAlert.ForeColor = Color.LightCoral;
             lblErrorAlert.ImeMode = ImeMode.NoControl;
             lblErrorAlert.Location = new Point(6, 353);
             lblErrorAlert.Name = "lblErrorAlert";
@@ -154,6 +154,7 @@
             txtRepeatPassword.Font = new Font("Segoe UI", 12F);
             txtRepeatPassword.Location = new Point(6, 313);
             txtRepeatPassword.Name = "txtRepeatPassword";
+            txtRepeatPassword.PasswordChar = '●';
             txtRepeatPassword.Size = new Size(758, 29);
             txtRepeatPassword.TabIndex = 8;
             txtRepeatPassword.Enter += txtRepeatPassword_Enter;
@@ -205,6 +206,7 @@
             txtPassword.Font = new Font("Segoe UI", 12F);
             txtPassword.Location = new Point(6, 249);
             txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '●';
             txtPassword.Size = new Size(758, 29);
             txtPassword.TabIndex = 3;
             txtPassword.Enter += txtPassword_Enter;

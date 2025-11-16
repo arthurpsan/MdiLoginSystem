@@ -54,28 +54,36 @@
             chProductPrice = new ColumnHeader();
             chProductStock = new ColumnHeader();
             chProductMinimalStock = new ColumnHeader();
+            lblDiscount = new Label();
+            numDiscount = new NumericUpDown();
             splitContainerSales = new SplitContainer();
             pnlCart = new TableLayoutPanel();
             lblSelectedCustomerName = new Label();
             lstCart = new ListView();
-            chCartProductGhost = new ColumnHeader();
-            chCartProductId = new ColumnHeader();
+            chCartGhost = new ColumnHeader();
             chCartProductName = new ColumnHeader();
-            chCartProductCategory = new ColumnHeader();
-            chCartProductPrice = new ColumnHeader();
+            chCartProductQty = new ColumnHeader();
+            chCartProductDiscount = new ColumnHeader();
+            chCartProductUnitPrice = new ColumnHeader();
+            chCartProductTotalPrice = new ColumnHeader();
             lblTotalSale = new Label();
             btnFinalizeSale = new Button();
+            lblInstallments = new Label();
+            numInstallments = new NumericUpDown();
+            btnRequestAuth = new Button();
             TabControlMain.SuspendLayout();
             tabPageCustomer.SuspendLayout();
             pnlCustomer.SuspendLayout();
             tabPageProduct.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numDiscount).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainerSales).BeginInit();
             splitContainerSales.Panel1.SuspendLayout();
             splitContainerSales.Panel2.SuspendLayout();
             splitContainerSales.SuspendLayout();
             pnlCart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numInstallments).BeginInit();
             SuspendLayout();
             // 
             // TabControlMain
@@ -154,7 +162,7 @@
             // 
             // chCustomerEmail
             // 
-            chCustomerEmail.Text = "Email";
+            chCustomerEmail.Text = "Name";
             chCustomerEmail.TextAlign = HorizontalAlignment.Center;
             chCustomerEmail.Width = 202;
             // 
@@ -216,6 +224,8 @@
             tableLayoutPanel1.Controls.Add(txtSearchProduct, 2, 0);
             tableLayoutPanel1.Controls.Add(btnAddItem, 2, 4);
             tableLayoutPanel1.Controls.Add(lstProducts, 0, 1);
+            tableLayoutPanel1.Controls.Add(lblDiscount, 0, 4);
+            tableLayoutPanel1.Controls.Add(numDiscount, 1, 4);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(3, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -267,7 +277,7 @@
             cboCategories.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.SetColumnSpan(cboCategories, 2);
             cboCategories.FormattingEnabled = true;
-            cboCategories.Location = new Point(129, 297);
+            cboCategories.Location = new Point(129, 298);
             cboCategories.Name = "cboCategories";
             cboCategories.Size = new Size(120, 25);
             cboCategories.TabIndex = 11;
@@ -348,6 +358,26 @@
             chProductStock.Text = "Stock";
             chProductStock.TextAlign = HorizontalAlignment.Center;
             // 
+            // lblDiscount
+            // 
+            lblDiscount.AutoSize = true;
+            lblDiscount.Dock = DockStyle.Fill;
+            lblDiscount.Location = new Point(3, 371);
+            lblDiscount.Name = "lblDiscount";
+            lblDiscount.Size = new Size(57, 43);
+            lblDiscount.TabIndex = 14;
+            lblDiscount.Text = "Desconto (%):";
+            lblDiscount.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // numDiscount
+            // 
+            numDiscount.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            numDiscount.Location = new Point(66, 380);
+            numDiscount.Name = "numDiscount";
+            numDiscount.Size = new Size(57, 25);
+            numDiscount.TabIndex = 15;
+            numDiscount.TextAlign = HorizontalAlignment.Center;
+            // 
             // splitContainerSales
             // 
             splitContainerSales.Dock = DockStyle.Fill;
@@ -376,6 +406,9 @@
             pnlCart.Controls.Add(lstCart, 0, 1);
             pnlCart.Controls.Add(lblTotalSale, 0, 2);
             pnlCart.Controls.Add(btnFinalizeSale, 2, 4);
+            pnlCart.Controls.Add(lblInstallments, 2, 2);
+            pnlCart.Controls.Add(numInstallments, 4, 2);
+            pnlCart.Controls.Add(btnRequestAuth, 0, 4);
             pnlCart.Dock = DockStyle.Fill;
             pnlCart.Location = new Point(0, 0);
             pnlCart.Name = "pnlCart";
@@ -393,7 +426,7 @@
             lblSelectedCustomerName.AutoSize = true;
             pnlCart.SetColumnSpan(lblSelectedCustomerName, 2);
             lblSelectedCustomerName.Dock = DockStyle.Fill;
-            lblSelectedCustomerName.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblSelectedCustomerName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSelectedCustomerName.Location = new Point(3, 0);
             lblSelectedCustomerName.Name = "lblSelectedCustomerName";
             lblSelectedCustomerName.Size = new Size(258, 45);
@@ -405,7 +438,7 @@
             // 
             lstCart.BackColor = Color.LightGray;
             lstCart.CheckBoxes = true;
-            lstCart.Columns.AddRange(new ColumnHeader[] { chCartProductGhost, chCartProductId, chCartProductName, chCartProductCategory, chCartProductPrice });
+            lstCart.Columns.AddRange(new ColumnHeader[] { chCartGhost, chCartProductName, chCartProductQty, chCartProductDiscount, chCartProductUnitPrice, chCartProductTotalPrice });
             pnlCart.SetColumnSpan(lstCart, 4);
             lstCart.Dock = DockStyle.Fill;
             lstCart.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -419,44 +452,49 @@
             lstCart.UseCompatibleStateImageBehavior = false;
             lstCart.View = View.Details;
             // 
-            // chCartProductGhost
+            // chCartGhost
             // 
-            chCartProductGhost.Text = "";
-            chCartProductGhost.Width = 0;
-            // 
-            // chCartProductId
-            // 
-            chCartProductId.Text = "ID";
-            chCartProductId.TextAlign = HorizontalAlignment.Center;
-            chCartProductId.Width = 63;
+            chCartGhost.Width = 0;
             // 
             // chCartProductName
             // 
-            chCartProductName.Text = "Name";
+            chCartProductName.Text = "Product";
             chCartProductName.TextAlign = HorizontalAlignment.Center;
-            chCartProductName.Width = 196;
+            chCartProductName.Width = 180;
             // 
-            // chCartProductCategory
+            // chCartProductQty
             // 
-            chCartProductCategory.Text = "Category";
-            chCartProductCategory.TextAlign = HorizontalAlignment.Center;
-            chCartProductCategory.Width = 133;
+            chCartProductQty.Text = "Quantity";
+            chCartProductQty.TextAlign = HorizontalAlignment.Center;
+            chCartProductQty.Width = 80;
             // 
-            // chCartProductPrice
+            // chCartProductDiscount
             // 
-            chCartProductPrice.Text = "Price";
-            chCartProductPrice.TextAlign = HorizontalAlignment.Center;
-            chCartProductPrice.Width = 127;
+            chCartProductDiscount.Text = "Disc. %";
+            chCartProductDiscount.TextAlign = HorizontalAlignment.Center;
+            chCartProductDiscount.Width = 58;
+            // 
+            // chCartProductUnitPrice
+            // 
+            chCartProductUnitPrice.Text = "Unit Price";
+            chCartProductUnitPrice.TextAlign = HorizontalAlignment.Center;
+            chCartProductUnitPrice.Width = 92;
+            // 
+            // chCartProductTotalPrice
+            // 
+            chCartProductTotalPrice.Text = "Total";
+            chCartProductTotalPrice.TextAlign = HorizontalAlignment.Center;
+            chCartProductTotalPrice.Width = 110;
             // 
             // lblTotalSale
             // 
             lblTotalSale.AutoSize = true;
-            pnlCart.SetColumnSpan(lblTotalSale, 4);
+            pnlCart.SetColumnSpan(lblTotalSale, 2);
             lblTotalSale.Dock = DockStyle.Fill;
             lblTotalSale.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lblTotalSale.Location = new Point(3, 315);
             lblTotalSale.Name = "lblTotalSale";
-            lblTotalSale.Size = new Size(524, 45);
+            lblTotalSale.Size = new Size(258, 45);
             lblTotalSale.TabIndex = 8;
             lblTotalSale.Text = "Total";
             lblTotalSale.TextAlign = ContentAlignment.MiddleCenter;
@@ -470,9 +508,46 @@
             btnFinalizeSale.Name = "btnFinalizeSale";
             btnFinalizeSale.Size = new Size(260, 39);
             btnFinalizeSale.TabIndex = 9;
-            btnFinalizeSale.Text = "Finalize Sale";
+            btnFinalizeSale.Text = "Finish Sale";
             btnFinalizeSale.UseVisualStyleBackColor = true;
-            btnFinalizeSale.Click += btnFinalizeSale_Click;
+            btnFinalizeSale.Click += btnFinishSale_Click;
+            // 
+            // lblInstallments
+            // 
+            lblInstallments.AutoSize = true;
+            lblInstallments.Dock = DockStyle.Fill;
+            lblInstallments.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblInstallments.Location = new Point(267, 315);
+            lblInstallments.Name = "lblInstallments";
+            lblInstallments.Size = new Size(126, 45);
+            lblInstallments.TabIndex = 10;
+            lblInstallments.Text = "Installments:";
+            lblInstallments.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // numInstallments
+            // 
+            numInstallments.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            numInstallments.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numInstallments.Location = new Point(399, 325);
+            numInstallments.Maximum = new decimal(new int[] { 6, 0, 0, 0 });
+            numInstallments.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numInstallments.Name = "numInstallments";
+            numInstallments.Size = new Size(128, 25);
+            numInstallments.TabIndex = 11;
+            numInstallments.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // btnRequestAuth
+            // 
+            pnlCart.SetColumnSpan(btnRequestAuth, 2);
+            btnRequestAuth.Dock = DockStyle.Fill;
+            btnRequestAuth.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRequestAuth.Location = new Point(3, 408);
+            btnRequestAuth.Name = "btnRequestAuth";
+            btnRequestAuth.Size = new Size(258, 39);
+            btnRequestAuth.TabIndex = 12;
+            btnRequestAuth.Text = "Authorize Sale";
+            btnRequestAuth.UseVisualStyleBackColor = true;
+            btnRequestAuth.Visible = false;
             // 
             // NewSaleScreen
             // 
@@ -480,6 +555,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(splitContainerSales);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "NewSaleScreen";
             ShowIcon = false;
             Text = "Sale Screen";
@@ -491,13 +567,16 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numDiscount).EndInit();
             splitContainerSales.Panel1.ResumeLayout(false);
             splitContainerSales.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerSales).EndInit();
             splitContainerSales.ResumeLayout(false);
             pnlCart.ResumeLayout(false);
             pnlCart.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numInstallments).EndInit();
             ResumeLayout(false);
+
         }
 
         #endregion
@@ -533,12 +612,18 @@
         private TableLayoutPanel pnlCart;
         private Label lblSelectedCustomerName;
         private ListView lstCart;
-        private ColumnHeader chCartProductGhost;
-        private ColumnHeader chCartProductId;
         private ColumnHeader chCartProductName;
-        private ColumnHeader chCartProductCategory;
-        private ColumnHeader chCartProductPrice;
+        private ColumnHeader chCartProductQty;
+        private ColumnHeader chCartProductDiscount;
+        private ColumnHeader chCartProductUnitPrice;
+        private ColumnHeader chCartProductTotalPrice;
         private Label lblTotalSale;
         private Button btnFinalizeSale;
+        private Label lblInstallments;
+        private NumericUpDown numInstallments;
+        private Button btnRequestAuth;
+        private Label lblDiscount;
+        private NumericUpDown numDiscount;
+        private ColumnHeader chCartGhost;
     }
 }

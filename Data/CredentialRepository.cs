@@ -81,5 +81,31 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
+
+        public static Boolean ValidateManagerCredentials(string email, string password)
+        {
+            try
+            {
+                Credential? dbCredential = FindByEmail(email);
+
+                if (dbCredential == null)
+                {
+                    return false;
+                }
+
+                if (!dbCredential.Manager == false)
+                {
+                    return false;
+                }
+
+                string hashedInputPassword = Credential.ComputeSHA256(password, Credential.SALT);
+
+                return dbCredential.Password == hashedInputPassword;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

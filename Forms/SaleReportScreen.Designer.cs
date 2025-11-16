@@ -53,7 +53,7 @@
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            pnlReports.Controls.Add(lblSalesReports, 0, 1);
+            pnlReports.Controls.Add(lblSalesReports, 0, 0);
             pnlReports.Controls.Add(btnRefresh, 3, 5);
             pnlReports.Controls.Add(lstReports, 0, 3);
             pnlReports.Controls.Add(lblTimePeriod, 2, 0);
@@ -80,8 +80,8 @@
             // 
             lblSalesReports.AutoSize = true;
             lblSalesReports.Dock = DockStyle.Fill;
-            lblSalesReports.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSalesReports.Location = new Point(3, 40);
+            lblSalesReports.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSalesReports.Location = new Point(3, 0);
             lblSalesReports.Name = "lblSalesReports";
             lblSalesReports.Size = new Size(474, 40);
             lblSalesReports.TabIndex = 1;
@@ -201,22 +201,22 @@
             dtpStartDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             dtpStartDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pnlReports.SetColumnSpan(dtpStartDate, 2);
+            dtpStartDate.Format = DateTimePickerFormat.Short;
             dtpStartDate.Location = new Point(563, 48);
             dtpStartDate.Name = "dtpStartDate";
             dtpStartDate.Size = new Size(234, 23);
             dtpStartDate.TabIndex = 5;
-            dtpStartDate.Format = DateTimePickerFormat.Short;
             // 
             // dtpEndDate
             // 
             dtpEndDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             dtpEndDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pnlReports.SetColumnSpan(dtpEndDate, 2);
+            dtpEndDate.Format = DateTimePickerFormat.Short;
             dtpEndDate.Location = new Point(563, 88);
             dtpEndDate.Name = "dtpEndDate";
             dtpEndDate.Size = new Size(234, 23);
             dtpEndDate.TabIndex = 11;
-            dtpEndDate.Format = DateTimePickerFormat.Short;
             // 
             // SaleReportScreen
             // 
@@ -224,6 +224,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlReports);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "SaleReportScreen";
             ShowIcon = false;
@@ -250,5 +251,6 @@
         private Label label3;
         private DateTimePicker dtpStartDate;
         private DateTimePicker dtpEndDate;
+
     }
 }

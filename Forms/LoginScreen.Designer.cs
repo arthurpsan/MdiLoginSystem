@@ -77,7 +77,7 @@
             // lblErrorAlert
             // 
             resources.ApplyResources(lblErrorAlert, "lblErrorAlert");
-            lblErrorAlert.ForeColor = Color.Crimson;
+            lblErrorAlert.ForeColor = Color.LightCoral;
             lblErrorAlert.Name = "lblErrorAlert";
             // 
             // btnLogin
@@ -132,5 +132,7 @@
         private GroupBox grpPassword;
         private Label lblErrorAlert;
         private GroupBox grpEmail;
+        private Label lblDiscount;
+        private NumericUpDown numDiscount;
     }
 }

@@ -218,7 +218,7 @@
             lblTotalComission.Name = "lblTotalComission";
             lblTotalComission.Size = new Size(394, 21);
             lblTotalComission.TabIndex = 23;
-            lblTotalComission.Text = "Comissão Total: R$ 0,00";
+            lblTotalComission.Text = "Total Comission: R$ 0,00";
             lblTotalComission.TextAlign = ContentAlignment.MiddleRight;
             // 
             // ComissionReportScreen
@@ -227,6 +227,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlReports);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "ComissionReportScreen";
             ShowIcon = false;
