@@ -93,7 +93,7 @@ namespace UserManagementSystem.Data
                     return false;
                 }
 
-                if (!dbCredential.Manager == false)
+                if (dbCredential.Manager == false)
                 {
                     return false;
                 }

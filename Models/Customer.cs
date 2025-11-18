@@ -63,7 +63,8 @@ namespace UserManagementSystem.Models
             {
                 return true;
             }
-            else if (Purchases.Any(purchase => purchase != null && purchase.Payments.Any(payment => DateTime.Now > payment.ExpirationDate && payment.DatePayment is null)))
+            else if (Purchases.Any(purchase => purchase != null && purchase.Payments
+                .Any(payment => DateTime.Now > payment.ExpirationDate && payment.DatePayment is null)))
             {
                 return false;
             }

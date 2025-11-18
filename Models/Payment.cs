@@ -39,7 +39,7 @@ namespace UserManagementSystem.Models
         public Decimal? CalcTotalPayment()
         {
 
-            if (DatePayment == null || ExpirationDate == null || Purchase.CalcTotal == null)
+            if (ExpirationDate == null || Purchase == null || Purchase.CalcTotal() == null)
             {
                 return 0;
             }

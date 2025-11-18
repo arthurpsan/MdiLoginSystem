@@ -57,7 +57,7 @@ namespace UserManagementSystem.Models
         {
             decimal? total = CalcTotal();
 
-            if (ComissionTax == null || total == null)
+            if (total == null || total == 0)
             {
                 return 0;
             }
