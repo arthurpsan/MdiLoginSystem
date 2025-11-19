@@ -33,6 +33,7 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             registerToolStripMenuItem = new ToolStripMenuItem();
             userToolStripMenuItem = new ToolStripMenuItem();
+            saleToolStripMenuItem = new ToolStripMenuItem();
             reporToolStripMenuItem = new ToolStripMenuItem();
             usersToolStripMenuItem = new ToolStripMenuItem();
             salesDataToolStripMenuItem = new ToolStripMenuItem();
@@ -43,7 +44,7 @@
             statusStrip1 = new StatusStrip();
             staAccess = new ToolStripStatusLabel();
             lblLastAccess = new ToolStripStatusLabel();
-            saleToolStripMenuItem = new ToolStripMenuItem();
+            customerToolStripMenuItem = new ToolStripMenuItem();
             mnuSystem.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -68,13 +69,13 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(92, 22);
+            exitToolStripMenuItem.Size = new Size(93, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // registerToolStripMenuItem
             // 
-            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem, saleToolStripMenuItem });
+            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem, customerToolStripMenuItem, saleToolStripMenuItem });
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             registerToolStripMenuItem.Size = new Size(61, 20);
             registerToolStripMenuItem.Text = "Register";
@@ -86,6 +87,13 @@
             userToolStripMenuItem.Text = "User...";
             userToolStripMenuItem.Click += userToolStripMenuItem_Click;
             // 
+            // saleToolStripMenuItem
+            // 
+            saleToolStripMenuItem.Name = "saleToolStripMenuItem";
+            saleToolStripMenuItem.Size = new Size(180, 22);
+            saleToolStripMenuItem.Text = "Sale...";
+            saleToolStripMenuItem.Click += saleToolStripMenuItem_Click;
+            // 
             // reporToolStripMenuItem
             // 
             reporToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usersToolStripMenuItem, salesDataToolStripMenuItem, clientsDataToolStripMenuItem, comissionDataToolStripMenuItem });
@@ -96,28 +104,28 @@
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(180, 22);
+            usersToolStripMenuItem.Size = new Size(166, 22);
             usersToolStripMenuItem.Text = "User Data...";
             usersToolStripMenuItem.Click += usersToolStripMenuItem_Click;
             // 
             // salesDataToolStripMenuItem
             // 
             salesDataToolStripMenuItem.Name = "salesDataToolStripMenuItem";
-            salesDataToolStripMenuItem.Size = new Size(180, 22);
+            salesDataToolStripMenuItem.Size = new Size(166, 22);
             salesDataToolStripMenuItem.Text = "Sale Data...";
             salesDataToolStripMenuItem.Click += salesDataToolStripMenuItem_Click;
             // 
             // clientsDataToolStripMenuItem
             // 
             clientsDataToolStripMenuItem.Name = "clientsDataToolStripMenuItem";
-            clientsDataToolStripMenuItem.Size = new Size(180, 22);
+            clientsDataToolStripMenuItem.Size = new Size(166, 22);
             clientsDataToolStripMenuItem.Text = "Client Data...";
             clientsDataToolStripMenuItem.Click += clientsDataToolStripMenuItem_Click;
             // 
             // comissionDataToolStripMenuItem
             // 
             comissionDataToolStripMenuItem.Name = "comissionDataToolStripMenuItem";
-            comissionDataToolStripMenuItem.Size = new Size(180, 22);
+            comissionDataToolStripMenuItem.Size = new Size(166, 22);
             comissionDataToolStripMenuItem.Text = "Comission Data...";
             comissionDataToolStripMenuItem.Click += comissionDataToolStripMenuItem_Click;
             // 
@@ -157,12 +165,12 @@
             lblLastAccess.Size = new Size(131, 17);
             lblLastAccess.Text = "toolStripStatusLabel1";
             // 
-            // saleToolStripMenuItem
+            // customerToolStripMenuItem
             // 
-            saleToolStripMenuItem.Name = "saleToolStripMenuItem";
-            saleToolStripMenuItem.Size = new Size(180, 22);
-            saleToolStripMenuItem.Text = "Sale...";
-            saleToolStripMenuItem.Click += saleToolStripMenuItem_Click;
+            customerToolStripMenuItem.Name = "customerToolStripMenuItem";
+            customerToolStripMenuItem.Size = new Size(180, 22);
+            customerToolStripMenuItem.Text = "Customer...";
+            customerToolStripMenuItem.Click += customerToolStripMenuItem_Click;
             // 
             // SystemMenu
             // 
@@ -207,5 +215,6 @@
         private ToolStripMenuItem clientsDataToolStripMenuItem;
         private ToolStripMenuItem comissionDataToolStripMenuItem;
         private ToolStripMenuItem saleToolStripMenuItem;
+        private ToolStripMenuItem customerToolStripMenuItem;
     }
 }

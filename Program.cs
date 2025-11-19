@@ -30,8 +30,6 @@ namespace UserManagementSystem
                 if (!dbContext.Credentials.Any())
                 {
                     // Create default admin.
-
-                    // Creating the models.
                     User adminUser = new User
                     {
                         Name = "Administrator",
@@ -51,11 +49,9 @@ namespace UserManagementSystem
                     // Ask the Repository to save the new admin.
                     /* As the Credential has the reference to the User, 
                     MS Entity Framework (DbContext) should be able to save both models. */
-
                     CredentialRepository.SaveOrUpdate(adminCredential);
 
                     // Create default customer user.
-
                     Customer customerUser = new Customer
                     {
                         Name = "Default Customer",
@@ -64,15 +60,14 @@ namespace UserManagementSystem
                     };
 
                     // Ask the Repository to save the new customer.
-
                     CustomerRepository.SaveOrUpdate(customerUser);
 
                     // Create a default seller user.
-
                     User salespersonUser = new Salesperson
                     {
                         Name = "Default Seller",
                         Nickname = "Seller",
+                        SalespersonEnrollment = 0,
                         PhoneNumber = 38997654321,
                         Email = "seller@system.com"
                     };
@@ -89,11 +84,11 @@ namespace UserManagementSystem
                     CredentialRepository.SaveOrUpdate(sellerCredential);
 
                     // Create a default cashier user.
-
                     User cashierUser = new Cashier
                     {
                         Name = "Default Cashier",
                         Nickname = "Cashier",
+                        CashierEnrollment = 0,
                         PhoneNumber = 38993456789,
                         Email = "cashier@system.com"
                     };
@@ -105,6 +100,8 @@ namespace UserManagementSystem
                         Manager = false,
                         User = cashierUser
                     };
+
+                    CredentialRepository.SaveOrUpdate(cashierCredential);
                 }
             }
         }

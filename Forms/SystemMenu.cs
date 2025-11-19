@@ -7,6 +7,17 @@ namespace UserManagementSystem
     {
         private static SystemMenu? _instance;
         private User? _loggedInUser;
+
+        public static SystemMenu GetInstance(User user)
+        {
+            if (_instance == null || _instance.IsDisposed)
+            {
+                _instance = new SystemMenu(user);
+            }
+
+            return _instance;
+        }
+
         public SystemMenu(User? user)
         {
             InitializeComponent();
@@ -17,6 +28,7 @@ namespace UserManagementSystem
             if (user != null && user.Credential != null)
             {
                 userToolStripMenuItem.Enabled = user.Credential.Manager;
+                customerToolStripMenuItem.Enabled = user.Credential.Manager;
 
                 lblLastAccess.Text = $"Last Access: {user.Credential.LastAccess?.ToString("g") ?? "First Access!"}";
             }
@@ -25,16 +37,6 @@ namespace UserManagementSystem
                 lblLastAccess.Text = "Error while loading session data!";
             }
 
-        }
-
-        public static SystemMenu GetInstance(User user)
-        {
-            if (_instance == null || _instance.IsDisposed)
-            {
-                _instance = new SystemMenu(user);
-            }
-
-            return _instance;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -102,6 +104,14 @@ namespace UserManagementSystem
             saleForm.MdiParent = this;
             saleForm.Show();
             saleForm.BringToFront();
+        }
+
+        private void customerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomerSignUpScreen customerForm = CustomerSignUpScreen.GetInstance(_loggedInUser);
+            customerForm.MdiParent = this;
+            customerForm.Show();
+            customerForm.BringToFront();
         }
     }
 }
