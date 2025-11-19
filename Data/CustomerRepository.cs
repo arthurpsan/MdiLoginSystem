@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Models;
+using System.ComponentModel;
+using MySql.Data.MySqlClient;
 
 namespace UserManagementSystem.Data
 {
@@ -85,6 +87,23 @@ namespace UserManagementSystem.Data
                 using (Repository dbContext = new Repository())
                 {
                     return dbContext.Customers.ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public BindingList<Customer> FindAllAsBindingList()
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    dbContext.Customers.Load();
+                    var customers = dbContext.Customers.Local;
+                    return customers.ToBindingList();
                 }
             }
             catch (Exception)

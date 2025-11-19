@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
 
@@ -19,7 +18,7 @@ namespace UserManagementSystem.Forms
             _instance._loggedInUser = user;
             return _instance;
         }
-        
+
         public CustomerSignUpScreen()
         {
             InitializeComponent();
