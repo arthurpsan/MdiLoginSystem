@@ -54,7 +54,7 @@ namespace UserManagementSystem.Models
             }
 
             // In case the payment is still not made and is past due (today)
-            else if (DatePayment != null && DateTime.Now > ExpirationDate)
+            else if (DatePayment != null && DatePayment > ExpirationDate)
             { 
                 TimeSpan delay = DateTime.Now - ExpirationDate.Value;
                 int delayedMonths = (int)Math.Ceiling(delay.TotalDays / 30);

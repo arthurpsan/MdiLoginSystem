@@ -6,7 +6,7 @@ namespace UserManagementSystem.Data
 {
     public class Repository : DbContext
     {
-        private static readonly string _connectionsParams = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=StoreManagementSystem";
+        private static readonly string _connectionsParams = @"server=127.0.0.1;port=3308;uid=root;pwd=;database=StoreManagementSystem";
         
         // Define DbSets for each model
         public DbSet<User> Users { get; set; }
