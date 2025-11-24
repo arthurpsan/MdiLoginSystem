@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem
 {
-    partial class SystemMenu
+    partial class SystemMainMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -32,8 +32,10 @@
             fIleToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             registerToolStripMenuItem = new ToolStripMenuItem();
-            userToolStripMenuItem = new ToolStripMenuItem();
+            employeeToolStripMenuItem = new ToolStripMenuItem();
+            customerToolStripMenuItem = new ToolStripMenuItem();
             saleToolStripMenuItem = new ToolStripMenuItem();
+            producttoolStripMenuItem = new ToolStripMenuItem();
             reporToolStripMenuItem = new ToolStripMenuItem();
             usersToolStripMenuItem = new ToolStripMenuItem();
             salesDataToolStripMenuItem = new ToolStripMenuItem();
@@ -44,7 +46,6 @@
             statusStrip1 = new StatusStrip();
             staAccess = new ToolStripStatusLabel();
             lblLastAccess = new ToolStripStatusLabel();
-            customerToolStripMenuItem = new ToolStripMenuItem();
             mnuSystem.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -69,30 +70,44 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Size = new Size(92, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // registerToolStripMenuItem
             // 
-            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { userToolStripMenuItem, customerToolStripMenuItem, saleToolStripMenuItem });
+            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { employeeToolStripMenuItem, customerToolStripMenuItem, saleToolStripMenuItem, producttoolStripMenuItem });
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             registerToolStripMenuItem.Size = new Size(61, 20);
             registerToolStripMenuItem.Text = "Register";
             // 
-            // userToolStripMenuItem
+            // employeeToolStripMenuItem
             // 
-            userToolStripMenuItem.Name = "userToolStripMenuItem";
-            userToolStripMenuItem.Size = new Size(180, 22);
-            userToolStripMenuItem.Text = "User...";
-            userToolStripMenuItem.Click += userToolStripMenuItem_Click;
+            employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
+            employeeToolStripMenuItem.Size = new Size(199, 22);
+            employeeToolStripMenuItem.Text = "Employee...";
+            employeeToolStripMenuItem.Click += employeeToolStripMenuItem_Click;
+            // 
+            // customerToolStripMenuItem
+            // 
+            customerToolStripMenuItem.Name = "customerToolStripMenuItem";
+            customerToolStripMenuItem.Size = new Size(199, 22);
+            customerToolStripMenuItem.Text = "Customer...";
+            customerToolStripMenuItem.Click += customerToolStripMenuItem_Click;
             // 
             // saleToolStripMenuItem
             // 
             saleToolStripMenuItem.Name = "saleToolStripMenuItem";
-            saleToolStripMenuItem.Size = new Size(180, 22);
+            saleToolStripMenuItem.Size = new Size(199, 22);
             saleToolStripMenuItem.Text = "Sale...";
             saleToolStripMenuItem.Click += saleToolStripMenuItem_Click;
+            // 
+            // producttoolStripMenuItem
+            // 
+            producttoolStripMenuItem.Name = "producttoolStripMenuItem";
+            producttoolStripMenuItem.Size = new Size(199, 22);
+            producttoolStripMenuItem.Text = "Product and Category...";
+            producttoolStripMenuItem.Click += producttoolStripMenuItem_Click;
             // 
             // reporToolStripMenuItem
             // 
@@ -165,14 +180,7 @@
             lblLastAccess.Size = new Size(131, 17);
             lblLastAccess.Text = "toolStripStatusLabel1";
             // 
-            // customerToolStripMenuItem
-            // 
-            customerToolStripMenuItem.Name = "customerToolStripMenuItem";
-            customerToolStripMenuItem.Size = new Size(180, 22);
-            customerToolStripMenuItem.Text = "Customer...";
-            customerToolStripMenuItem.Click += customerToolStripMenuItem_Click;
-            // 
-            // SystemMenu
+            // SystemMainMenu
             // 
             AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -184,7 +192,7 @@
             IsMdiContainer = true;
             MainMenuStrip = mnuSystem;
             MaximizeBox = false;
-            Name = "SystemMenu";
+            Name = "SystemMainMenu";
             ShowIcon = false;
             Text = "System - Main Menu - [v 0.0.1]";
             WindowState = FormWindowState.Maximized;
@@ -206,7 +214,7 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
-        private ToolStripMenuItem userToolStripMenuItem;
+        private ToolStripMenuItem employeeToolStripMenuItem;
         private ToolStripMenuItem usersToolStripMenuItem;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel staAccess;
@@ -216,5 +224,6 @@
         private ToolStripMenuItem comissionDataToolStripMenuItem;
         private ToolStripMenuItem saleToolStripMenuItem;
         private ToolStripMenuItem customerToolStripMenuItem;
+        private ToolStripMenuItem producttoolStripMenuItem;
     }
 }

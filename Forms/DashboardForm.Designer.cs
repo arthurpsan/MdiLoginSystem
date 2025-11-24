@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem
 {
-    partial class UserReportScreen
+    partial class DashboardForm
     {
         /// <summary>
         /// Required designer variable.
@@ -67,9 +67,11 @@
             // lblReports
             // 
             lblReports.AutoSize = true;
+            lblReports.BackColor = Color.FromArgb(0, 53, 123);
             pnlReports.SetColumnSpan(lblReports, 3);
             lblReports.Dock = DockStyle.Fill;
             lblReports.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblReports.ForeColor = Color.White;
             lblReports.Location = new Point(3, 0);
             lblReports.Name = "lblReports";
             lblReports.Size = new Size(794, 45);
@@ -154,7 +156,7 @@
             btnRefresh.UseVisualStyleBackColor = true;
             btnRefresh.Click += btnRefresh_Click;
             // 
-            // UserReportScreen
+            // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -162,7 +164,7 @@
             Controls.Add(pnlReports);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "UserReportScreen";
+            Name = "DashboardForm";
             ShowIcon = false;
             Text = "System - User Reports";
             Load += ReportScreen_Load;

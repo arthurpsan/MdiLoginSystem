@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class ManagerAuthorizationScreen
+    partial class ManagerAuthForm
     {
         /// <summary>
         /// Required designer variable.
@@ -74,9 +74,11 @@
             // lblInstructions
             // 
             lblInstructions.AutoSize = true;
+            lblInstructions.BackColor = Color.FromArgb(0, 53, 123);
             tableLayoutPanel1.SetColumnSpan(lblInstructions, 4);
             lblInstructions.Dock = DockStyle.Fill;
             lblInstructions.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblInstructions.ForeColor = Color.White;
             lblInstructions.Location = new Point(3, 0);
             lblInstructions.Name = "lblInstructions";
             lblInstructions.Size = new Size(794, 45);
@@ -181,7 +183,7 @@
             lblErrorAlert.Text = "Credentials don't match. Please try again!";
             lblErrorAlert.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // ManagerAuthorizationScreen
+            // ManagerAuthForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -189,7 +191,7 @@
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            Name = "ManagerAuthorizationScreen";
+            Name = "ManagerAuthForm";
             ShowIcon = false;
             Text = "ManagerAuthorizationScreen";
             tableLayoutPanel1.ResumeLayout(false);

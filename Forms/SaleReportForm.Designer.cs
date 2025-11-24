@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class SaleReportScreen
+    partial class SaleReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -79,8 +79,10 @@
             // lblSalesReports
             // 
             lblSalesReports.AutoSize = true;
+            lblSalesReports.BackColor = Color.FromArgb(0, 53, 123);
             lblSalesReports.Dock = DockStyle.Fill;
             lblSalesReports.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSalesReports.ForeColor = Color.White;
             lblSalesReports.Location = new Point(3, 0);
             lblSalesReports.Name = "lblSalesReports";
             lblSalesReports.Size = new Size(474, 40);
@@ -218,7 +220,7 @@
             dtpEndDate.Size = new Size(234, 23);
             dtpEndDate.TabIndex = 11;
             // 
-            // SaleReportScreen
+            // SaleReportForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -226,7 +228,7 @@
             Controls.Add(pnlReports);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "SaleReportScreen";
+            Name = "SaleReportForm";
             ShowIcon = false;
             Text = "SaleReportScreen";
             pnlReports.ResumeLayout(false);

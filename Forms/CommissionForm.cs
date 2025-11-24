@@ -7,20 +7,20 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Forms
 {
-    public partial class ComissionReportScreen : Form
+    public partial class CommissionForm : Form
     {
-        private static ComissionReportScreen? _instance;
-        public static ComissionReportScreen GetInstance()
+        private static CommissionForm? _instance;
+        public static CommissionForm GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new ComissionReportScreen();
+                _instance = new CommissionForm();
             }
 
             return _instance;
         }
 
-        public ComissionReportScreen()
+        public CommissionForm()
         {
             InitializeComponent();
             this.Load += ComissionReportScreen_Load;

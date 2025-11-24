@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class ComissionReportScreen
+    partial class CommissionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -49,9 +49,11 @@
             // lblTitle
             // 
             lblTitle.AutoSize = true;
+            lblTitle.BackColor = Color.FromArgb(0, 53, 123);
             pnlReports.SetColumnSpan(lblTitle, 4);
             lblTitle.Dock = DockStyle.Fill;
             lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(3, 0);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(794, 45);
@@ -221,7 +223,7 @@
             lblTotalComission.Text = "Total Comission: R$ 0,00";
             lblTotalComission.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // ComissionReportScreen
+            // CommissionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -229,7 +231,7 @@
             Controls.Add(pnlReports);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "ComissionReportScreen";
+            Name = "CommissionForm";
             ShowIcon = false;
             Text = "Comission Analytics";
             pnlReports.ResumeLayout(false);

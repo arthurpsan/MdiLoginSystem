@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class CustomerSignUpScreen
+    partial class CustomerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,11 +31,11 @@
             tabControlMain = new TabControl();
             tbpNewCustomer = new TabPage();
             pnlCreateCustomer = new TableLayoutPanel();
-            groupboxEmail = new GroupBox();
-            txtEmail = new TextBox();
-            lblCreateNewCustomer = new Label();
             groupboxName = new GroupBox();
             txtName = new TextBox();
+            lblCreateNewCustomer = new Label();
+            groupboxEmail = new GroupBox();
+            txtEmail = new TextBox();
             tbpEditCustomer = new TabPage();
             pnlEditCustomer = new TableLayoutPanel();
             groupBoxEditName = new GroupBox();
@@ -44,23 +44,23 @@
             txtEditCustomerEmail = new TextBox();
             lblEditCustomer = new Label();
             pnlCustomerManagement = new TableLayoutPanel();
-            lstCustomersBindingList = new ListView();
-            chCustomerGhost = new ColumnHeader();
-            chCustomerId = new ColumnHeader();
-            chCustomerName = new ColumnHeader();
-            chCustomerEmail = new ColumnHeader();
             btnDelete = new Button();
             btnSave = new Button();
+            customersGridView = new DataGridView();
+            ColumnCustomerId = new DataGridViewTextBoxColumn();
+            ColumnCustomerName = new DataGridViewTextBoxColumn();
+            ColumnCustomerEmail = new DataGridViewTextBoxColumn();
             tabControlMain.SuspendLayout();
             tbpNewCustomer.SuspendLayout();
             pnlCreateCustomer.SuspendLayout();
-            groupboxEmail.SuspendLayout();
             groupboxName.SuspendLayout();
+            groupboxEmail.SuspendLayout();
             tbpEditCustomer.SuspendLayout();
             pnlEditCustomer.SuspendLayout();
             groupBoxEditName.SuspendLayout();
             groupBoxEditEmail.SuspendLayout();
             pnlCustomerManagement.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)customersGridView).BeginInit();
             SuspendLayout();
             // 
             // tabControlMain
@@ -105,40 +105,6 @@
             pnlCreateCustomer.Size = new Size(780, 194);
             pnlCreateCustomer.TabIndex = 0;
             // 
-            // groupboxEmail
-            // 
-            pnlCreateCustomer.SetColumnSpan(groupboxEmail, 5);
-            groupboxEmail.Controls.Add(txtEmail);
-            groupboxEmail.Dock = DockStyle.Fill;
-            groupboxEmail.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupboxEmail.Location = new Point(3, 41);
-            groupboxEmail.Name = "groupboxEmail";
-            groupboxEmail.Size = new Size(774, 71);
-            groupboxEmail.TabIndex = 2;
-            groupboxEmail.TabStop = false;
-            groupboxEmail.Text = "E-mail";
-            // 
-            // txtEmail
-            // 
-            txtEmail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtEmail.Location = new Point(6, 28);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(762, 29);
-            txtEmail.TabIndex = 0;
-            // 
-            // lblCreateNewCustomer
-            // 
-            lblCreateNewCustomer.AutoSize = true;
-            pnlCreateCustomer.SetColumnSpan(lblCreateNewCustomer, 5);
-            lblCreateNewCustomer.Dock = DockStyle.Fill;
-            lblCreateNewCustomer.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCreateNewCustomer.Location = new Point(3, 0);
-            lblCreateNewCustomer.Name = "lblCreateNewCustomer";
-            lblCreateNewCustomer.Size = new Size(774, 38);
-            lblCreateNewCustomer.TabIndex = 1;
-            lblCreateNewCustomer.Text = "Create New Customer";
-            lblCreateNewCustomer.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // groupboxName
             // 
             pnlCreateCustomer.SetColumnSpan(groupboxName, 3);
@@ -159,6 +125,42 @@
             txtName.Name = "txtName";
             txtName.Size = new Size(762, 29);
             txtName.TabIndex = 0;
+            // 
+            // lblCreateNewCustomer
+            // 
+            lblCreateNewCustomer.AutoSize = true;
+            lblCreateNewCustomer.BackColor = Color.FromArgb(0, 53, 123);
+            pnlCreateCustomer.SetColumnSpan(lblCreateNewCustomer, 5);
+            lblCreateNewCustomer.Dock = DockStyle.Fill;
+            lblCreateNewCustomer.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCreateNewCustomer.ForeColor = Color.White;
+            lblCreateNewCustomer.Location = new Point(3, 0);
+            lblCreateNewCustomer.Name = "lblCreateNewCustomer";
+            lblCreateNewCustomer.Size = new Size(774, 38);
+            lblCreateNewCustomer.TabIndex = 1;
+            lblCreateNewCustomer.Text = "Create New Customer";
+            lblCreateNewCustomer.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // groupboxEmail
+            // 
+            pnlCreateCustomer.SetColumnSpan(groupboxEmail, 5);
+            groupboxEmail.Controls.Add(txtEmail);
+            groupboxEmail.Dock = DockStyle.Fill;
+            groupboxEmail.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            groupboxEmail.Location = new Point(3, 41);
+            groupboxEmail.Name = "groupboxEmail";
+            groupboxEmail.Size = new Size(774, 71);
+            groupboxEmail.TabIndex = 2;
+            groupboxEmail.TabStop = false;
+            groupboxEmail.Text = "E-mail";
+            // 
+            // txtEmail
+            // 
+            txtEmail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtEmail.Location = new Point(6, 28);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(762, 29);
+            txtEmail.TabIndex = 0;
             // 
             // tbpEditCustomer
             // 
@@ -234,9 +236,11 @@
             // lblEditCustomer
             // 
             lblEditCustomer.AutoSize = true;
+            lblEditCustomer.BackColor = Color.FromArgb(0, 53, 123);
             pnlEditCustomer.SetColumnSpan(lblEditCustomer, 5);
             lblEditCustomer.Dock = DockStyle.Fill;
             lblEditCustomer.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEditCustomer.ForeColor = Color.White;
             lblEditCustomer.Location = new Point(3, 0);
             lblEditCustomer.Name = "lblEditCustomer";
             lblEditCustomer.Size = new Size(774, 38);
@@ -251,9 +255,9 @@
             pnlCustomerManagement.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlCustomerManagement.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlCustomerManagement.Controls.Add(tabControlMain, 0, 0);
-            pnlCustomerManagement.Controls.Add(lstCustomersBindingList, 0, 1);
             pnlCustomerManagement.Controls.Add(btnDelete, 1, 2);
             pnlCustomerManagement.Controls.Add(btnSave, 2, 2);
+            pnlCustomerManagement.Controls.Add(customersGridView, 0, 1);
             pnlCustomerManagement.Dock = DockStyle.Fill;
             pnlCustomerManagement.Location = new Point(0, 0);
             pnlCustomerManagement.Name = "pnlCustomerManagement";
@@ -264,41 +268,6 @@
             pnlCustomerManagement.Size = new Size(800, 450);
             pnlCustomerManagement.TabIndex = 1;
             // 
-            // lstCustomersBindingList
-            // 
-            lstCustomersBindingList.BackColor = Color.LightGray;
-            lstCustomersBindingList.Columns.AddRange(new ColumnHeader[] { chCustomerGhost, chCustomerId, chCustomerName, chCustomerEmail });
-            pnlCustomerManagement.SetColumnSpan(lstCustomersBindingList, 3);
-            lstCustomersBindingList.Dock = DockStyle.Fill;
-            lstCustomersBindingList.GridLines = true;
-            lstCustomersBindingList.Location = new Point(3, 237);
-            lstCustomersBindingList.Name = "lstCustomersBindingList";
-            lstCustomersBindingList.Size = new Size(794, 174);
-            lstCustomersBindingList.TabIndex = 1;
-            lstCustomersBindingList.UseCompatibleStateImageBehavior = false;
-            lstCustomersBindingList.View = View.Details;
-            // 
-            // chCustomerGhost
-            // 
-            chCustomerGhost.Width = 0;
-            // 
-            // chCustomerId
-            // 
-            chCustomerId.Text = "ID";
-            chCustomerId.TextAlign = HorizontalAlignment.Center;
-            // 
-            // chCustomerName
-            // 
-            chCustomerName.Text = "Name";
-            chCustomerName.TextAlign = HorizontalAlignment.Center;
-            chCustomerName.Width = 260;
-            // 
-            // chCustomerEmail
-            // 
-            chCustomerEmail.Text = "E-mail";
-            chCustomerEmail.TextAlign = HorizontalAlignment.Center;
-            chCustomerEmail.Width = 470;
-            // 
             // btnDelete
             // 
             btnDelete.Dock = DockStyle.Fill;
@@ -308,6 +277,7 @@
             btnDelete.TabIndex = 4;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += BtnDelete_Click;
             // 
             // btnSave
             // 
@@ -318,8 +288,47 @@
             btnSave.TabIndex = 3;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += BtnSave_Click;
             // 
-            // CustomerSignUpScreen
+            // customersGridView
+            // 
+            customersGridView.AllowUserToAddRows = false;
+            customersGridView.AllowUserToDeleteRows = false;
+            customersGridView.AllowUserToResizeColumns = false;
+            customersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            customersGridView.Columns.AddRange(new DataGridViewColumn[] { ColumnCustomerId, ColumnCustomerName, ColumnCustomerEmail });
+            pnlCustomerManagement.SetColumnSpan(customersGridView, 3);
+            customersGridView.Dock = DockStyle.Fill;
+            customersGridView.Location = new Point(3, 237);
+            customersGridView.Name = "customersGridView";
+            customersGridView.ReadOnly = true;
+            customersGridView.Size = new Size(794, 174);
+            customersGridView.TabIndex = 5;
+            // 
+            // ColumnCustomerId
+            // 
+            ColumnCustomerId.HeaderText = "ID";
+            ColumnCustomerId.Name = "ColumnCustomerId";
+            ColumnCustomerId.ReadOnly = true;
+            ColumnCustomerId.Resizable = DataGridViewTriState.False;
+            ColumnCustomerId.Width = 80;
+            // 
+            // ColumnCustomerName
+            // 
+            ColumnCustomerName.HeaderText = "Name";
+            ColumnCustomerName.Name = "ColumnCustomerName";
+            ColumnCustomerName.ReadOnly = true;
+            ColumnCustomerName.Resizable = DataGridViewTriState.False;
+            ColumnCustomerName.Width = 270;
+            // 
+            // ColumnCustomerEmail
+            // 
+            ColumnCustomerEmail.HeaderText = "E-mail";
+            ColumnCustomerEmail.Name = "ColumnCustomerEmail";
+            ColumnCustomerEmail.ReadOnly = true;
+            ColumnCustomerEmail.Width = 401;
+            // 
+            // CustomerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -327,17 +336,17 @@
             Controls.Add(pnlCustomerManagement);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "CustomerSignUpScreen";
+            Name = "CustomerForm";
             ShowIcon = false;
-            Text = "CustomerSignUpScreen";
+            Text = "\tCustomer Management";
             tabControlMain.ResumeLayout(false);
             tbpNewCustomer.ResumeLayout(false);
             pnlCreateCustomer.ResumeLayout(false);
             pnlCreateCustomer.PerformLayout();
-            groupboxEmail.ResumeLayout(false);
-            groupboxEmail.PerformLayout();
             groupboxName.ResumeLayout(false);
             groupboxName.PerformLayout();
+            groupboxEmail.ResumeLayout(false);
+            groupboxEmail.PerformLayout();
             tbpEditCustomer.ResumeLayout(false);
             pnlEditCustomer.ResumeLayout(false);
             pnlEditCustomer.PerformLayout();
@@ -346,6 +355,7 @@
             groupBoxEditEmail.ResumeLayout(false);
             groupBoxEditEmail.PerformLayout();
             pnlCustomerManagement.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)customersGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -355,11 +365,6 @@
         private TabPage tbpNewCustomer;
         private TabPage tbpEditCustomer;
         private TableLayoutPanel pnlCustomerManagement;
-        private ListView lstCustomersBindingList;
-        private ColumnHeader chCustomerGhost;
-        private ColumnHeader chCustomerId;
-        private ColumnHeader chCustomerName;
-        private ColumnHeader chCustomerEmail;
         private Button btnSave;
         private Button btnDelete;
         private TableLayoutPanel pnlCreateCustomer;
@@ -374,5 +379,9 @@
         private GroupBox groupBoxEditEmail;
         private TextBox txtEditCustomerEmail;
         private Label lblEditCustomer;
+        private DataGridView customersGridView;
+        private DataGridViewTextBoxColumn ColumnCustomerId;
+        private DataGridViewTextBoxColumn ColumnCustomerName;
+        private DataGridViewTextBoxColumn ColumnCustomerEmail;
     }
 }

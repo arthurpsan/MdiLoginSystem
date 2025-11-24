@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem
 {
-    partial class AboutScreen
+    partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.

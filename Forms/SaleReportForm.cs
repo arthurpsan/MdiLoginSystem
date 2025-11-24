@@ -4,19 +4,19 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Forms
 {
-    public partial class SaleReportScreen : Form
+    public partial class SaleReportForm : Form
     {
-        private static SaleReportScreen _instance;
-        public static SaleReportScreen GetInstance()
+        private static SaleReportForm _instance;
+        public static SaleReportForm GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new SaleReportScreen();
+                _instance = new SaleReportForm();
             }
 
             return _instance;
         }
-        public SaleReportScreen()
+        public SaleReportForm()
         {
             InitializeComponent();
         }

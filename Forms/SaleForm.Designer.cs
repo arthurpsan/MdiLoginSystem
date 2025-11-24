@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class NewSaleScreen
+    partial class SaleForm
     {
         /// <summary>
         /// Required designer variable.
@@ -71,6 +71,7 @@
             lblInstallments = new Label();
             numInstallments = new NumericUpDown();
             btnRequestAuth = new Button();
+            lblCart = new Label();
             TabControlMain.SuspendLayout();
             tabPageCustomer.SuspendLayout();
             pnlCustomer.SuspendLayout();
@@ -248,7 +249,7 @@
             lblCategory.Size = new Size(120, 41);
             lblCategory.TabIndex = 8;
             lblCategory.Text = "Category:";
-            lblCategory.TextAlign = ContentAlignment.MiddleCenter;
+            lblCategory.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblSearchProduct
             // 
@@ -277,7 +278,7 @@
             cboCategories.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.SetColumnSpan(cboCategories, 2);
             cboCategories.FormattingEnabled = true;
-            cboCategories.Location = new Point(129, 298);
+            cboCategories.Location = new Point(129, 297);
             cboCategories.Name = "cboCategories";
             cboCategories.Size = new Size(120, 25);
             cboCategories.TabIndex = 11;
@@ -292,7 +293,7 @@
             lblQuantity.Size = new Size(120, 41);
             lblQuantity.TabIndex = 10;
             lblQuantity.Text = "Quantity:";
-            lblQuantity.TextAlign = ContentAlignment.MiddleCenter;
+            lblQuantity.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtSearchProduct
             // 
@@ -402,13 +403,14 @@
             pnlCart.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlCart.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlCart.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlCart.Controls.Add(lblSelectedCustomerName, 0, 0);
+            pnlCart.Controls.Add(lblSelectedCustomerName, 0, 3);
             pnlCart.Controls.Add(lstCart, 0, 1);
             pnlCart.Controls.Add(lblTotalSale, 0, 2);
             pnlCart.Controls.Add(btnFinalizeSale, 2, 4);
             pnlCart.Controls.Add(lblInstallments, 2, 2);
             pnlCart.Controls.Add(numInstallments, 4, 2);
             pnlCart.Controls.Add(btnRequestAuth, 0, 4);
+            pnlCart.Controls.Add(lblCart, 0, 0);
             pnlCart.Dock = DockStyle.Fill;
             pnlCart.Location = new Point(0, 0);
             pnlCart.Name = "pnlCart";
@@ -427,7 +429,7 @@
             pnlCart.SetColumnSpan(lblSelectedCustomerName, 2);
             lblSelectedCustomerName.Dock = DockStyle.Fill;
             lblSelectedCustomerName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSelectedCustomerName.Location = new Point(3, 0);
+            lblSelectedCustomerName.Location = new Point(3, 360);
             lblSelectedCustomerName.Name = "lblSelectedCustomerName";
             lblSelectedCustomerName.Size = new Size(258, 45);
             lblSelectedCustomerName.TabIndex = 0;
@@ -489,6 +491,7 @@
             // lblTotalSale
             // 
             lblTotalSale.AutoSize = true;
+            lblTotalSale.BackColor = Color.White;
             pnlCart.SetColumnSpan(lblTotalSale, 2);
             lblTotalSale.Dock = DockStyle.Fill;
             lblTotalSale.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
@@ -549,16 +552,32 @@
             btnRequestAuth.UseVisualStyleBackColor = true;
             btnRequestAuth.Visible = false;
             // 
-            // NewSaleScreen
+            // lblCart
+            // 
+            lblCart.AutoSize = true;
+            lblCart.BackColor = Color.FromArgb(0, 53, 123);
+            pnlCart.SetColumnSpan(lblCart, 4);
+            lblCart.Dock = DockStyle.Fill;
+            lblCart.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCart.ForeColor = Color.White;
+            lblCart.Location = new Point(3, 0);
+            lblCart.Name = "lblCart";
+            lblCart.Size = new Size(524, 45);
+            lblCart.TabIndex = 13;
+            lblCart.Text = "SHOPPING CART";
+            lblCart.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // SaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(splitContainerSales);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Name = "NewSaleScreen";
+            MaximizeBox = false;
+            Name = "SaleForm";
             ShowIcon = false;
-            Text = "Sale Screen";
+            Text = "Sales and Checkout";
             TabControlMain.ResumeLayout(false);
             tabPageCustomer.ResumeLayout(false);
             pnlCustomer.ResumeLayout(false);
@@ -625,5 +644,6 @@
         private Label lblDiscount;
         private NumericUpDown numDiscount;
         private ColumnHeader chCartGhost;
+        private Label lblCart;
     }
 }

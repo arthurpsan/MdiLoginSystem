@@ -6,38 +6,38 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Forms
 {
-    public partial class CustomerPurchasesReport : Form
+    public partial class CustomerReportForm : Form
     {
-        private static CustomerPurchasesReport? _instance;
+        private static CustomerReportForm? _instance;
         private List<Customer> _allCustomers = new List<Customer>();
 
-        public static CustomerPurchasesReport GetInstance()
+        public static CustomerReportForm GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new CustomerPurchasesReport();
+                _instance = new CustomerReportForm();
             }
 
             return _instance;
         }
 
-        public CustomerPurchasesReport()
+        public CustomerReportForm()
         {
             InitializeComponent();
 
             this.Load += CustomerPurchasesReport_Load;
 
-            txtSearchCustomer.TextChanged += txtSearchCustomer_TextChanged;
-            lstCustomers.SelectedIndexChanged += lstCustomers_SelectedIndexChanged;
+            txtSearchCustomer.TextChanged += TxtSearchCustomer_TextChanged;
+            lstCustomers.SelectedIndexChanged += LstCustomers_SelectedIndexChanged;
 
-            lstPurchasesReport.Columns.Add("ID Compra", 80);
+            lstPurchasesReport.Columns.Add("ID", 80);
             lstPurchasesReport.Columns.Add("Data", 120);
-            lstPurchasesReport.Columns.Add("Vendedor", 150);
-            lstPurchasesReport.Columns.Add("Valor Total", 100);
+            lstPurchasesReport.Columns.Add("Salesperson", 150);
+            lstPurchasesReport.Columns.Add("Total value", 100);
             lstPurchasesReport.View = View.Details;
 
-            lstCustomers.Columns.Add("ID Cliente", 80);
-            lstCustomers.Columns.Add("Nome", 250);
+            lstCustomers.Columns.Add("Customer ID", 80);
+            lstCustomers.Columns.Add("Name", 250);
             lstCustomers.View = View.Details;
         }
 
@@ -50,7 +50,7 @@ namespace UserManagementSystem.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao carregar clientes: {ex.Message}", "Erro");
+                MessageBox.Show($"Failed to load customers: {ex.Message}", "Error");
             }
         }
 
@@ -66,7 +66,7 @@ namespace UserManagementSystem.Forms
             }
         }
 
-        private void txtSearchCustomer_TextChanged(object sender, EventArgs e)
+        private void TxtSearchCustomer_TextChanged(object sender, EventArgs e)
         {
             string filter = txtSearchCustomer.Text.ToLower();
 
@@ -77,7 +77,7 @@ namespace UserManagementSystem.Forms
             PopulateCustomerList(filteredList);
         }
 
-        private void lstCustomers_SelectedIndexChanged(object sender, EventArgs e)
+        private void LstCustomers_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstCustomers.SelectedItems.Count == 0) return;
 

@@ -6,9 +6,9 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Forms
 {
-    public partial class NewSaleScreen : Form
+    public partial class SaleForm : Form
     {
-        private static NewSaleScreen? _instance;
+        private static SaleForm? _instance;
         private User? _loggedInSeller;
 
         // logic variables
@@ -17,17 +17,17 @@ namespace UserManagementSystem.Forms
         private bool _managerOverride = false;
         private const decimal MAX_DISCOUNT_NO_AUTH = 0.05m; // 5%
 
-        public static NewSaleScreen GetInstance(User? seller)
+        public static SaleForm GetInstance(User? seller)
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new NewSaleScreen();
+                _instance = new SaleForm();
             }
             _instance._loggedInSeller = seller;
             return _instance;
         }
 
-        public NewSaleScreen()
+        public SaleForm()
         {
             InitializeComponent();
 
@@ -72,6 +72,8 @@ namespace UserManagementSystem.Forms
                 {
                     // Usa as colunas do seu Designer (ID e Nome/Email)
                     ListViewItem item = new ListViewItem(customer.Id.ToString());
+
+                    item.SubItems.Add(customer.Id.ToString());
                     item.SubItems.Add(customer.Name); // Corrigido de 'Email' para 'Name'
                     item.Tag = customer;
                     lstCustomers.Items.Add(item);
@@ -163,7 +165,7 @@ namespace UserManagementSystem.Forms
 
         private void btnRequestAuth_Click(object sender, EventArgs e)
         {
-            using (ManagerAuthorizationScreen authForm = new ManagerAuthorizationScreen())
+            using (ManagerAuthForm authForm = new ManagerAuthForm())
             {
                 if (authForm.ShowDialog() == DialogResult.OK)
                 {
@@ -175,7 +177,7 @@ namespace UserManagementSystem.Forms
             }
         }
 
-        // --- Lógica do Carrinho ---
+        // Logic/Method used in our shopping cart
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
@@ -202,7 +204,7 @@ namespace UserManagementSystem.Forms
             {
                 MessageBox.Show($"{discountPercent}% Discount breaks our 5% limit. The manager's authorization is needed.", "Authorization");
 
-                using (ManagerAuthorizationScreen authForm = new ManagerAuthorizationScreen())
+                using (ManagerAuthForm authForm = new ManagerAuthForm())
                 {
                     if (authForm.ShowDialog() != DialogResult.OK)
                     {

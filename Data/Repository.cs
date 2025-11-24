@@ -6,7 +6,7 @@ namespace UserManagementSystem.Data
 {
     public class Repository : DbContext
     {
-        private static readonly string _connectionsParams = @"server=127.0.0.1;port=3307;uid=root;pwd=;database=UserManagementSystem";
+        private static readonly string _connectionsParams = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=StoreManagementSystem";
         
         // Define DbSets for each model
         public DbSet<User> Users { get; set; }
@@ -53,6 +53,12 @@ namespace UserManagementSystem.Data
             modelBuilder.Entity<Payment>(payment => 
             { 
                 payment.HasOne(p => p.Purchase).WithMany(pu => pu.Payments); 
+            }
+            );
+
+            modelBuilder.Entity<Cashier>(cashier =>
+            {
+                cashier.HasIndex(c => c.CashierEnrollment).IsUnique();
             }
             );
         }

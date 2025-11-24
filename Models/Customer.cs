@@ -36,7 +36,7 @@ namespace UserManagementSystem.Models
             set
             {
                 ArgumentNullException.ThrowIfNull(value, nameof(Email));
-                if (value.Length < 5 || value.Length > 140 || !value.Contains("@"))
+                if (value.Length < 5 || value.Length > 140 || !value.Contains('@'))
                 {
                     throw new ArgumentException("Email must be between 5 and 100 characters long and contain '@'.", nameof(Email));
                 }
@@ -46,7 +46,7 @@ namespace UserManagementSystem.Models
 
         [Required]
 
-        private List<Purchase> _purchases = new List<Purchase>();
+        private List<Purchase> _purchases = new();
         public List<Purchase> Purchases
         {
             get => _purchases;

@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class CustomerPurchasesReport
+    partial class CustomerReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -82,9 +82,11 @@
             // lblTitle
             // 
             lblTitle.AutoSize = true;
+            lblTitle.BackColor = Color.FromArgb(0, 53, 123);
             pnlMainLayout.SetColumnSpan(lblTitle, 4);
             lblTitle.Dock = DockStyle.Fill;
             lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(3, 0);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(794, 45);
@@ -157,7 +159,7 @@
             lblDescription.Text = "(Exhibits client data for the last 30 days.)";
             lblDescription.TextAlign = ContentAlignment.BottomLeft;
             // 
-            // CustomerPurchasesReport
+            // CustomerReportForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -165,7 +167,7 @@
             Controls.Add(pnlMainLayout);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "CustomerPurchasesReport";
+            Name = "CustomerReportForm";
             ShowIcon = false;
             Text = "PurchasesReport";
             pnlMainLayout.ResumeLayout(false);

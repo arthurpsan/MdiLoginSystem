@@ -3,22 +3,22 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem
 {
-    public partial class SystemMenu : Form
+    public partial class SystemMainMenu : Form
     {
-        private static SystemMenu? _instance;
+        private static SystemMainMenu? _instance;
         private User? _loggedInUser;
 
-        public static SystemMenu GetInstance(User user)
+        public static SystemMainMenu GetInstance(User user)
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new SystemMenu(user);
+                _instance = new SystemMainMenu(user);
             }
 
             return _instance;
         }
 
-        public SystemMenu(User? user)
+        public SystemMainMenu(User? user)
         {
             InitializeComponent();
             _loggedInUser = user;
@@ -27,8 +27,9 @@ namespace UserManagementSystem
 
             if (user != null && user.Credential != null)
             {
-                userToolStripMenuItem.Enabled = user.Credential.Manager;
+                employeeToolStripMenuItem.Enabled = user.Credential.Manager;
                 customerToolStripMenuItem.Enabled = user.Credential.Manager;
+                producttoolStripMenuItem.Enabled = user.Credential.Manager;
 
                 lblLastAccess.Text = $"Last Access: {user.Credential.LastAccess?.ToString("g") ?? "First Access!"}";
             }
@@ -42,7 +43,7 @@ namespace UserManagementSystem
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            AboutScreen aboutForm = AboutScreen.GetInstance();
+            AboutForm aboutForm = AboutForm.GetInstance();
             aboutForm.MdiParent = this;
             aboutForm.Show();
             aboutForm.BringToFront();
@@ -51,32 +52,35 @@ namespace UserManagementSystem
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
-            LoginScreen.GetInstance().ClearFieldsAndShow();
+            LoginForm.GetInstance().ClearFieldsAndShow();
         }
 
+
+        #region METHODS TO OPEN CHILD FORMS
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UserReportScreen userReportForm = UserReportScreen.GetInstance();
+            DashboardForm userReportForm = DashboardForm.GetInstance();
             userReportForm.MdiParent = this;
             userReportForm.Show();
             userReportForm.BringToFront();
         }
 
-        private void userToolStripMenuItem_Click(object sender, EventArgs e)
+        private void employeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SignupScreen signupForm = SignupScreen.GetInstance();
-            signupForm.MdiParent = this;
-            signupForm.Show();
+            EmployeeForm employeeForm = EmployeeForm.GetInstance(_loggedInUser);
+            employeeForm.MdiParent = this;
+            employeeForm.Show();
+            employeeForm.BringToFront();
         }
 
         private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LoginScreen.GetInstance().ClearFieldsAndShow();
+            LoginForm.GetInstance().ClearFieldsAndShow();
         }
 
         private void salesDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaleReportScreen saleReportForm = SaleReportScreen.GetInstance();
+            SaleReportForm saleReportForm = SaleReportForm.GetInstance();
             saleReportForm.MdiParent = this;
             saleReportForm.Show();
             saleReportForm.BringToFront();
@@ -84,7 +88,7 @@ namespace UserManagementSystem
 
         private void comissionDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ComissionReportScreen comissionReportForm = ComissionReportScreen.GetInstance();
+            CommissionForm comissionReportForm = CommissionForm.GetInstance();
             comissionReportForm.MdiParent = this;
             comissionReportForm.Show();
             comissionReportForm.BringToFront();
@@ -92,7 +96,7 @@ namespace UserManagementSystem
 
         private void clientsDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CustomerPurchasesReport customerReportForm = CustomerPurchasesReport.GetInstance();
+            CustomerReportForm customerReportForm = CustomerReportForm.GetInstance();
             customerReportForm.MdiParent = this;
             customerReportForm.Show();
             customerReportForm.BringToFront();
@@ -100,7 +104,7 @@ namespace UserManagementSystem
 
         private void saleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewSaleScreen saleForm = NewSaleScreen.GetInstance(_loggedInUser);
+            SaleForm saleForm = SaleForm.GetInstance(_loggedInUser);
             saleForm.MdiParent = this;
             saleForm.Show();
             saleForm.BringToFront();
@@ -108,10 +112,20 @@ namespace UserManagementSystem
 
         private void customerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CustomerSignUpScreen customerForm = CustomerSignUpScreen.GetInstance(_loggedInUser);
+            CustomerForm customerForm = CustomerForm.GetInstance(_loggedInUser);
             customerForm.MdiParent = this;
             customerForm.Show();
             customerForm.BringToFront();
+        }
+
+        #endregion
+
+        private void producttoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProductForm productForm = ProductForm.GetInstance(_loggedInUser);
+            productForm.MdiParent = this;
+            productForm.Show();
+            productForm.BringToFront();
         }
     }
 }

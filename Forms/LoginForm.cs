@@ -3,31 +3,31 @@ using UserManagementSystem.Models;
 
 namespace UserManagementSystem
 {
-    public partial class LoginScreen : Form
+    public partial class LoginForm : Form
     {
-        private static LoginScreen? _instance;
+        private static LoginForm? _instance;
 
-        private LoginScreen()
+        private LoginForm()
         {
             InitializeComponent();
 
         }
 
-        public static LoginScreen GetInstance()
+        public static LoginForm GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new LoginScreen();
+                _instance = new LoginForm();
             }
 
             return _instance;
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             // Get email and password from text boxes
-            String email = txtEmail.Text;
-            String password = txtPassword.Text;
+            String email = txtUserEmail.Text;
+            String password = txtUserPassword.Text;
 
             // Search for the model in the database (Credential)
 
@@ -38,8 +38,8 @@ namespace UserManagementSystem
             if (dbCredential == null)
             {
                 lblErrorAlert.Visible = true;
-                txtPassword.Clear();
-                txtEmail.Focus();
+                txtUserPassword.Clear();
+                txtUserEmail.Focus();
                 return;
             }
 
@@ -67,72 +67,81 @@ namespace UserManagementSystem
 
                 dbCredential.User.Credential = dbCredential;
 
-                txtEmail.Clear();
-                txtPassword.Clear();
+                txtUserEmail.Clear();
+                txtUserPassword.Clear();
                 this.Hide();
 
                 // Pass the model User to the System Menu
-                SystemMenu.GetInstance(dbCredential.User).Show();
+                SystemMainMenu.GetInstance(dbCredential.User).Show();
             }
             else
             {
                 // Invalid password
                 lblErrorAlert.Visible = true;
-                txtPassword.Clear();
-                txtPassword.Focus();
+                txtUserPassword.Clear();
+                txtUserPassword.Focus();
             }
         }
 
         // Method to Clear fields and error messages
         public void ClearFieldsAndShow()
         {
-            txtEmail.Clear();
-            txtPassword.Clear();
+            txtUserEmail.Clear();
+            txtUserPassword.Clear();
             lblErrorAlert.Visible = false;
             this.Show();
-            txtEmail.Focus();
+            txtUserEmail.Focus();
         }
 
         #region Input Field Highlighting Methods
-        private void txtEmail_Enter(object sender, EventArgs e)
+        private void TxtUserEmail_Enter(object sender, EventArgs e)
         {
-            txtEmail.BackColor = Color.LightCyan;
+            txtUserEmail.BackColor = Color.LightCyan;
         }
 
-        private void txtEmail_Leave(object sender, EventArgs e)
+        private void TxtUserEmail_Leave(object sender, EventArgs e)
         {
-            txtEmail.BackColor = Color.White;
+            txtUserEmail.BackColor = Color.White;
         }
 
-        private void grpPassword_Enter(object sender, EventArgs e)
+        private void TxtUserPassword_Enter(object sender, EventArgs e)
         {
-            txtPassword.BackColor = Color.LightCyan;
+            txtUserPassword.BackColor = Color.LightCyan;
         }
 
-        private void txtPassword_Leave(object sender, EventArgs e)
+        private void TxtUserPassword_Leave(object sender, EventArgs e)
         {
-            txtPassword.BackColor = Color.White;
+            txtUserPassword.BackColor = Color.White;
         }
         #endregion 
 
         // Method to handle Enter key navigation
-        private void LoginScreen_KeyDown(object sender, KeyEventArgs e)
+        private void UserLoginScreen_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (txtEmail.Focused)
+                if (txtUserEmail.Focused)
                 {
-                    txtPassword.Focus();
+                    txtUserPassword.Focus();
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
-                else if (txtPassword.Focused)
+                else if (txtUserPassword.Focused)
                 {
                     btnLogin.PerformClick();
 
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
+            }
+        }
+
+        private void TxtUserPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnLogin.PerformClick();
+                e.Handled = true;
             }
         }
     }

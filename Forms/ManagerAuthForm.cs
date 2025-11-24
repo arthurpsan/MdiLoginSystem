@@ -4,9 +4,9 @@ using UserManagementSystem.Data;
 
 namespace UserManagementSystem.Forms
 {
-    public partial class ManagerAuthorizationScreen : Form
+    public partial class ManagerAuthForm : Form
     {
-        public ManagerAuthorizationScreen()
+        public ManagerAuthForm()
         {
             InitializeComponent();
 

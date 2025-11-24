@@ -19,7 +19,7 @@ namespace UserManagementSystem
             // Verify and "populate" the Database on startup
             VerifyDatabase();
 
-            Application.Run(LoginScreen.GetInstance());
+            Application.Run(LoginForm.GetInstance());
         }
 
         // Method to verify and populate the database default users if no credentials exist.
@@ -67,7 +67,7 @@ namespace UserManagementSystem
                     {
                         Name = "Default Seller",
                         Nickname = "Seller",
-                        SalespersonEnrollment = 0,
+                        Enrollment = 0,
                         PhoneNumber = 38997654321,
                         Email = "seller@system.com"
                     };

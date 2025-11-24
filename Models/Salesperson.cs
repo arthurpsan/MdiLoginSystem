@@ -6,7 +6,7 @@ namespace UserManagementSystem.Models
     public class Salesperson : User
     {
         [Required]
-        public UInt32? SalespersonEnrollment { get; set; }
+        public UInt32? Enrollment { get; set; }
 
         // Relationship with Purchase class
         [Required]
