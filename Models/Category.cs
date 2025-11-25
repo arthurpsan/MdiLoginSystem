@@ -18,7 +18,7 @@ namespace UserManagementSystem.Models
             {
                 ArgumentNullException.ThrowIfNullOrWhiteSpace(value, nameof(Name));
 
-                if (value.Length > 50 || value.Length < 3)
+                if (value.Length > 75 || value.Length < 3)
                 {
                     throw new ArgumentOutOfRangeException("Name must contain between 3 and 50 characters.");
                 }

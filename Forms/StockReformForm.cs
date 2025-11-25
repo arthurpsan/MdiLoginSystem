@@ -1,21 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Data;
+using UserManagementSystem.Models;
+using System.ComponentModel;
+
 
 namespace UserManagementSystem.Forms
 {
     public partial class StockReformForm : Form
     {
+        private static StockReformForm? _instance;
+        private readonly Repository _dbContext;
+        private BindingList<Product> _products;
+        public static StockReformForm GetInstance()
+        {
+            if (_instance == null || _instance.IsDisposed)
+            {
+                _instance = new StockReformForm();
+            }
+            return _instance;
+        }
+
         public StockReformForm()
         {
             InitializeComponent();
+
+            _dbContext = new Repository();
+            _dbContext.Products.Load();
+
+            _products = _dbContext.Products.Local.ToBindingList();
+
+            ColumnProductId.DataPropertyName = nameof(Product.Id);
+            ColumnProductName.DataPropertyName = nameof(Product.Name);
+            ColumnProductStock.DataPropertyName = nameof(Product.Stockpile);
+            ColumunMinStock.DataPropertyName = nameof(Product.MinimumStock);
+
+
+
         }
 
         private void btnLowStock_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using UserManagementSystem.Forms;
+﻿using UserManagementSystem.Data;
+using UserManagementSystem.Forms;
 using UserManagementSystem.Models;
 
 namespace UserManagementSystem
@@ -118,8 +119,6 @@ namespace UserManagementSystem
             customerForm.BringToFront();
         }
 
-        #endregion
-
         private void producttoolStripMenuItem_Click(object sender, EventArgs e)
         {
             ProductForm productForm = ProductForm.GetInstance(_loggedInUser);
@@ -127,5 +126,16 @@ namespace UserManagementSystem
             productForm.Show();
             productForm.BringToFront();
         }
+
+        private void stockDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StockReformForm stockForm = StockReformForm.GetInstance();
+            stockForm.MdiParent = this;
+            stockForm.Show();
+            stockForm.BringToFront();
+        }
+
+        #endregion
+
     }
 }

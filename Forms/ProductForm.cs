@@ -1,125 +1,259 @@
 ﻿using System;
-using System.Linq;
-using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using Microsoft.VisualBasic;
 
 namespace UserManagementSystem.Forms
 {
-    public partial class PaymentForm : Form
+    public partial class ProductForm : Form
     {
-        public PaymentForm()
+        private static ProductForm? _instance;
+        private User? _loggedInUser;
+        private Repository _dbContext = new Repository();
+        private BindingList<Product> _products;
+        private BindingList<Category> _categories;
+
+        public static ProductForm GetInstance(User user)
         {
-            InitializeComponent();
+            if (_instance == null || _instance.IsDisposed)
+            {
+                _instance = new ProductForm(user);
+            }
+
+            return _instance;
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        public ProductForm(User? user)
         {
-            string name = txtSearchCustomer.Text;
-            lstPendingPayments.Items.Clear();
+            InitializeComponent();
+            _loggedInUser = user;
 
+            LoadCategories();
+            LoadProducts();
+            BindControls();
+
+            dgvProduct.AllowUserToAddRows = false;
+            dgvCategory.AllowUserToAddRows = false;
+        }
+
+        // -- main methods for loading data --
+        private void LoadCategories()
+        {
+            _dbContext.Categories.Load();
+            _categories = _dbContext.Categories.Local.ToBindingList();
+            cboProductCategory.DataSource = _categories;
+            cboProductCategory.DisplayMember = "Name";
+            cboProductCategory.ValueMember = "Id";
+            dgvCategory.DataSource = null;
+            dgvCategory.DataSource = _categories;
+        }
+
+        private void LoadProducts()
+        {
+            _dbContext.Products.Load();
+            _products = _dbContext.Products.Local.ToBindingList();
+            dgvProduct.DataSource = null;
+            dgvProduct.DataSource = _products;
+        }
+
+        // set up data bindings for DataGridView columns
+        private void BindControls()
+        {
+            // products
+            ColumnProductId.DataPropertyName = nameof(Product.Id);
+            ColumnProductName.DataPropertyName = nameof(Product.Name);
+            ColumnProductPrice.DataPropertyName = nameof(Product.Price);
+            ColumnProductCurrentStock.DataPropertyName = nameof(Product.Stockpile);
+            ColumnProductMinStock.DataPropertyName = nameof(Product.MinimumStock);
+            ColumnProductCategory.DataPropertyName = nameof(Product.Category);
+            ColumnProductIsActive.DataPropertyName = nameof(Product.IsActive);
+
+            // categories
+            ColumnCategoryId.DataPropertyName = nameof(Category.Id);
+            ColumnCategoryName.DataPropertyName = nameof(Category.Name);
+        }
+
+        #region CRUD methods for category and product
+
+        // category methods
+        private void RegisterCategory()
+        {
+            var category = new Category();
             try
             {
-                // Find customer by name
-                var allCustomers = CustomerRepository.FindAll();
-                var customer = allCustomers.FirstOrDefault(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
-
-                if (customer == null)
-                {
-                    MessageBox.Show("Customer not found.");
-                    return;
-                }
-
-                // Requirement: Find pending payments
-                // We fetch purchases for this client. 
-                // Ideally, PurchaseRepository needs a method to fetch deep data, 
-                // but we can filter the FindByCustomerIdAndDate existing method.
-                var purchases = PurchaseRepository.FindByCustomerIdAndDate(customer.Id, DateTime.MinValue);
-
-                foreach (var purchase in purchases)
-                {
-                    // Ensure payments are loaded
-                    if (purchase.Payments == null) continue;
-
-                    foreach (var payment in purchase.Payments)
-                    {
-                        // Requirement: Select the parcel to be paid (only show unpaid)
-                        if (payment.DatePayment == null)
-                        {
-                            // Logic to PREVIEW the fine before paying
-                            // We temporarily set the date to NOW to calculate what the fine would be
-                            payment.DatePayment = DateTime.Now;
-                            decimal? totalWithFine = payment.CalcTotalPayment();
-
-                            // Reset it back to null because we haven't paid yet
-                            payment.DatePayment = null;
-
-                            // Calculate original value (approximate based on purchase total / installments)
-                            decimal? originalVal = purchase.CalcTotal() / purchase.Payments.Count;
-
-                            ListViewItem item = new ListViewItem(payment.Id.ToString());
-                            item.SubItems.Add(purchase.Id.ToString());
-                            item.SubItems.Add(payment.ExpirationDate?.ToShortDateString());
-                            item.SubItems.Add(originalVal?.ToString("C"));
-
-                            // Requirement: Visualize calculation of fine
-                            item.SubItems.Add(totalWithFine?.ToString("C"));
-
-                            item.Tag = payment; // Store the object for the Pay button
-
-                            lstPendingPayments.Items.Add(item);
-                        }
-                    }
-                }
+                category.Name = txtCategoryName.Text;
+                CategoryRepository.SaveOrUpdate(category);
+                LoadCategories();
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show("Category name cannot be empty.");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show("Category name must have 3-50 characters.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error searching: " + ex.Message);
+                MessageBox.Show("An unexpected error occurred: " + ex.Message);
             }
         }
 
-        private void lstPendingPayments_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateCategory()
         {
-            if (lstPendingPayments.SelectedItems.Count > 0)
+            if (dgvCategory.CurrentRow?.DataBoundItem is Category currentCategory)
             {
-                // Optional: Show details in the label
-                lblTotalWithFine.Text = "Selected Amount: " + lstPendingPayments.SelectedItems[0].SubItems[4].Text;
+                currentCategory.Name = txtCategoryName.Text;
+                CategoryRepository.SaveOrUpdate(currentCategory);
+                LoadCategories();
+            }
+
+            else 
+            {
+                MessageBox.Show("No category selected for update.");
             }
         }
 
-        private void btnPay_Click(object sender, EventArgs e)
+        private void DeleteCategory()
         {
-            if (lstPendingPayments.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("Select a payment first.");
-                return;
-            }
-
-            Payment selectedPayment = lstPendingPayments.SelectedItems[0].Tag as Payment;
-
-            if (selectedPayment != null)
+            if (dgvCategory.CurrentRow?.DataBoundItem is Category currentCategory)
             {
                 try
                 {
-                    // Requirement: Inform debt settlement
-                    selectedPayment.DatePayment = DateTime.Now;
-
-                    // Requirement: Automatic fine registration 
-                    // (Happens inside the CalcTotalPayment logic implicitly or you can save the specific calculated fine if you add a field for it)
-
-                    // Save to database
-                    PaymentRepository.SaveOrUpdate(selectedPayment);
-
-                    MessageBox.Show("Payment Confirmed!");
-                    btnSearch_Click(sender, e); // Refresh the list
-                    lblTotalWithFine.Text = "";
+                    CategoryRepository.Delete(currentCategory);
+                    LoadCategories();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error processing payment: " + ex.Message);
+                    MessageBox.Show("Category detection failed: " + ex.Message);
+                }
+                
+            }
+        }
+
+        // product methods
+        private void RegisterProduct()
+        {
+
+            var selectedCategory = cboProductCategory.SelectedItem as Category;
+            if (selectedCategory == null)
+            {
+                MessageBox.Show("Please select a valid category.");
+                return;
+            }
+
+            var product = new Product();
+            try 
+            {
+                product.Name = txtProductName.Text;
+                product.Price = decimal.Parse(nudProductPrice.Text);
+                product.Stockpile = uint.Parse(nudStock.Text);
+                product.MinimumStock = uint.Parse(nudMinStock.Text);
+                product.CategoryId = selectedCategory.Id;
+                product.IsActive = chkIsActive.Checked;
+
+                ProductRepository.SaveOrUpdate(product);
+                LoadProducts();
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred: " + ex.Message);
+            }
+            
+        }
+
+        private void UpdateProduct()
+        {
+            var selectedCategory = cboProductCategory.SelectedItem as Category;
+
+            if (selectedCategory == null || dgvProduct.CurrentRow?.DataBoundItem is not Product currentProduct)
+            {
+                MessageBox.Show("Please select a valid product and category.");
+                return;
+            }
+
+            try
+            {
+                
+                currentProduct.Name = txtProductName.Text;
+                currentProduct.Price = decimal.Parse(nudProductPrice.Text);
+                currentProduct.Stockpile = uint.Parse(nudStock.Text);
+                currentProduct.MinimumStock = uint.Parse(nudMinStock.Text);
+                currentProduct.CategoryId = selectedCategory.Id;
+                currentProduct.IsActive = chkIsActive.Checked;
+                ProductRepository.SaveOrUpdate(currentProduct);
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Product update failed: " + ex.Message);
+            }
+        }
+
+        private void DeleteProduct()
+        {
+            if (dgvProduct.CurrentRow?.DataBoundItem is Product currentProduct)
+            {
+                try
+                {
+                    ProductRepository.Delete(currentProduct);
+                    LoadProducts();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Product deletion falied: " + ex.Message);
                 }
             }
         }
+
+        #endregion
+
+        #region event handlers
+
+        // event handlers for category button clicks
+        private void btnRegisterCategory_Click(object sender, EventArgs e)
+        {
+            RegisterCategory();
+        }
+
+        private void btnUpdateCategory_Click(object sender, EventArgs e)
+        {
+            UpdateCategory();
+        }
+
+        private void btnDeleteCategory_Click(object sender, EventArgs e)
+        {
+            DeleteCategory();
+        }
+
+        // event handlers for product button clicks
+        private void btnRegisterProduct_Click(object sender, EventArgs e)
+        {
+            RegisterProduct();
+        }
+
+        private void btnUpdateProduct_Click(object sender, EventArgs e)
+        {
+            UpdateProduct();
+
+        }
+
+        private void btnDeleteProduct_Click(object sender, EventArgs e)
+        {
+            DeleteProduct();
+        }
+
+        #endregion
+
     }
 }

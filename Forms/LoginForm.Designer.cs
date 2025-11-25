@@ -129,7 +129,6 @@
 
         #endregion
 
-        private Button BtnLogin;
         private TableLayoutPanel pnlLoginScreen;
         private GroupBox grpLogin;
         private TableLayoutPanel pnlLoginCredentials;
