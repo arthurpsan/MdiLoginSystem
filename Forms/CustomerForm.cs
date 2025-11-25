@@ -10,6 +10,7 @@ namespace UserManagementSystem.Forms
     {
         private static CustomerForm? _instance;
         private User? _loggedInUser;
+        private readonly Repository _dbContext = new Repository();
         private BindingList<Customer> _customers;
 
         public static CustomerForm? GetInstance(User? user)
@@ -31,7 +32,7 @@ namespace UserManagementSystem.Forms
             LoadCustomers();
             BindControls();
 
-            // Wire up selection changed to populate text boxes
+            customersGridView.AutoGenerateColumns = false;
             customersGridView.AllowUserToAddRows = false;
 
             customersGridView.SelectionChanged += customersGridView_SelectionChanged;
@@ -39,9 +40,19 @@ namespace UserManagementSystem.Forms
 
         public void LoadCustomers()
         {
-            _customers = CustomerRepository.FindAll().ToBindingList();
-            customersGridView.DataSource = null;
-            customersGridView.DataSource = _customers;
+            _dbContext.ChangeTracker.Clear();
+            _dbContext.Customers.Load();
+
+            if (_customers != null)
+            {
+                _customers = _dbContext.Customers.Local.ToBindingList();
+                customersGridView.DataSource = _customers;
+            }
+            else
+            {
+                customersGridView.Refresh();
+            }
+
         }
 
         public void BindControls()
@@ -110,8 +121,8 @@ namespace UserManagementSystem.Forms
                     if (MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         CustomerRepository.Delete(currentCustomer);
-                        LoadCustomers();
-                        Refresh();
+                        _dbContext.Remove(currentCustomer);
+
                         ClearInputs();
                         MessageBox.Show("Customer deleted successfully.");
                     }
