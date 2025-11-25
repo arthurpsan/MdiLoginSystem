@@ -10,84 +10,157 @@ namespace UserManagementSystem.Forms
     {
         private static CustomerForm? _instance;
         private User? _loggedInUser;
-        private readonly Repository _dbContext;
-        private readonly BindingList<Customer> _customers;
+        private BindingList<Customer> _customers;
 
         public static CustomerForm? GetInstance(User? user)
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new CustomerForm();
+                _instance = new CustomerForm(user);
             }
 
             _instance._loggedInUser = user;
             return _instance;
         }
 
-        public CustomerForm()
+        public CustomerForm(User? user)
         {
             InitializeComponent();
+            _loggedInUser = user;
 
-            _dbContext = new Repository();
-            _dbContext.Customers.Load();
+            LoadCustomers();
+            BindControls();
 
-            _customers = _dbContext.Customers.Local.ToBindingList();
+            // Wire up selection changed to populate text boxes
+            customersGridView.AllowUserToAddRows = false;
 
+            customersGridView.SelectionChanged += customersGridView_SelectionChanged;
+        }
+
+        public void LoadCustomers()
+        {
+            _customers = CustomerRepository.FindAll().ToBindingList();
+            customersGridView.DataSource = null;
             customersGridView.DataSource = _customers;
+        }
 
-            ColumnCustomerId.DataPropertyName = nameof(Customer.Id);
+        public void BindControls()
+        {
             ColumnCustomerName.DataPropertyName = nameof(Customer.Name);
             ColumnCustomerEmail.DataPropertyName = nameof(Customer.Email);
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        #region CRUD methods for customers
+
+        private void RegisterCustomer()
         {
+            var customer = new Customer();
             try
             {
-                if (tabControlMain.SelectedTab == tbpNewCustomer)
-                {
-                    var customer = new Customer
-                    {
-                        Email = txtEmail.Text,
-                        Name = txtName.Text
-                    };
+                customer.Name = txtCustomerName.Text;
+                customer.Email = txtCustomerEmail.Text;
 
-                    _dbContext.Customers.Add(customer);
-                }
-                else if (tabControlMain.SelectedTab == tbpEditCustomer)
-                {
-                    if (customersGridView.CurrentRow?.DataBoundItem is Customer currentCustomer)
-                    {
-                        currentCustomer.Name = txtEditCustomerName.Text;
-                        currentCustomer.Email = txtEditCustomerEmail.Text;
-                    }
-                }
+                CustomerRepository.SaveOrUpdate(customer);
 
-                _dbContext.SaveChanges();
-                MessageBox.Show("Saved successfully!");
+                LoadCustomers();
+                ClearInputs();
+                MessageBox.Show("Customer registered successfully!");
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show($"Validation error: {ex.Message}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
             }
+        }
+
+        private void UpdateCustomer()
+        {
+            if (customersGridView.CurrentRow?.DataBoundItem is Customer currentCustomer)
+            {
+                try
+                {
+                    currentCustomer.Name = txtCustomerName.Text;
+                    currentCustomer.Email = txtCustomerEmail.Text;
+
+                    CustomerRepository.SaveOrUpdate(currentCustomer);
+
+                    customersGridView.Refresh();
+                    MessageBox.Show("Customer updated successfully!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Update failed: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No customer selected for update.");
+            }
+        }
+
+        private void DeleteCustomer()
+        {
+            if (customersGridView.CurrentRow?.DataBoundItem is Customer currentCustomer)
+            {
+                try
+                {
+                    if (MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        CustomerRepository.Delete(currentCustomer);
+                        LoadCustomers();
+                        Refresh();
+                        ClearInputs();
+                        MessageBox.Show("Customer deleted successfully.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Deletion failed: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a customer to delete.");
+            }
+        }
+
+        private void ClearInputs()
+        {
+            txtCustomerName.Text = string.Empty;
+            txtCustomerEmail.Text = string.Empty;
+        }
+
+        #endregion
+
+        #region Event Handlers
+        private void btnRegisterCustomer_Click(object sender, EventArgs e)
+        {
+            RegisterCustomer();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            UpdateCustomer();
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            try
+            DeleteCustomer();
+        }
+
+        private void customersGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (customersGridView.CurrentRow?.DataBoundItem is Customer selectedCustomer)
             {
-                if (customersGridView.CurrentRow?.DataBoundItem is Customer currentCustomer)
-                {
-                    _dbContext.Customers.Remove(currentCustomer);
-                    _dbContext.SaveChanges();
-                    MessageBox.Show("Deleted successfully!");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
+                txtCustomerName.Text = selectedCustomer.Name;
+                txtCustomerEmail.Text = selectedCustomer.Email;
             }
         }
+
+        #endregion
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
