@@ -32,8 +32,6 @@
             tabPageCategories = new TabPage();
             pnlCategorieManagement = new TableLayoutPanel();
             dgvCategory = new DataGridView();
-            ColumnCategoryId = new DataGridViewTextBoxColumn();
-            ColumnCategoryName = new DataGridViewTextBoxColumn();
             grpCategoryDetails = new GroupBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             txtCategoryName = new TextBox();
@@ -63,7 +61,7 @@
             chkIsActive = new CheckBox();
             lblProductManager = new Label();
             dgvProduct = new DataGridView();
-            ColumnProductId = new DataGridViewTextBoxColumn();
+            ColumnCategoryName = new DataGridViewTextBoxColumn();
             ColumnProductName = new DataGridViewTextBoxColumn();
             ColumnProductPrice = new DataGridViewTextBoxColumn();
             ColumnProductCurrentStock = new DataGridViewTextBoxColumn();
@@ -136,8 +134,8 @@
             // 
             // dgvCategory
             // 
-            dgvCategory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCategory.Columns.AddRange(new DataGridViewColumn[] { ColumnCategoryId, ColumnCategoryName });
+            dgvCategory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvCategory.Columns.AddRange(new DataGridViewColumn[] { ColumnCategoryName });
             pnlCategorieManagement.SetColumnSpan(dgvCategory, 4);
             dgvCategory.Dock = DockStyle.Fill;
             dgvCategory.Location = new Point(3, 44);
@@ -145,22 +143,6 @@
             pnlCategorieManagement.SetRowSpan(dgvCategory, 2);
             dgvCategory.Size = new Size(780, 201);
             dgvCategory.TabIndex = 4;
-            // 
-            // ColumnCategoryId
-            // 
-            ColumnCategoryId.HeaderText = "Id";
-            ColumnCategoryId.Name = "ColumnCategoryId";
-            ColumnCategoryId.ReadOnly = true;
-            ColumnCategoryId.Resizable = DataGridViewTriState.False;
-            ColumnCategoryId.Width = 160;
-            // 
-            // ColumnCategoryName
-            // 
-            ColumnCategoryName.HeaderText = "Name";
-            ColumnCategoryName.Name = "ColumnCategoryName";
-            ColumnCategoryName.ReadOnly = true;
-            ColumnCategoryName.Resizable = DataGridViewTriState.False;
-            ColumnCategoryName.Width = 577;
             // 
             // grpCategoryDetails
             // 
@@ -518,8 +500,7 @@
             // 
             // dgvProduct
             // 
-            dgvProduct.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProduct.Columns.AddRange(new DataGridViewColumn[] { ColumnProductId, ColumnProductName, ColumnProductPrice, ColumnProductCurrentStock, ColumnProductMinStock, ColumnProductCategory, ColumnProductIsActive });
+            dgvProduct.Columns.AddRange(new DataGridViewColumn[] { ColumnProductName, ColumnProductPrice, ColumnProductCurrentStock, ColumnProductMinStock, ColumnProductCategory, ColumnProductIsActive });
             pnlProductManagement.SetColumnSpan(dgvProduct, 4);
             dgvProduct.Dock = DockStyle.Fill;
             dgvProduct.Location = new Point(3, 44);
@@ -528,13 +509,13 @@
             dgvProduct.Size = new Size(780, 201);
             dgvProduct.TabIndex = 3;
             // 
-            // ColumnProductId
+            // ColumnCategoryName
             // 
-            ColumnProductId.HeaderText = "Id";
-            ColumnProductId.Name = "ColumnProductId";
-            ColumnProductId.ReadOnly = true;
-            ColumnProductId.Resizable = DataGridViewTriState.False;
-            ColumnProductId.Width = 60;
+            ColumnCategoryName.HeaderText = "Name";
+            ColumnCategoryName.Name = "ColumnCategoryName";
+            ColumnCategoryName.ReadOnly = true;
+            ColumnCategoryName.Resizable = DataGridViewTriState.False;
+            ColumnCategoryName.Width = 737;
             // 
             // ColumnProductName
             // 
@@ -565,7 +546,7 @@
             ColumnProductMinStock.Name = "ColumnProductMinStock";
             ColumnProductMinStock.ReadOnly = true;
             ColumnProductMinStock.Resizable = DataGridViewTriState.False;
-            ColumnProductMinStock.Width = 60;
+            ColumnProductMinStock.Width = 120;
             // 
             // ColumnProductCategory
             // 
@@ -641,16 +622,7 @@
         private Label label2;
         private ComboBox cboProductCategory;
         private DataGridView dgvProduct;
-        private DataGridViewTextBoxColumn ColumnProductId;
-        private DataGridViewTextBoxColumn ColumnProductName;
-        private DataGridViewTextBoxColumn ColumnProductPrice;
-        private DataGridViewTextBoxColumn ColumnProductCurrentStock;
-        private DataGridViewTextBoxColumn ColumnProductMinStock;
-        private DataGridViewTextBoxColumn ColumnProductCategory;
-        private DataGridViewTextBoxColumn ColumnProductIsActive;
         private DataGridView dgvCategory;
-        private DataGridViewTextBoxColumn ColumnCategoryId;
-        private DataGridViewTextBoxColumn ColumnCategoryName;
         private Button btnRegisterCategory;
         private Button btnDeleteCategory;
         private Button btnUpdateCategory;
@@ -661,5 +633,12 @@
         private NumericUpDown nudProductPrice;
         private CheckBox chkIsActive;
         private Label lblIsActive;
+        private DataGridViewTextBoxColumn ColumnCategoryName;
+        private DataGridViewTextBoxColumn ColumnProductName;
+        private DataGridViewTextBoxColumn ColumnProductPrice;
+        private DataGridViewTextBoxColumn ColumnProductCurrentStock;
+        private DataGridViewTextBoxColumn ColumnProductMinStock;
+        private DataGridViewTextBoxColumn ColumnProductCategory;
+        private DataGridViewTextBoxColumn ColumnProductIsActive;
     }
 }

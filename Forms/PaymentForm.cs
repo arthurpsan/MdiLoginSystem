@@ -9,6 +9,17 @@ namespace UserManagementSystem.Forms
 {
     public partial class PaymentForm : Form
     {
+        private static PaymentForm? _instance;
+        public static PaymentForm? GetInstance(User? user)
+        {
+            if (_instance == null || _instance.IsDisposed)
+            {
+                _instance = new PaymentForm();
+            }
+
+            return _instance;
+        }
+
         public PaymentForm()
         {
             InitializeComponent();
@@ -46,12 +57,13 @@ namespace UserManagementSystem.Forms
                             decimal? totalWithFine = payment.CalcTotalPayment();
                             payment.DatePayment = null; // Reset
 
-                            decimal? originalVal = purchase.CalcTotal() / purchase.Payments.Count;
+                            decimal? totalPurchase = purchase.CalcTotal();
+                            int paymentCount = purchase.Payments.Count;
 
                             ListViewItem item = new ListViewItem(payment.Id.ToString());
                             item.SubItems.Add(purchase.Id.ToString());
                             item.SubItems.Add(payment.ExpirationDate?.ToShortDateString());
-                            item.SubItems.Add(originalVal?.ToString("C"));
+                            decimal? originalVal = paymentCount > 0 ? (totalPurchase / paymentCount) : 0;
                             item.SubItems.Add(totalWithFine?.ToString("C")); // Value with fine
 
                             item.Tag = payment;

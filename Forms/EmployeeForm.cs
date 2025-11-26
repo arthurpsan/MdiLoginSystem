@@ -9,12 +9,12 @@ namespace UserManagementSystem.Forms
     public partial class EmployeeForm : Form
     {
         private static EmployeeForm? _instance;
-        private Models.User? _loggedInUser;
+        private User? _loggedInUser;
         private readonly Repository _dbContext;
         private BindingList<User> _employees;
 
 
-        public static EmployeeForm GetInstance(Models.User? user)
+        public static EmployeeForm GetInstance(User? user)
         {
             if (_instance == null || _instance.IsDisposed)
             {

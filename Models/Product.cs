@@ -8,6 +8,7 @@ namespace UserManagementSystem.Models
     public class Product
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public UInt64? Id { get; set; }
 
         [Required]

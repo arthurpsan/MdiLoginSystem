@@ -9,10 +9,11 @@ namespace UserManagementSystem.Forms
 {
     public partial class StockReformForm : Form
     {
+        private static User? _loggedInUser;
         private static StockReformForm? _instance;
         private readonly Repository _dbContext;
         private BindingList<Product> _products;
-        public static StockReformForm GetInstance()
+        public static StockReformForm GetInstance(User? user)
         {
             if (_instance == null || _instance.IsDisposed)
             {

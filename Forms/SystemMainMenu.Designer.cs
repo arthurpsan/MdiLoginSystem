@@ -47,6 +47,7 @@
             statusStrip1 = new StatusStrip();
             staAccess = new ToolStripStatusLabel();
             lblLastAccess = new ToolStripStatusLabel();
+            paymentToolStripMenuItem = new ToolStripMenuItem();
             mnuSystem.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -77,7 +78,7 @@
             // 
             // registerToolStripMenuItem
             // 
-            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { employeeToolStripMenuItem, customerToolStripMenuItem, saleToolStripMenuItem, producttoolStripMenuItem });
+            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { employeeToolStripMenuItem, customerToolStripMenuItem, saleToolStripMenuItem, producttoolStripMenuItem, paymentToolStripMenuItem });
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             registerToolStripMenuItem.Size = new Size(61, 20);
             registerToolStripMenuItem.Text = "Register";
@@ -120,35 +121,35 @@
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(180, 22);
+            usersToolStripMenuItem.Size = new Size(166, 22);
             usersToolStripMenuItem.Text = "User Data...";
             usersToolStripMenuItem.Click += usersToolStripMenuItem_Click;
             // 
             // salesDataToolStripMenuItem
             // 
             salesDataToolStripMenuItem.Name = "salesDataToolStripMenuItem";
-            salesDataToolStripMenuItem.Size = new Size(180, 22);
+            salesDataToolStripMenuItem.Size = new Size(166, 22);
             salesDataToolStripMenuItem.Text = "Sale Data...";
             salesDataToolStripMenuItem.Click += salesDataToolStripMenuItem_Click;
             // 
             // clientsDataToolStripMenuItem
             // 
             clientsDataToolStripMenuItem.Name = "clientsDataToolStripMenuItem";
-            clientsDataToolStripMenuItem.Size = new Size(180, 22);
+            clientsDataToolStripMenuItem.Size = new Size(166, 22);
             clientsDataToolStripMenuItem.Text = "Client Data...";
             clientsDataToolStripMenuItem.Click += clientsDataToolStripMenuItem_Click;
             // 
             // comissionDataToolStripMenuItem
             // 
             comissionDataToolStripMenuItem.Name = "comissionDataToolStripMenuItem";
-            comissionDataToolStripMenuItem.Size = new Size(180, 22);
+            comissionDataToolStripMenuItem.Size = new Size(166, 22);
             comissionDataToolStripMenuItem.Text = "Comission Data...";
             comissionDataToolStripMenuItem.Click += comissionDataToolStripMenuItem_Click;
             // 
             // stockDataToolStripMenuItem
             // 
             stockDataToolStripMenuItem.Name = "stockDataToolStripMenuItem";
-            stockDataToolStripMenuItem.Size = new Size(180, 22);
+            stockDataToolStripMenuItem.Size = new Size(166, 22);
             stockDataToolStripMenuItem.Text = "Stock Data...";
             stockDataToolStripMenuItem.Click += stockDataToolStripMenuItem_Click;
             // 
@@ -187,6 +188,13 @@
             lblLastAccess.Name = "lblLastAccess";
             lblLastAccess.Size = new Size(131, 17);
             lblLastAccess.Text = "toolStripStatusLabel1";
+            // 
+            // paymentToolStripMenuItem
+            // 
+            paymentToolStripMenuItem.Name = "paymentToolStripMenuItem";
+            paymentToolStripMenuItem.Size = new Size(199, 22);
+            paymentToolStripMenuItem.Text = "Payment...";
+            paymentToolStripMenuItem.Click += paymentToolStripMenuItem_Click;
             // 
             // SystemMainMenu
             // 
@@ -234,5 +242,6 @@
         private ToolStripMenuItem customerToolStripMenuItem;
         private ToolStripMenuItem producttoolStripMenuItem;
         private ToolStripMenuItem stockDataToolStripMenuItem;
+        private ToolStripMenuItem paymentToolStripMenuItem;
     }
 }

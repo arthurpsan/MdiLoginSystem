@@ -56,6 +56,45 @@ namespace UserManagementSystem
             LoginForm.GetInstance().ClearFieldsAndShow();
         }
 
+        private void lowStockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var lowStockProducts = ProductRepository.FindAll()
+                                    .Where(p => p.Stockpile <= p.MinimumStock)
+                                    .ToList();
+
+            if (lowStockProducts.Count == 0)
+            {
+                MessageBox.Show("All stock levels are good!");
+                return;
+            }
+
+            string report = "PRODUCTS WITH LOW STOCK:\n\n";
+            foreach (var p in lowStockProducts)
+            {
+                report += $"- {p.Name}: Current {p.Stockpile} (Min {p.MinimumStock})\n";
+            }
+            MessageBox.Show(report, "Low Stock Report");
+        }
+
+        private void delinquentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var customers = CustomerRepository.FindAll();
+            var delinquents = customers.Where(c => !c.CanBuy()).ToList();
+
+            if (delinquents.Count == 0)
+            {
+                MessageBox.Show("No delinquent customers found.");
+                return;
+            }
+
+            string report = "DELINQUENT CUSTOMERS (Blocked):\n\n";
+            foreach (var c in delinquents)
+            {
+                report += $"- {c.Name} (ID: {c.Id})\n";
+            }
+            MessageBox.Show(report, "Delinquency Report");
+        }
+
 
         #region METHODS TO OPEN CHILD FORMS
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -129,13 +168,22 @@ namespace UserManagementSystem
 
         private void stockDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StockReformForm stockForm = StockReformForm.GetInstance();
+            StockReformForm stockForm = StockReformForm.GetInstance(_loggedInUser);
             stockForm.MdiParent = this;
             stockForm.Show();
             stockForm.BringToFront();
         }
 
+        private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PaymentForm paymentForm = PaymentForm.GetInstance(_loggedInUser);
+            paymentForm.MdiParent = this;
+            paymentForm.Show();
+            paymentForm.BringToFront();
+        }
+
         #endregion
+
 
     }
 }
