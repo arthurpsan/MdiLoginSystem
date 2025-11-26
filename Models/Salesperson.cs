@@ -6,7 +6,22 @@ namespace UserManagementSystem.Models
     public class Salesperson : User
     {
         [Required]
-        public UInt32? Enrollment { get; set; }
+        private UInt32 _sellerEnrollment;
+        public UInt32? SellerEnrollment
+        {
+            get => _sellerEnrollment;
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value, nameof(SellerEnrollment));
+
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException("Enrollment must be a positive number.");
+                }
+
+                _sellerEnrollment = value.Value;
+            }
+        }
 
         // Relationship with Purchase class
         [Required]

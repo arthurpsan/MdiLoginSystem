@@ -278,7 +278,7 @@
             cboCategories.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.SetColumnSpan(cboCategories, 2);
             cboCategories.FormattingEnabled = true;
-            cboCategories.Location = new Point(129, 297);
+            cboCategories.Location = new Point(129, 298);
             cboCategories.Name = "cboCategories";
             cboCategories.Size = new Size(120, 25);
             cboCategories.TabIndex = 11;

@@ -34,7 +34,7 @@ namespace UserManagementSystem
                     {
                         Name = "Administrator",
                         Nickname = "Admin",
-                        PhoneNumber = 38998103030,
+                        PhoneNumber = 5538998103030,
                         Email = "admin@system.com"
                     };
 
@@ -67,8 +67,7 @@ namespace UserManagementSystem
                     {
                         Name = "Default Seller",
                         Nickname = "Seller",
-                        Enrollment = 0,
-                        PhoneNumber = 38997654321,
+                        PhoneNumber = 5538997654321,
                         Email = "seller@system.com"
                     };
 
@@ -88,8 +87,7 @@ namespace UserManagementSystem
                     {
                         Name = "Default Cashier",
                         Nickname = "Cashier",
-                        CashierEnrollment = 0,
-                        PhoneNumber = 38993456789,
+                        PhoneNumber = 5538993456789,
                         Email = "cashier@system.com"
                     };
 

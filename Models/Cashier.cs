@@ -12,6 +12,8 @@ namespace UserManagementSystem.Models
             get => _cashierEnrollment;
             set
             {
+                ArgumentNullException.ThrowIfNull(value, nameof(CashierEnrollment));
+
                 if (value == null || value <= 0)
                 {
                     throw new ArgumentOutOfRangeException("Cashier enrollment must be a positive value.");

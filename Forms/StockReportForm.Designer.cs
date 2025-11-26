@@ -1,6 +1,6 @@
 ﻿namespace UserManagementSystem.Forms
 {
-    partial class StockReformForm
+    partial class StockReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,18 +29,17 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            dataGridView1 = new DataGridView();
+            dgvStock = new DataGridView();
             lblStockTitle = new Label();
             grpActions = new GroupBox();
             pnlActions = new TableLayoutPanel();
             lblShowLowStock = new Label();
             btnLowStock = new Button();
-            ColumnProductId = new DataGridViewTextBoxColumn();
             ColumnProductName = new DataGridViewTextBoxColumn();
             ColumnProductStock = new DataGridViewTextBoxColumn();
             ColumunMinStock = new DataGridViewTextBoxColumn();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStock).BeginInit();
             grpActions.SuspendLayout();
             pnlActions.SuspendLayout();
             SuspendLayout();
@@ -52,9 +51,9 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel1.Controls.Add(dataGridView1, 1, 1);
-            tableLayoutPanel1.Controls.Add(lblStockTitle, 1, 0);
-            tableLayoutPanel1.Controls.Add(grpActions, 1, 3);
+            tableLayoutPanel1.Controls.Add(dgvStock, 0, 1);
+            tableLayoutPanel1.Controls.Add(lblStockTitle, 0, 0);
+            tableLayoutPanel1.Controls.Add(grpActions, 0, 3);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -66,42 +65,42 @@
             tableLayoutPanel1.Size = new Size(800, 450);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // dataGridView1
+            // dgvStock
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ColumnProductId, ColumnProductName, ColumnProductStock, ColumunMinStock });
-            tableLayoutPanel1.SetColumnSpan(dataGridView1, 2);
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(43, 50);
-            dataGridView1.Name = "dataGridView1";
-            tableLayoutPanel1.SetRowSpan(dataGridView1, 2);
-            dataGridView1.Size = new Size(714, 230);
-            dataGridView1.TabIndex = 0;
+            dgvStock.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvStock.Columns.AddRange(new DataGridViewColumn[] { ColumnProductName, ColumnProductStock, ColumunMinStock });
+            tableLayoutPanel1.SetColumnSpan(dgvStock, 4);
+            dgvStock.Dock = DockStyle.Fill;
+            dgvStock.Location = new Point(3, 50);
+            dgvStock.Name = "dgvStock";
+            tableLayoutPanel1.SetRowSpan(dgvStock, 2);
+            dgvStock.Size = new Size(794, 230);
+            dgvStock.TabIndex = 0;
             // 
             // lblStockTitle
             // 
             lblStockTitle.AutoSize = true;
             lblStockTitle.BackColor = Color.FromArgb(0, 53, 123);
-            tableLayoutPanel1.SetColumnSpan(lblStockTitle, 2);
+            tableLayoutPanel1.SetColumnSpan(lblStockTitle, 4);
             lblStockTitle.Dock = DockStyle.Fill;
             lblStockTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblStockTitle.ForeColor = Color.White;
-            lblStockTitle.Location = new Point(43, 0);
+            lblStockTitle.Location = new Point(3, 0);
             lblStockTitle.Name = "lblStockTitle";
-            lblStockTitle.Size = new Size(714, 47);
+            lblStockTitle.Size = new Size(794, 47);
             lblStockTitle.TabIndex = 1;
             lblStockTitle.Text = "Stock Reports";
             lblStockTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // grpActions
             // 
-            tableLayoutPanel1.SetColumnSpan(grpActions, 2);
+            tableLayoutPanel1.SetColumnSpan(grpActions, 4);
             grpActions.Controls.Add(pnlActions);
             grpActions.Dock = DockStyle.Fill;
             grpActions.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            grpActions.Location = new Point(43, 286);
+            grpActions.Location = new Point(3, 286);
             grpActions.Name = "grpActions";
-            grpActions.Size = new Size(714, 161);
+            grpActions.Size = new Size(794, 161);
             grpActions.TabIndex = 2;
             grpActions.TabStop = false;
             grpActions.Text = "Actions";
@@ -115,26 +114,28 @@
             pnlActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            pnlActions.Controls.Add(lblShowLowStock, 0, 0);
-            pnlActions.Controls.Add(btnLowStock, 1, 0);
-            pnlActions.Location = new Point(6, 28);
+            pnlActions.Controls.Add(lblShowLowStock, 1, 0);
+            pnlActions.Controls.Add(btnLowStock, 4, 0);
+            pnlActions.Dock = DockStyle.Fill;
+            pnlActions.Location = new Point(3, 25);
             pnlActions.Name = "pnlActions";
             pnlActions.RowCount = 4;
             pnlActions.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             pnlActions.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             pnlActions.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             pnlActions.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            pnlActions.Size = new Size(702, 124);
+            pnlActions.Size = new Size(788, 133);
             pnlActions.TabIndex = 0;
             // 
             // lblShowLowStock
             // 
             lblShowLowStock.AutoSize = true;
+            pnlActions.SetColumnSpan(lblShowLowStock, 3);
             lblShowLowStock.Dock = DockStyle.Fill;
             lblShowLowStock.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblShowLowStock.Location = new Point(3, 0);
+            lblShowLowStock.Location = new Point(397, 0);
             lblShowLowStock.Name = "lblShowLowStock";
-            lblShowLowStock.Size = new Size(345, 31);
+            lblShowLowStock.Size = new Size(228, 33);
             lblShowLowStock.TabIndex = 0;
             lblShowLowStock.Text = "Show products with low stock:";
             lblShowLowStock.TextAlign = ContentAlignment.MiddleRight;
@@ -144,21 +145,12 @@
             pnlActions.SetColumnSpan(btnLowStock, 2);
             btnLowStock.Dock = DockStyle.Fill;
             btnLowStock.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLowStock.Location = new Point(354, 3);
+            btnLowStock.Location = new Point(631, 3);
             btnLowStock.Name = "btnLowStock";
-            btnLowStock.Size = new Size(134, 25);
+            btnLowStock.Size = new Size(154, 27);
             btnLowStock.TabIndex = 1;
             btnLowStock.Text = "Show";
             btnLowStock.UseVisualStyleBackColor = true;
-            btnLowStock.Click += btnLowStock_Click;
-            // 
-            // ColumnProductId
-            // 
-            ColumnProductId.HeaderText = "Product ID";
-            ColumnProductId.Name = "ColumnProductId";
-            ColumnProductId.ReadOnly = true;
-            ColumnProductId.Resizable = DataGridViewTriState.False;
-            ColumnProductId.Width = 60;
             // 
             // ColumnProductName
             // 
@@ -166,23 +158,23 @@
             ColumnProductName.Name = "ColumnProductName";
             ColumnProductName.ReadOnly = true;
             ColumnProductName.Resizable = DataGridViewTriState.False;
-            ColumnProductName.Width = 280;
+            ColumnProductName.Width = 400;
             // 
-            // columnProductStock
+            // ColumnProductStock
             // 
             ColumnProductStock.HeaderText = "Current Stock";
-            ColumnProductStock.Name = "columnProductStock";
+            ColumnProductStock.Name = "ColumnProductStock";
             ColumnProductStock.ReadOnly = true;
             ColumnProductStock.Resizable = DataGridViewTriState.False;
-            ColumnProductStock.Width = 180;
+            ColumnProductStock.Width = 190;
             // 
-            // columunMinStock
+            // ColumunMinStock
             // 
             ColumunMinStock.HeaderText = "Minimum Stock";
-            ColumunMinStock.Name = "columunMinStock";
+            ColumunMinStock.Name = "ColumunMinStock";
             ColumunMinStock.ReadOnly = true;
             ColumunMinStock.Resizable = DataGridViewTriState.False;
-            ColumunMinStock.Width = 151;
+            ColumunMinStock.Width = 161;
             // 
             // StockReformForm
             // 
@@ -196,7 +188,7 @@
             Text = "StockReformForm";
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvStock).EndInit();
             grpActions.ResumeLayout(false);
             pnlActions.ResumeLayout(false);
             pnlActions.PerformLayout();
@@ -206,13 +198,12 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private DataGridView dataGridView1;
+        private DataGridView dgvStock;
         private Label lblStockTitle;
         private GroupBox grpActions;
         private TableLayoutPanel pnlActions;
         private Label lblShowLowStock;
         private Button btnLowStock;
-        private DataGridViewTextBoxColumn ColumnProductId;
         private DataGridViewTextBoxColumn ColumnProductName;
         private DataGridViewTextBoxColumn ColumnProductStock;
         private DataGridViewTextBoxColumn ColumunMinStock;

@@ -64,7 +64,7 @@ namespace UserManagementSystem.Models
             get => _phoneNumber;
             set
             {
-                if (value < 10000000000 || value > 99999999999)
+                if (value < 1000000000000 || value > 9999999999999)
                 {
                     throw new ArgumentOutOfRangeException("Phone number must be a valid number.");
                 }

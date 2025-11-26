@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Windows.Forms;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
-using System.ComponentModel;
 
 namespace UserManagementSystem.Forms
 {
@@ -10,16 +10,15 @@ namespace UserManagementSystem.Forms
     {
         private static CustomerForm? _instance;
         private User? _loggedInUser;
-        private readonly Repository _dbContext = new Repository();
+
         private BindingList<Customer> _customers;
 
-        public static CustomerForm? GetInstance(User? user)
+        public static CustomerForm GetInstance(User? user)
         {
             if (_instance == null || _instance.IsDisposed)
             {
                 _instance = new CustomerForm(user);
             }
-
             _instance._loggedInUser = user;
             return _instance;
         }
@@ -29,107 +28,107 @@ namespace UserManagementSystem.Forms
             InitializeComponent();
             _loggedInUser = user;
 
+            dgvCustomers.AutoGenerateColumns = false;
+
+            if (dgvCustomers.Columns["ColumnCustomerName"] != null)
+                dgvCustomers.Columns["ColumnCustomerName"].DataPropertyName = nameof(Customer.Name);
+
+            if (dgvCustomers.Columns["ColumnCustomerEmail"] != null)
+                dgvCustomers.Columns["ColumnCustomerEmail"].DataPropertyName = nameof(Customer.Email);
+
             LoadCustomers();
-            BindControls();
 
-            customersGridView.AutoGenerateColumns = false;
-            customersGridView.AllowUserToAddRows = false;
-
-            customersGridView.SelectionChanged += customersGridView_SelectionChanged;
+            dgvCustomers.AllowUserToAddRows = false;
         }
 
-        public void LoadCustomers()
+        private void LoadCustomers()
         {
-            _dbContext.ChangeTracker.Clear();
-            _dbContext.Customers.Load();
+            var list = CustomerRepository.FindAll();
+            _customers = new BindingList<Customer>(list);
 
-            if (_customers != null)
-            {
-                _customers = _dbContext.Customers.Local.ToBindingList();
-                customersGridView.DataSource = _customers;
-            }
-            else
-            {
-                customersGridView.Refresh();
-            }
-
+            dgvCustomers.DataSource = null;
+            dgvCustomers.DataSource = _customers;
         }
 
-        public void BindControls()
+        // method linked to the "Register Customer" button in the Designer
+        private void btnRegisterCustomer_Click(object? sender, EventArgs e)
         {
-            ColumnCustomerName.DataPropertyName = nameof(Customer.Name);
-            ColumnCustomerEmail.DataPropertyName = nameof(Customer.Email);
-        }
-
-        #region CRUD methods for customers
-
-        private void RegisterCustomer()
-        {
-            var customer = new Customer();
             try
             {
-                customer.Name = txtCustomerName.Text;
-                customer.Email = txtCustomerEmail.Text;
 
-                CustomerRepository.SaveOrUpdate(customer);
+                Customer newCustomer = new Customer
+                {
+                    Name = txtCustomerName.Text,
+                    Email = txtCustomerEmail.Text
+                };
 
-                LoadCustomers();
+                CustomerRepository.SaveOrUpdate(newCustomer);
+
+                _customers.Add(newCustomer);
+
                 ClearInputs();
                 MessageBox.Show("Customer registered successfully!");
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentException ex)
             {
-                MessageBox.Show($"Validation error: {ex.Message}");
+                MessageBox.Show(ex.Message, "Validation error: ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+                MessageBox.Show("Error saving: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void UpdateCustomer()
+        // This method is linked to the "Update" button in the Designer
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (customersGridView.CurrentRow?.DataBoundItem is Customer currentCustomer)
+            if (dgvCustomers.CurrentRow?.DataBoundItem is Customer selectedCustomer)
             {
                 try
                 {
-                    currentCustomer.Name = txtCustomerName.Text;
-                    currentCustomer.Email = txtCustomerEmail.Text;
+                    selectedCustomer.Name = txtCustomerName.Text;
+                    selectedCustomer.Email = txtCustomerEmail.Text;
 
-                    CustomerRepository.SaveOrUpdate(currentCustomer);
+                    CustomerRepository.SaveOrUpdate(selectedCustomer);
 
-                    customersGridView.Refresh();
+                    dgvCustomers.Refresh();
+                    ClearInputs();
                     MessageBox.Show("Customer updated successfully!");
+                }
+                catch (ArgumentException ex)
+                {
+                    MessageBox.Show(ex.Message, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dgvCustomers.Refresh();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Update failed: {ex.Message}");
+                    MessageBox.Show("Error updating: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("No customer selected for update.");
+                MessageBox.Show("Please select a customer to edit.");
             }
         }
 
-        private void DeleteCustomer()
+        // This method is linked to the "Delete" button in the Designer
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (customersGridView.CurrentRow?.DataBoundItem is Customer currentCustomer)
+            if (dgvCustomers.CurrentRow?.DataBoundItem is Customer selectedCustomer)
             {
-                try
+                var confirm = MessageBox.Show($"Delete {selectedCustomer.Name}?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirm == DialogResult.Yes)
                 {
-                    if (MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    try
                     {
-                        CustomerRepository.Delete(currentCustomer);
-                        _dbContext.Remove(currentCustomer);
-
+                        CustomerRepository.Delete(selectedCustomer);
+                        _customers.Remove(selectedCustomer);
                         ClearInputs();
-                        MessageBox.Show("Customer deleted successfully.");
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Deletion failed: {ex.Message}");
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error deleting: " + ex.Message);
+                    }
                 }
             }
             else
@@ -138,46 +137,19 @@ namespace UserManagementSystem.Forms
             }
         }
 
-        private void ClearInputs()
-        {
-            txtCustomerName.Text = string.Empty;
-            txtCustomerEmail.Text = string.Empty;
-        }
-
-        #endregion
-
-        #region Event Handlers
-        private void btnRegisterCustomer_Click(object sender, EventArgs e)
-        {
-            RegisterCustomer();
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            UpdateCustomer();
-        }
-
-        private void BtnDelete_Click(object sender, EventArgs e)
-        {
-            DeleteCustomer();
-        }
-
         private void customersGridView_SelectionChanged(object sender, EventArgs e)
         {
-            if (customersGridView.CurrentRow?.DataBoundItem is Customer selectedCustomer)
+            if (dgvCustomers.CurrentRow?.DataBoundItem is Customer selectedCustomer)
             {
                 txtCustomerName.Text = selectedCustomer.Name;
                 txtCustomerEmail.Text = selectedCustomer.Email;
             }
         }
 
-        #endregion
-
-        protected override void OnFormClosed(FormClosedEventArgs e)
+        private void ClearInputs()
         {
-            _dbContext.Dispose();
-            base.OnFormClosed(e);
+            txtCustomerName.Clear();
+            txtCustomerEmail.Clear();
         }
-
     }
 }

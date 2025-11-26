@@ -36,18 +36,18 @@
             customerToolStripMenuItem = new ToolStripMenuItem();
             saleToolStripMenuItem = new ToolStripMenuItem();
             producttoolStripMenuItem = new ToolStripMenuItem();
+            paymentToolStripMenuItem = new ToolStripMenuItem();
             reporToolStripMenuItem = new ToolStripMenuItem();
             usersToolStripMenuItem = new ToolStripMenuItem();
             salesDataToolStripMenuItem = new ToolStripMenuItem();
-            clientsDataToolStripMenuItem = new ToolStripMenuItem();
+            CustomerDataToolStripMenuItem = new ToolStripMenuItem();
             comissionDataToolStripMenuItem = new ToolStripMenuItem();
-            stockDataToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             staAccess = new ToolStripStatusLabel();
             lblLastAccess = new ToolStripStatusLabel();
-            paymentToolStripMenuItem = new ToolStripMenuItem();
+            stockDataToolStripMenuItem = new ToolStripMenuItem();
             mnuSystem.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -111,9 +111,16 @@
             producttoolStripMenuItem.Text = "Product and Category...";
             producttoolStripMenuItem.Click += producttoolStripMenuItem_Click;
             // 
+            // paymentToolStripMenuItem
+            // 
+            paymentToolStripMenuItem.Name = "paymentToolStripMenuItem";
+            paymentToolStripMenuItem.Size = new Size(199, 22);
+            paymentToolStripMenuItem.Text = "Payment...";
+            paymentToolStripMenuItem.Click += paymentToolStripMenuItem_Click;
+            // 
             // reporToolStripMenuItem
             // 
-            reporToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usersToolStripMenuItem, salesDataToolStripMenuItem, clientsDataToolStripMenuItem, comissionDataToolStripMenuItem, stockDataToolStripMenuItem });
+            reporToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usersToolStripMenuItem, salesDataToolStripMenuItem, stockDataToolStripMenuItem, CustomerDataToolStripMenuItem, comissionDataToolStripMenuItem });
             reporToolStripMenuItem.Name = "reporToolStripMenuItem";
             reporToolStripMenuItem.Size = new Size(59, 20);
             reporToolStripMenuItem.Text = "Reports";
@@ -121,37 +128,30 @@
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(166, 22);
+            usersToolStripMenuItem.Size = new Size(180, 22);
             usersToolStripMenuItem.Text = "User Data...";
             usersToolStripMenuItem.Click += usersToolStripMenuItem_Click;
             // 
             // salesDataToolStripMenuItem
             // 
             salesDataToolStripMenuItem.Name = "salesDataToolStripMenuItem";
-            salesDataToolStripMenuItem.Size = new Size(166, 22);
+            salesDataToolStripMenuItem.Size = new Size(180, 22);
             salesDataToolStripMenuItem.Text = "Sale Data...";
             salesDataToolStripMenuItem.Click += salesDataToolStripMenuItem_Click;
             // 
-            // clientsDataToolStripMenuItem
+            // CustomerDataToolStripMenuItem
             // 
-            clientsDataToolStripMenuItem.Name = "clientsDataToolStripMenuItem";
-            clientsDataToolStripMenuItem.Size = new Size(166, 22);
-            clientsDataToolStripMenuItem.Text = "Client Data...";
-            clientsDataToolStripMenuItem.Click += clientsDataToolStripMenuItem_Click;
+            CustomerDataToolStripMenuItem.Name = "CustomerDataToolStripMenuItem";
+            CustomerDataToolStripMenuItem.Size = new Size(180, 22);
+            CustomerDataToolStripMenuItem.Text = "Customer Data...";
+            CustomerDataToolStripMenuItem.Click += clientsDataToolStripMenuItem_Click;
             // 
             // comissionDataToolStripMenuItem
             // 
             comissionDataToolStripMenuItem.Name = "comissionDataToolStripMenuItem";
-            comissionDataToolStripMenuItem.Size = new Size(166, 22);
+            comissionDataToolStripMenuItem.Size = new Size(180, 22);
             comissionDataToolStripMenuItem.Text = "Comission Data...";
             comissionDataToolStripMenuItem.Click += comissionDataToolStripMenuItem_Click;
-            // 
-            // stockDataToolStripMenuItem
-            // 
-            stockDataToolStripMenuItem.Name = "stockDataToolStripMenuItem";
-            stockDataToolStripMenuItem.Size = new Size(166, 22);
-            stockDataToolStripMenuItem.Text = "Stock Data...";
-            stockDataToolStripMenuItem.Click += stockDataToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -189,12 +189,12 @@
             lblLastAccess.Size = new Size(131, 17);
             lblLastAccess.Text = "toolStripStatusLabel1";
             // 
-            // paymentToolStripMenuItem
+            // stockDataToolStripMenuItem
             // 
-            paymentToolStripMenuItem.Name = "paymentToolStripMenuItem";
-            paymentToolStripMenuItem.Size = new Size(199, 22);
-            paymentToolStripMenuItem.Text = "Payment...";
-            paymentToolStripMenuItem.Click += paymentToolStripMenuItem_Click;
+            stockDataToolStripMenuItem.Name = "stockDataToolStripMenuItem";
+            stockDataToolStripMenuItem.Size = new Size(180, 22);
+            stockDataToolStripMenuItem.Text = "Stock Data...";
+            stockDataToolStripMenuItem.Click += stockDataToolStripMenuItem_Click;
             // 
             // SystemMainMenu
             // 
@@ -236,12 +236,12 @@
         private ToolStripStatusLabel staAccess;
         private ToolStripStatusLabel lblLastAccess;
         private ToolStripMenuItem salesDataToolStripMenuItem;
-        private ToolStripMenuItem clientsDataToolStripMenuItem;
+        private ToolStripMenuItem CustomerDataToolStripMenuItem;
         private ToolStripMenuItem comissionDataToolStripMenuItem;
         private ToolStripMenuItem saleToolStripMenuItem;
         private ToolStripMenuItem customerToolStripMenuItem;
         private ToolStripMenuItem producttoolStripMenuItem;
-        private ToolStripMenuItem stockDataToolStripMenuItem;
         private ToolStripMenuItem paymentToolStripMenuItem;
+        private ToolStripMenuItem stockDataToolStripMenuItem;
     }
 }

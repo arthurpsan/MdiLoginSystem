@@ -41,15 +41,6 @@ namespace UserManagementSystem
 
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            AboutForm aboutForm = AboutForm.GetInstance();
-            aboutForm.MdiParent = this;
-            aboutForm.Show();
-            aboutForm.BringToFront();
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -97,6 +88,15 @@ namespace UserManagementSystem
 
 
         #region METHODS TO OPEN CHILD FORMS
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            AboutForm aboutForm = AboutForm.GetInstance();
+            aboutForm.MdiParent = this;
+            aboutForm.Show();
+            aboutForm.BringToFront();
+        }
+
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DashboardForm userReportForm = DashboardForm.GetInstance();
@@ -168,10 +168,10 @@ namespace UserManagementSystem
 
         private void stockDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StockReformForm stockForm = StockReformForm.GetInstance(_loggedInUser);
-            stockForm.MdiParent = this;
-            stockForm.Show();
-            stockForm.BringToFront();
+            StockReportForm stockReportForm = StockReportForm.GetInstance(_loggedInUser);
+            stockReportForm.MdiParent = this;
+            stockReportForm.Show();
+            stockReportForm.BringToFront();
         }
 
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)

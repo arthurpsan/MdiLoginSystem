@@ -20,6 +20,8 @@ namespace UserManagementSystem.Forms
             {
                 _instance = new ProductForm(user);
             }
+
+
             return _instance;
         }
 

@@ -31,7 +31,9 @@
             pnlCustomerManagement = new TableLayoutPanel();
             btnDelete = new Button();
             btnSave = new Button();
-            customersGridView = new DataGridView();
+            dgvCustomers = new DataGridView();
+            ColumnCustomerName = new DataGridViewTextBoxColumn();
+            ColumnCustomerEmail = new DataGridViewTextBoxColumn();
             btnUpdate = new Button();
             lblCustomerManagement = new Label();
             gpoCustomerCredentials = new GroupBox();
@@ -40,10 +42,8 @@
             lblCustomerEmail = new Label();
             lblCustomerName = new Label();
             txtCustomerName = new TextBox();
-            ColumnCustomerName = new DataGridViewTextBoxColumn();
-            ColumnCustomerEmail = new DataGridViewTextBoxColumn();
             pnlCustomerManagement.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)customersGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             gpoCustomerCredentials.SuspendLayout();
             pnlCustomerCredentials.SuspendLayout();
             SuspendLayout();
@@ -57,7 +57,7 @@
             pnlCustomerManagement.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlCustomerManagement.Controls.Add(btnDelete, 1, 3);
             pnlCustomerManagement.Controls.Add(btnSave, 3, 3);
-            pnlCustomerManagement.Controls.Add(customersGridView, 0, 2);
+            pnlCustomerManagement.Controls.Add(dgvCustomers, 0, 2);
             pnlCustomerManagement.Controls.Add(btnUpdate, 2, 3);
             pnlCustomerManagement.Controls.Add(lblCustomerManagement, 0, 0);
             pnlCustomerManagement.Controls.Add(gpoCustomerCredentials, 0, 1);
@@ -94,20 +94,35 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnRegisterCustomer_Click;
             // 
-            // customersGridView
+            // dgvCustomers
             // 
-            customersGridView.AllowUserToAddRows = false;
-            customersGridView.AllowUserToDeleteRows = false;
-            customersGridView.AllowUserToResizeColumns = false;
-            customersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            customersGridView.Columns.AddRange(new DataGridViewColumn[] { ColumnCustomerName, ColumnCustomerEmail });
-            pnlCustomerManagement.SetColumnSpan(customersGridView, 4);
-            customersGridView.Dock = DockStyle.Fill;
-            customersGridView.Location = new Point(3, 237);
-            customersGridView.Name = "customersGridView";
-            customersGridView.ReadOnly = true;
-            customersGridView.Size = new Size(794, 174);
-            customersGridView.TabIndex = 5;
+            dgvCustomers.AllowUserToAddRows = false;
+            dgvCustomers.AllowUserToDeleteRows = false;
+            dgvCustomers.AllowUserToResizeColumns = false;
+            dgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { ColumnCustomerName, ColumnCustomerEmail });
+            pnlCustomerManagement.SetColumnSpan(dgvCustomers, 4);
+            dgvCustomers.Dock = DockStyle.Fill;
+            dgvCustomers.Location = new Point(3, 237);
+            dgvCustomers.Name = "dgvCustomers";
+            dgvCustomers.ReadOnly = true;
+            dgvCustomers.Size = new Size(794, 174);
+            dgvCustomers.TabIndex = 5;
+            // 
+            // ColumnCustomerName
+            // 
+            ColumnCustomerName.HeaderText = "Name";
+            ColumnCustomerName.Name = "ColumnCustomerName";
+            ColumnCustomerName.ReadOnly = true;
+            ColumnCustomerName.Resizable = DataGridViewTriState.False;
+            ColumnCustomerName.Width = 290;
+            // 
+            // ColumnCustomerEmail
+            // 
+            ColumnCustomerEmail.HeaderText = "E-mail";
+            ColumnCustomerEmail.Name = "ColumnCustomerEmail";
+            ColumnCustomerEmail.ReadOnly = true;
+            ColumnCustomerEmail.Width = 461;
             // 
             // btnUpdate
             // 
@@ -208,21 +223,6 @@
             txtCustomerName.Size = new Size(388, 22);
             txtCustomerName.TabIndex = 0;
             // 
-            // ColumnCustomerName
-            // 
-            ColumnCustomerName.HeaderText = "Name";
-            ColumnCustomerName.Name = "ColumnCustomerName";
-            ColumnCustomerName.ReadOnly = true;
-            ColumnCustomerName.Resizable = DataGridViewTriState.False;
-            ColumnCustomerName.Width = 290;
-            // 
-            // ColumnCustomerEmail
-            // 
-            ColumnCustomerEmail.HeaderText = "E-mail";
-            ColumnCustomerEmail.Name = "ColumnCustomerEmail";
-            ColumnCustomerEmail.ReadOnly = true;
-            ColumnCustomerEmail.Width = 461;
-            // 
             // CustomerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -236,7 +236,7 @@
             Text = "\tCustomer Management";
             pnlCustomerManagement.ResumeLayout(false);
             pnlCustomerManagement.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)customersGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
             gpoCustomerCredentials.ResumeLayout(false);
             pnlCustomerCredentials.ResumeLayout(false);
             pnlCustomerCredentials.PerformLayout();
@@ -247,7 +247,7 @@
         private TableLayoutPanel pnlCustomerManagement;
         private Button btnSave;
         private Button btnDelete;
-        private DataGridView customersGridView;
+        private DataGridView dgvCustomers;
         private Button btnUpdate;
         private Label lblCustomerManagement;
         private GroupBox gpoCustomerCredentials;
