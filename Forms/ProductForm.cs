@@ -30,11 +30,9 @@ namespace UserManagementSystem.Forms
             InitializeComponent();
             _loggedInUser = user;
 
-            // Load data from repositories into BindingLists
             _categories = new BindingList<Category>(CategoryRepository.FindAll());
             _products = new BindingList<Product>(ProductRepository.FindAll());
 
-            // Bind controls once
             BindControls();
 
             dgvProduct.AllowUserToAddRows = false;
@@ -74,7 +72,6 @@ namespace UserManagementSystem.Forms
                 category.Name = txtCategoryName.Text;
                 CategoryRepository.SaveOrUpdate(category);
 
-                // add to bound list to refresh UI
                 _categories.Add(category);
             }
             catch (ArgumentNullException)
@@ -103,7 +100,7 @@ namespace UserManagementSystem.Forms
             {
                 currentCategory.Name = txtCategoryName.Text;
                 CategoryRepository.SaveOrUpdate(currentCategory);
-                dgvCategory.Refresh(); // collection already bound
+                dgvCategory.Refresh();
                 cboProductCategory.Refresh();
             }
             catch (Exception ex)
@@ -120,7 +117,7 @@ namespace UserManagementSystem.Forms
             try
             {
                 CategoryRepository.Delete(currentCategory);
-                _categories.Remove(currentCategory); // remove from bound list
+                _categories.Remove(currentCategory);
             }
             catch (Exception ex)
             {
@@ -151,7 +148,7 @@ namespace UserManagementSystem.Forms
                 product.IsActive = chkIsActive.Checked;
 
                 ProductRepository.SaveOrUpdate(product);
-                _products.Add(product);             // notify grid
+                _products.Add(product);
             }
             catch (ArgumentNullException ex)
             {
@@ -186,7 +183,7 @@ namespace UserManagementSystem.Forms
                 currentProduct.IsActive = chkIsActive.Checked;
 
                 ProductRepository.SaveOrUpdate(currentProduct);
-                dgvProduct.Refresh(); // collection already bound
+                dgvProduct.Refresh();
             }
             catch (Exception ex)
             {
@@ -202,7 +199,7 @@ namespace UserManagementSystem.Forms
             try
             {
                 ProductRepository.Delete(currentProduct);
-                _products.Remove(currentProduct); // remove from bound list
+                _products.Remove(currentProduct);
             }
             catch (Exception ex)
             {

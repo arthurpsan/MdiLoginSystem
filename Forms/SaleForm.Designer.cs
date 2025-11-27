@@ -31,10 +31,8 @@
             TabControlMain = new TabControl();
             tabPageCustomer = new TabPage();
             pnlCustomer = new TableLayoutPanel();
-            lstCustomers = new ListView();
-            chCustomerGhost = new ColumnHeader();
-            chCustomerId = new ColumnHeader();
-            chCustomerEmail = new ColumnHeader();
+            dgvCustomers = new DataGridView();
+            colCustName = new DataGridViewTextBoxColumn();
             lblSearchCustomer = new Label();
             txtSearchCustomer = new TextBox();
             btnSearchCustomer = new Button();
@@ -47,44 +45,43 @@
             lblQuantity = new Label();
             txtSearchProduct = new TextBox();
             btnAddItem = new Button();
-            lstProducts = new ListView();
-            chProductGhost = new ColumnHeader();
-            chProductId = new ColumnHeader();
-            chProductName = new ColumnHeader();
-            chProductPrice = new ColumnHeader();
-            chProductStock = new ColumnHeader();
-            chProductMinimalStock = new ColumnHeader();
             lblDiscount = new Label();
             numDiscount = new NumericUpDown();
+            dgvProducts = new DataGridView();
+            colProdName = new DataGridViewTextBoxColumn();
+            colProdPrice = new DataGridViewTextBoxColumn();
+            colProdStock = new DataGridViewTextBoxColumn();
             splitContainerSales = new SplitContainer();
             pnlCart = new TableLayoutPanel();
             lblSelectedCustomerName = new Label();
-            lstCart = new ListView();
-            chCartGhost = new ColumnHeader();
-            chCartProductName = new ColumnHeader();
-            chCartProductQty = new ColumnHeader();
-            chCartProductDiscount = new ColumnHeader();
-            chCartProductUnitPrice = new ColumnHeader();
-            chCartProductTotalPrice = new ColumnHeader();
             lblTotalSale = new Label();
             btnFinalizeSale = new Button();
             lblInstallments = new Label();
             numInstallments = new NumericUpDown();
             btnRequestAuth = new Button();
             lblCart = new Label();
+            dgvCart = new DataGridView();
+            colProduct = new DataGridViewTextBoxColumn();
+            Quantity = new DataGridViewTextBoxColumn();
+            UnitPrice = new DataGridViewTextBoxColumn();
+            Discount = new DataGridViewTextBoxColumn();
+            colTotal = new DataGridViewTextBoxColumn();
             TabControlMain.SuspendLayout();
             tabPageCustomer.SuspendLayout();
             pnlCustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             tabPageProduct.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numDiscount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainerSales).BeginInit();
             splitContainerSales.Panel1.SuspendLayout();
             splitContainerSales.Panel2.SuspendLayout();
             splitContainerSales.SuspendLayout();
             pnlCart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numInstallments).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
             SuspendLayout();
             // 
             // TabControlMain
@@ -117,7 +114,7 @@
             pnlCustomer.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlCustomer.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlCustomer.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlCustomer.Controls.Add(lstCustomers, 0, 2);
+            pnlCustomer.Controls.Add(dgvCustomers, 0, 2);
             pnlCustomer.Controls.Add(lblSearchCustomer, 0, 0);
             pnlCustomer.Controls.Add(txtSearchCustomer, 0, 1);
             pnlCustomer.Controls.Add(btnSearchCustomer, 2, 1);
@@ -132,40 +129,28 @@
             pnlCustomer.Size = new Size(252, 414);
             pnlCustomer.TabIndex = 0;
             // 
-            // lstCustomers
+            // dgvCustomers
             // 
-            lstCustomers.BackColor = Color.LightGray;
-            lstCustomers.CheckBoxes = true;
-            lstCustomers.Columns.AddRange(new ColumnHeader[] { chCustomerGhost, chCustomerId, chCustomerEmail });
-            pnlCustomer.SetColumnSpan(lstCustomers, 4);
-            lstCustomers.Dock = DockStyle.Fill;
-            lstCustomers.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstCustomers.FullRowSelect = true;
-            lstCustomers.GridLines = true;
-            lstCustomers.LabelWrap = false;
-            lstCustomers.Location = new Point(3, 81);
-            lstCustomers.Name = "lstCustomers";
-            lstCustomers.Size = new Size(246, 309);
-            lstCustomers.TabIndex = 3;
-            lstCustomers.UseCompatibleStateImageBehavior = false;
-            lstCustomers.View = View.Details;
+            dgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { colCustName });
+            pnlCustomer.SetColumnSpan(dgvCustomers, 4);
+            dgvCustomers.Dock = DockStyle.Fill;
+            dgvCustomers.Location = new Point(3, 81);
+            dgvCustomers.MultiSelect = false;
+            dgvCustomers.Name = "dgvCustomers";
+            dgvCustomers.ReadOnly = true;
+            pnlCustomer.SetRowSpan(dgvCustomers, 2);
+            dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCustomers.Size = new Size(246, 330);
+            dgvCustomers.TabIndex = 17;
             // 
-            // chCustomerGhost
+            // colCustName
             // 
-            chCustomerGhost.Text = "";
-            chCustomerGhost.Width = 0;
-            // 
-            // chCustomerId
-            // 
-            chCustomerId.Text = "ID";
-            chCustomerId.TextAlign = HorizontalAlignment.Center;
-            chCustomerId.Width = 40;
-            // 
-            // chCustomerEmail
-            // 
-            chCustomerEmail.Text = "Name";
-            chCustomerEmail.TextAlign = HorizontalAlignment.Center;
-            chCustomerEmail.Width = 202;
+            colCustName.DataPropertyName = "Name";
+            colCustName.HeaderText = "Name";
+            colCustName.Name = "colCustName";
+            colCustName.ReadOnly = true;
+            colCustName.Width = 250;
             // 
             // lblSearchCustomer
             // 
@@ -224,18 +209,20 @@
             tableLayoutPanel1.Controls.Add(lblQuantity, 0, 3);
             tableLayoutPanel1.Controls.Add(txtSearchProduct, 2, 0);
             tableLayoutPanel1.Controls.Add(btnAddItem, 2, 4);
-            tableLayoutPanel1.Controls.Add(lstProducts, 0, 1);
             tableLayoutPanel1.Controls.Add(lblDiscount, 0, 4);
             tableLayoutPanel1.Controls.Add(numDiscount, 1, 4);
+            tableLayoutPanel1.Controls.Add(dgvProducts, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(3, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 5;
+            tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(252, 414);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -278,7 +265,7 @@
             cboCategories.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.SetColumnSpan(cboCategories, 2);
             cboCategories.FormattingEnabled = true;
-            cboCategories.Location = new Point(129, 298);
+            cboCategories.Location = new Point(129, 297);
             cboCategories.Name = "cboCategories";
             cboCategories.Size = new Size(120, 25);
             cboCategories.TabIndex = 11;
@@ -316,49 +303,6 @@
             btnAddItem.UseVisualStyleBackColor = true;
             btnAddItem.Click += btnAddItem_Click;
             // 
-            // lstProducts
-            // 
-            lstProducts.BackColor = Color.LightGray;
-            lstProducts.CheckBoxes = true;
-            lstProducts.Columns.AddRange(new ColumnHeader[] { chProductGhost, chProductId, chProductName, chProductPrice, chProductStock, chProductMinimalStock });
-            tableLayoutPanel1.SetColumnSpan(lstProducts, 4);
-            lstProducts.Dock = DockStyle.Fill;
-            lstProducts.FullRowSelect = true;
-            lstProducts.GridLines = true;
-            lstProducts.Location = new Point(3, 44);
-            lstProducts.Name = "lstProducts";
-            lstProducts.Size = new Size(246, 242);
-            lstProducts.TabIndex = 13;
-            lstProducts.UseCompatibleStateImageBehavior = false;
-            lstProducts.View = View.Details;
-            // 
-            // chProductGhost
-            // 
-            chProductGhost.Text = "";
-            chProductGhost.Width = 0;
-            // 
-            // chProductId
-            // 
-            chProductId.Text = "ID";
-            chProductId.TextAlign = HorizontalAlignment.Center;
-            // 
-            // chProductName
-            // 
-            chProductName.Text = "Name";
-            chProductName.TextAlign = HorizontalAlignment.Center;
-            chProductName.Width = 61;
-            // 
-            // chProductPrice
-            // 
-            chProductPrice.Text = "Price";
-            chProductPrice.TextAlign = HorizontalAlignment.Center;
-            chProductPrice.Width = 61;
-            // 
-            // chProductStock
-            // 
-            chProductStock.Text = "Stock";
-            chProductStock.TextAlign = HorizontalAlignment.Center;
-            // 
             // lblDiscount
             // 
             lblDiscount.AutoSize = true;
@@ -378,6 +322,46 @@
             numDiscount.Size = new Size(57, 25);
             numDiscount.TabIndex = 15;
             numDiscount.TextAlign = HorizontalAlignment.Center;
+            // 
+            // dgvProducts
+            // 
+            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProducts.Columns.AddRange(new DataGridViewColumn[] { colProdName, colProdPrice, colProdStock });
+            tableLayoutPanel1.SetColumnSpan(dgvProducts, 4);
+            dgvProducts.Dock = DockStyle.Fill;
+            dgvProducts.Location = new Point(3, 44);
+            dgvProducts.MultiSelect = false;
+            dgvProducts.Name = "dgvProducts";
+            dgvProducts.ReadOnly = true;
+            dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvProducts.Size = new Size(246, 242);
+            dgvProducts.TabIndex = 16;
+            // 
+            // colProdName
+            // 
+            colProdName.DataPropertyName = "Name";
+            colProdName.HeaderText = "Name";
+            colProdName.Name = "colProdName";
+            colProdName.ReadOnly = true;
+            colProdName.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colProdPrice
+            // 
+            colProdPrice.DataPropertyName = "Price";
+            colProdPrice.HeaderText = "Price";
+            colProdPrice.Name = "colProdPrice";
+            colProdPrice.ReadOnly = true;
+            colProdPrice.SortMode = DataGridViewColumnSortMode.NotSortable;
+            colProdPrice.Width = 80;
+            // 
+            // colProdStock
+            // 
+            colProdStock.DataPropertyName = "Stockpile";
+            colProdStock.HeaderText = "Stock";
+            colProdStock.Name = "colProdStock";
+            colProdStock.ReadOnly = true;
+            colProdStock.SortMode = DataGridViewColumnSortMode.NotSortable;
+            colProdStock.Width = 60;
             // 
             // splitContainerSales
             // 
@@ -404,13 +388,13 @@
             pnlCart.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlCart.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlCart.Controls.Add(lblSelectedCustomerName, 0, 3);
-            pnlCart.Controls.Add(lstCart, 0, 1);
             pnlCart.Controls.Add(lblTotalSale, 0, 2);
             pnlCart.Controls.Add(btnFinalizeSale, 2, 4);
             pnlCart.Controls.Add(lblInstallments, 2, 2);
             pnlCart.Controls.Add(numInstallments, 4, 2);
             pnlCart.Controls.Add(btnRequestAuth, 0, 4);
             pnlCart.Controls.Add(lblCart, 0, 0);
+            pnlCart.Controls.Add(dgvCart, 0, 1);
             pnlCart.Dock = DockStyle.Fill;
             pnlCart.Location = new Point(0, 0);
             pnlCart.Name = "pnlCart";
@@ -435,58 +419,6 @@
             lblSelectedCustomerName.TabIndex = 0;
             lblSelectedCustomerName.Text = "Customer Name";
             lblSelectedCustomerName.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lstCart
-            // 
-            lstCart.BackColor = Color.LightGray;
-            lstCart.CheckBoxes = true;
-            lstCart.Columns.AddRange(new ColumnHeader[] { chCartGhost, chCartProductName, chCartProductQty, chCartProductDiscount, chCartProductUnitPrice, chCartProductTotalPrice });
-            pnlCart.SetColumnSpan(lstCart, 4);
-            lstCart.Dock = DockStyle.Fill;
-            lstCart.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstCart.FullRowSelect = true;
-            lstCart.GridLines = true;
-            lstCart.LabelWrap = false;
-            lstCart.Location = new Point(3, 48);
-            lstCart.Name = "lstCart";
-            lstCart.Size = new Size(524, 264);
-            lstCart.TabIndex = 7;
-            lstCart.UseCompatibleStateImageBehavior = false;
-            lstCart.View = View.Details;
-            // 
-            // chCartGhost
-            // 
-            chCartGhost.Width = 0;
-            // 
-            // chCartProductName
-            // 
-            chCartProductName.Text = "Product";
-            chCartProductName.TextAlign = HorizontalAlignment.Center;
-            chCartProductName.Width = 180;
-            // 
-            // chCartProductQty
-            // 
-            chCartProductQty.Text = "Quantity";
-            chCartProductQty.TextAlign = HorizontalAlignment.Center;
-            chCartProductQty.Width = 80;
-            // 
-            // chCartProductDiscount
-            // 
-            chCartProductDiscount.Text = "Disc. %";
-            chCartProductDiscount.TextAlign = HorizontalAlignment.Center;
-            chCartProductDiscount.Width = 58;
-            // 
-            // chCartProductUnitPrice
-            // 
-            chCartProductUnitPrice.Text = "Unit Price";
-            chCartProductUnitPrice.TextAlign = HorizontalAlignment.Center;
-            chCartProductUnitPrice.Width = 92;
-            // 
-            // chCartProductTotalPrice
-            // 
-            chCartProductTotalPrice.Text = "Total";
-            chCartProductTotalPrice.TextAlign = HorizontalAlignment.Center;
-            chCartProductTotalPrice.Width = 110;
             // 
             // lblTotalSale
             // 
@@ -567,6 +499,59 @@
             lblCart.Text = "SHOPPING CART";
             lblCart.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // dgvCart
+            // 
+            dgvCart.AllowUserToAddRows = false;
+            dgvCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCart.Columns.AddRange(new DataGridViewColumn[] { colProduct, Quantity, UnitPrice, Discount, colTotal });
+            pnlCart.SetColumnSpan(dgvCart, 4);
+            dgvCart.Dock = DockStyle.Fill;
+            dgvCart.Location = new Point(3, 48);
+            dgvCart.Name = "dgvCart";
+            dgvCart.ReadOnly = true;
+            dgvCart.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCart.Size = new Size(524, 264);
+            dgvCart.TabIndex = 14;
+            // 
+            // colProduct
+            // 
+            colProduct.HeaderText = "Product";
+            colProduct.Name = "colProduct";
+            colProduct.ReadOnly = true;
+            colProduct.SortMode = DataGridViewColumnSortMode.NotSortable;
+            colProduct.Width = 200;
+            // 
+            // Quantity
+            // 
+            Quantity.HeaderText = "Qty";
+            Quantity.Name = "Quantity";
+            Quantity.ReadOnly = true;
+            Quantity.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Quantity.Width = 60;
+            // 
+            // UnitPrice
+            // 
+            UnitPrice.HeaderText = "Price";
+            UnitPrice.Name = "UnitPrice";
+            UnitPrice.ReadOnly = true;
+            UnitPrice.SortMode = DataGridViewColumnSortMode.NotSortable;
+            UnitPrice.Width = 90;
+            // 
+            // Discount
+            // 
+            Discount.HeaderText = "Disc %";
+            Discount.Name = "Discount";
+            Discount.ReadOnly = true;
+            Discount.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Discount.Width = 70;
+            // 
+            // colTotal
+            // 
+            colTotal.HeaderText = "Total";
+            colTotal.Name = "colTotal";
+            colTotal.ReadOnly = true;
+            colTotal.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
             // SaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -582,11 +567,13 @@
             tabPageCustomer.ResumeLayout(false);
             pnlCustomer.ResumeLayout(false);
             pnlCustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
             tabPageProduct.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)numDiscount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             splitContainerSales.Panel1.ResumeLayout(false);
             splitContainerSales.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerSales).EndInit();
@@ -594,6 +581,7 @@
             pnlCart.ResumeLayout(false);
             pnlCart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numInstallments).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
             ResumeLayout(false);
 
         }
@@ -602,11 +590,7 @@
 
         private TabControl TabControlMain;
         private TabPage tabPageCustomer;
-        private ListView lstCustomers;
-        private ColumnHeader chCustomerGhost;
         private ColumnHeader columnHeaderId;
-        private ColumnHeader chCustomerId;
-        private ColumnHeader chCustomerEmail;
         private SplitContainer splitContainerSales;
         private TabPage tabPageProduct;
         private TableLayoutPanel pnlCustomer;
@@ -621,21 +605,8 @@
         private NumericUpDown numQuantity;
         private ComboBox cboCategories;
         private Button btnAddItem;
-        private ListView lstProducts;
-        private ColumnHeader chProductGhost;
-        private ColumnHeader chProductName;
-        private ColumnHeader chProductPrice;
-        private ColumnHeader chProductId;
-        private ColumnHeader chProductStock;
-        private ColumnHeader chProductMinimalStock;
         private TableLayoutPanel pnlCart;
         private Label lblSelectedCustomerName;
-        private ListView lstCart;
-        private ColumnHeader chCartProductName;
-        private ColumnHeader chCartProductQty;
-        private ColumnHeader chCartProductDiscount;
-        private ColumnHeader chCartProductUnitPrice;
-        private ColumnHeader chCartProductTotalPrice;
         private Label lblTotalSale;
         private Button btnFinalizeSale;
         private Label lblInstallments;
@@ -643,7 +614,18 @@
         private Button btnRequestAuth;
         private Label lblDiscount;
         private NumericUpDown numDiscount;
-        private ColumnHeader chCartGhost;
         private Label lblCart;
+        private DataGridView dgvCart;
+        private DataGridViewTextBoxColumn colProduct;
+        private DataGridViewTextBoxColumn Quantity;
+        private DataGridViewTextBoxColumn UnitPrice;
+        private DataGridViewTextBoxColumn Discount;
+        private DataGridViewTextBoxColumn colTotal;
+        private DataGridView dgvCustomers;
+        private DataGridView dgvProducts;
+        private DataGridViewTextBoxColumn colProdName;
+        private DataGridViewTextBoxColumn colProdPrice;
+        private DataGridViewTextBoxColumn colProdStock;
+        private DataGridViewTextBoxColumn colCustName;
     }
 }

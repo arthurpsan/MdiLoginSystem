@@ -12,6 +12,11 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
+                    if (product.Category != null && product.Category.Id > 0)
+                    {
+                        dbContext.Attach(product.Category);
+                    }
+
                     if (product.Id == 0)
                     {
                         dbContext.Products.Add(product);
@@ -20,6 +25,7 @@ namespace UserManagementSystem.Data
                     {
                         dbContext.Entry(product).State = EntityState.Modified;
                     }
+
                     dbContext.SaveChanges();
                 }
             }

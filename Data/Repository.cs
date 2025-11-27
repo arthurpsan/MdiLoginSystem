@@ -71,7 +71,10 @@ namespace UserManagementSystem.Data
 
             });
 
-
+            modelBuilder.Entity<Purchase>()
+                .HasMany(p => p.Items)
+                .WithOne(i => i.Purchase)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
@@ -9,7 +12,9 @@ namespace UserManagementSystem.Forms
     public partial class CustomerReportForm : Form
     {
         private static CustomerReportForm? _instance;
-        private List<Customer> _allCustomers = new List<Customer>();
+
+        private BindingList<Customer> _customerList;
+        private List<Customer> _cacheAllCustomers;
 
         public static CustomerReportForm GetInstance()
         {
@@ -17,7 +22,6 @@ namespace UserManagementSystem.Forms
             {
                 _instance = new CustomerReportForm();
             }
-
             return _instance;
         }
 
@@ -25,95 +29,141 @@ namespace UserManagementSystem.Forms
         {
             InitializeComponent();
 
-            this.Load += CustomerPurchasesReport_Load;
+            BindControls();
 
+            LoadData();
+
+            this.Load += (s, e) => LoadData();
             txtSearchCustomer.TextChanged += TxtSearchCustomer_TextChanged;
-            lstCustomers.SelectedIndexChanged += LstCustomers_SelectedIndexChanged;
-
-            lstPurchasesReport.Columns.Add("ID", 80);
-            lstPurchasesReport.Columns.Add("Data", 120);
-            lstPurchasesReport.Columns.Add("Salesperson", 150);
-            lstPurchasesReport.Columns.Add("Total value", 100);
-            lstPurchasesReport.View = View.Details;
-
-            lstCustomers.Columns.Add("Customer ID", 80);
-            lstCustomers.Columns.Add("Name", 250);
-            lstCustomers.View = View.Details;
+            chkShowDelinquents.CheckedChanged += ChkShowDelinquents_CheckedChanged;
+            dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
+            dgvPurchases.CellFormatting += DgvPurchases_CellFormatting;
         }
 
-        private void CustomerPurchasesReport_Load(object sender, EventArgs e)
+        private void BindControls()
+        {
+            dgvCustomers.AutoGenerateColumns = false;
+            dgvCustomers.AllowUserToAddRows = false;
+            dgvCustomers.DataSource = _customerList; // initially null, populated by LoadData
+
+            // force id hidden if it exists in designer
+            if (dgvCustomers.Columns["Id"] != null)
+            {
+                dgvCustomers.Columns["Id"].Visible = false;
+            }
+
+            dgvPurchases.AutoGenerateColumns = false;
+            dgvPurchases.AllowUserToAddRows = false;
+        }
+
+        #region data loading & logic
+
+        private void LoadData()
         {
             try
             {
-                _allCustomers = CustomerRepository.FindAll();
-                PopulateCustomerList(_allCustomers);
+                List<Customer> sourceData;
+
+                if (chkShowDelinquents.Checked)
+                {
+                    sourceData = CustomerRepository.FindDelinquents();
+                    UpdateStatusLabel("Delinquent Customers (Action Required)", Color.DarkRed);
+
+                    if (sourceData.Count == 0)
+                    {
+                        MessageBox.Show("Great! No delinquent customers found.", "Report");
+                    }
+                }
+                else
+                {
+                    sourceData = CustomerRepository.FindAll();
+                    UpdateStatusLabel("Customer List (All)", Color.Black);
+                }
+
+                _cacheAllCustomers = sourceData;
+
+                _customerList = new BindingList<Customer>(sourceData);
+                dgvCustomers.DataSource = _customerList;
+
+                dgvPurchases.DataSource = null;
+                lblDescription.Text = "Select a customer to view details.";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load customers: {ex.Message}", "Error");
+                MessageBox.Show("Error loading data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void PopulateCustomerList(List<Customer> customers)
+        private void SearchCustomer()
         {
-            lstCustomers.Items.Clear();
-            foreach (var customer in customers)
-            {
-                ListViewItem item = new ListViewItem(customer.Id.ToString());
-                item.SubItems.Add(customer.Name);
-                item.Tag = customer;
-                lstCustomers.Items.Add(item);
-            }
-        }
+            if (_cacheAllCustomers == null) return;
 
-        private void TxtSearchCustomer_TextChanged(object sender, EventArgs e)
-        {
             string filter = txtSearchCustomer.Text.ToLower();
-
-            var filteredList = _allCustomers
+            var filteredList = _cacheAllCustomers
                 .Where(c => c.Name.ToLower().Contains(filter))
                 .ToList();
 
-            PopulateCustomerList(filteredList);
+            dgvCustomers.DataSource = new BindingList<Customer>(filteredList);
         }
 
-        private void LstCustomers_SelectedIndexChanged(object sender, EventArgs e)
+        private void LoadCustomerPurchases()
         {
-            if (lstCustomers.SelectedItems.Count == 0) return;
-
-            Customer? selectedCustomer = lstCustomers.SelectedItems[0].Tag as Customer;
-            if (selectedCustomer == null) return;
-
-            lstPurchasesReport.Items.Clear();
-
-            try
+            if (dgvCustomers.CurrentRow?.DataBoundItem is Customer selectedCustomer)
             {
-                // Define a data de início (30 dias atrás)
-                DateTime startDate = DateTime.Now.AddDays(-30);
-
-                // Busca no repositório
-                var purchases = PurchaseRepository.FindByCustomerIdAndDate(selectedCustomer.Id, startDate);
-
-                if (purchases.Count == 0)
+                try
                 {
-                    lblDescription.Text = "Customer has no purchases in the last 30 days";
-                }
+                    DateTime startDate = DateTime.Now.AddDays(-30);
+                    var purchases = PurchaseRepository.FindByCustomerIdAndDate(selectedCustomer.Id, startDate);
 
-                // Popula o relatório 'listView1'
-                foreach (var purchase in purchases)
+                    dgvPurchases.DataSource = new BindingList<Purchase>(purchases);
+
+                    lblDescription.Text = purchases.Count == 0
+                        ? "No purchases in the last 30 days."
+                        : $"Showing {purchases.Count} purchases from the last 30 days.";
+                }
+                catch (Exception ex)
                 {
-                    ListViewItem item = new ListViewItem(purchase.Id.ToString());
-                    item.SubItems.Add(purchase.Implementation?.ToString("g"));
-                    item.SubItems.Add(purchase.Seller?.Name ?? "N/A");
-                    item.SubItems.Add(purchase.CalcTotal()?.ToString("C"));
-
-                    lstPurchasesReport.Items.Add(item);
+                    MessageBox.Show("Error loading history: " + ex.Message);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao carregar compras do cliente: {ex.Message}", "Erro");
             }
         }
+
+        private void FormatPurchaseGrid(DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            if (dgvPurchases.Rows[e.RowIndex].DataBoundItem is Purchase purchase)
+            {
+                // match column names from designer
+                if (dgvPurchases.Columns[e.ColumnIndex].Name == "colSeller")
+                {
+                    e.Value = purchase.Seller?.Name ?? "N/A";
+                }
+                else if (dgvPurchases.Columns[e.ColumnIndex].Name == "colTotal")
+                {
+                    e.Value = purchase.CalcTotal()?.ToString("C");
+                }
+            }
+        }
+
+        private void UpdateStatusLabel(string text, Color color)
+        {
+            lblCustomerList.Text = text;
+            lblCustomerList.ForeColor = color;
+        }
+
+        #endregion
+
+        #region event handlers
+
+        private void ChkShowDelinquents_CheckedChanged(object sender, EventArgs e) => LoadData();
+
+        private void TxtSearchCustomer_TextChanged(object sender, EventArgs e) => SearchCustomer();
+
+        private void DgvCustomers_SelectionChanged(object sender, EventArgs e) => LoadCustomerPurchases();
+
+        private void DgvPurchases_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) => FormatPurchaseGrid(e);
+
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ namespace UserManagementSystem.Models
     public class Purchase
     {
         [Key]
-        public UInt64? Id { get; set; }
+        public UInt64 Id { get; set; }
 
         [Required]
         public UInt64? Number { get; set; }

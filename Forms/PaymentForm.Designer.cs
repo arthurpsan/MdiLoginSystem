@@ -30,47 +30,67 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtSearchCustomer = new System.Windows.Forms.TextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.lstPendingPayments = new System.Windows.Forms.ListView();
-            this.btnPay = new System.Windows.Forms.Button();
-            this.lblTotalWithFine = new System.Windows.Forms.Label();
-
-            // Setup Search Box
-            this.txtSearchCustomer.Location = new System.Drawing.Point(12, 12);
-            this.txtSearchCustomer.Size = new System.Drawing.Size(200, 20);
-
-            // Setup Search Button
-            this.btnSearch.Location = new System.Drawing.Point(220, 10);
-            this.btnSearch.Text = "Search Client";
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-
-            // Setup ListView
-            this.lstPendingPayments.Location = new System.Drawing.Point(12, 50);
-            this.lstPendingPayments.Size = new System.Drawing.Size(400, 200);
-            this.lstPendingPayments.View = System.Windows.Forms.View.Details;
-            this.lstPendingPayments.FullRowSelect = true;
-            this.lstPendingPayments.Columns.Add("Pay ID", 50);
-            this.lstPendingPayments.Columns.Add("Purchase", 70);
-            this.lstPendingPayments.Columns.Add("Due Date", 100);
-            this.lstPendingPayments.Columns.Add("Original Val", 80);
-            this.lstPendingPayments.Columns.Add("Total (w/ Fine)", 100);
-            this.lstPendingPayments.SelectedIndexChanged += new System.EventHandler(this.lstPendingPayments_SelectedIndexChanged);
-
-            // Setup Pay Button
-            this.btnPay.Location = new System.Drawing.Point(12, 260);
-            this.btnPay.Text = "Confirm Payment";
-            this.btnPay.Size = new System.Drawing.Size(150, 40);
-            this.btnPay.Click += new System.EventHandler(this.btnPay_Click);
-
-            // Add Controls
-            this.Controls.Add(this.txtSearchCustomer);
-            this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.lstPendingPayments);
-            this.Controls.Add(this.btnPay);
-
-            this.Text = "Cashier - Payment Registry";
-            this.Size = new System.Drawing.Size(450, 350);
+            txtSearchCustomer = new TextBox();
+            btnSearch = new Button();
+            btnPay = new Button();
+            lblTotalWithFine = new Label();
+            lstPendingPayments = new ListView();
+            SuspendLayout();
+            // 
+            // txtSearchCustomer
+            // 
+            txtSearchCustomer.Location = new Point(12, 12);
+            txtSearchCustomer.Name = "txtSearchCustomer";
+            txtSearchCustomer.Size = new Size(200, 23);
+            txtSearchCustomer.TabIndex = 0;
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(220, 10);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(75, 23);
+            btnSearch.TabIndex = 1;
+            btnSearch.Text = "Search Client";
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // btnPay
+            // 
+            btnPay.Location = new Point(12, 260);
+            btnPay.Name = "btnPay";
+            btnPay.Size = new Size(150, 40);
+            btnPay.TabIndex = 3;
+            btnPay.Text = "Confirm Payment";
+            btnPay.Click += btnPay_Click;
+            // 
+            // lblTotalWithFine
+            // 
+            lblTotalWithFine.Location = new Point(0, 0);
+            lblTotalWithFine.Name = "lblTotalWithFine";
+            lblTotalWithFine.Size = new Size(100, 23);
+            lblTotalWithFine.TabIndex = 0;
+            // 
+            // lstPendingPayments
+            // 
+            lstPendingPayments.FullRowSelect = true;
+            lstPendingPayments.Location = new Point(12, 50);
+            lstPendingPayments.Name = "lstPendingPayments";
+            lstPendingPayments.Size = new Size(400, 200);
+            lstPendingPayments.TabIndex = 2;
+            lstPendingPayments.UseCompatibleStateImageBehavior = false;
+            lstPendingPayments.View = View.Details;
+            lstPendingPayments.SelectedIndexChanged += lstPendingPayments_SelectedIndexChanged;
+            // 
+            // PaymentForm
+            // 
+            ClientSize = new Size(434, 311);
+            Controls.Add(txtSearchCustomer);
+            Controls.Add(btnSearch);
+            Controls.Add(lstPendingPayments);
+            Controls.Add(btnPay);
+            Name = "PaymentForm";
+            Text = "Cashier - Payment Registry";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -78,8 +98,8 @@
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.TextBox txtSearchCustomer;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.ListView lstPendingPayments; // Columns: ID, Purchase ID, Due Date, Value, Fine
         private System.Windows.Forms.Button btnPay;
         private System.Windows.Forms.Label lblTotalWithFine;
+        private ListView lstPendingPayments;
     }
 }

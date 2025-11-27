@@ -31,12 +31,20 @@
             pnlMainLayout = new TableLayoutPanel();
             lblCustomerList = new Label();
             lblTitle = new Label();
-            lstPurchasesReport = new ListView();
             txtSearchCustomer = new TextBox();
             lblSearchCustomer = new Label();
-            lstCustomers = new ListView();
             lblDescription = new Label();
+            chkShowDelinquents = new CheckBox();
+            dgvCustomers = new DataGridView();
+            dgvPurchases = new DataGridView();
+            Name = new DataGridViewTextBoxColumn();
+            Email = new DataGridViewTextBoxColumn();
+            Date = new DataGridViewTextBoxColumn();
+            colSeller = new DataGridViewTextBoxColumn();
+            colTotal = new DataGridViewTextBoxColumn();
             pnlMainLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPurchases).BeginInit();
             SuspendLayout();
             // 
             // pnlMainLayout
@@ -48,11 +56,12 @@
             pnlMainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlMainLayout.Controls.Add(lblCustomerList, 2, 1);
             pnlMainLayout.Controls.Add(lblTitle, 0, 0);
-            pnlMainLayout.Controls.Add(lstPurchasesReport, 0, 5);
             pnlMainLayout.Controls.Add(txtSearchCustomer, 0, 2);
             pnlMainLayout.Controls.Add(lblSearchCustomer, 0, 1);
-            pnlMainLayout.Controls.Add(lstCustomers, 2, 2);
             pnlMainLayout.Controls.Add(lblDescription, 0, 4);
+            pnlMainLayout.Controls.Add(chkShowDelinquents, 1, 3);
+            pnlMainLayout.Controls.Add(dgvCustomers, 2, 2);
+            pnlMainLayout.Controls.Add(dgvPurchases, 0, 5);
             pnlMainLayout.Dock = DockStyle.Fill;
             pnlMainLayout.Location = new Point(0, 0);
             pnlMainLayout.Name = "pnlMainLayout";
@@ -94,20 +103,6 @@
             lblTitle.Text = "Customer Data Reports";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // lstPurchasesReport
-            // 
-            lstPurchasesReport.BackColor = Color.LightGray;
-            pnlMainLayout.SetColumnSpan(lstPurchasesReport, 4);
-            lstPurchasesReport.Dock = DockStyle.Fill;
-            lstPurchasesReport.FullRowSelect = true;
-            lstPurchasesReport.GridLines = true;
-            lstPurchasesReport.Location = new Point(3, 228);
-            lstPurchasesReport.Name = "lstPurchasesReport";
-            lstPurchasesReport.Size = new Size(794, 219);
-            lstPurchasesReport.TabIndex = 0;
-            lstPurchasesReport.UseCompatibleStateImageBehavior = false;
-            lstPurchasesReport.View = View.Details;
-            // 
             // txtSearchCustomer
             // 
             txtSearchCustomer.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -131,21 +126,6 @@
             lblSearchCustomer.Text = "Search by Customer:";
             lblSearchCustomer.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // lstCustomers
-            // 
-            lstCustomers.BackColor = Color.LightGray;
-            pnlMainLayout.SetColumnSpan(lstCustomers, 2);
-            lstCustomers.Dock = DockStyle.Fill;
-            lstCustomers.FullRowSelect = true;
-            lstCustomers.GridLines = true;
-            lstCustomers.Location = new Point(403, 93);
-            lstCustomers.Name = "lstCustomers";
-            pnlMainLayout.SetRowSpan(lstCustomers, 2);
-            lstCustomers.Size = new Size(394, 84);
-            lstCustomers.TabIndex = 5;
-            lstCustomers.UseCompatibleStateImageBehavior = false;
-            lstCustomers.View = View.Details;
-            // 
             // lblDescription
             // 
             lblDescription.AutoSize = true;
@@ -159,6 +139,85 @@
             lblDescription.Text = "(Exhibits client data for the last 30 days.)";
             lblDescription.TextAlign = ContentAlignment.BottomLeft;
             // 
+            // chkShowDelinquents
+            // 
+            chkShowDelinquents.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            chkShowDelinquents.AutoSize = true;
+            chkShowDelinquents.CheckAlign = ContentAlignment.TopRight;
+            chkShowDelinquents.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            chkShowDelinquents.Location = new Point(203, 149);
+            chkShowDelinquents.Name = "chkShowDelinquents";
+            chkShowDelinquents.Size = new Size(194, 17);
+            chkShowDelinquents.TabIndex = 8;
+            chkShowDelinquents.Text = "Show delinquents only";
+            chkShowDelinquents.TextAlign = ContentAlignment.MiddleRight;
+            chkShowDelinquents.UseVisualStyleBackColor = true;
+            // 
+            // dgvCustomers
+            // 
+            dgvCustomers.AllowUserToAddRows = false;
+            dgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { Name, Email });
+            pnlMainLayout.SetColumnSpan(dgvCustomers, 2);
+            dgvCustomers.Dock = DockStyle.Fill;
+            dgvCustomers.Location = new Point(403, 93);
+            dgvCustomers.MultiSelect = false;
+            dgvCustomers.Name = "dgvCustomers";
+            dgvCustomers.ReadOnly = true;
+            pnlMainLayout.SetRowSpan(dgvCustomers, 2);
+            dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCustomers.Size = new Size(394, 84);
+            dgvCustomers.TabIndex = 9;
+            // 
+            // dgvPurchases
+            // 
+            dgvPurchases.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPurchases.Columns.AddRange(new DataGridViewColumn[] { Date, colSeller, colTotal });
+            pnlMainLayout.SetColumnSpan(dgvPurchases, 4);
+            dgvPurchases.Dock = DockStyle.Fill;
+            dgvPurchases.Location = new Point(3, 228);
+            dgvPurchases.Name = "dgvPurchases";
+            dgvPurchases.Size = new Size(794, 219);
+            dgvPurchases.TabIndex = 10;
+            // 
+            // Name
+            // 
+            Name.DataPropertyName = "Name";
+            Name.HeaderText = "Name";
+            Name.Name = "Name";
+            Name.ReadOnly = true;
+            Name.Width = 126;
+            // 
+            // Email
+            // 
+            Email.DataPropertyName = "Email";
+            Email.HeaderText = "Email";
+            Email.Name = "Email";
+            Email.ReadOnly = true;
+            Email.Width = 225;
+            // 
+            // Date
+            // 
+            Date.DataPropertyName = "Implementation";
+            Date.HeaderText = "Date";
+            Date.Name = "Date";
+            Date.ReadOnly = true;
+            Date.Width = 190;
+            // 
+            // colSeller
+            // 
+            colSeller.HeaderText = "Seller";
+            colSeller.Name = "colSeller";
+            colSeller.ReadOnly = true;
+            colSeller.Width = 380;
+            // 
+            // colTotal
+            // 
+            colTotal.HeaderText = "Total";
+            colTotal.Name = "colTotal";
+            colTotal.ReadOnly = true;
+            colTotal.Width = 181;
+            // 
             // CustomerReportForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -167,23 +226,30 @@
             Controls.Add(pnlMainLayout);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "CustomerReportForm";
             ShowIcon = false;
-            Text = "PurchasesReport";
+            Text = "Customers Report";
             pnlMainLayout.ResumeLayout(false);
             pnlMainLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPurchases).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private TableLayoutPanel pnlMainLayout;
-        private ListView lstPurchasesReport;
         private Label lblTitle;
         private TextBox txtSearchCustomer;
         private Label lblSearchCustomer;
         private Label lblCustomerList;
-        private ListView lstCustomers;
         private Label lblDescription;
+        private CheckBox chkShowDelinquents;
+        private DataGridView dgvCustomers;
+        private DataGridView dgvPurchases;
+        private DataGridViewTextBoxColumn Name;
+        private DataGridViewTextBoxColumn Email;
+        private DataGridViewTextBoxColumn Date;
+        private DataGridViewTextBoxColumn colSeller;
+        private DataGridViewTextBoxColumn colTotal;
     }
 }

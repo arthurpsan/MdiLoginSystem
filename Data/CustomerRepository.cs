@@ -111,5 +111,25 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
+
+        public static List<Customer> FindDelinquents()
+        {
+            try
+            {
+                using (Repository dbContext = new Repository())
+                {
+                    var customers = dbContext.Customers
+                        .Include(c => c.Purchases)
+                        .ThenInclude(p => p.Payments)
+                        .ToList();
+
+                    return customers.Where(c => !c.CanBuy()).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

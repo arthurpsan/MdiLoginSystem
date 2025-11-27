@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
@@ -9,11 +11,12 @@ namespace UserManagementSystem.Forms
     public partial class SaleForm : Form
     {
         private static SaleForm? _instance;
-        private User? _loggedInSeller;
+        private readonly User? _loggedInSeller;
 
-        // logic variables
+        private readonly BindingList<Item> _cartItems;
         private Customer? _selectedCustomer;
-        private List<Item> _cartItems = new List<Item>();
+
+        // logic flags
         private bool _managerOverride = false;
         private const decimal MAX_DISCOUNT_NO_AUTH = 0.05m; // 5%
 
@@ -21,205 +24,203 @@ namespace UserManagementSystem.Forms
         {
             if (_instance == null || _instance.IsDisposed)
             {
-                _instance = new SaleForm();
+                _instance = new SaleForm(seller);
             }
-            _instance._loggedInSeller = seller;
             return _instance;
         }
 
-        public SaleForm()
+        public SaleForm(User? seller)
         {
             InitializeComponent();
+            _loggedInSeller = seller;
 
-            this.Load += LoadInitialData;
+            // init empty cart
+            _cartItems = new BindingList<Item>();
+
+            // bind controls once
+            BindControls();
+
+            // load initial data
+            LoadInitialData();
+
+            // wire up events
+            txtSearchProduct.TextChanged += (s, e) => SearchProducts();
+            cboCategories.SelectedIndexChanged += (s, e) => SearchProducts();
+
+            // grid events
+            dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
+            dgvCart.CellFormatting += DgvCart_CellFormatting;
+
+            // button events
             btnSearchCustomer.Click += btnSearchCustomer_Click;
-            txtSearchProduct.TextChanged += (sender, e) => SearchProducts();
-            cboCategories.SelectedIndexChanged += (sender, e) => SearchProducts();
-            btnRequestAuth.Click += btnRequestAuth_Click;
-
-            lstCustomers.SelectedIndexChanged += lstCustomers_SelectedIndexChanged;
             btnAddItem.Click += btnAddItem_Click;
             btnFinalizeSale.Click += btnFinishSale_Click;
+            btnRequestAuth.Click += btnRequestAuth_Click;
         }
 
-        private void LoadInitialData(object sender, EventArgs e)
+        // default constructor for designer
+        public SaleForm() : this(null) { }
+
+        private void BindControls()
+        {
+            // PREVENT DUPLICATE COLUMNS
+            dgvCart.AutoGenerateColumns = false;
+            dgvCustomers.AutoGenerateColumns = false;
+            dgvProducts.AutoGenerateColumns = false;
+
+            // PREVENT USER EDITING
+            dgvCart.AllowUserToAddRows = false;
+            dgvCustomers.AllowUserToAddRows = false;
+            dgvProducts.AllowUserToAddRows = false;
+
+            // BIND CART (Starts Empty)
+            dgvCart.DataSource = _cartItems;
+        }
+
+        #region logic methods
+
+        private void LoadInitialData()
         {
             try
             {
+                // 1. Setup Categories
                 cboCategories.DataSource = CategoryRepository.FindAll();
                 cboCategories.DisplayMember = "Name";
                 cboCategories.ValueMember = "Id";
                 cboCategories.SelectedItem = null;
+
+                // 2. Load All Customers (Fix: Call search with empty text)
+                SearchCustomers();
+
+                // 3. Load All Products (Optional: populate product grid immediately)
+                SearchProducts();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Falied to load data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Failed to load data: {ex.Message}");
             }
         }
 
-        // Customer Search
-
-        private void btnSearchCustomer_Click(object sender, EventArgs e)
+        private void SearchCustomers()
         {
             try
             {
+                string filter = txtSearchCustomer.Text.Trim();
                 var customers = CustomerRepository.FindAll()
-                    .Where(c => c.Name.Contains(txtSearchCustomer.Text, StringComparison.OrdinalIgnoreCase))
+                    .Where(c => c.Name.Contains(filter, StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
-                lstCustomers.Items.Clear();
-                foreach (var customer in customers)
-                {
-                    // Usa as colunas do seu Designer (ID e Nome/Email)
-                    ListViewItem item = new ListViewItem(customer.Id.ToString());
-
-                    item.SubItems.Add(customer.Id.ToString());
-                    item.SubItems.Add(customer.Name); // Corrigido de 'Email' para 'Name'
-                    item.Tag = customer;
-                    lstCustomers.Items.Add(item);
-                }
+                // DIRECT BINDING - Requires DataPropertyName in Designer to be "Name"
+                dgvCustomers.DataSource = new BindingList<Customer>(customers);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Falied to search customers: {ex.Message}", "Error");
+                MessageBox.Show("Error searching: " + ex.Message);
             }
+        }
+
+        private void SelectCustomer()
+        {
+            // Validates selection
+            if (dgvCustomers.CurrentRow == null || dgvCustomers.CurrentRow.DataBoundItem is not Customer shallow)
+            {
+                _selectedCustomer = null;
+                return;
+            }
+
+            // Re-fetch for deep data (Purchases/Payments)
+            _selectedCustomer = CustomerRepository.FindByIdWithPurchases(shallow.Id);
+
+            if (_selectedCustomer == null) return;
+
+            lblSelectedCustomerName.Text = _selectedCustomer.Name;
+            _managerOverride = false;
+
+            if (!_selectedCustomer.CanBuy())
+            {
+                MessageBox.Show("Customer is delinquent. Manager authorization required.", "Blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnFinalizeSale.Enabled = false;
+                btnRequestAuth.Visible = true;
+            }
+            else
+            {
+                btnFinalizeSale.Enabled = true;
+                btnRequestAuth.Visible = false;
+            }
+
+            // Move to Product Tab automatically
+            TabControlMain.SelectedTab = tabPageProduct;
         }
 
         private void SearchProducts()
         {
             try
             {
-                var products = ProductRepository.FindByPartialName(txtSearchProduct.Text);
-                Category? selectedCategory = cboCategories.SelectedItem as Category;
+                string filter = txtSearchProduct.Text.Trim();
+                var products = ProductRepository.FindByPartialName(filter);
 
-                if (selectedCategory != null && products != null)
+                if (cboCategories.SelectedItem is Category cat)
                 {
-                    products = products.Where(p => p.Category != null && p.Category.Id == selectedCategory.Id).ToList();
+                    products = products?.Where(p => p.CategoryId == cat.Id).ToList();
                 }
 
-                lstProducts.Items.Clear();
                 if (products != null)
                 {
-                    foreach (var product in products)
-                    {
-                        ListViewItem item = new ListViewItem(product.Id.ToString());
-                        item.SubItems.Add(product.Name);
-                        item.SubItems.Add(product.Price?.ToString("C"));
-                        item.SubItems.Add(product.Stockpile?.ToString());
-                        item.Tag = product;
-                        lstProducts.Items.Add(item);
-                    }
+                    dgvProducts.DataSource = new BindingList<Product>(products);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro while searching products: {ex.Message}", "Error");
+                MessageBox.Show("Error searching products: " + ex.Message);
             }
         }
 
-        // Authorization and Customer Selection
-
-        private void lstCustomers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lstCustomers.SelectedItems.Count == 0)
-            {
-                _selectedCustomer = null;
-                return;
-            }
-
-            Customer? shallowCustomer = lstCustomers.SelectedItems[0].Tag as Customer;
-            if (shallowCustomer == null) return;
-
-            try
-            {
-                _selectedCustomer = CustomerRepository.FindByIdWithPurchases(shallowCustomer.Id);
-
-                if (_selectedCustomer == null)
-                {
-                    MessageBox.Show("Erro while loading customer data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                lblSelectedCustomerName.Text = _selectedCustomer.Name;
-                _managerOverride = false;
-
-                if (!_selectedCustomer.CanBuy())
-                {
-                    MessageBox.Show("Customer has pending issues. Sale is blocked. waiting for authorization.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    btnFinalizeSale.Enabled = false;
-                    btnRequestAuth.Visible = true;
-                }
-                else
-                {
-                    btnFinalizeSale.Enabled = true;
-                    btnRequestAuth.Visible = false;
-                }
-
-                TabControlMain.SelectedTab = tabPageProduct;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading customer data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnRequestAuth_Click(object sender, EventArgs e)
-        {
-            using (ManagerAuthForm authForm = new ManagerAuthForm())
-            {
-                if (authForm.ShowDialog() == DialogResult.OK)
-                {
-                    MessageBox.Show("Authorization conceded. Sale approved.", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    _managerOverride = true;
-                    btnFinalizeSale.Enabled = true;
-                    btnRequestAuth.Visible = false;
-                }
-            }
-        }
-
-        // Logic/Method used in our shopping cart
-
-        private void btnAddItem_Click(object sender, EventArgs e)
+        private void AddItemToCart()
         {
             if (_selectedCustomer == null)
             {
-                MessageBox.Show("You cant add items without selecting a customer first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a customer first.");
                 TabControlMain.SelectedTab = tabPageCustomer;
                 return;
             }
-            if (lstProducts.SelectedItems.Count == 0)
+
+            if (dgvProducts.CurrentRow?.DataBoundItem is not Product selectedProduct)
             {
-                MessageBox.Show("Select a product.", "Error.");
+                MessageBox.Show("Please select a product.");
                 return;
             }
 
-            Product? selectedProduct = lstProducts.SelectedItems[0].Tag as Product;
-            UInt32 quantity = (UInt32)numQuantity.Value;
-            decimal discountPercent = (decimal)numDiscount.Value;
+            uint quantity = (uint)numQuantity.Value;
+            decimal discountPercent = numDiscount.Value;
             decimal discountDecimal = discountPercent / 100.0m;
 
-            if (selectedProduct == null || quantity == 0) return;
+            if (quantity == 0)
+            {
+                MessageBox.Show("Quantity must be greater than 0.");
+                return;
+            }
 
+            // 1. Stock Validation
+            if (quantity > selectedProduct.Stockpile)
+            {
+                MessageBox.Show($"Insufficient stock! Available: {selectedProduct.Stockpile}");
+                return;
+            }
+
+            // 2. Manager Auth for Discount
             if (discountDecimal > MAX_DISCOUNT_NO_AUTH)
             {
-                MessageBox.Show($"{discountPercent}% Discount breaks our 5% limit. The manager's authorization is needed.", "Authorization");
-
-                using (ManagerAuthForm authForm = new ManagerAuthForm())
+                using (ManagerAuthForm auth = new ManagerAuthForm())
                 {
-                    if (authForm.ShowDialog() != DialogResult.OK)
+                    if (auth.ShowDialog() != DialogResult.OK)
                     {
-                        MessageBox.Show("Discount not authorized. The item will not be added.", "Authorization blocked");
+                        MessageBox.Show("Authorization denied. Item not added.");
                         return;
                     }
                 }
             }
 
-            if (quantity > selectedProduct.Stockpile)
-            {
-                MessageBox.Show($"Insufficient stock. Avaible: {selectedProduct.Stockpile}", "Error");
-                return;
-            }
-
+            // 3. Add to Cart
             Item newItem = new Item
             {
                 Product = selectedProduct,
@@ -229,104 +230,96 @@ namespace UserManagementSystem.Forms
             };
 
             _cartItems.Add(newItem);
-            UpdateCartListView();
+            UpdateTotals();
 
+            // Reset UI
             numQuantity.Value = 0;
             numDiscount.Value = 0;
-            lstProducts.SelectedItems.Clear();
         }
 
-        private void UpdateCartListView()
+        private void FinishSale()
         {
-            lstCart.Items.Clear();
-            Decimal? totalSale = 0;
-
-            foreach (Item item in _cartItems)
+            if (_selectedCustomer == null || _cartItems.Count == 0) return;
+            if (_loggedInSeller == null)
             {
-                Decimal? itemTotal = item.CalcTotal();
-                if (itemTotal == null) continue;
-
-                // CORREÇÃO: Adiciona a coluna de desconto
-                ListViewItem viewItem = new ListViewItem(item.Product?.Name ?? "N/A");
-                viewItem.SubItems.Add(item.Quantity?.ToString() ?? "0");
-                viewItem.SubItems.Add(item.Discount?.ToString("P0")); // "P0" = 5%
-                viewItem.SubItems.Add(item.UnitPrice?.ToString("C"));
-                viewItem.SubItems.Add(itemTotal?.ToString("C"));
-                viewItem.Tag = item;
-
-                lstCart.Items.Add(viewItem);
-                totalSale += itemTotal.Value;
-            }
-
-            lblTotalSale.Text = totalSale?.ToString("C");
-        }
-
-        // Finishing
-
-        private void btnFinishSale_Click(object sender, EventArgs e)
-        {
-            if (_selectedCustomer == null) { return; }
-            if (_cartItems.Count == 0) { return; }
-            if (_loggedInSeller == null || _loggedInSeller is not Salesperson) { return; }
-
-            if (!_selectedCustomer.CanBuy() && !_managerOverride)
-            {
-                MessageBox.Show("This customer is está delinquent does not have manager authorization.", "Sale not authorized", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Seller session error. Please relogin.");
                 return;
             }
 
+            // Security Check
+            if (!_selectedCustomer.CanBuy() && !_managerOverride)
+            {
+                MessageBox.Show("Customer blocked. Manager authorization required.");
+                return;
+            }
+
+            decimal totalSale = _cartItems.Sum(i => i.CalcTotal() ?? 0);
+            int installments = (int)numInstallments.Value;
+
+            if (!ValidateSaleRules(totalSale, installments)) return;
+
             try
             {
-                Purchase newPurchase = new Purchase
+                Purchase purchase = new Purchase
                 {
                     Customer = _selectedCustomer,
                     Seller = (Salesperson)_loggedInSeller,
-                    Items = _cartItems,
+                    Items = _cartItems.ToList(),
                     Beggining = DateTime.Now,
                     Implementation = DateTime.Now,
-                    State = State.FINISHED,
+                    State = State.FINISHED
                 };
 
-                int installmentsCount = (int)numInstallments.Value;
-                decimal? totalSale = newPurchase.CalcTotal();
-                decimal installmentValue = (totalSale ?? 0) / installmentsCount;
-
-                if (installmentValue < 50)
+                // Generate Installments
+                for (int i = 1; i <= installments; i++)
                 {
-                    MessageBox.Show($"Value of installment (R$ {installmentValue:F2}) is less than R$ 50,00.", "Error");
-                    return;
-                }
-
-                for (int i = 1; i <= installmentsCount; i++)
-                {
-                    Payment newPayment = new Payment
+                    purchase.Payments.Add(new Payment
                     {
                         ExpirationDate = DateTime.Now.AddMonths(i),
-                        DatePayment = null,
                         PaymentFine = 0,
-                        Purchase = newPurchase
-                    };
-                    newPurchase.Payments.Add(newPayment);
+                        Purchase = purchase
+                    });
                 }
 
-                foreach (Item item in _cartItems)
+                // Update Stock
+                foreach (var item in _cartItems)
                 {
-                    if (item.Product != null && item.Quantity != null)
+                    if (item.Product != null)
                     {
                         item.Product.Stockpile -= item.Quantity;
                         ProductRepository.SaveOrUpdate(item.Product);
                     }
                 }
 
-                PurchaseRepository.SaveOrUpdate(newPurchase);
-                MessageBox.Show("Sale done with success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Save Sale
+                PurchaseRepository.SaveOrUpdate(purchase);
 
+                MessageBox.Show("Sale completed successfully!", "Success");
                 ClearSaleScreen();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to complete sale: {ex.Message}", "Critical Error");
+                MessageBox.Show("Error processing sale: " + ex.Message);
             }
+        }
+
+        private bool ValidateSaleRules(decimal totalValue, int installments)
+        {
+            decimal installmentValue = totalValue / installments;
+
+            if (installmentValue < 50)
+            {
+                MessageBox.Show($"Installment value ({installmentValue:C}) is less than R$ 50.00 minimum.", "Rule Violation");
+                return false;
+            }
+
+            if (installments > 6)
+            {
+                MessageBox.Show("Maximum installments is 6.", "Rule Violation");
+                return false;
+            }
+
+            return true;
         }
 
         private void ClearSaleScreen()
@@ -336,23 +329,72 @@ namespace UserManagementSystem.Forms
             _managerOverride = false;
 
             lblSelectedCustomerName.Text = "Customer:";
+            lblTotalSale.Text = "R$ 0,00";
             txtSearchCustomer.Clear();
-            lstCustomers.Items.Clear();
 
-            txtSearchProduct.Clear();
-            lstProducts.Items.Clear();
-            cboCategories.SelectedItem = null;
-
-            UpdateCartListView();
-
-            numInstallments.Value = 1;
-            numDiscount.Value = 0;
-            numQuantity.Value = 0;
+            // Clear grids
+            dgvCustomers.DataSource = null;
+            dgvProducts.DataSource = null;
 
             btnFinalizeSale.Enabled = true;
             btnRequestAuth.Visible = false;
 
             TabControlMain.SelectedTab = tabPageCustomer;
         }
+
+        private void FormatCartGrid(DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= _cartItems.Count) return;
+
+            Item item = _cartItems[e.RowIndex];
+
+            // Ensure these Column Names match your Designer Names!
+            if (dgvCart.Columns[e.ColumnIndex].Name == "colProduct")
+            {
+                e.Value = item.Product?.Name ?? "Unknown";
+            }
+            else if (dgvCart.Columns[e.ColumnIndex].Name == "colTotal")
+            {
+                e.Value = item.CalcTotal()?.ToString("C");
+            }
+        }
+
+        private void UpdateTotals()
+        {
+            decimal total = _cartItems.Sum(i => i.CalcTotal() ?? 0);
+            lblTotalSale.Text = total.ToString("C");
+        }
+
+        private void RequestAuthorization()
+        {
+            using (ManagerAuthForm authForm = new ManagerAuthForm())
+            {
+                if (authForm.ShowDialog() == DialogResult.OK)
+                {
+                    MessageBox.Show("Sale Authorized by Manager.", "Success");
+                    _managerOverride = true;
+                    btnFinalizeSale.Enabled = true;
+                    btnRequestAuth.Visible = false;
+                }
+            }
+        }
+
+        #endregion
+
+        #region event handlers
+
+        private void btnSearchCustomer_Click(object sender, EventArgs e) => SearchCustomers();
+
+        private void DgvCustomers_SelectionChanged(object sender, EventArgs e) => SelectCustomer();
+
+        private void btnRequestAuth_Click(object sender, EventArgs e) => RequestAuthorization();
+
+        private void btnAddItem_Click(object sender, EventArgs e) => AddItemToCart();
+
+        private void btnFinishSale_Click(object sender, EventArgs e) => FinishSale();
+
+        private void DgvCart_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) => FormatCartGrid(e);
+
+        #endregion
     }
 }

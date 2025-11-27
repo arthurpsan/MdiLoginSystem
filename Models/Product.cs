@@ -9,7 +9,7 @@ namespace UserManagementSystem.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public UInt64? Id { get; set; }
+        public UInt64 Id { get; set; }
 
         [Required]
         private String? _name;
