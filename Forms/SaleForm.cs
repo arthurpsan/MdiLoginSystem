@@ -391,6 +391,30 @@ namespace UserManagementSystem.Forms
 
         private void DgvCart_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) => FormatCartGrid(e);
 
+        private void btnRemoveItem_Click(object sender, EventArgs e)
+        {
+            // 1. Validation
+            if (dgvCart.CurrentRow == null || dgvCart.CurrentRow.Index < 0)
+            {
+                MessageBox.Show("Please select an item to remove.", "Warning");
+                return;
+            }
+
+            // 2. Remove from List
+            // Because we use BindingList, we can remove directly by index
+            int selectedIndex = dgvCart.CurrentRow.Index;
+
+            // Double check bound limits
+            if (selectedIndex < _cartItems.Count)
+            {
+                Item itemToRemove = _cartItems[selectedIndex];
+                _cartItems.Remove(itemToRemove);
+
+                // 3. Update Totals
+                UpdateTotals();
+            }
+        }
+
         #endregion
     }
 }

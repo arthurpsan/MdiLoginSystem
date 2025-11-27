@@ -28,17 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pnlReports = new TableLayoutPanel();
+            lblEnd = new Label();
+            dtpEndDate = new DateTimePicker();
             lblSalesReports = new Label();
             lblTimePeriod = new Label();
             lblBegin = new Label();
             lblTotalSales = new Label();
             dtpStartDate = new DateTimePicker();
-            dtpEndDate = new DateTimePicker();
-            lblEnd = new Label();
-            dataGridView1 = new DataGridView();
+            dgvSales = new DataGridView();
+            dateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            sellerNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            totalValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            bdsSales = new BindingSource(components);
+            lblSearch = new Label();
+            txtSearch = new TextBox();
             pnlReports.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSales).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bdsSales).BeginInit();
             SuspendLayout();
             // 
             // pnlReports
@@ -55,7 +63,9 @@
             pnlReports.Controls.Add(lblBegin, 1, 4);
             pnlReports.Controls.Add(lblTotalSales, 0, 5);
             pnlReports.Controls.Add(dtpStartDate, 2, 4);
-            pnlReports.Controls.Add(dataGridView1, 0, 1);
+            pnlReports.Controls.Add(dgvSales, 0, 1);
+            pnlReports.Controls.Add(lblSearch, 0, 3);
+            pnlReports.Controls.Add(txtSearch, 0, 4);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
@@ -69,7 +79,29 @@
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 1;
-            pnlReports.Paint += pnlReports_Paint;
+            // 
+            // lblEnd
+            // 
+            lblEnd.AutoSize = true;
+            lblEnd.Dock = DockStyle.Fill;
+            lblEnd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEnd.Location = new Point(483, 405);
+            lblEnd.Name = "lblEnd";
+            lblEnd.Size = new Size(74, 45);
+            lblEnd.TabIndex = 16;
+            lblEnd.Text = "End";
+            lblEnd.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // dtpEndDate
+            // 
+            dtpEndDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            dtpEndDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            pnlReports.SetColumnSpan(dtpEndDate, 2);
+            dtpEndDate.Format = DateTimePickerFormat.Short;
+            dtpEndDate.Location = new Point(563, 416);
+            dtpEndDate.Name = "dtpEndDate";
+            dtpEndDate.Size = new Size(234, 23);
+            dtpEndDate.TabIndex = 15;
             // 
             // lblSalesReports
             // 
@@ -134,39 +166,70 @@
             dtpStartDate.Size = new Size(234, 23);
             dtpStartDate.TabIndex = 5;
             // 
-            // dtpEndDate
+            // dgvSales
             // 
-            dtpEndDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            dtpEndDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            pnlReports.SetColumnSpan(dtpEndDate, 2);
-            dtpEndDate.Format = DateTimePickerFormat.Short;
-            dtpEndDate.Location = new Point(563, 416);
-            dtpEndDate.Name = "dtpEndDate";
-            dtpEndDate.Size = new Size(234, 23);
-            dtpEndDate.TabIndex = 15;
+            dgvSales.AllowUserToAddRows = false;
+            dgvSales.AutoGenerateColumns = false;
+            dgvSales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvSales.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSales.Columns.AddRange(new DataGridViewColumn[] { dateDataGridViewTextBoxColumn, sellerNameDataGridViewTextBoxColumn, totalValueDataGridViewTextBoxColumn });
+            pnlReports.SetColumnSpan(dgvSales, 4);
+            dgvSales.DataSource = bdsSales;
+            dgvSales.Dock = DockStyle.Fill;
+            dgvSales.Location = new Point(3, 48);
+            dgvSales.Name = "dgvSales";
+            dgvSales.ReadOnly = true;
+            dgvSales.RowHeadersVisible = false;
+            pnlReports.SetRowSpan(dgvSales, 2);
+            dgvSales.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvSales.Size = new Size(794, 264);
+            dgvSales.TabIndex = 17;
             // 
-            // lblEnd
+            // dateDataGridViewTextBoxColumn
             // 
-            lblEnd.AutoSize = true;
-            lblEnd.Dock = DockStyle.Fill;
-            lblEnd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEnd.Location = new Point(483, 405);
-            lblEnd.Name = "lblEnd";
-            lblEnd.Size = new Size(74, 45);
-            lblEnd.TabIndex = 16;
-            lblEnd.Text = "End";
-            lblEnd.TextAlign = ContentAlignment.MiddleCenter;
+            dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
+            dateDataGridViewTextBoxColumn.HeaderText = "Date";
+            dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            dateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dataGridView1
+            // sellerNameDataGridViewTextBoxColumn
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            pnlReports.SetColumnSpan(dataGridView1, 4);
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(3, 48);
-            dataGridView1.Name = "dataGridView1";
-            pnlReports.SetRowSpan(dataGridView1, 2);
-            dataGridView1.Size = new Size(794, 264);
-            dataGridView1.TabIndex = 17;
+            sellerNameDataGridViewTextBoxColumn.DataPropertyName = "SellerName";
+            sellerNameDataGridViewTextBoxColumn.HeaderText = "Seller";
+            sellerNameDataGridViewTextBoxColumn.Name = "sellerNameDataGridViewTextBoxColumn";
+            sellerNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // totalValueDataGridViewTextBoxColumn
+            // 
+            totalValueDataGridViewTextBoxColumn.DataPropertyName = "TotalValue";
+            totalValueDataGridViewTextBoxColumn.HeaderText = "Total Value";
+            totalValueDataGridViewTextBoxColumn.Name = "totalValueDataGridViewTextBoxColumn";
+            totalValueDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bdsSales
+            // 
+            bdsSales.DataSource = typeof(Models.ViewModels.SaleReportViewModel);
+            // 
+            // lblSearch
+            // 
+            lblSearch.AutoSize = true;
+            lblSearch.Dock = DockStyle.Fill;
+            lblSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearch.Location = new Point(3, 315);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(474, 45);
+            lblSearch.TabIndex = 18;
+            lblSearch.Text = "Search:";
+            lblSearch.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtSearch.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(3, 371);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(474, 22);
+            txtSearch.TabIndex = 19;
             // 
             // SaleReportForm
             // 
@@ -181,7 +244,8 @@
             Text = "SaleReportScreen";
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSales).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bdsSales).EndInit();
             ResumeLayout(false);
         }
 
@@ -195,6 +259,12 @@
         private DateTimePicker dtpStartDate;
         private Label lblEnd;
         private DateTimePicker dtpEndDate;
-        private DataGridView dataGridView1;
+        private DataGridView dgvSales;
+        private BindingSource bdsSales;
+        private Label lblSearch;
+        private TextBox txtSearch;
+        private DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn sellerNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn totalValueDataGridViewTextBoxColumn;
     }
 }

@@ -30,34 +30,39 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             txtSearchCustomer = new TextBox();
-            btnSearch = new Button();
             btnPay = new Button();
             lblTotalWithFine = new Label();
-            lstPendingPayments = new ListView();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            lblSearchCustomer = new Label();
+            label1 = new Label();
+            dgvReports = new DataGridView();
+            purchaseIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            expirationDateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            totalAmountDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            bdsPayments = new BindingSource(components);
+            tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReports).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bdsPayments).BeginInit();
             SuspendLayout();
             // 
             // txtSearchCustomer
             // 
-            txtSearchCustomer.Location = new Point(12, 12);
+            txtSearchCustomer.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.SetColumnSpan(txtSearchCustomer, 2);
+            txtSearchCustomer.Location = new Point(3, 258);
             txtSearchCustomer.Name = "txtSearchCustomer";
-            txtSearchCustomer.Size = new Size(200, 23);
+            txtSearchCustomer.Size = new Size(336, 23);
             txtSearchCustomer.TabIndex = 0;
-            // 
-            // btnSearch
-            // 
-            btnSearch.Location = new Point(220, 10);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(75, 23);
-            btnSearch.TabIndex = 1;
-            btnSearch.Text = "Search Client";
-            btnSearch.Click += btnSearch_Click;
             // 
             // btnPay
             // 
-            btnPay.Location = new Point(12, 260);
+            btnPay.Dock = DockStyle.Fill;
+            btnPay.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPay.Location = new Point(516, 327);
             btnPay.Name = "btnPay";
-            btnPay.Size = new Size(150, 40);
+            btnPay.Size = new Size(165, 31);
             btnPay.TabIndex = 3;
             btnPay.Text = "Confirm Payment";
             btnPay.Click += btnPay_Click;
@@ -69,37 +74,124 @@
             lblTotalWithFine.Size = new Size(100, 23);
             lblTotalWithFine.TabIndex = 0;
             // 
-            // lstPendingPayments
+            // tableLayoutPanel1
             // 
-            lstPendingPayments.FullRowSelect = true;
-            lstPendingPayments.Location = new Point(12, 50);
-            lstPendingPayments.Name = "lstPendingPayments";
-            lstPendingPayments.Size = new Size(400, 200);
-            lstPendingPayments.TabIndex = 2;
-            lstPendingPayments.UseCompatibleStateImageBehavior = false;
-            lstPendingPayments.View = View.Details;
-            lstPendingPayments.SelectedIndexChanged += lstPendingPayments_SelectedIndexChanged;
+            tableLayoutPanel1.ColumnCount = 4;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.Controls.Add(btnPay, 3, 5);
+            tableLayoutPanel1.Controls.Add(txtSearchCustomer, 0, 3);
+            tableLayoutPanel1.Controls.Add(lblSearchCustomer, 0, 2);
+            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(dgvReports, 0, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 6;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.Size = new Size(684, 361);
+            tableLayoutPanel1.TabIndex = 4;
+            // 
+            // lblSearchCustomer
+            // 
+            lblSearchCustomer.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(lblSearchCustomer, 2);
+            lblSearchCustomer.Dock = DockStyle.Fill;
+            lblSearchCustomer.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearchCustomer.Location = new Point(3, 216);
+            lblSearchCustomer.Name = "lblSearchCustomer";
+            lblSearchCustomer.Size = new Size(336, 36);
+            lblSearchCustomer.TabIndex = 4;
+            lblSearchCustomer.Text = "Search Customer:";
+            lblSearchCustomer.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.FromArgb(0, 53, 123);
+            tableLayoutPanel1.SetColumnSpan(label1, 4);
+            label1.Dock = DockStyle.Fill;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(678, 36);
+            label1.TabIndex = 5;
+            label1.Text = "Payment Registry";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // dgvReports
+            // 
+            dgvReports.AllowUserToAddRows = false;
+            dgvReports.AutoGenerateColumns = false;
+            dgvReports.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvReports.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvReports.Columns.AddRange(new DataGridViewColumn[] { purchaseIdDataGridViewTextBoxColumn, expirationDateDataGridViewTextBoxColumn, totalAmountDataGridViewTextBoxColumn });
+            tableLayoutPanel1.SetColumnSpan(dgvReports, 4);
+            dgvReports.DataSource = bdsPayments;
+            dgvReports.Dock = DockStyle.Fill;
+            dgvReports.Location = new Point(3, 39);
+            dgvReports.Name = "dgvReports";
+            dgvReports.RowHeadersVisible = false;
+            dgvReports.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvReports.Size = new Size(678, 174);
+            dgvReports.TabIndex = 6;
+            // 
+            // purchaseIdDataGridViewTextBoxColumn
+            // 
+            purchaseIdDataGridViewTextBoxColumn.DataPropertyName = "PurchaseId";
+            purchaseIdDataGridViewTextBoxColumn.HeaderText = "Purchase #";
+            purchaseIdDataGridViewTextBoxColumn.Name = "purchaseIdDataGridViewTextBoxColumn";
+            // 
+            // expirationDateDataGridViewTextBoxColumn
+            // 
+            expirationDateDataGridViewTextBoxColumn.DataPropertyName = "ExpirationDate";
+            expirationDateDataGridViewTextBoxColumn.HeaderText = "Due Date";
+            expirationDateDataGridViewTextBoxColumn.Name = "expirationDateDataGridViewTextBoxColumn";
+            // 
+            // totalAmountDataGridViewTextBoxColumn
+            // 
+            totalAmountDataGridViewTextBoxColumn.DataPropertyName = "TotalAmount";
+            totalAmountDataGridViewTextBoxColumn.HeaderText = "Total Amount";
+            totalAmountDataGridViewTextBoxColumn.Name = "totalAmountDataGridViewTextBoxColumn";
+            // 
+            // bdsPayments
+            // 
+            bdsPayments.DataSource = typeof(Models.ViewModels.PaymentViewModel);
             // 
             // PaymentForm
             // 
-            ClientSize = new Size(434, 311);
-            Controls.Add(txtSearchCustomer);
-            Controls.Add(btnSearch);
-            Controls.Add(lstPendingPayments);
-            Controls.Add(btnPay);
+            ClientSize = new Size(684, 361);
+            Controls.Add(tableLayoutPanel1);
             Name = "PaymentForm";
             Text = "Cashier - Payment Registry";
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReports).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bdsPayments).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.TextBox txtSearchCustomer;
-        private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnPay;
         private System.Windows.Forms.Label lblTotalWithFine;
-        private ListView lstPendingPayments;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label lblSearchCustomer;
+        private Label label1;
+        private DataGridView dgvReports;
+        private BindingSource bdsPayments;
+        private DataGridViewTextBoxColumn purchaseIdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn expirationDateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn totalAmountDataGridViewTextBoxColumn;
     }
 }

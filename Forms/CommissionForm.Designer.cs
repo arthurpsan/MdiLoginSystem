@@ -28,22 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             lblTitle = new Label();
             pnlReports = new TableLayoutPanel();
-            lstReports = new ListView();
-            columnHeaderGhost = new ColumnHeader();
-            columnHeaderSalespersonId = new ColumnHeader();
-            columnHeaderPurchaseId = new ColumnHeader();
-            columnHeaderComission = new ColumnHeader();
-            columnHeaderSalesperson = new ColumnHeader();
-            lblSalesperson = new Label();
+            lblSearch = new Label();
             lblPeriod = new Label();
-            cboSalesperson = new ComboBox();
             dtpFinalDate = new DateTimePicker();
             dtpInitialDate = new DateTimePicker();
-            btnRefresh = new Button();
             lblTotalComission = new Label();
+            dgvCommissions = new DataGridView();
+            sellerNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            purchaseIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            dateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            commissionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            bdsCommissions = new BindingSource(components);
+            txtSearch = new TextBox();
             pnlReports.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCommissions).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bdsCommissions).BeginInit();
             SuspendLayout();
             // 
             // lblTitle
@@ -68,15 +70,14 @@
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlReports.Controls.Add(lstReports, 0, 1);
             pnlReports.Controls.Add(lblTitle, 0, 0);
-            pnlReports.Controls.Add(lblSalesperson, 0, 3);
+            pnlReports.Controls.Add(lblSearch, 0, 3);
             pnlReports.Controls.Add(lblPeriod, 2, 3);
-            pnlReports.Controls.Add(cboSalesperson, 0, 4);
             pnlReports.Controls.Add(dtpFinalDate, 3, 4);
             pnlReports.Controls.Add(dtpInitialDate, 2, 4);
-            pnlReports.Controls.Add(btnRefresh, 2, 5);
-            pnlReports.Controls.Add(lblTotalComission, 0, 5);
+            pnlReports.Controls.Add(lblTotalComission, 2, 5);
+            pnlReports.Controls.Add(dgvCommissions, 0, 1);
+            pnlReports.Controls.Add(txtSearch, 0, 4);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
@@ -91,63 +92,18 @@
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 2;
             // 
-            // lstReports
+            // lblSearch
             // 
-            lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderSalespersonId, columnHeaderPurchaseId, columnHeaderComission, columnHeaderSalesperson });
-            pnlReports.SetColumnSpan(lstReports, 4);
-            lstReports.Dock = DockStyle.Fill;
-            lstReports.FullRowSelect = true;
-            lstReports.GridLines = true;
-            lstReports.LabelWrap = false;
-            lstReports.Location = new Point(3, 48);
-            lstReports.Name = "lstReports";
-            pnlReports.SetRowSpan(lstReports, 2);
-            lstReports.Size = new Size(794, 264);
-            lstReports.TabIndex = 18;
-            lstReports.UseCompatibleStateImageBehavior = false;
-            lstReports.View = View.Details;
-            // 
-            // columnHeaderGhost
-            // 
-            columnHeaderGhost.Text = "";
-            columnHeaderGhost.Width = 0;
-            // 
-            // columnHeaderSalespersonId
-            // 
-            columnHeaderSalespersonId.Text = "Salesperson ID";
-            columnHeaderSalespersonId.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSalespersonId.Width = 100;
-            // 
-            // columnHeaderPurchaseId
-            // 
-            columnHeaderPurchaseId.Text = "Purchase Number";
-            columnHeaderPurchaseId.TextAlign = HorizontalAlignment.Center;
-            columnHeaderPurchaseId.Width = 296;
-            // 
-            // columnHeaderComission
-            // 
-            columnHeaderComission.Text = "Comission";
-            columnHeaderComission.TextAlign = HorizontalAlignment.Center;
-            columnHeaderComission.Width = 200;
-            // 
-            // columnHeaderSalesperson
-            // 
-            columnHeaderSalesperson.Text = "Salesperson Name";
-            columnHeaderSalesperson.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSalesperson.Width = 194;
-            // 
-            // lblSalesperson
-            // 
-            lblSalesperson.AutoSize = true;
-            lblSalesperson.Dock = DockStyle.Fill;
-            lblSalesperson.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSalesperson.Location = new Point(3, 315);
-            lblSalesperson.Name = "lblSalesperson";
-            lblSalesperson.Size = new Size(194, 45);
-            lblSalesperson.TabIndex = 17;
-            lblSalesperson.Text = "Salesperson:";
-            lblSalesperson.TextAlign = ContentAlignment.MiddleLeft;
+            lblSearch.AutoSize = true;
+            pnlReports.SetColumnSpan(lblSearch, 2);
+            lblSearch.Dock = DockStyle.Fill;
+            lblSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearch.Location = new Point(3, 315);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(394, 45);
+            lblSearch.TabIndex = 17;
+            lblSearch.Text = "Search for Seller:";
+            lblSearch.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblPeriod
             // 
@@ -161,17 +117,6 @@
             lblPeriod.TabIndex = 19;
             lblPeriod.Text = "Timeframe:";
             lblPeriod.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // cboSalesperson
-            // 
-            cboSalesperson.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            pnlReports.SetColumnSpan(cboSalesperson, 2);
-            cboSalesperson.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cboSalesperson.FormattingEnabled = true;
-            cboSalesperson.Location = new Point(3, 368);
-            cboSalesperson.Name = "cboSalesperson";
-            cboSalesperson.Size = new Size(394, 29);
-            cboSalesperson.TabIndex = 16;
             // 
             // dtpFinalDate
             // 
@@ -197,31 +142,81 @@
             dtpInitialDate.Size = new Size(194, 29);
             dtpInitialDate.TabIndex = 20;
             // 
-            // btnRefresh
-            // 
-            pnlReports.SetColumnSpan(btnRefresh, 2);
-            btnRefresh.Dock = DockStyle.Fill;
-            btnRefresh.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnRefresh.Location = new Point(403, 408);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(394, 39);
-            btnRefresh.TabIndex = 22;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.UseVisualStyleBackColor = true;
-            btnRefresh.Click += btnRefresh_Click;
-            // 
             // lblTotalComission
             // 
             lblTotalComission.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             lblTotalComission.AutoSize = true;
             pnlReports.SetColumnSpan(lblTotalComission, 2);
             lblTotalComission.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            lblTotalComission.Location = new Point(3, 417);
+            lblTotalComission.Location = new Point(403, 417);
             lblTotalComission.Name = "lblTotalComission";
             lblTotalComission.Size = new Size(394, 21);
             lblTotalComission.TabIndex = 23;
             lblTotalComission.Text = "Total Comission: R$ 0,00";
             lblTotalComission.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // dgvCommissions
+            // 
+            dgvCommissions.AllowUserToAddRows = false;
+            dgvCommissions.AllowUserToResizeColumns = false;
+            dgvCommissions.AllowUserToResizeRows = false;
+            dgvCommissions.AutoGenerateColumns = false;
+            dgvCommissions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvCommissions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCommissions.Columns.AddRange(new DataGridViewColumn[] { sellerNameDataGridViewTextBoxColumn, purchaseIdDataGridViewTextBoxColumn, dateDataGridViewTextBoxColumn, commissionDataGridViewTextBoxColumn });
+            pnlReports.SetColumnSpan(dgvCommissions, 4);
+            dgvCommissions.DataSource = bdsCommissions;
+            dgvCommissions.Dock = DockStyle.Fill;
+            dgvCommissions.Location = new Point(3, 48);
+            dgvCommissions.Name = "dgvCommissions";
+            dgvCommissions.ReadOnly = true;
+            dgvCommissions.RowHeadersVisible = false;
+            pnlReports.SetRowSpan(dgvCommissions, 2);
+            dgvCommissions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCommissions.Size = new Size(794, 264);
+            dgvCommissions.TabIndex = 24;
+            // 
+            // sellerNameDataGridViewTextBoxColumn
+            // 
+            sellerNameDataGridViewTextBoxColumn.DataPropertyName = "SellerName";
+            sellerNameDataGridViewTextBoxColumn.HeaderText = "Seller Name";
+            sellerNameDataGridViewTextBoxColumn.Name = "sellerNameDataGridViewTextBoxColumn";
+            sellerNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // purchaseIdDataGridViewTextBoxColumn
+            // 
+            purchaseIdDataGridViewTextBoxColumn.DataPropertyName = "PurchaseId";
+            purchaseIdDataGridViewTextBoxColumn.HeaderText = "Purchase #";
+            purchaseIdDataGridViewTextBoxColumn.Name = "purchaseIdDataGridViewTextBoxColumn";
+            purchaseIdDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // dateDataGridViewTextBoxColumn
+            // 
+            dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
+            dateDataGridViewTextBoxColumn.HeaderText = "Date";
+            dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            dateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // commissionDataGridViewTextBoxColumn
+            // 
+            commissionDataGridViewTextBoxColumn.DataPropertyName = "Commission";
+            commissionDataGridViewTextBoxColumn.HeaderText = "Commission";
+            commissionDataGridViewTextBoxColumn.Name = "commissionDataGridViewTextBoxColumn";
+            commissionDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bdsCommissions
+            // 
+            bdsCommissions.DataSource = typeof(Models.ViewModels.CommissionViewModel);
+            // 
+            // txtSearch
+            // 
+            txtSearch.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            pnlReports.SetColumnSpan(txtSearch, 2);
+            txtSearch.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(3, 371);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(394, 22);
+            txtSearch.TabIndex = 25;
             // 
             // CommissionForm
             // 
@@ -236,6 +231,8 @@
             Text = "Comission Analytics";
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvCommissions).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bdsCommissions).EndInit();
             ResumeLayout(false);
         }
 
@@ -244,17 +241,17 @@
         private Label lblTitle;
         private TableLayoutPanel pnlReports;
         private ComboBox cboSalesperson;
-        private Label lblSalesperson;
-        private ListView lstReports;
-        private ColumnHeader columnHeaderGhost;
-        private ColumnHeader columnHeaderSalespersonId;
-        private ColumnHeader columnHeaderPurchaseId;
-        private ColumnHeader columnHeaderComission;
-        private ColumnHeader columnHeaderSalesperson;
+        private Label lblSearch;
         private Label lblPeriod;
         private DateTimePicker dtpInitialDate;
         private DateTimePicker dtpFinalDate;
-        private Button btnRefresh;
         private Label lblTotalComission;
+        private DataGridView dgvCommissions;
+        private BindingSource bdsCommissions;
+        private DataGridViewTextBoxColumn sellerNameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn purchaseIdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn commissionDataGridViewTextBoxColumn;
+        private TextBox txtSearch;
     }
 }

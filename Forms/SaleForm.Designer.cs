@@ -66,6 +66,7 @@
             UnitPrice = new DataGridViewTextBoxColumn();
             Discount = new DataGridViewTextBoxColumn();
             colTotal = new DataGridViewTextBoxColumn();
+            btnRemoveItem = new Button();
             TabControlMain.SuspendLayout();
             tabPageCustomer.SuspendLayout();
             pnlCustomer.SuspendLayout();
@@ -396,6 +397,7 @@
             pnlCart.Controls.Add(btnRequestAuth, 0, 4);
             pnlCart.Controls.Add(lblCart, 0, 0);
             pnlCart.Controls.Add(dgvCart, 0, 1);
+            pnlCart.Controls.Add(btnRemoveItem, 2, 3);
             pnlCart.Dock = DockStyle.Fill;
             pnlCart.Location = new Point(0, 0);
             pnlCart.Name = "pnlCart";
@@ -557,6 +559,19 @@
             colTotal.ReadOnly = true;
             colTotal.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
+            // btnRemoveItem
+            // 
+            pnlCart.SetColumnSpan(btnRemoveItem, 2);
+            btnRemoveItem.Dock = DockStyle.Fill;
+            btnRemoveItem.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRemoveItem.Location = new Point(267, 363);
+            btnRemoveItem.Name = "btnRemoveItem";
+            btnRemoveItem.Size = new Size(260, 39);
+            btnRemoveItem.TabIndex = 15;
+            btnRemoveItem.Text = "Remove Item";
+            btnRemoveItem.UseVisualStyleBackColor = true;
+            btnRemoveItem.Click += btnRemoveItem_Click;
+            // 
             // SaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -632,5 +647,6 @@
         private DataGridViewTextBoxColumn UnitPrice;
         private DataGridViewTextBoxColumn Discount;
         private DataGridViewTextBoxColumn colTotal;
+        private Button btnRemoveItem;
     }
 }

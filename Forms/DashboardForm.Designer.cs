@@ -1,4 +1,4 @@
-﻿namespace UserManagementSystem
+﻿namespace UserManagementSystem.Forms
 {
     partial class DashboardForm
     {
@@ -28,133 +28,163 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pnlReports = new TableLayoutPanel();
+            lblDashboard = new Label();
+            txtSearch = new TextBox();
             lblReports = new Label();
-            lstReports = new ListView();
-            columnHeaderGhost = new ColumnHeader();
-            columnHeaderId = new ColumnHeader();
-            columnHeaderUsername = new ColumnHeader();
-            columnHeaderNickname = new ColumnHeader();
-            columnHeaderEmail = new ColumnHeader();
-            columnHeaderPhone = new ColumnHeader();
-            columnHeaderLevel = new ColumnHeader();
-            columnHeaderLastAccess = new ColumnHeader();
-            btnRefresh = new Button();
+            dgvReports = new DataGridView();
+            nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            nicknameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            emailDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            phoneDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            roleDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            lastAccessDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            bdsReports = new BindingSource(components);
+            lblSearch = new Label();
             pnlReports.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReports).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bdsReports).BeginInit();
             SuspendLayout();
             // 
             // pnlReports
             // 
-            pnlReports.ColumnCount = 3;
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
-            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
-            pnlReports.Controls.Add(lblReports, 0, 0);
-            pnlReports.Controls.Add(lstReports, 0, 1);
-            pnlReports.Controls.Add(btnRefresh, 2, 3);
+            pnlReports.ColumnCount = 4;
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pnlReports.Controls.Add(lblDashboard, 0, 0);
+            pnlReports.Controls.Add(txtSearch, 0, 3);
+            pnlReports.Controls.Add(lblReports, 0, 5);
+            pnlReports.Controls.Add(dgvReports, 0, 1);
+            pnlReports.Controls.Add(lblSearch, 0, 2);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
-            pnlReports.RowCount = 4;
+            pnlReports.RowCount = 6;
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
             pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 0;
+            // 
+            // lblDashboard
+            // 
+            lblDashboard.AutoSize = true;
+            lblDashboard.BackColor = Color.FromArgb(0, 53, 123);
+            pnlReports.SetColumnSpan(lblDashboard, 4);
+            lblDashboard.Dock = DockStyle.Fill;
+            lblDashboard.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDashboard.ForeColor = Color.White;
+            lblDashboard.Location = new Point(3, 0);
+            lblDashboard.Name = "lblDashboard";
+            lblDashboard.RightToLeft = RightToLeft.No;
+            lblDashboard.Size = new Size(794, 45);
+            lblDashboard.TabIndex = 0;
+            lblDashboard.Text = "Employee Dashboard";
+            lblDashboard.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            pnlReports.SetColumnSpan(txtSearch, 2);
+            txtSearch.Location = new Point(3, 326);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(394, 23);
+            txtSearch.TabIndex = 1;
             // 
             // lblReports
             // 
             lblReports.AutoSize = true;
-            lblReports.BackColor = Color.FromArgb(0, 53, 123);
-            pnlReports.SetColumnSpan(lblReports, 3);
             lblReports.Dock = DockStyle.Fill;
-            lblReports.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblReports.ForeColor = Color.White;
-            lblReports.Location = new Point(3, 0);
+            lblReports.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblReports.Location = new Point(3, 405);
             lblReports.Name = "lblReports";
-            lblReports.Size = new Size(794, 45);
-            lblReports.TabIndex = 1;
-            lblReports.Text = "General Employee Dashboard";
-            lblReports.TextAlign = ContentAlignment.MiddleCenter;
+            lblReports.Size = new Size(194, 45);
+            lblReports.TabIndex = 2;
+            lblReports.Text = "Reports";
+            lblReports.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // lstReports
+            // dgvReports
             // 
-            lstReports.BackColor = Color.LightGray;
-            lstReports.CheckBoxes = true;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderUsername, columnHeaderNickname, columnHeaderEmail, columnHeaderPhone, columnHeaderLevel, columnHeaderLastAccess });
-            pnlReports.SetColumnSpan(lstReports, 3);
-            lstReports.Dock = DockStyle.Fill;
-            lstReports.FullRowSelect = true;
-            lstReports.GridLines = true;
-            lstReports.LabelWrap = false;
-            lstReports.Location = new Point(3, 48);
-            lstReports.Name = "lstReports";
-            pnlReports.SetRowSpan(lstReports, 2);
-            lstReports.Size = new Size(794, 354);
-            lstReports.TabIndex = 2;
-            lstReports.UseCompatibleStateImageBehavior = false;
-            lstReports.View = View.Details;
+            dgvReports.AllowUserToAddRows = false;
+            dgvReports.AutoGenerateColumns = false;
+            dgvReports.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvReports.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvReports.Columns.AddRange(new DataGridViewColumn[] { nameDataGridViewTextBoxColumn, nicknameDataGridViewTextBoxColumn, emailDataGridViewTextBoxColumn, phoneDataGridViewTextBoxColumn, roleDataGridViewTextBoxColumn, lastAccessDataGridViewTextBoxColumn });
+            pnlReports.SetColumnSpan(dgvReports, 4);
+            dgvReports.DataSource = bdsReports;
+            dgvReports.Dock = DockStyle.Fill;
+            dgvReports.Location = new Point(3, 48);
+            dgvReports.Name = "dgvReports";
+            dgvReports.ReadOnly = true;
+            dgvReports.RowHeadersVisible = false;
+            dgvReports.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvReports.Size = new Size(794, 219);
+            dgvReports.TabIndex = 3;
             // 
-            // columnHeaderGhost
+            // nameDataGridViewTextBoxColumn
             // 
-            columnHeaderGhost.Text = "";
-            columnHeaderGhost.Width = 0;
+            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            nameDataGridViewTextBoxColumn.HeaderText = "Full Name";
+            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            nameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // columnHeaderId
+            // nicknameDataGridViewTextBoxColumn
             // 
-            columnHeaderId.Text = "ID";
-            columnHeaderId.TextAlign = HorizontalAlignment.Center;
-            columnHeaderId.Width = 100;
+            nicknameDataGridViewTextBoxColumn.DataPropertyName = "Nickname";
+            nicknameDataGridViewTextBoxColumn.HeaderText = "Username / Nick";
+            nicknameDataGridViewTextBoxColumn.Name = "nicknameDataGridViewTextBoxColumn";
+            nicknameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // columnHeaderUsername
+            // emailDataGridViewTextBoxColumn
             // 
-            columnHeaderUsername.Text = "Username";
-            columnHeaderUsername.TextAlign = HorizontalAlignment.Center;
-            columnHeaderUsername.Width = 200;
+            emailDataGridViewTextBoxColumn.DataPropertyName = "Email";
+            emailDataGridViewTextBoxColumn.HeaderText = "Email Address";
+            emailDataGridViewTextBoxColumn.Name = "emailDataGridViewTextBoxColumn";
+            emailDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // columnHeaderNickname
+            // phoneDataGridViewTextBoxColumn
             // 
-            columnHeaderNickname.Text = "Nickname";
-            columnHeaderNickname.TextAlign = HorizontalAlignment.Center;
-            columnHeaderNickname.Width = 100;
+            phoneDataGridViewTextBoxColumn.DataPropertyName = "Phone";
+            phoneDataGridViewTextBoxColumn.HeaderText = "Phone";
+            phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
+            phoneDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // columnHeaderEmail
+            // roleDataGridViewTextBoxColumn
             // 
-            columnHeaderEmail.Text = "E-mail";
-            columnHeaderEmail.TextAlign = HorizontalAlignment.Center;
-            columnHeaderEmail.Width = 300;
+            roleDataGridViewTextBoxColumn.DataPropertyName = "Role";
+            roleDataGridViewTextBoxColumn.HeaderText = "Role";
+            roleDataGridViewTextBoxColumn.Name = "roleDataGridViewTextBoxColumn";
+            roleDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // columnHeaderPhone
+            // lastAccessDataGridViewTextBoxColumn
             // 
-            columnHeaderPhone.Text = "Phone";
-            columnHeaderPhone.TextAlign = HorizontalAlignment.Center;
-            columnHeaderPhone.Width = 100;
+            lastAccessDataGridViewTextBoxColumn.DataPropertyName = "LastAccess";
+            lastAccessDataGridViewTextBoxColumn.HeaderText = "Last Access";
+            lastAccessDataGridViewTextBoxColumn.Name = "lastAccessDataGridViewTextBoxColumn";
+            lastAccessDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // columnHeaderLevel
+            // bdsReports
             // 
-            columnHeaderLevel.Text = "Level";
-            columnHeaderLevel.TextAlign = HorizontalAlignment.Center;
-            columnHeaderLevel.Width = 90;
+            bdsReports.DataSource = typeof(Models.ViewModels.UserViewModel);
             // 
-            // columnHeaderLastAccess
+            // lblSearch
             // 
-            columnHeaderLastAccess.Text = "Last Access";
-            columnHeaderLastAccess.TextAlign = HorizontalAlignment.Center;
-            columnHeaderLastAccess.Width = 160;
-            // 
-            // btnRefresh
-            // 
-            btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnRefresh.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRefresh.Location = new Point(535, 408);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(262, 39);
-            btnRefresh.TabIndex = 3;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.UseVisualStyleBackColor = true;
-            btnRefresh.Click += btnRefresh_Click;
+            lblSearch.AutoSize = true;
+            pnlReports.SetColumnSpan(lblSearch, 2);
+            lblSearch.Dock = DockStyle.Fill;
+            lblSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearch.Location = new Point(3, 270);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(394, 45);
+            lblSearch.TabIndex = 4;
+            lblSearch.Text = "Search Employee:";
+            lblSearch.TextAlign = ContentAlignment.MiddleRight;
             // 
             // DashboardForm
             // 
@@ -166,26 +196,28 @@
             MaximizeBox = false;
             Name = "DashboardForm";
             ShowIcon = false;
-            Text = "System - User Reports";
-            Load += ReportScreen_Load;
+            Text = "DashboardForm";
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReports).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bdsReports).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private TableLayoutPanel pnlReports;
+        private Label lblDashboard;
+        private TextBox txtSearch;
         private Label lblReports;
-        private ListView lstReports;
-        private ColumnHeader columnHeaderId;
-        private ColumnHeader columnHeaderUsername;
-        private ColumnHeader columnHeaderEmail;
-        private ColumnHeader columnHeaderLevel;
-        private Button btnRefresh;
-        private ColumnHeader columnHeaderLastAccess;
-        private ColumnHeader columnHeaderGhost;
-        private ColumnHeader columnHeaderNickname;
-        private ColumnHeader columnHeaderPhone;
+        private DataGridView dgvReports;
+        private Label lblSearch;
+        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn nicknameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn roleDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn lastAccessDataGridViewTextBoxColumn;
+        private BindingSource bdsReports;
     }
 }

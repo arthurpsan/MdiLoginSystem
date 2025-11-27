@@ -1,69 +1,71 @@
-﻿using System;
+﻿using System.ComponentModel;
 using UserManagementSystem.Data;
-using UserManagementSystem.Models;
+using UserManagementSystem.Models.ViewModels;
 
 namespace UserManagementSystem.Forms
 {
     public partial class SaleReportForm : Form
     {
-        private static SaleReportForm _instance;
+        private static SaleReportForm? _instance;
+        private List<SaleReportViewModel> _originalList = new();
+
         public static SaleReportForm GetInstance()
         {
-            if (_instance == null || _instance.IsDisposed)
-            {
-                _instance = new SaleReportForm();
-            }
-
+            if (_instance == null || _instance.IsDisposed) _instance = new SaleReportForm();
             return _instance;
         }
+
         public SaleReportForm()
         {
             InitializeComponent();
-        }
 
-        private void pnlReports_Paint(object sender, PaintEventArgs e)
-        {
+            dgvSales.AutoGenerateColumns = true;
+            dgvSales.DataSource = bdsSales;
 
-        }
 
-        private void lstReports_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            txtSearch.TextChanged += (s, e) => FilterData();
 
+            this.Load += (s, e) => btnRefresh_Click(s, e);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            DateTime startDate = dtpStartDate.Value.Date;
-            DateTime endDate = dtpEndDate.Value.Date.AddDays(1).AddTicks(-1);
-
-            lstReports.Items.Clear();
-            decimal totalSales = 0;
+            DateTime start = dtpStartDate.Value.Date;
+            DateTime end = dtpEndDate.Value.Date.AddDays(1).AddTicks(-1);
+            decimal totalValue = 0;
 
             try
             {
-                var purchases = PurchaseRepository.FindByDateRange(startDate, endDate);
+                var purchases = PurchaseRepository.FindByDateRange(start, end);
 
-                foreach (var purchase in purchases)
+                _originalList = purchases.Select(p =>
                 {
-                    decimal? saleValue = purchase.CalcTotal();
-                    totalSales += saleValue ?? 0;
+                    decimal total = p.CalcTotal() ?? 0;
+                    totalValue += total;
 
-                    ListViewItem item = new ListViewItem("");
-                    item.SubItems.Add(purchase.Id.ToString());
-                    item.SubItems.Add(purchase.Implementation?.ToString("g"));
-                    item.SubItems.Add(saleValue?.ToString("C"));
+                    return new SaleReportViewModel
+                    {
+                        SaleId = p.Id,
+                        Date = p.Implementation?.ToString("g") ?? "-",
+                        SellerName = p.Seller?.Name ?? "Unknown",
+                        TotalValue = total.ToString("C")
+                    };
+                }).ToList();
 
-                    item.SubItems.Add(purchase.Seller?.Name ?? "N/A");
-
-                    lstReports.Items.Add(item);
-                }
-
-                lblTotalSales.Text = $"Total sales: {totalSales:C}";
+                FilterData();
+                lblTotalSales.Text = $"Total Period Sales: {totalValue:C}";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error while loading report: {ex.Message}", "Critical Error");
+                MessageBox.Show("Error: " + ex.Message);
             }
+        }
+
+        private void FilterData()
+        {
+            string term = txtSearch.Text.ToLower().Trim();
+            var filtered = _originalList.Where(x => x.SellerName.ToLower().Contains(term)).ToList();
+            bdsSales.DataSource = new BindingList<SaleReportViewModel>(filtered); // Assuming you named BindingSource 'bdsSales'
         }
     }
 }

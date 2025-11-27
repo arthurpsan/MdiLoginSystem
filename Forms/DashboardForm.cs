@@ -1,87 +1,75 @@
-﻿using UserManagementSystem.Data;
-using UserManagementSystem.Models;
+﻿using System.ComponentModel;
+using System.Data;
+using UserManagementSystem.Data;
+using UserManagementSystem.Models.ViewModels;
 
-namespace UserManagementSystem
+namespace UserManagementSystem.Forms
 {
     public partial class DashboardForm : Form
     {
         private static DashboardForm? _instance;
+        private List<UserViewModel> _originalList = new(); // Cache for search
+
         public static DashboardForm GetInstance()
         {
-            if (_instance == null || _instance.IsDisposed)
-            {
-                _instance = new DashboardForm();
-            }
-
+            if (_instance == null || _instance.IsDisposed) _instance = new DashboardForm();
             return _instance;
         }
 
         public DashboardForm()
         {
             InitializeComponent();
+
+            dgvReports.AutoGenerateColumns = true;
+            dgvReports.DataSource = bdsReports;
+
+            LoadData();
+
+            txtSearch.TextChanged += (s, e) => FilterData();
         }
 
-        private void ReportScreen_Load(object sender, EventArgs e)
+        private void ReportScreen_Load(object sender, EventArgs e) => LoadData();
+        private void btnRefresh_Click(object sender, EventArgs e) => LoadData();
+
+        private void LoadData()
         {
-            SetupListView();
-            LoadReportData();
-        }
-
-        private void SetupListView()
-        {
-            lstReports.View = View.Details;
-            lstReports.GridLines = true;
-            lstReports.FullRowSelect = true;
-
-            lstReports.ColumnWidthChanging += lstReports_ColumnWidthChanging;
-        }
-
-        private void lstReports_ColumnWidthChanging(object? sender, ColumnWidthChangingEventArgs e)
-        {
-            e.Cancel = true;
-
-            e.NewWidth = lstReports.Columns[e.ColumnIndex].Width;
-        }
-
-        // Method to load user report
-        private void LoadReportData()
-        {
-            // Implementation for loading user report
             try
             {
-                lstReports.Items.Clear();
+                var data = CredentialRepository.FindAll();
 
-                List<Credential> credentials = CredentialRepository.FindAll();
-
-                foreach (Credential credential in credentials)
+                // Map Database Object -> ViewModel
+                _originalList = data.Select(c => new UserViewModel
                 {
-                    // Creates a "ghost line" in order to avoid clashing alignment with the first column rule
+                    Id = c.User?.Id,
+                    Name = c.User?.Name ?? "N/A",
+                    Nickname = c.User?.Nickname ?? "N/A",
+                    Email = c.Email ?? "",
+                    Phone = c.User?.PhoneNumber?.ToString() ?? "N/A",
+                    Role = c.Manager ? "Manager" : "Staff",
+                    LastAccess = c.LastAccess?.ToString("g") ?? "Never"
+                }).ToList();
 
-                    ListViewItem line = new ListViewItem(string.Empty);
-
-                    line.SubItems.Add(credential.User?.Id.ToString() ?? "N/A");
-                    line.SubItems.Add(credential.User.Name);
-                    line.SubItems.Add(credential.User.Nickname);
-                    line.SubItems.Add(credential.Email);
-                    line.SubItems.Add(credential.User.PhoneNumber?.ToString() ?? "N/A");
-
-                    string level = credential.Manager ? "Admin" : "Regular";
-                    line.SubItems.Add(level);
-
-                    line.SubItems.Add(credential.LastAccess?.ToString() ?? "Never");
-
-                    lstReports.Items.Add(line);
-                }
+                FilterData(); // Updates the grid
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading user report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading data: " + ex.Message);
             }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void FilterData()
         {
-            LoadReportData();
+            string term = txtSearch.Text.ToLower().Trim();
+
+            var filtered = _originalList.Where(u =>
+                u.Name.ToLower().Contains(term) ||
+                u.Email.ToLower().Contains(term) ||
+                u.Role.ToLower().Contains(term)
+            ).ToList();
+
+            // Push to BindingSource -> Updates Grid automatically
+            bdsReports.DataSource = new BindingList<UserViewModel>(filtered);
+            lblReports.Text = $"User Reports ({filtered.Count})";
         }
     }
 }
