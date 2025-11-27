@@ -255,7 +255,7 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            // check security
+            // Check security
             if (!_selectedCustomer.CanBuy() && !_managerOverride)
             {
                 MessageBox.Show("Customer blocked. Manager authorization required.");
@@ -267,7 +267,7 @@ namespace UserManagementSystem.Forms
 
             if (!ValidateSaleRules(totalSale, installments)) return;
 
-            // check role
+            // Check role
             if (_loggedInSeller is not Salesperson seller)
             {
                 MessageBox.Show("Only registered Salespeople can finalize sales.\n(Admins cannot be the 'Seller' of record).");
@@ -276,6 +276,7 @@ namespace UserManagementSystem.Forms
 
             try
             {
+                // 1. Create the Purchase Object (This defines 'purchase')
                 Purchase purchase = new Purchase
                 {
                     Customer = _selectedCustomer,
@@ -286,7 +287,7 @@ namespace UserManagementSystem.Forms
                     State = State.FINISHED
                 };
 
-                // create payments
+                // 2. Generate Payments
                 for (int i = 1; i <= installments; i++)
                 {
                     purchase.Payments.Add(new Payment
@@ -297,17 +298,11 @@ namespace UserManagementSystem.Forms
                     });
                 }
 
-                // update stock
-                foreach (var item in _cartItems)
-                {
-                    if (item.Product != null)
-                    {
-                        item.Product.Stockpile -= item.Quantity;
-                        ProductRepository.SaveOrUpdate(item.Product);
-                    }
-                }
+                // NOTE: We DO NOT update stock here manually anymore. 
+                // The Transaction method handles stock deduction automatically.
 
-                PurchaseRepository.SaveOrUpdate(purchase);
+                // 3. Save everything in a single Transaction
+                PurchaseRepository.ProcessSaleTransaction(purchase);
 
                 MessageBox.Show("Sale completed successfully!", "Success");
                 ClearSaleScreen();

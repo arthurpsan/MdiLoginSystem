@@ -41,7 +41,21 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    dbContext.Products.Remove(product);
+                    bool hasSales = dbContext.Itens.Any(i => i.Product != null && i.Product.Id == product.Id);
+
+                    if (hasSales)
+                    {
+                        dbContext.Attach(product);
+                        product.IsActive = false;
+                        dbContext.Entry(product).State = EntityState.Modified;
+
+                        throw new InvalidOperationException("Product has sales history. It was marked as Inactive instead of deleted.");
+                    }
+                    else
+                    {
+                        dbContext.Products.Remove(product);
+                    }
+
                     dbContext.SaveChanges();
                 }
             }

@@ -193,13 +193,28 @@ namespace UserManagementSystem.Forms
 
         private void DeleteProduct()
         {
+            // 1. Define 'currentProduct' by getting it from the grid
             if (dgvProduct.CurrentRow?.DataBoundItem is not Product currentProduct)
+            {
+                MessageBox.Show("Please select a product to delete.");
                 return;
+            }
 
             try
             {
+                // 2. Attempt deletion (now handles the Soft Delete logic we added)
                 ProductRepository.Delete(currentProduct);
+
+                // 3. Remove from the UI list
                 _products.Remove(currentProduct);
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Handle the "Product has sales history" case gracefully
+                MessageBox.Show(ex.Message, "System Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refresh the grid to show the change (e.g., if it was marked Inactive)
+                dgvProduct.Refresh();
             }
             catch (Exception ex)
             {
