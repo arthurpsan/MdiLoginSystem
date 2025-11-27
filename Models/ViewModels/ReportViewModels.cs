@@ -12,7 +12,7 @@ namespace UserManagementSystem.Models.ViewModels
 
         [DisplayName("Full Name")]
         public string Name { get; set; } = string.Empty;
-
+            
         [DisplayName("Username / Nick")]
         public string Nickname { get; set; } = string.Empty;
 
