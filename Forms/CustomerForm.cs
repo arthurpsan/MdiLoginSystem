@@ -55,27 +55,33 @@ namespace UserManagementSystem.Forms
         {
             try
             {
+                // 1. Validation Logic
+                if (string.IsNullOrWhiteSpace(txtCustomerName.Text) || string.IsNullOrWhiteSpace(txtCustomerEmail.Text))
+                {
+                    MessageBox.Show("Please fill in all fields.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
+                // 2. Creation Logic
                 Customer newCustomer = new Customer
                 {
-                    Name = txtCustomerName.Text,
-                    Email = txtCustomerEmail.Text
+                    Name = txtCustomerName.Text.Trim(),
+                    Email = txtCustomerEmail.Text.Trim()
                 };
 
                 CustomerRepository.SaveOrUpdate(newCustomer);
-
                 _customers.Add(newCustomer);
 
                 ClearInputs();
-                MessageBox.Show("Customer registered successfully!");
+                MessageBox.Show("Customer registered successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show(ex.Message, "Validation error: ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error saving: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error saving customer: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

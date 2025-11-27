@@ -30,20 +30,15 @@
         {
             pnlReports = new TableLayoutPanel();
             lblSalesReports = new Label();
-            btnRefresh = new Button();
-            lstReports = new ListView();
-            columnHeaderGhost = new ColumnHeader();
-            columnHeaderId = new ColumnHeader();
-            columnHeaderPeriod = new ColumnHeader();
-            columnHeaderSales = new ColumnHeader();
-            columnHeaderSeller = new ColumnHeader();
             lblTimePeriod = new Label();
-            label2 = new Label();
-            label1 = new Label();
-            label3 = new Label();
+            lblBegin = new Label();
+            lblTotalSales = new Label();
             dtpStartDate = new DateTimePicker();
             dtpEndDate = new DateTimePicker();
+            lblEnd = new Label();
+            dataGridView1 = new DataGridView();
             pnlReports.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // pnlReports
@@ -53,25 +48,25 @@
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            pnlReports.Controls.Add(lblEnd, 1, 5);
+            pnlReports.Controls.Add(dtpEndDate, 2, 5);
             pnlReports.Controls.Add(lblSalesReports, 0, 0);
-            pnlReports.Controls.Add(btnRefresh, 3, 5);
-            pnlReports.Controls.Add(lstReports, 0, 3);
-            pnlReports.Controls.Add(lblTimePeriod, 2, 0);
-            pnlReports.Controls.Add(label2, 1, 2);
-            pnlReports.Controls.Add(label1, 1, 1);
-            pnlReports.Controls.Add(label3, 0, 5);
-            pnlReports.Controls.Add(dtpStartDate, 2, 1);
-            pnlReports.Controls.Add(dtpEndDate, 2, 2);
+            pnlReports.Controls.Add(lblTimePeriod, 1, 3);
+            pnlReports.Controls.Add(lblBegin, 1, 4);
+            pnlReports.Controls.Add(lblTotalSales, 0, 5);
+            pnlReports.Controls.Add(dtpStartDate, 2, 4);
+            pnlReports.Controls.Add(dataGridView1, 0, 1);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
             pnlReports.RowCount = 6;
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 54.5454559F));
-            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            pnlReports.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             pnlReports.Size = new Size(800, 450);
             pnlReports.TabIndex = 1;
             pnlReports.Paint += pnlReports_Paint;
@@ -80,123 +75,53 @@
             // 
             lblSalesReports.AutoSize = true;
             lblSalesReports.BackColor = Color.FromArgb(0, 53, 123);
+            pnlReports.SetColumnSpan(lblSalesReports, 4);
             lblSalesReports.Dock = DockStyle.Fill;
             lblSalesReports.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSalesReports.ForeColor = Color.White;
             lblSalesReports.Location = new Point(3, 0);
             lblSalesReports.Name = "lblSalesReports";
-            lblSalesReports.Size = new Size(474, 40);
+            lblSalesReports.Size = new Size(794, 45);
             lblSalesReports.TabIndex = 1;
             lblSalesReports.Text = "Sales Data Reports";
             lblSalesReports.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // btnRefresh
-            // 
-            btnRefresh.Dock = DockStyle.Fill;
-            btnRefresh.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRefresh.Location = new Point(683, 408);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(114, 39);
-            btnRefresh.TabIndex = 13;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.UseVisualStyleBackColor = true;
-            btnRefresh.Click += btnRefresh_Click;
-            // 
-            // lstReports
-            // 
-            lstReports.BackColor = Color.LightGray;
-            lstReports.Columns.AddRange(new ColumnHeader[] { columnHeaderGhost, columnHeaderId, columnHeaderPeriod, columnHeaderSales, columnHeaderSeller });
-            pnlReports.SetColumnSpan(lstReports, 4);
-            lstReports.Dock = DockStyle.Fill;
-            lstReports.FullRowSelect = true;
-            lstReports.GridLines = true;
-            lstReports.LabelWrap = false;
-            lstReports.Location = new Point(3, 123);
-            lstReports.Name = "lstReports";
-            pnlReports.SetRowSpan(lstReports, 2);
-            lstReports.Size = new Size(794, 279);
-            lstReports.TabIndex = 12;
-            lstReports.UseCompatibleStateImageBehavior = false;
-            lstReports.View = View.Details;
-            lstReports.SelectedIndexChanged += lstReports_SelectedIndexChanged;
-            // 
-            // columnHeaderGhost
-            // 
-            columnHeaderGhost.Text = "";
-            columnHeaderGhost.Width = 0;
-            // 
-            // columnHeaderId
-            // 
-            columnHeaderId.Text = "Sale ID";
-            columnHeaderId.TextAlign = HorizontalAlignment.Center;
-            columnHeaderId.Width = 80;
-            // 
-            // columnHeaderPeriod
-            // 
-            columnHeaderPeriod.Text = "Period";
-            columnHeaderPeriod.TextAlign = HorizontalAlignment.Center;
-            columnHeaderPeriod.Width = 180;
-            // 
-            // columnHeaderSales
-            // 
-            columnHeaderSales.Text = "Sale";
-            columnHeaderSales.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSales.Width = 295;
-            // 
-            // columnHeaderSeller
-            // 
-            columnHeaderSeller.Text = "Seller";
-            columnHeaderSeller.TextAlign = HorizontalAlignment.Center;
-            columnHeaderSeller.Width = 235;
-            // 
             // lblTimePeriod
             // 
             lblTimePeriod.AutoSize = true;
-            pnlReports.SetColumnSpan(lblTimePeriod, 2);
+            pnlReports.SetColumnSpan(lblTimePeriod, 3);
             lblTimePeriod.Dock = DockStyle.Fill;
             lblTimePeriod.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTimePeriod.Location = new Point(563, 0);
+            lblTimePeriod.Location = new Point(483, 315);
             lblTimePeriod.Name = "lblTimePeriod";
-            lblTimePeriod.Size = new Size(234, 40);
+            lblTimePeriod.Size = new Size(314, 45);
             lblTimePeriod.TabIndex = 6;
             lblTimePeriod.Text = "Time Period";
             lblTimePeriod.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lblBegin
             // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Fill;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(483, 80);
-            label2.Name = "label2";
-            label2.Size = new Size(74, 40);
-            label2.TabIndex = 8;
-            label2.Text = "End";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
+            lblBegin.AutoSize = true;
+            lblBegin.Dock = DockStyle.Fill;
+            lblBegin.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblBegin.Location = new Point(483, 360);
+            lblBegin.Name = "lblBegin";
+            lblBegin.Size = new Size(74, 45);
+            lblBegin.TabIndex = 7;
+            lblBegin.Text = "Begin";
+            lblBegin.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // lblTotalSales
             // 
-            label1.AutoSize = true;
-            label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(483, 40);
-            label1.Name = "label1";
-            label1.Size = new Size(74, 40);
-            label1.TabIndex = 7;
-            label1.Text = "Begin";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(3, 417);
-            label3.Name = "label3";
-            label3.Size = new Size(474, 21);
-            label3.TabIndex = 14;
-            label3.Text = "Total sales:";
-            label3.TextAlign = ContentAlignment.MiddleLeft;
+            lblTotalSales.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblTotalSales.AutoSize = true;
+            lblTotalSales.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalSales.Location = new Point(3, 417);
+            lblTotalSales.Name = "lblTotalSales";
+            lblTotalSales.Size = new Size(474, 21);
+            lblTotalSales.TabIndex = 14;
+            lblTotalSales.Text = "Total sales:";
+            lblTotalSales.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // dtpStartDate
             // 
@@ -204,7 +129,7 @@
             dtpStartDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pnlReports.SetColumnSpan(dtpStartDate, 2);
             dtpStartDate.Format = DateTimePickerFormat.Short;
-            dtpStartDate.Location = new Point(563, 48);
+            dtpStartDate.Location = new Point(563, 371);
             dtpStartDate.Name = "dtpStartDate";
             dtpStartDate.Size = new Size(234, 23);
             dtpStartDate.TabIndex = 5;
@@ -215,10 +140,33 @@
             dtpEndDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pnlReports.SetColumnSpan(dtpEndDate, 2);
             dtpEndDate.Format = DateTimePickerFormat.Short;
-            dtpEndDate.Location = new Point(563, 88);
+            dtpEndDate.Location = new Point(563, 416);
             dtpEndDate.Name = "dtpEndDate";
             dtpEndDate.Size = new Size(234, 23);
-            dtpEndDate.TabIndex = 11;
+            dtpEndDate.TabIndex = 15;
+            // 
+            // lblEnd
+            // 
+            lblEnd.AutoSize = true;
+            lblEnd.Dock = DockStyle.Fill;
+            lblEnd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEnd.Location = new Point(483, 405);
+            lblEnd.Name = "lblEnd";
+            lblEnd.Size = new Size(74, 45);
+            lblEnd.TabIndex = 16;
+            lblEnd.Text = "End";
+            lblEnd.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            pnlReports.SetColumnSpan(dataGridView1, 4);
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(3, 48);
+            dataGridView1.Name = "dataGridView1";
+            pnlReports.SetRowSpan(dataGridView1, 2);
+            dataGridView1.Size = new Size(794, 264);
+            dataGridView1.TabIndex = 17;
             // 
             // SaleReportForm
             // 
@@ -233,6 +181,7 @@
             Text = "SaleReportScreen";
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -241,18 +190,11 @@
         private TableLayoutPanel pnlReports;
         private Label lblSalesReports;
         private Label lblTimePeriod;
-        private Label label1;
-        private Label label2;
-        private ListView lstReports;
-        private ColumnHeader columnHeaderGhost;
-        private ColumnHeader columnHeaderId;
-        private ColumnHeader columnHeaderPeriod;
-        private ColumnHeader columnHeaderSales;
-        private ColumnHeader columnHeaderSeller;
-        private Button btnRefresh;
-        private Label label3;
+        private Label lblBegin;
+        private Label lblTotalSales;
         private DateTimePicker dtpStartDate;
+        private Label lblEnd;
         private DateTimePicker dtpEndDate;
-
+        private DataGridView dataGridView1;
     }
 }

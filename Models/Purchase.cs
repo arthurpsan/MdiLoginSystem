@@ -11,8 +11,8 @@ namespace UserManagementSystem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public UInt64 Id { get; set; }
 
-        [Required]
         public UInt64? Number { get; set; }
+
         public DateTime? Beggining { get; set; }
         public DateTime? Implementation { get; set; }
 
@@ -24,6 +24,7 @@ namespace UserManagementSystem.Models
         [Required]
         public Salesperson? Seller { get; set; }
         public Customer? Customer { get; set; }
+
         public List<Item> Items { get; set; } = new List<Item>();
         public List<Payment> Payments { get; set; } = new List<Payment>();
 

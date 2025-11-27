@@ -58,7 +58,7 @@ namespace UserManagementSystem.Forms
                     lstReports.Items.Add(item);
                 }
 
-                label3.Text = $"Total sales: {totalSales:C}";
+                lblTotalSales.Text = $"Total sales: {totalSales:C}";
             }
             catch (Exception ex)
             {

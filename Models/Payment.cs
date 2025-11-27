@@ -19,7 +19,6 @@ namespace UserManagementSystem.Models
         [Required]
         public DateTime? ExpirationDate { get; set; }
 
-        [Required]
         private DateTime? _datePayment;
         public DateTime? DatePayment
         {

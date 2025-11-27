@@ -141,5 +141,48 @@ namespace UserManagementSystem.Data
             }
             catch (Exception) { throw; }
         }
+
+        public static void ProcessSaleTransaction(Purchase purchase)
+        {
+            using (Repository dbContext = new Repository())
+            using (var transaction = dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    // 1. Attach and Update Stock for all products
+                    foreach (var item in purchase.Items)
+                    {
+                        if (item.Product != null)
+                        {
+                            // Attach the product to this specific context to track changes
+                            dbContext.Attach(item.Product);
+
+                            // Deduct stock (ensure logic prevents negative stock before this)
+                            item.Product.Stockpile -= item.Quantity;
+
+                            // Mark as modified
+                            dbContext.Entry(item.Product).State = EntityState.Modified;
+                        }
+                    }
+
+                    // 2. Attach Relationships (Seller, Customer) to avoid duplication
+                    if (purchase.Seller != null) dbContext.Attach(purchase.Seller);
+                    if (purchase.Customer != null) dbContext.Attach(purchase.Customer);
+
+                    // 3. Add the Purchase (Items and Payments will be added by cascade)
+                    dbContext.Purchases.Add(purchase);
+
+                    // 4. Save and Commit
+                    dbContext.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw; // Re-throw to handle UI error message
+                }
+            }
+        }
+
     }
 }
