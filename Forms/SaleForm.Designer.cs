@@ -266,7 +266,7 @@
             cboCategories.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.SetColumnSpan(cboCategories, 2);
             cboCategories.FormattingEnabled = true;
-            cboCategories.Location = new Point(129, 297);
+            cboCategories.Location = new Point(129, 298);
             cboCategories.Name = "cboCategories";
             cboCategories.Size = new Size(120, 25);
             cboCategories.TabIndex = 11;
@@ -525,6 +525,7 @@
             // 
             // Quantity
             // 
+            Quantity.DataPropertyName = "Quantity";
             Quantity.HeaderText = "Qty";
             Quantity.Name = "Quantity";
             Quantity.ReadOnly = true;
@@ -533,6 +534,7 @@
             // 
             // UnitPrice
             // 
+            UnitPrice.DataPropertyName = "UnitPrice";
             UnitPrice.HeaderText = "Price";
             UnitPrice.Name = "UnitPrice";
             UnitPrice.ReadOnly = true;
@@ -541,6 +543,7 @@
             // 
             // Discount
             // 
+            Discount.DataPropertyName = "Discount";
             Discount.HeaderText = "Disc %";
             Discount.Name = "Discount";
             Discount.ReadOnly = true;
@@ -618,16 +621,16 @@
         private NumericUpDown numDiscount;
         private Label lblCart;
         private DataGridView dgvCart;
-        private DataGridViewTextBoxColumn colProduct;
-        private DataGridViewTextBoxColumn Quantity;
-        private DataGridViewTextBoxColumn UnitPrice;
-        private DataGridViewTextBoxColumn Discount;
-        private DataGridViewTextBoxColumn colTotal;
         private DataGridView dgvCustomers;
         private DataGridView dgvProducts;
         private DataGridViewTextBoxColumn colProdName;
         private DataGridViewTextBoxColumn colProdPrice;
         private DataGridViewTextBoxColumn colProdStock;
         private DataGridViewTextBoxColumn colCustName;
+        private DataGridViewTextBoxColumn colProduct;
+        private DataGridViewTextBoxColumn Quantity;
+        private DataGridViewTextBoxColumn UnitPrice;
+        private DataGridViewTextBoxColumn Discount;
+        private DataGridViewTextBoxColumn colTotal;
     }
 }

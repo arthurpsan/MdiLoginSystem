@@ -14,44 +14,33 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    // 1. attach existing entities
-                    // attach seller
+                    // 1. Attach Existing Data (Crucial!)
                     if (purchase.Seller != null && purchase.Seller.Id > 0)
-                    {
                         dbContext.Attach(purchase.Seller);
-                    }
 
-                    // attach customer
                     if (purchase.Customer != null && purchase.Customer.Id > 0)
-                    {
                         dbContext.Attach(purchase.Customer);
-                    }
 
-                    // attach products inside items
                     if (purchase.Items != null)
                     {
                         foreach (var item in purchase.Items)
                         {
-                            // FIX: removed '?? 0' since Id is not nullable anymore
                             if (item.Product != null && item.Product.Id > 0)
                             {
                                 dbContext.Attach(item.Product);
-
+                                // If Category is loaded, attach it too to prevent duplicates
                                 if (item.Product.Category != null)
-                                {
                                     dbContext.Attach(item.Product.Category);
-                                }
                             }
                         }
                     }
 
-                    // 2. save the purchase
-                    // FIX: removed '?? 0' check here too
-                    if (purchase.Id == null || purchase.Id == 0)
+                    // 2. Save
+                    if (purchase.Id == 0) // New
                     {
                         dbContext.Purchases.Add(purchase);
                     }
-                    else
+                    else // Update
                     {
                         dbContext.Entry(purchase).State = EntityState.Modified;
                     }

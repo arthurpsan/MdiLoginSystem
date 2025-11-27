@@ -18,7 +18,7 @@ namespace UserManagementSystem.Forms
 
         // logic flags
         private bool _managerOverride = false;
-        private const decimal MAX_DISCOUNT_NO_AUTH = 0.05m; // 5%
+        private const decimal MAX_DISCOUNT_NO_AUTH = 0.05m;
 
         public static SaleForm GetInstance(User? seller)
         {
@@ -36,10 +36,10 @@ namespace UserManagementSystem.Forms
 
             _cartItems = new BindingList<Item>();
 
-            // FIX: Force numeric limits so the user can actually type numbers
+            // fix numeric up down limits
             numQuantity.Minimum = 0;
             numQuantity.Maximum = 9999;
-            numQuantity.DecimalPlaces = 0; // Force integers only
+            numQuantity.DecimalPlaces = 0;
 
             numDiscount.Minimum = 0;
             numDiscount.Maximum = 100;
@@ -48,6 +48,7 @@ namespace UserManagementSystem.Forms
             BindControls();
             LoadInitialData();
 
+            // configure grids
             dgvCart.AllowUserToAddRows = false;
             dgvCustomers.AllowUserToAddRows = false;
             dgvProducts.AllowUserToAddRows = false;
@@ -57,11 +58,6 @@ namespace UserManagementSystem.Forms
             cboCategories.SelectedIndexChanged += (s, e) => SearchProducts();
             dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
             dgvCart.CellFormatting += DgvCart_CellFormatting;
-
-            btnSearchCustomer.Click += btnSearchCustomer_Click;
-            btnAddItem.Click += btnAddItem_Click;
-            btnFinalizeSale.Click += btnFinishSale_Click;
-            btnRequestAuth.Click += btnRequestAuth_Click;
         }
 
         public SaleForm() : this(null) { }
@@ -88,7 +84,7 @@ namespace UserManagementSystem.Forms
                 cboCategories.ValueMember = "Id";
                 cboCategories.SelectedItem = null;
 
-                // load initial lists
+                // load initial data
                 SearchCustomers();
                 SearchProducts();
             }
@@ -123,7 +119,7 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            // refetch for deep data
+            // refetch deep data
             _selectedCustomer = CustomerRepository.FindByIdWithPurchases(shallow.Id);
 
             if (_selectedCustomer == null) return;
@@ -170,7 +166,7 @@ namespace UserManagementSystem.Forms
 
                 if (cboCategories.SelectedItem is Category cat)
                 {
-                    products = products.Where(p => p.CategoryId == cat.Id).ToList();
+                    products = products?.Where(p => p.CategoryId == cat.Id).ToList();
                 }
 
                 if (products != null)
@@ -203,21 +199,13 @@ namespace UserManagementSystem.Forms
             decimal discountDecimal = discountPercent / 100.0m;
             decimal rawQty = numQuantity.Value;
 
-            // debug check: ensures value is captured
             if (rawQty <= 0)
             {
-                MessageBox.Show($"Quantity must be greater than 0. (Current Value: {rawQty})");
+                MessageBox.Show("Quantity must be greater than 0.");
                 return;
             }
 
             uint quantity = (uint)rawQty;
-
-            // check if decimal was entered
-            if (quantity == 0)
-            {
-                MessageBox.Show("Quantity must be a whole number (e.g. 1, 2, 5). No decimals allowed.");
-                return;
-            }
 
             // validate stock
             if (quantity > selectedProduct.Stockpile)
@@ -375,7 +363,7 @@ namespace UserManagementSystem.Forms
 
             Item item = _cartItems[e.RowIndex];
 
-            // match columns
+            // match designer columns
             if (dgvCart.Columns[e.ColumnIndex].Name == "colProduct")
             {
                 e.Value = item.Product?.Name ?? "Unknown";
