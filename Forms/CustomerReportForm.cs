@@ -29,10 +29,14 @@ namespace UserManagementSystem.Forms
         {
             InitializeComponent();
 
+            // setup ui
             BindControls();
-
             LoadData();
 
+            dgvCustomers.AllowUserToAddRows = false;
+            dgvPurchases.AllowUserToAddRows = false;
+
+            // wire events
             this.Load += (s, e) => LoadData();
             txtSearchCustomer.TextChanged += TxtSearchCustomer_TextChanged;
             chkShowDelinquents.CheckedChanged += ChkShowDelinquents_CheckedChanged;
@@ -42,21 +46,20 @@ namespace UserManagementSystem.Forms
 
         private void BindControls()
         {
+            // prevent auto generation
             dgvCustomers.AutoGenerateColumns = false;
-            dgvCustomers.AllowUserToAddRows = false;
-            dgvCustomers.DataSource = _customerList; // initially null, populated by LoadData
+            dgvCustomers.DataSource = _customerList;
 
-            // force id hidden if it exists in designer
+            // safeguard
             if (dgvCustomers.Columns["Id"] != null)
             {
                 dgvCustomers.Columns["Id"].Visible = false;
             }
 
             dgvPurchases.AutoGenerateColumns = false;
-            dgvPurchases.AllowUserToAddRows = false;
         }
 
-        #region data loading & logic
+        #region logic methods
 
         private void LoadData()
         {
@@ -80,11 +83,12 @@ namespace UserManagementSystem.Forms
                     UpdateStatusLabel("Customer List (All)", Color.Black);
                 }
 
+                // cache data
                 _cacheAllCustomers = sourceData;
-
                 _customerList = new BindingList<Customer>(sourceData);
                 dgvCustomers.DataSource = _customerList;
 
+                // clear details
                 dgvPurchases.DataSource = null;
                 lblDescription.Text = "Select a customer to view details.";
             }
@@ -134,7 +138,7 @@ namespace UserManagementSystem.Forms
 
             if (dgvPurchases.Rows[e.RowIndex].DataBoundItem is Purchase purchase)
             {
-                // match column names from designer
+                // match columns
                 if (dgvPurchases.Columns[e.ColumnIndex].Name == "colSeller")
                 {
                     e.Value = purchase.Seller?.Name ?? "N/A";

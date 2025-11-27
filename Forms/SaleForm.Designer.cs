@@ -183,6 +183,7 @@
             btnSearchCustomer.TabIndex = 6;
             btnSearchCustomer.Text = "Search";
             btnSearchCustomer.UseVisualStyleBackColor = true;
+            btnSearchCustomer.Click += btnSearchCustomer_Click;
             // 
             // tabPageProduct
             // 
@@ -483,6 +484,7 @@
             btnRequestAuth.Text = "Authorize Sale";
             btnRequestAuth.UseVisualStyleBackColor = true;
             btnRequestAuth.Visible = false;
+            btnRequestAuth.Click += btnRequestAuth_Click;
             // 
             // lblCart
             // 
