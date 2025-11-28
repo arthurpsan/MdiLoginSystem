@@ -5,9 +5,10 @@ namespace UserManagementSystem.Data
 {
     public class Repository : DbContext
     {
-        // Centralized Connection String
+        // 1. Simple Static Configuration (No JSON needed)
         public const string ConnectionString = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=StoreManagementSystem";
 
+        // 2. DbSets (Fixed 'Itens' to 'Items')
         public DbSet<User> Users { get; set; }
         public DbSet<Credential> Credentials { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
@@ -16,10 +17,14 @@ namespace UserManagementSystem.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Salesperson> Sellers { get; set; }
-        public DbSet<Item> Itens { get; set; }
+        public DbSet<Item> Items { get; set; } // Fixed typo
         public DbSet<Cashier> Cashiers { get; set; }
 
-        public Repository() => Database.EnsureCreated();
+        public Repository()
+        {
+            // Optional: Uncomment to auto-create DB on startup if needed
+            // Database.EnsureCreated(); 
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,6 +38,7 @@ namespace UserManagementSystem.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configure Relationships
             modelBuilder.Entity<User>(user =>
             {
                 user.HasOne(u => u.Credential)
@@ -42,12 +48,8 @@ namespace UserManagementSystem.Data
 
             modelBuilder.Entity<Purchase>(purchase =>
             {
-                purchase.HasMany(p => p.Payments);
-            });
-
-            modelBuilder.Entity<Payment>(payment =>
-            {
-                payment.HasOne(p => p.Purchase).WithMany(pu => pu.Payments);
+                purchase.HasMany(p => p.Payments)
+                        .WithOne(pay => pay.Purchase); // Explicitly define both sides
             });
 
             modelBuilder.Entity<Cashier>(cashier =>
@@ -58,11 +60,12 @@ namespace UserManagementSystem.Data
             modelBuilder.Entity<Product>(product =>
             {
                 product.HasOne(p => p.Category)
-                .WithMany()
-                .HasForeignKey(p => p.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                    .WithMany()
+                    .HasForeignKey(p => p.CategoryId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
+            // Fixed typo reference here
             modelBuilder.Entity<Purchase>()
                 .HasMany(p => p.Items)
                 .WithOne(i => i.Purchase)

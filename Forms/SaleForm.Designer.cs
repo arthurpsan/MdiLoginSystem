@@ -610,7 +610,6 @@
 
         private TabControl TabControlMain;
         private TabPage tabPageCustomer;
-        private ColumnHeader columnHeaderId;
         private SplitContainer splitContainerSales;
         private TabPage tabPageProduct;
         private TableLayoutPanel pnlCustomer;

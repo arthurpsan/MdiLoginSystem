@@ -41,7 +41,7 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    bool hasSales = dbContext.Itens.Any(i => i.Product != null && i.Product.Id == product.Id);
+                    bool hasSales = dbContext.Items.Any(i => i.Product != null && i.Product.Id == product.Id);
 
                     if (hasSales)
                     {

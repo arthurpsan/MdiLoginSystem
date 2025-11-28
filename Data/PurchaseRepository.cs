@@ -60,7 +60,7 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    if (purchase.Id == null || purchase.Id == 0) return;
+                    if (purchase.Id == 0) return;
 
                     var dbPurchase = dbContext.Purchases.Find(purchase.Id);
                     if (dbPurchase != null)
@@ -158,7 +158,7 @@ namespace UserManagementSystem.Data
                             dbContext.Attach(item.Product);
 
                             // Deduct stock (ensure logic prevents negative stock before this)
-                            item.Product.Stockpile -= item.Quantity;
+                            item.Product.StockQuantity -= item.Quantity;
 
                             // Mark as modified
                             dbContext.Entry(item.Product).State = EntityState.Modified;

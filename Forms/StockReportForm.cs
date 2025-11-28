@@ -55,7 +55,7 @@ namespace UserManagementSystem.Forms
             // 3. Map Your Designer Columns to the Data Properties
             // These names "Name", "Stockpile", "MinimumStock" must match your Product.cs model exactly.
             ColumnProductName.DataPropertyName = nameof(Product.Name);
-            ColumnProductStock.DataPropertyName = nameof(Product.Stockpile);
+            ColumnProductStock.DataPropertyName = nameof(Product.StockQuantity);
             ColumunMinStock.DataPropertyName = nameof(Product.MinimumStock);
         }
 
@@ -67,7 +67,7 @@ namespace UserManagementSystem.Forms
 
                 // 4. Filter: Products where Stockpile <= MinimumStock
                 var lowStockList = allProducts
-                                    .Where(p => p.Stockpile <= p.MinimumStock)
+                                    .Where(p => p.StockQuantity <= p.MinimumStock)
                                     .ToList();
 
                 // Bind directly to the list of Products

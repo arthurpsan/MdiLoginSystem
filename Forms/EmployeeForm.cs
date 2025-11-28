@@ -9,7 +9,6 @@ namespace UserManagementSystem.Forms
     public partial class EmployeeForm : Form
     {
         private static EmployeeForm? _instance;
-        // The BindingSource is now in the Designer file as 'bdsEmployees'
 
         public static EmployeeForm GetInstance(User? user)
         {
@@ -29,6 +28,8 @@ namespace UserManagementSystem.Forms
             InitializeRoles();
             SetupGrid();
             LoadData();
+
+            ClearInputs();
         }
 
         private void InitializeRoles()
@@ -40,20 +41,65 @@ namespace UserManagementSystem.Forms
 
         private void SetupGrid()
         {
+            // grid settings
             dgvEmployees.AutoGenerateColumns = false;
             dgvEmployees.AllowUserToAddRows = false;
             dgvEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvEmployees.MultiSelect = false;
+            dgvEmployees.ReadOnly = true;
 
-            // The Designer already does: dgvEmployees.DataSource = bdsEmployees;
-            // But good to ensure columns match properties
-            if (dgvEmployees.Columns["ColumnEmployeeName"] != null)
-                dgvEmployees.Columns["ColumnEmployeeName"].DataPropertyName = nameof(User.Name);
-            if (dgvEmployees.Columns["ColumnEmployeeNickname"] != null)
-                dgvEmployees.Columns["ColumnEmployeeNickname"].DataPropertyName = nameof(User.Nickname);
-            if (dgvEmployees.Columns["ColumnEmployeeEmail"] != null)
-                dgvEmployees.Columns["ColumnEmployeeEmail"].DataPropertyName = nameof(User.Email);
-            if (dgvEmployees.Columns["ColumnEmployeePhone"] != null)
-                dgvEmployees.Columns["ColumnEmployeePhone"].DataPropertyName = nameof(User.PhoneNumber);
+            // clear existing columns
+            dgvEmployees.Columns.Clear();
+
+            // manually add columns
+
+            var colName = new DataGridViewTextBoxColumn
+            {
+                Name = "ColumnEmployeeName", // Internal name for finding the column later
+                HeaderText = "Name",         // What the user sees
+                DataPropertyName = "Name",   // Must match 'public string Name { get; set; }' in User model
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill // This column takes up extra space
+            };
+            dgvEmployees.Columns.Add(colName);
+
+            var colNick = new DataGridViewTextBoxColumn
+            {
+                Name = "ColumnEmployeeNickname",
+                HeaderText = "Nickname",
+                DataPropertyName = "Nickname",
+                Width = 120
+            };
+            dgvEmployees.Columns.Add(colNick);
+
+            var colEmail = new DataGridViewTextBoxColumn
+            {
+                Name = "ColumnEmployeeEmail",
+                HeaderText = "E-mail",
+                DataPropertyName = "Email",
+                Width = 200
+            };
+            dgvEmployees.Columns.Add(colEmail);
+
+            var colPhone = new DataGridViewTextBoxColumn
+            {
+                Name = "ColumnEmployeePhone",
+                HeaderText = "Phone",
+                DataPropertyName = "PhoneNumber",
+                Width = 120
+            };
+            dgvEmployees.Columns.Add(colPhone);
+
+            var colRole = new DataGridViewTextBoxColumn
+            {
+                Name = "ColumnEmployeeRole",
+                HeaderText = "Role",
+                DataPropertyName = "Role",
+                Width = 100
+            };
+            dgvEmployees.Columns.Add(colRole);
+
+            dgvEmployees.SelectionChanged -= DgvEmployees_SelectionChanged;
+            dgvEmployees.SelectionChanged += DgvEmployees_SelectionChanged;
         }
 
         private void LoadData()
@@ -61,7 +107,6 @@ namespace UserManagementSystem.Forms
             try
             {
                 var list = UserRepository.FindAll();
-                // Assign list to the Designer's BindingSource
                 bdsEmployees.DataSource = new BindingList<User>(list);
             }
             catch (Exception ex)
@@ -81,36 +126,71 @@ namespace UserManagementSystem.Forms
             try
             {
                 string role = cboEmployeeRoles.SelectedItem?.ToString() ?? "Salesperson";
-                uint defaultEnrollment = (uint)new Random().Next(1000, 9999);
 
-                User newUser = role switch
+                // Calculate if they are a manager right now
+                bool isManager = (role == "Manager");
+
+                // === SCENARIO A: UPDATE EXISTING USER ===
+                if (btnSave.Text == "Update" && bdsEmployees.Current is User currentUser)
                 {
-                    "Salesperson" => new Salesperson { SellerEnrollment = defaultEnrollment },
-                    "Cashier" => new Cashier { CashierEnrollment = defaultEnrollment },
-                    _ => new User()
-                };
+                    currentUser.Name = txtEmployeeName.Text;
+                    currentUser.Nickname = txtEmployeeNickname.Text;
+                    currentUser.Email = txtEmployeeEmail.Text;
 
-                newUser.Name = txtEmployeeName.Text;
-                newUser.Nickname = txtEmployeeNickname.Text;
-                newUser.Email = txtEmployeeEmail.Text;
+                    // FIX: If Credential is missing, create it so we don't lose the Manager status
+                    if (currentUser.Credential == null)
+                    {
+                        currentUser.Credential = new Credential { User = currentUser };
+                    }
+                    currentUser.Credential.Manager = isManager;
 
-                string cleanPhone = new string(mskPhoneNumber.Text.Where(char.IsDigit).ToArray());
-                if (ulong.TryParse(cleanPhone, out ulong phone)) newUser.PhoneNumber = phone;
+                    string cleanPhone = new string(mskPhoneNumber.Text.Where(char.IsDigit).ToArray());
+                    if (ulong.TryParse(cleanPhone, out ulong phone))
+                        currentUser.PhoneNumber = phone;
 
-                Credential credential = new Credential
+                    // Use the User repo to save (Cascading to Credential depends on your Repo implementation)
+                    UserRepository.SaveOrUpdate(currentUser);
+
+                    bdsEmployees.ResetCurrentItem();
+                    Alerts.ShowSuccess("Employee updated successfully!");
+                }
+                // === SCENARIO B: CREATE NEW USER ===
+                else
                 {
-                    Email = newUser.Email,
-                    Password = txtEmployeePassword.Text,
-                    Manager = (role == "Manager"),
-                    User = newUser
-                };
+                    uint defaultEnrollment = (uint)new Random().Next(1000, 9999);
+                    User newUser = role switch
+                    {
+                        "Salesperson" => new Salesperson { SellerEnrollment = defaultEnrollment },
+                        "Cashier" => new Cashier { CashierEnrollment = defaultEnrollment },
+                        _ => new User()
+                    };
 
-                CredentialRepository.SaveOrUpdate(credential);
+                    newUser.Name = txtEmployeeName.Text;
+                    newUser.Nickname = txtEmployeeNickname.Text;
+                    newUser.Email = txtEmployeeEmail.Text;
 
-                // Add to the Designer's BindingSource
-                bdsEmployees.Add(newUser);
+                    // REMOVED: newUser.Credential.Manager = ... (This caused the crash!)
 
-                Alerts.ShowSuccess($"{role} registered successfully!");
+                    string cleanPhone = new string(mskPhoneNumber.Text.Where(char.IsDigit).ToArray());
+                    if (ulong.TryParse(cleanPhone, out ulong phone)) newUser.PhoneNumber = phone;
+
+                    // Create the credential and assign the Manager status HERE
+                    Credential credential = new Credential
+                    {
+                        Email = newUser.Email,
+                        Password = txtEmployeePassword.Text,
+                        Manager = isManager, // <--- Set it directly here
+                        User = newUser
+                    };
+
+                    // Bi-directional link (good practice so the object graph is complete)
+                    newUser.Credential = credential;
+
+                    CredentialRepository.SaveOrUpdate(credential);
+                    bdsEmployees.Add(newUser);
+                    Alerts.ShowSuccess($"{role} registered successfully!");
+                }
+
                 ClearInputs();
             }
             catch (Exception ex)
@@ -143,8 +223,46 @@ namespace UserManagementSystem.Forms
             }
         }
 
+        private void DgvEmployees_SelectionChanged(object? sender, EventArgs e)
+        {
+            // FIX: Stop the logic if the user just clicked "New" (cleared selection)
+            if (dgvEmployees.SelectedRows.Count == 0) return;
+
+            if (bdsEmployees.Current is User selectedUser)
+            {
+                txtEmployeeName.Text = selectedUser.Name;
+                txtEmployeeNickname.Text = selectedUser.Nickname;
+                txtEmployeeEmail.Text = selectedUser.Email;
+                mskPhoneNumber.Text = selectedUser.PhoneNumber.ToString();
+
+                // Check for null Credential to prevent crashes
+                bool isManager = selectedUser.Credential?.Manager ?? false;
+
+                if (isManager)
+                    cboEmployeeRoles.SelectedItem = "Manager";
+                else if (selectedUser is Salesperson)
+                    cboEmployeeRoles.SelectedItem = "Salesperson";
+                else if (selectedUser is Cashier)
+                    cboEmployeeRoles.SelectedItem = "Cashier";
+                // Default fallback if nothing matches
+                else
+                    cboEmployeeRoles.SelectedIndex = -1;
+
+                btnSave.Text = "Update";
+
+                txtEmployeePassword.Clear();
+                txtRepeatPassword.Clear();
+            }
+        }
+
+        private void btnNewEmployee_Click(object sender, EventArgs e)
+        {
+            ClearInputs();
+        }
+
         private void ClearInputs()
         {
+            // Clear text fields
             txtEmployeeName.Clear();
             txtEmployeeNickname.Clear();
             txtEmployeeEmail.Clear();
@@ -152,6 +270,10 @@ namespace UserManagementSystem.Forms
             txtEmployeePassword.Clear();
             txtRepeatPassword.Clear();
             cboEmployeeRoles.SelectedIndex = 0;
+
+            // Reset UI state
+            btnSave.Text = "Save";          // Reset button text
+            dgvEmployees.ClearSelection();  // Deselect grid row
         }
     }
 }

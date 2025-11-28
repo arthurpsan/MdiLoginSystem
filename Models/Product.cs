@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,88 +11,24 @@ namespace UserManagementSystem.Models
         public UInt64 Id { get; set; }
 
         [Required]
-        private String? _name;
-        public String? Name
-        {
-            get => _name;
-            set
-            {
-                ArgumentNullException.ThrowIfNullOrWhiteSpace(value, nameof(Name));
-                if (value.Length > 100 || value.Length < 3)
-                {
-                    throw new ArgumentOutOfRangeException("Name must contain between 3 and 100 characters.");
-                }
-                _name = value;
-            }
-        }
+        public String? Name { get; set; }
 
         [Required]
-        private Decimal? _price;
-        public Decimal? Price
-        {
-            get => _price;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value, nameof(Price));
+        public Decimal? Price { get; set; }
 
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("Price must be a positive value.");
-                }
-
-                _price = value;
-            }
-        }
+        // FIXED: Renamed from 'Stockpile' to 'StockQuantity'
+        [Required]
+        public UInt32? StockQuantity { get; set; }
 
         [Required]
-        private UInt32? _stockpile;
-        public UInt32? Stockpile
-        {
-            get => _stockpile;
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("Stockpile must be >= 0!");
-                }
-
-                _stockpile = value;
-            }
-        }
-
-        [Required]
-        private UInt32? _minimumStock;
-        public UInt32? MinimumStock 
-        {
-            get => _minimumStock;
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("Minimum stock must be >= 0!");
-                }
-
-                _minimumStock = value;
-            }
-        }
+        public UInt32? MinimumStock { get; set; }
 
         [Required]
         public Boolean IsActive { get; set; } = true;
 
-        // Relationship with category
         [Required]
-        private Category? _category;
-        public Category? Category
-        {
-            get => _category;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value, nameof(Category));
+        public Category? Category { get; set; }
 
-                _category = value;
-            }
-        }
-        
         public UInt64 CategoryId { get; set; }
     }
 }

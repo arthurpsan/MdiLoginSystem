@@ -64,7 +64,7 @@ namespace UserManagementSystem.Forms
             if (dgvProduct.Columns["ColumnProductPrice"] != null)
                 dgvProduct.Columns["ColumnProductPrice"].DataPropertyName = nameof(Product.Price);
             if (dgvProduct.Columns["ColumnProductCurrentStock"] != null)
-                dgvProduct.Columns["ColumnProductCurrentStock"].DataPropertyName = nameof(Product.Stockpile);
+                dgvProduct.Columns["ColumnProductCurrentStock"].DataPropertyName = nameof(Product.StockQuantity);
             if (dgvProduct.Columns["ColumnProductMinStock"] != null)
                 dgvProduct.Columns["ColumnProductMinStock"].DataPropertyName = nameof(Product.MinimumStock);
             if (dgvProduct.Columns["ColumnProductCategory"] != null)
@@ -113,7 +113,7 @@ namespace UserManagementSystem.Forms
             {
                 txtProductName.Text = selected.Name;
                 nudProductPrice.Value = selected.Price ?? 0;
-                nudStock.Value = selected.Stockpile ?? 0;
+                nudStock.Value = selected.StockQuantity ?? 0;
                 nudMinStock.Value = selected.MinimumStock ?? 0;
                 chkIsActive.Checked = selected.IsActive;
                 cboProductCategory.SelectedItem = selected.Category;
@@ -215,7 +215,7 @@ namespace UserManagementSystem.Forms
                 {
                     Name = txtProductName.Text,
                     Price = nudProductPrice.Value,
-                    Stockpile = (uint)nudStock.Value,
+                    StockQuantity = (uint)nudStock.Value,
                     MinimumStock = (uint)nudMinStock.Value,
                     Category = selectedCategory,
                     IsActive = chkIsActive.Checked
@@ -246,7 +246,7 @@ namespace UserManagementSystem.Forms
             {
                 current.Name = txtProductName.Text;
                 current.Price = nudProductPrice.Value;
-                current.Stockpile = (uint)nudStock.Value;
+                current.StockQuantity = (uint)nudStock.Value;
                 current.MinimumStock = (uint)nudMinStock.Value;
                 current.Category = cboProductCategory.SelectedItem as Category;
                 current.IsActive = chkIsActive.Checked;

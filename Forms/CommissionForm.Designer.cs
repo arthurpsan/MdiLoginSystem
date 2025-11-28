@@ -240,7 +240,6 @@
 
         private Label lblTitle;
         private TableLayoutPanel pnlReports;
-        private ComboBox cboSalesperson;
         private Label lblSearch;
         private Label lblPeriod;
         private DateTimePicker dtpInitialDate;

@@ -19,10 +19,8 @@ namespace UserManagementSystem.Forms
         public CommissionForm()
         {
             InitializeComponent();
-
             dgvCommissions.AutoGenerateColumns = true;
             dgvCommissions.DataSource = bdsCommissions;
-
             txtSearch.TextChanged += (s, e) => FilterData();
         }
 
@@ -34,13 +32,9 @@ namespace UserManagementSystem.Forms
 
             try
             {
-                Salesperson? seller = cboSalesperson.SelectedItem as Salesperson;
-                List<Purchase> purchases;
-
-                if (seller == null || cboSalesperson.SelectedIndex == 0)
-                    purchases = PurchaseRepository.FindByDateRange(start, end);
-                else
-                    purchases = PurchaseRepository.FindByDateRangeAndSeller(start, end, seller.Id);
+                // FIXED: Removed dependency on missing cboSalesperson
+                // We simply load all data in range and filter by text later
+                List<Purchase> purchases = PurchaseRepository.FindByDateRange(start, end);
 
                 _originalList = purchases.Select(p =>
                 {

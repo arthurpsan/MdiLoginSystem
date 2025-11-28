@@ -32,6 +32,13 @@
             pnlEmployeeManagement = new TableLayoutPanel();
             lblEmployeeManagement = new Label();
             dgvEmployees = new DataGridView();
+            nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            nicknameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            emailDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            phoneDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            roleDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            lastAccessDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            bdsEmployees = new BindingSource(components);
             grpEmployeeCredentials = new GroupBox();
             pnlEmployeeCredentials = new TableLayoutPanel();
             btnRemoveEmployee = new Button();
@@ -50,12 +57,12 @@
             cboEmployeeRoles = new ComboBox();
             btnSave = new Button();
             mskPhoneNumber = new MaskedTextBox();
-            bdsEmployees = new BindingSource(components);
+            btnNewEmployee = new Button();
             pnlEmployeeManagement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmployees).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bdsEmployees).BeginInit();
             grpEmployeeCredentials.SuspendLayout();
             pnlEmployeeCredentials.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)bdsEmployees).BeginInit();
             SuspendLayout();
             // 
             // pnlEmployeeManagement
@@ -96,14 +103,70 @@
             // 
             // dgvEmployees
             // 
+            dgvEmployees.AllowUserToAddRows = false;
+            dgvEmployees.AllowUserToDeleteRows = false;
+            dgvEmployees.AllowUserToResizeColumns = false;
+            dgvEmployees.AllowUserToResizeRows = false;
+            dgvEmployees.AutoGenerateColumns = false;
+            dgvEmployees.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEmployees.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEmployees.Columns.AddRange(new DataGridViewColumn[] { nameDataGridViewTextBoxColumn, nicknameDataGridViewTextBoxColumn, emailDataGridViewTextBoxColumn, phoneDataGridViewTextBoxColumn, roleDataGridViewTextBoxColumn, lastAccessDataGridViewTextBoxColumn });
             pnlEmployeeManagement.SetColumnSpan(dgvEmployees, 4);
+            dgvEmployees.DataSource = bdsEmployees;
             dgvEmployees.Dock = DockStyle.Fill;
             dgvEmployees.Location = new Point(3, 318);
+            dgvEmployees.MultiSelect = false;
             dgvEmployees.Name = "dgvEmployees";
+            dgvEmployees.ReadOnly = true;
             dgvEmployees.RowHeadersVisible = false;
             dgvEmployees.Size = new Size(794, 129);
             dgvEmployees.TabIndex = 1;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            nameDataGridViewTextBoxColumn.HeaderText = "Full Name";
+            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // nicknameDataGridViewTextBoxColumn
+            // 
+            nicknameDataGridViewTextBoxColumn.DataPropertyName = "Nickname";
+            nicknameDataGridViewTextBoxColumn.HeaderText = "Username / Nick";
+            nicknameDataGridViewTextBoxColumn.Name = "nicknameDataGridViewTextBoxColumn";
+            nicknameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // emailDataGridViewTextBoxColumn
+            // 
+            emailDataGridViewTextBoxColumn.DataPropertyName = "Email";
+            emailDataGridViewTextBoxColumn.HeaderText = "Email Address";
+            emailDataGridViewTextBoxColumn.Name = "emailDataGridViewTextBoxColumn";
+            emailDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // phoneDataGridViewTextBoxColumn
+            // 
+            phoneDataGridViewTextBoxColumn.DataPropertyName = "Phone";
+            phoneDataGridViewTextBoxColumn.HeaderText = "Phone";
+            phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
+            phoneDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // roleDataGridViewTextBoxColumn
+            // 
+            roleDataGridViewTextBoxColumn.DataPropertyName = "Role";
+            roleDataGridViewTextBoxColumn.HeaderText = "Role";
+            roleDataGridViewTextBoxColumn.Name = "roleDataGridViewTextBoxColumn";
+            roleDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // lastAccessDataGridViewTextBoxColumn
+            // 
+            lastAccessDataGridViewTextBoxColumn.DataPropertyName = "LastAccess";
+            lastAccessDataGridViewTextBoxColumn.HeaderText = "Last Access";
+            lastAccessDataGridViewTextBoxColumn.Name = "lastAccessDataGridViewTextBoxColumn";
+            lastAccessDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bdsEmployees
+            // 
+            bdsEmployees.DataSource = typeof(Models.ViewModels.UserViewModel);
             // 
             // grpEmployeeCredentials
             // 
@@ -127,7 +190,7 @@
             pnlEmployeeCredentials.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             pnlEmployeeCredentials.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             pnlEmployeeCredentials.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            pnlEmployeeCredentials.Controls.Add(btnRemoveEmployee, 3, 4);
+            pnlEmployeeCredentials.Controls.Add(btnRemoveEmployee, 2, 4);
             pnlEmployeeCredentials.Controls.Add(lblEmployeeRole, 3, 0);
             pnlEmployeeCredentials.Controls.Add(lblRepeatPassword, 3, 3);
             pnlEmployeeCredentials.Controls.Add(lblPassword, 3, 2);
@@ -135,7 +198,6 @@
             pnlEmployeeCredentials.Controls.Add(lblEmployeeEmail, 0, 2);
             pnlEmployeeCredentials.Controls.Add(lblEmployeeNickname, 0, 1);
             pnlEmployeeCredentials.Controls.Add(lblEmployeeName, 0, 0);
-            pnlEmployeeCredentials.Controls.Add(txtEmployeeName, 1, 0);
             pnlEmployeeCredentials.Controls.Add(txtEmployeeNickname, 1, 1);
             pnlEmployeeCredentials.Controls.Add(txtEmployeeEmail, 1, 2);
             pnlEmployeeCredentials.Controls.Add(txtEmployeePassword, 4, 2);
@@ -143,6 +205,8 @@
             pnlEmployeeCredentials.Controls.Add(cboEmployeeRoles, 4, 0);
             pnlEmployeeCredentials.Controls.Add(btnSave, 4, 4);
             pnlEmployeeCredentials.Controls.Add(mskPhoneNumber, 1, 3);
+            pnlEmployeeCredentials.Controls.Add(btnNewEmployee, 3, 4);
+            pnlEmployeeCredentials.Controls.Add(txtEmployeeName, 1, 0);
             pnlEmployeeCredentials.Dock = DockStyle.Fill;
             pnlEmployeeCredentials.Location = new Point(3, 25);
             pnlEmployeeCredentials.Name = "pnlEmployeeCredentials";
@@ -160,7 +224,7 @@
             // 
             btnRemoveEmployee.Dock = DockStyle.Fill;
             btnRemoveEmployee.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRemoveEmployee.Location = new Point(474, 191);
+            btnRemoveEmployee.Location = new Point(317, 191);
             btnRemoveEmployee.Name = "btnRemoveEmployee";
             btnRemoveEmployee.Size = new Size(151, 42);
             btnRemoveEmployee.TabIndex = 15;
@@ -330,9 +394,17 @@
             mskPhoneNumber.Size = new Size(151, 22);
             mskPhoneNumber.TabIndex = 16;
             // 
-            // bdsEmployees
+            // btnNewEmployee
             // 
-            bdsEmployees.DataSource = typeof(Models.ViewModels.UserViewModel);
+            btnNewEmployee.Dock = DockStyle.Fill;
+            btnNewEmployee.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            btnNewEmployee.Location = new Point(474, 191);
+            btnNewEmployee.Name = "btnNewEmployee";
+            btnNewEmployee.Size = new Size(151, 42);
+            btnNewEmployee.TabIndex = 17;
+            btnNewEmployee.Text = "New ";
+            btnNewEmployee.UseVisualStyleBackColor = true;
+            btnNewEmployee.Click += btnNewEmployee_Click;
             // 
             // EmployeeForm
             // 
@@ -348,10 +420,10 @@
             pnlEmployeeManagement.ResumeLayout(false);
             pnlEmployeeManagement.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmployees).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bdsEmployees).EndInit();
             grpEmployeeCredentials.ResumeLayout(false);
             pnlEmployeeCredentials.ResumeLayout(false);
             pnlEmployeeCredentials.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)bdsEmployees).EndInit();
             ResumeLayout(false);
         }
 
@@ -379,5 +451,12 @@
         private Button btnSave;
         private MaskedTextBox mskPhoneNumber;
         private BindingSource bdsEmployees;
+        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn nicknameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn roleDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn lastAccessDataGridViewTextBoxColumn;
+        private Button btnNewEmployee;
     }
 }

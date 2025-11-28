@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq; // Required for LINQ methods like Where and FirstOrDefault
 using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Models;
 
@@ -18,6 +20,7 @@ namespace UserManagementSystem.Data
                     }
                     else
                     {
+                        // If updating, attach and mark as modified
                         dbContext.Entry(user).State = EntityState.Modified;
                     }
 
@@ -36,6 +39,7 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
+                    // Ensure the object is tracked by this specific context context before removing
                     dbContext.Attach(user);
                     dbContext.Users.Remove(user);
                     dbContext.SaveChanges();
@@ -68,7 +72,8 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    return dbContext.Users.Find(name);
+                    // FIX: .Find() expects an ID. Use FirstOrDefault to search by Name.
+                    return dbContext.Users.FirstOrDefault(u => u.Name == name);
                 }
             }
             catch (Exception)
@@ -79,11 +84,18 @@ namespace UserManagementSystem.Data
 
         public static List<User> FindByPartialName(String partialName)
         {
-            using (Repository dbContext = new Repository())
+            try
             {
-                return dbContext.Users
-                    .Where(u => u.Name.ToLower().Contains(partialName.ToLower()))
-                    .ToList();
+                using (Repository dbContext = new Repository())
+                {
+                    return dbContext.Users
+                        .Where(u => EF.Functions.Like(u.Name, $"%{partialName}%"))
+                        .ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
@@ -101,7 +113,5 @@ namespace UserManagementSystem.Data
                 throw;
             }
         }
-
     }
 }
-

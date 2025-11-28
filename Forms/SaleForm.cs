@@ -208,9 +208,9 @@ namespace UserManagementSystem.Forms
             uint quantity = (uint)rawQty;
 
             // validate stock
-            if (quantity > selectedProduct.Stockpile)
+            if (quantity > selectedProduct.StockQuantity)
             {
-                MessageBox.Show($"Insufficient stock! Available: {selectedProduct.Stockpile}");
+                MessageBox.Show($"Insufficient stock! Available: {selectedProduct.StockQuantity}");
                 return;
             }
 
@@ -282,7 +282,7 @@ namespace UserManagementSystem.Forms
                     Customer = _selectedCustomer,
                     Seller = seller,
                     Items = _cartItems.ToList(),
-                    Beggining = DateTime.Now,
+                    Beginning = DateTime.Now,
                     Implementation = DateTime.Now,
                     State = State.FINISHED
                 };

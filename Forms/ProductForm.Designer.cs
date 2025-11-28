@@ -552,9 +552,6 @@
         private TableLayoutPanel pnlCategorieManagement;
         private TabPage tabPageProducts;
         private ListView lstCategories;
-        private ColumnHeader chCategoriesGhost;
-        private ColumnHeader chCategoriesId;
-        private ColumnHeader chCategoriesName;
         private GroupBox grpCategoryDetails;
         private TableLayoutPanel tableLayoutPanel1;
         private TextBox txtCategoryName;
@@ -564,7 +561,6 @@
         private GroupBox grpProductDetails;
         private TableLayoutPanel tableLayoutPanel2;
         private TextBox txtProductName;
-        private Label lblProductId;
         private Label lblProductName;
         private Label lblProductManager;
         private NumericUpDown nudMinStock;

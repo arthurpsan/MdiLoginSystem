@@ -25,6 +25,17 @@ namespace UserManagementSystem.Models
             }
         }
 
+        public virtual String Role
+        {
+            get
+            {
+                if (Credential?.Manager == true) return "Manager";
+                if (this is Salesperson) return "Salesperson";
+                if (this is Cashier) return "Cashier";
+                return "Employee";
+            }
+        }
+
         private String? _nickname;
         public String? Nickname
         {
@@ -73,8 +84,8 @@ namespace UserManagementSystem.Models
             }
         }
 
-        private Credential? _credential;
-        public Credential? Credential
+        private Credential _credential;
+        public Credential Credential
         {
             get
             {

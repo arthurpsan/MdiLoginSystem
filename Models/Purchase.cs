@@ -13,14 +13,13 @@ namespace UserManagementSystem.Models
 
         public UInt64? Number { get; set; }
 
-        public DateTime? Beggining { get; set; }
+        // FIXED: Renamed from 'Beggining'
+        public DateTime? Beginning { get; set; }
         public DateTime? Implementation { get; set; }
 
-        // State relationship
         [Required]
         public State State { get; set; } = State.PENDENT;
 
-        // Relationships with other classes
         [Required]
         public Salesperson? Seller { get; set; }
         public Customer? Customer { get; set; }
@@ -28,46 +27,23 @@ namespace UserManagementSystem.Models
         public List<Item> Items { get; set; } = new List<Item>();
         public List<Payment> Payments { get; set; } = new List<Payment>();
 
-
-        #region Methods to calculate totals and comissions
         public Decimal? CalcTotal()
         {
+            if (Items == null || Items.Count == 0) return 0;
             decimal? total = 0;
-
-            if (Items == null || Items.Count == 0)
-            {
-                return 0;
-            }
-
             foreach (Item item in Items)
             {
-                decimal? itemValue = item.CalcTotal();
-
-                if (itemValue == null)
-                {
-                    return 0;
-                }
-                    
-                total += itemValue;
+                total += item.CalcTotal() ?? 0;
             }
-
             return total;
         }
 
-        private const Decimal ComissionTax = 0.01m; // 5% comission
+        private const Decimal ComissionTax = 0.01m;
 
         public Decimal? CalcComission()
         {
             decimal? total = CalcTotal();
-
-            if (total == null || total == 0)
-            {
-                return 0;
-            }
-
-            return (total * ComissionTax);
+            return (total ?? 0) * ComissionTax;
         }
-
-        #endregion
     }
 }
