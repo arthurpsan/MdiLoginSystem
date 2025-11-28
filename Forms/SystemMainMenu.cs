@@ -1,7 +1,7 @@
 ﻿using UserManagementSystem.Data;
 using UserManagementSystem.Forms;
 using UserManagementSystem.Models;
-using UserManagementSystem.Utils; // Import Utils
+using UserManagementSystem.Utils;
 
 namespace UserManagementSystem
 {
@@ -26,6 +26,7 @@ namespace UserManagementSystem
             SetupPermissions();
         }
 
+        // method to manage setup permissions
         private void SetupPermissions()
         {
             Text = $"System - User Management - User: {_loggedInUser.Name} - [v0.0.1]";
@@ -39,7 +40,7 @@ namespace UserManagementSystem
             lblLastAccess.Text = $"Last Access: {_loggedInUser.Credential?.LastAccess?.ToString("g") ?? "First Access!"}";
         }
 
-        // --- GENERIC MDI OPENER ---
+        // --- generic MDI opener ---
         private void OpenMdiForm<T>(Func<T> factory) where T : Form
         {
             var form = this.MdiChildren.OfType<T>().FirstOrDefault();
@@ -58,7 +59,7 @@ namespace UserManagementSystem
             }
         }
 
-        // --- MENU EVENTS ---
+        #region MENU EVENTS
 
         private void employeeToolStripMenuItem_Click(object sender, EventArgs e)
             => OpenMdiForm(() => EmployeeForm.GetInstance(_loggedInUser));
@@ -106,5 +107,7 @@ namespace UserManagementSystem
         {
             LoginForm.GetInstance().ClearFieldsAndShow();
         }
+
+        #endregion
     }
 }

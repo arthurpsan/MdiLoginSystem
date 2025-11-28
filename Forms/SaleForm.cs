@@ -60,7 +60,7 @@ namespace UserManagementSystem.Forms
         {
             base.OnLoad(e);
 
-            _isSearchOperation = true; // lock events
+            _isSearchOperation = true;
             try
             {
                 LoadInitialData();
@@ -75,7 +75,7 @@ namespace UserManagementSystem.Forms
                 dgvCustomers.CurrentCell = null;
                 dgvCustomers.ClearSelection();
 
-                _isSearchOperation = false; // unlock events
+                _isSearchOperation = false;
             }
         }
 
@@ -119,7 +119,6 @@ namespace UserManagementSystem.Forms
 
         private void SearchCustomers()
         {
-            // Ativa a flag para impedir que o 'SelectionChanged' dispare popups enquanto a lista muda
             bool wasSearching = _isSearchOperation;
             _isSearchOperation = true;
 
@@ -132,9 +131,8 @@ namespace UserManagementSystem.Forms
 
                 dgvCustomers.DataSource = new BindingList<Customer>(customers);
 
-                // Limpa a seleção automática do DataGridView
                 dgvCustomers.ClearSelection();
-                dgvCustomers.CurrentCell = null; // Extra safety
+                dgvCustomers.CurrentCell = null;
                 _selectedCustomer = null;
             }
             catch (Exception ex)
@@ -143,17 +141,14 @@ namespace UserManagementSystem.Forms
             }
             finally
             {
-                // Restaura o estado anterior da flag
                 _isSearchOperation = wasSearching;
             }
         }
 
         private void SelectCustomer()
         {
-            // CRÍTICO: Se estivermos pesquisando ou carregando, NÃO execute a lógica de seleção
             if (_isSearchOperation) return;
 
-            // If nothing is selected, reset and return
             if (dgvCustomers.CurrentRow == null)
             {
                 _selectedCustomer = null;
@@ -165,10 +160,9 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            // Optimization: Don't re-run logic if clicking the same customer
+            // don't rerun logic if clicking the same customer
             if (_selectedCustomer != null && _selectedCustomer.Id == shallow.Id) return;
 
-            // Busca dados completos (incluindo compras para verificar inadimplência)
             var fullCustomer = CustomerRepository.FindByIdWithPurchases(shallow.Id);
 
             if (fullCustomer == null) return;
@@ -177,7 +171,6 @@ namespace UserManagementSystem.Forms
             lblSelectedCustomerName.Text = _selectedCustomer.Name;
             _managerOverride = false;
 
-            // Verifica Inadimplência
             if (!_selectedCustomer.CanBuy())
             {
                 MessageBox.Show("Customer is delinquent. Manager authorization required.", "Blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -190,7 +183,6 @@ namespace UserManagementSystem.Forms
                 btnRequestAuth.Visible = false;
             }
 
-            // Muda para a aba de produtos
             TabControlMain.SelectedTab = tabPageProduct;
         }
 
@@ -259,14 +251,12 @@ namespace UserManagementSystem.Forms
 
             uint quantity = (uint)rawQty;
 
-            // Validar Estoque
             if (quantity > selectedProduct.StockQuantity)
             {
                 MessageBox.Show($"Insufficient stock! Available: {selectedProduct.StockQuantity}");
                 return;
             }
 
-            // Validar Desconto (Regra de Negócio: > 5% precisa de gerente)
             if (discountDecimal > MAX_DISCOUNT_NO_AUTH)
             {
                 MessageBox.Show($"Discount of {discountPercent}% requires Manager Authorization.", "Authorization");
@@ -280,7 +270,6 @@ namespace UserManagementSystem.Forms
                 }
             }
 
-            // Adicionar Item
             Item newItem = new Item
             {
                 Product = selectedProduct,
@@ -292,7 +281,6 @@ namespace UserManagementSystem.Forms
             _cartItems.Add(newItem);
             UpdateTotals();
 
-            // Reset UI
             numQuantity.Value = 0;
             numDiscount.Value = 0;
             dgvProducts.ClearSelection();
@@ -307,7 +295,6 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            // Re-checar segurança (caso o usuário tenha trocado de cliente no meio do processo)
             if (!_selectedCustomer.CanBuy() && !_managerOverride)
             {
                 MessageBox.Show("Customer blocked. Manager authorization required.");
@@ -319,7 +306,6 @@ namespace UserManagementSystem.Forms
 
             if (!ValidateSaleRules(totalSale, installments)) return;
 
-            // Verificar Papel (Apenas vendedores podem vender)
             if (_loggedInSeller is not Salesperson seller)
             {
                 MessageBox.Show("Only registered Salespeople can finalize sales.\n(Admins cannot be the 'Seller' of record).");
@@ -328,7 +314,6 @@ namespace UserManagementSystem.Forms
 
             try
             {
-                // 1. Criar Objeto Compra
                 Purchase purchase = new Purchase
                 {
                     Customer = _selectedCustomer,
@@ -339,7 +324,6 @@ namespace UserManagementSystem.Forms
                     State = State.FINISHED
                 };
 
-                // 2. Gerar Pagamentos (Parcelas)
                 for (int i = 1; i <= installments; i++)
                 {
                     purchase.Payments.Add(new Payment
@@ -350,7 +334,6 @@ namespace UserManagementSystem.Forms
                     });
                 }
 
-                // 3. Salvar (Transação abate estoque automaticamente)
                 PurchaseRepository.ProcessSaleTransaction(purchase);
 
                 MessageBox.Show("Sale completed successfully!", "Success");
@@ -391,7 +374,6 @@ namespace UserManagementSystem.Forms
             lblTotalSale.Text = "R$ 0,00";
             txtSearchCustomer.Clear();
 
-            // Reset Grids
             SearchCustomers();
             dgvProducts.ClearSelection();
 

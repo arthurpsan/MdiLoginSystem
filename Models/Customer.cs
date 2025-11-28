@@ -56,7 +56,7 @@ namespace UserManagementSystem.Models
             }
         }
 
-        // Method to check if the customer can make a new purchase
+        // method to check if the customer can make a new purchase
         public Boolean CanBuy()
         {
             if (Purchases == null || Purchases.Count == 0)

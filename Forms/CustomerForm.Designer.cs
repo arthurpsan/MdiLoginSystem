@@ -99,6 +99,7 @@
             dgvCustomers.AllowUserToAddRows = false;
             dgvCustomers.AllowUserToDeleteRows = false;
             dgvCustomers.AllowUserToResizeColumns = false;
+            dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { ColumnCustomerName, ColumnCustomerEmail });
             pnlCustomerManagement.SetColumnSpan(dgvCustomers, 4);
@@ -106,6 +107,8 @@
             dgvCustomers.Location = new Point(3, 237);
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.ReadOnly = true;
+            dgvCustomers.RowHeadersVisible = false;
+            dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCustomers.Size = new Size(794, 174);
             dgvCustomers.TabIndex = 5;
             // 
@@ -115,14 +118,12 @@
             ColumnCustomerName.Name = "ColumnCustomerName";
             ColumnCustomerName.ReadOnly = true;
             ColumnCustomerName.Resizable = DataGridViewTriState.False;
-            ColumnCustomerName.Width = 290;
             // 
             // ColumnCustomerEmail
             // 
             ColumnCustomerEmail.HeaderText = "E-mail";
             ColumnCustomerEmail.Name = "ColumnCustomerEmail";
             ColumnCustomerEmail.ReadOnly = true;
-            ColumnCustomerEmail.Width = 461;
             // 
             // btnUpdate
             // 

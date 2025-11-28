@@ -16,7 +16,6 @@ namespace UserManagementSystem.Models
         [Required]
         public Decimal? Price { get; set; }
 
-        // FIXED: Renamed from 'Stockpile' to 'StockQuantity'
         [Required]
         public UInt32? StockQuantity { get; set; }
 

@@ -23,7 +23,7 @@ namespace UserManagementSystem.Models
             }
         }
 
-        // Relationship with Purchase class
+        // relationship with Purchase class
         [Required]
         public List<Purchase>? IssuePurchases { get; set; }
     }

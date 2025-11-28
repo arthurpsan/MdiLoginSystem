@@ -13,7 +13,7 @@ namespace UserManagementSystem.Models
 
         public UInt64? Number { get; set; }
 
-        // FIXED: Renamed from 'Beggining'
+        // renamed from 'Beggining'
         public DateTime? Beginning { get; set; }
         public DateTime? Implementation { get; set; }
 

@@ -16,12 +16,12 @@ namespace UserManagementSystem.Models
         public Decimal? UnitPrice { get; set; }
         public Decimal? Discount { get; set; }
 
-        // Relationship with Purchase and Product class
+        // relationship with Purchase and Product class
         [Required]
         public Purchase? Purchase { get; set; }
         public Product? Product { get; set; }
 
-        // Method to calculate the total value
+        // method to calculate the total value
         public Decimal? CalcTotal()
         {
             Decimal? totalDiscount = (Quantity * UnitPrice) * Discount;

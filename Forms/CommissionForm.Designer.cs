@@ -103,7 +103,7 @@
             lblSearch.Size = new Size(394, 45);
             lblSearch.TabIndex = 17;
             lblSearch.Text = "Search for Seller:";
-            lblSearch.TextAlign = ContentAlignment.MiddleRight;
+            lblSearch.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblPeriod
             // 
@@ -122,24 +122,26 @@
             // 
             dtpFinalDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             dtpFinalDate.CalendarFont = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpFinalDate.Font = new Font("Segoe UI", 12F);
-            dtpFinalDate.Location = new Point(603, 368);
+            dtpFinalDate.Font = new Font("Segoe UI", 9.75F);
+            dtpFinalDate.Format = DateTimePickerFormat.Short;
+            dtpFinalDate.Location = new Point(603, 370);
             dtpFinalDate.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
             dtpFinalDate.MinDate = new DateTime(2000, 1, 1, 0, 0, 0, 0);
             dtpFinalDate.Name = "dtpFinalDate";
-            dtpFinalDate.Size = new Size(194, 29);
+            dtpFinalDate.Size = new Size(194, 25);
             dtpFinalDate.TabIndex = 21;
             // 
             // dtpInitialDate
             // 
             dtpInitialDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             dtpInitialDate.CalendarFont = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpInitialDate.Font = new Font("Segoe UI", 12F);
-            dtpInitialDate.Location = new Point(403, 368);
+            dtpInitialDate.Font = new Font("Segoe UI", 9.75F);
+            dtpInitialDate.Format = DateTimePickerFormat.Short;
+            dtpInitialDate.Location = new Point(403, 370);
             dtpInitialDate.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
             dtpInitialDate.MinDate = new DateTime(2000, 1, 1, 0, 0, 0, 0);
             dtpInitialDate.Name = "dtpInitialDate";
-            dtpInitialDate.Size = new Size(194, 29);
+            dtpInitialDate.Size = new Size(194, 25);
             dtpInitialDate.TabIndex = 20;
             // 
             // lblTotalComission

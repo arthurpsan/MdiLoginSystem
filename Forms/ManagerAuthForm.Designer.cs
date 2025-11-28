@@ -182,6 +182,7 @@
             lblErrorAlert.TabIndex = 5;
             lblErrorAlert.Text = "Credentials don't match. Please try again!";
             lblErrorAlert.TextAlign = ContentAlignment.MiddleCenter;
+            lblErrorAlert.Visible = false;
             // 
             // ManagerAuthForm
             // 

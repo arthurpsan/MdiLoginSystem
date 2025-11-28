@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using UserManagementSystem.Data;
-using UserManagementSystem.Utils; // Import Utils
+using UserManagementSystem.Utils;
 
 namespace UserManagementSystem.Forms
 {
@@ -11,7 +11,6 @@ namespace UserManagementSystem.Forms
         {
             InitializeComponent();
 
-            // Wire events
             btnAuthorize.Click += btnAuthorize_Click;
             btnCancel.Click += btnCancel_Click;
         }
@@ -31,7 +30,7 @@ namespace UserManagementSystem.Forms
                 else
                 {
                     lblErrorAlert.Visible = true;
-                    // Don't close, let them try again
+
                     txtPassword.Clear();
                     txtPassword.Focus();
                 }

@@ -95,7 +95,7 @@
             // dtpEndDate
             // 
             dtpEndDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            dtpEndDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpEndDate.CalendarFont = new Font("Segoe UI", 9.75F);
             pnlReports.SetColumnSpan(dtpEndDate, 2);
             dtpEndDate.Format = DateTimePickerFormat.Short;
             dtpEndDate.Location = new Point(563, 416);
@@ -158,7 +158,7 @@
             // dtpStartDate
             // 
             dtpStartDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            dtpStartDate.CalendarFont = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpStartDate.CalendarFont = new Font("Segoe UI", 9.75F);
             pnlReports.SetColumnSpan(dtpStartDate, 2);
             dtpStartDate.Format = DateTimePickerFormat.Short;
             dtpStartDate.Location = new Point(563, 371);
@@ -241,7 +241,7 @@
             MaximizeBox = false;
             Name = "SaleReportForm";
             ShowIcon = false;
-            Text = "SaleReportScreen";
+            Text = "Sale Reports";
             pnlReports.ResumeLayout(false);
             pnlReports.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSales).EndInit();

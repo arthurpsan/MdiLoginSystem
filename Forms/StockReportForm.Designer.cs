@@ -38,6 +38,8 @@
             pnlActions = new TableLayoutPanel();
             lblShowLowStock = new Label();
             btnLowStock = new Button();
+            lblSearch = new Label();
+            txtSearch = new TextBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStock).BeginInit();
             grpActions.SuspendLayout();
@@ -144,8 +146,10 @@
             pnlActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             pnlActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            pnlActions.Controls.Add(lblShowLowStock, 1, 0);
-            pnlActions.Controls.Add(btnLowStock, 4, 0);
+            pnlActions.Controls.Add(lblShowLowStock, 1, 3);
+            pnlActions.Controls.Add(btnLowStock, 4, 3);
+            pnlActions.Controls.Add(lblSearch, 0, 0);
+            pnlActions.Controls.Add(txtSearch, 0, 1);
             pnlActions.Dock = DockStyle.Fill;
             pnlActions.Location = new Point(3, 25);
             pnlActions.Name = "pnlActions";
@@ -163,9 +167,9 @@
             pnlActions.SetColumnSpan(lblShowLowStock, 3);
             lblShowLowStock.Dock = DockStyle.Fill;
             lblShowLowStock.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblShowLowStock.Location = new Point(397, 0);
+            lblShowLowStock.Location = new Point(397, 99);
             lblShowLowStock.Name = "lblShowLowStock";
-            lblShowLowStock.Size = new Size(228, 33);
+            lblShowLowStock.Size = new Size(228, 34);
             lblShowLowStock.TabIndex = 0;
             lblShowLowStock.Text = "Show products with low stock:";
             lblShowLowStock.TextAlign = ContentAlignment.MiddleRight;
@@ -175,12 +179,34 @@
             pnlActions.SetColumnSpan(btnLowStock, 2);
             btnLowStock.Dock = DockStyle.Fill;
             btnLowStock.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLowStock.Location = new Point(631, 3);
+            btnLowStock.Location = new Point(631, 102);
             btnLowStock.Name = "btnLowStock";
-            btnLowStock.Size = new Size(154, 27);
+            btnLowStock.Size = new Size(154, 28);
             btnLowStock.TabIndex = 1;
             btnLowStock.Text = "Show";
             btnLowStock.UseVisualStyleBackColor = true;
+            // 
+            // lblSearch
+            // 
+            lblSearch.AutoSize = true;
+            lblSearch.Dock = DockStyle.Fill;
+            lblSearch.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearch.ForeColor = Color.Black;
+            lblSearch.Location = new Point(3, 0);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(388, 33);
+            lblSearch.TabIndex = 2;
+            lblSearch.Text = "Search Product:";
+            lblSearch.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtSearch.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(3, 37);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(388, 25);
+            txtSearch.TabIndex = 3;
             // 
             // StockReportForm
             // 
@@ -213,5 +239,7 @@
         private DataGridViewTextBoxColumn ColumnProductName;
         private DataGridViewTextBoxColumn ColumnProductStock;
         private DataGridViewTextBoxColumn ColumunMinStock;
+        private Label lblSearch;
+        private TextBox txtSearch;
     }
 }

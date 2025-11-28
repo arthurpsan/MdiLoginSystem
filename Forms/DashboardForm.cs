@@ -8,7 +8,7 @@ namespace UserManagementSystem.Forms
     public partial class DashboardForm : Form
     {
         private static DashboardForm? _instance;
-        private List<UserViewModel> _originalList = new(); // Cache for search
+        private List<UserViewModel> _originalList = new();
 
         public static DashboardForm GetInstance()
         {
@@ -37,7 +37,8 @@ namespace UserManagementSystem.Forms
             {
                 var data = CredentialRepository.FindAll();
 
-                // Map Database Object -> ViewModel
+                // maps database to viewmodel
+
                 _originalList = data.Select(c => new UserViewModel
                 {
                     Id = c.User?.Id,
@@ -49,7 +50,7 @@ namespace UserManagementSystem.Forms
                     LastAccess = c.LastAccess?.ToString("g") ?? "Never"
                 }).ToList();
 
-                FilterData(); // Updates the grid
+                FilterData(); // updates the grid
             }
             catch (Exception ex)
             {
@@ -67,7 +68,7 @@ namespace UserManagementSystem.Forms
                 u.Role.ToLower().Contains(term)
             ).ToList();
 
-            // Push to BindingSource -> Updates Grid automatically
+            // push to bds
             bdsReports.DataSource = new BindingList<UserViewModel>(filtered);
             lblReports.Text = $"User Reports ({filtered.Count})";
         }

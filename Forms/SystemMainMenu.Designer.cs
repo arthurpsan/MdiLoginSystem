@@ -40,16 +40,16 @@
             reporToolStripMenuItem = new ToolStripMenuItem();
             usersToolStripMenuItem = new ToolStripMenuItem();
             salesDataToolStripMenuItem = new ToolStripMenuItem();
+            stockDataToolStripMenuItem = new ToolStripMenuItem();
             CustomerDataToolStripMenuItem = new ToolStripMenuItem();
             comissionDataToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
-            statusStrip1 = new StatusStrip();
+            statusStripAcess = new StatusStrip();
             staAccess = new ToolStripStatusLabel();
             lblLastAccess = new ToolStripStatusLabel();
-            stockDataToolStripMenuItem = new ToolStripMenuItem();
             mnuSystem.SuspendLayout();
-            statusStrip1.SuspendLayout();
+            statusStripAcess.SuspendLayout();
             SuspendLayout();
             // 
             // mnuSystem
@@ -72,7 +72,7 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(92, 22);
+            exitToolStripMenuItem.Size = new Size(93, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -128,28 +128,35 @@
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(180, 22);
+            usersToolStripMenuItem.Size = new Size(166, 22);
             usersToolStripMenuItem.Text = "User Data...";
             usersToolStripMenuItem.Click += usersToolStripMenuItem_Click;
             // 
             // salesDataToolStripMenuItem
             // 
             salesDataToolStripMenuItem.Name = "salesDataToolStripMenuItem";
-            salesDataToolStripMenuItem.Size = new Size(180, 22);
+            salesDataToolStripMenuItem.Size = new Size(166, 22);
             salesDataToolStripMenuItem.Text = "Sale Data...";
             salesDataToolStripMenuItem.Click += salesDataToolStripMenuItem_Click;
+            // 
+            // stockDataToolStripMenuItem
+            // 
+            stockDataToolStripMenuItem.Name = "stockDataToolStripMenuItem";
+            stockDataToolStripMenuItem.Size = new Size(166, 22);
+            stockDataToolStripMenuItem.Text = "Stock Data...";
+            stockDataToolStripMenuItem.Click += stockDataToolStripMenuItem_Click;
             // 
             // CustomerDataToolStripMenuItem
             // 
             CustomerDataToolStripMenuItem.Name = "CustomerDataToolStripMenuItem";
-            CustomerDataToolStripMenuItem.Size = new Size(180, 22);
+            CustomerDataToolStripMenuItem.Size = new Size(166, 22);
             CustomerDataToolStripMenuItem.Text = "Customer Data...";
             CustomerDataToolStripMenuItem.Click += clientsDataToolStripMenuItem_Click;
             // 
             // comissionDataToolStripMenuItem
             // 
             comissionDataToolStripMenuItem.Name = "comissionDataToolStripMenuItem";
-            comissionDataToolStripMenuItem.Size = new Size(180, 22);
+            comissionDataToolStripMenuItem.Size = new Size(166, 22);
             comissionDataToolStripMenuItem.Text = "Comission Data...";
             comissionDataToolStripMenuItem.Click += comissionDataToolStripMenuItem_Click;
             // 
@@ -167,15 +174,15 @@
             aboutToolStripMenuItem.Text = "About...";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
-            // statusStrip1
+            // statusStripAcess
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { staAccess, lblLastAccess });
-            statusStrip1.Location = new Point(0, 488);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Padding = new Padding(1, 0, 16, 0);
-            statusStrip1.Size = new Size(914, 22);
-            statusStrip1.TabIndex = 2;
-            statusStrip1.Text = "statusStrip1";
+            statusStripAcess.Items.AddRange(new ToolStripItem[] { staAccess, lblLastAccess });
+            statusStripAcess.Location = new Point(0, 488);
+            statusStripAcess.Name = "statusStripAcess";
+            statusStripAcess.Padding = new Padding(1, 0, 16, 0);
+            statusStripAcess.Size = new Size(914, 22);
+            statusStripAcess.TabIndex = 2;
+            statusStripAcess.Text = "statusStrip1";
             // 
             // staAccess
             // 
@@ -189,19 +196,12 @@
             lblLastAccess.Size = new Size(131, 17);
             lblLastAccess.Text = "toolStripStatusLabel1";
             // 
-            // stockDataToolStripMenuItem
-            // 
-            stockDataToolStripMenuItem.Name = "stockDataToolStripMenuItem";
-            stockDataToolStripMenuItem.Size = new Size(180, 22);
-            stockDataToolStripMenuItem.Text = "Stock Data...";
-            stockDataToolStripMenuItem.Click += stockDataToolStripMenuItem_Click;
-            // 
             // SystemMainMenu
             // 
             AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 510);
-            Controls.Add(statusStrip1);
+            Controls.Add(statusStripAcess);
             Controls.Add(mnuSystem);
             Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -215,8 +215,8 @@
             FormClosing += SystemMenu_FormClosing;
             mnuSystem.ResumeLayout(false);
             mnuSystem.PerformLayout();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            statusStripAcess.ResumeLayout(false);
+            statusStripAcess.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -232,7 +232,7 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem employeeToolStripMenuItem;
         private ToolStripMenuItem usersToolStripMenuItem;
-        private StatusStrip statusStrip1;
+        private StatusStrip statusStripAcess;
         private ToolStripStatusLabel staAccess;
         private ToolStripStatusLabel lblLastAccess;
         private ToolStripMenuItem salesDataToolStripMenuItem;

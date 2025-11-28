@@ -22,26 +22,34 @@ namespace UserManagementSystem.Forms
             dgvCommissions.AutoGenerateColumns = true;
             dgvCommissions.DataSource = bdsCommissions;
             txtSearch.TextChanged += (s, e) => FilterData();
+
+            dtpInitialDate.ValueChanged += btnRefresh_Click;
+            dtpFinalDate.ValueChanged += btnRefresh_Click;
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            dtpInitialDate.Value = DateTime.Now.AddDays(-30);
+            dtpFinalDate.Value = DateTime.Now;
+            btnRefresh_Click(null, null);
+        }
+
+        private void btnRefresh_Click(object? sender, EventArgs e)
         {
             DateTime start = dtpInitialDate.Value.Date;
             DateTime end = dtpFinalDate.Value.Date.AddDays(1).AddTicks(-1);
             decimal totalComm = 0;
-            decimal totalSales = 0; // FIX: Track total sales
 
             try
             {
+                // fetch purchases within date range
                 List<Purchase> purchases = PurchaseRepository.FindByDateRange(start, end);
 
                 _originalList = purchases.Select(p =>
                 {
                     decimal comm = p.CalcComission() ?? 0;
-                    decimal sale = p.CalcTotal() ?? 0; // Calculate sale total
-
                     totalComm += comm;
-                    totalSales += sale;
 
                     return new CommissionViewModel
                     {
@@ -49,15 +57,12 @@ namespace UserManagementSystem.Forms
                         SellerName = p.Seller?.Name ?? "N/A",
                         PurchaseId = p.Id,
                         Date = p.Implementation?.ToString("d") ?? "-",
-                        SaleTotal = sale.ToString("C"), // FIX: Populate new column
                         Commission = comm.ToString("C")
                     };
                 }).ToList();
 
                 FilterData();
-
-                // FIX: Display both Total Sales and Total Commission
-                lblTotalComission.Text = $"Total Sales: {totalSales:C} | Total Commission: {totalComm:C}";
+                lblTotalComission.Text = $"Total Commission: {totalComm:C}";
             }
             catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
         }

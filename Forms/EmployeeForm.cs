@@ -55,10 +55,10 @@ namespace UserManagementSystem.Forms
 
             var colName = new DataGridViewTextBoxColumn
             {
-                Name = "ColumnEmployeeName", // Internal name for finding the column later
-                HeaderText = "Name",         // What the user sees
-                DataPropertyName = "Name",   // Must match 'public string Name { get; set; }' in User model
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill // This column takes up extra space
+                Name = "ColumnEmployeeName",
+                HeaderText = "Name",
+                DataPropertyName = "Name",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             };
             dgvEmployees.Columns.Add(colName);
 
@@ -127,17 +127,15 @@ namespace UserManagementSystem.Forms
             {
                 string role = cboEmployeeRoles.SelectedItem?.ToString() ?? "Salesperson";
 
-                // Calculate if they are a manager right now
                 bool isManager = (role == "Manager");
 
-                // === SCENARIO A: UPDATE EXISTING USER ===
+                // update existing user
                 if (btnSave.Text == "Update" && bdsEmployees.Current is User currentUser)
                 {
                     currentUser.Name = txtEmployeeName.Text;
                     currentUser.Nickname = txtEmployeeNickname.Text;
                     currentUser.Email = txtEmployeeEmail.Text;
 
-                    // FIX: If Credential is missing, create it so we don't lose the Manager status
                     if (currentUser.Credential == null)
                     {
                         currentUser.Credential = new Credential { User = currentUser };
@@ -148,13 +146,12 @@ namespace UserManagementSystem.Forms
                     if (ulong.TryParse(cleanPhone, out ulong phone))
                         currentUser.PhoneNumber = phone;
 
-                    // Use the User repo to save (Cascading to Credential depends on your Repo implementation)
                     UserRepository.SaveOrUpdate(currentUser);
 
                     bdsEmployees.ResetCurrentItem();
                     Alerts.ShowSuccess("Employee updated successfully!");
                 }
-                // === SCENARIO B: CREATE NEW USER ===
+                // create new user
                 else
                 {
                     uint defaultEnrollment = (uint)new Random().Next(1000, 9999);
@@ -169,12 +166,10 @@ namespace UserManagementSystem.Forms
                     newUser.Nickname = txtEmployeeNickname.Text;
                     newUser.Email = txtEmployeeEmail.Text;
 
-                    // REMOVED: newUser.Credential.Manager = ... (This caused the crash!)
-
                     string cleanPhone = new string(mskPhoneNumber.Text.Where(char.IsDigit).ToArray());
                     if (ulong.TryParse(cleanPhone, out ulong phone)) newUser.PhoneNumber = phone;
 
-                    // Create the credential and assign the Manager status HERE
+                    // assign manager status
                     Credential credential = new Credential
                     {
                         Email = newUser.Email,
@@ -183,7 +178,6 @@ namespace UserManagementSystem.Forms
                         User = newUser
                     };
 
-                    // Bi-directional link (good practice so the object graph is complete)
                     newUser.Credential = credential;
 
                     CredentialRepository.SaveOrUpdate(credential);
@@ -225,7 +219,6 @@ namespace UserManagementSystem.Forms
 
         private void DgvEmployees_SelectionChanged(object? sender, EventArgs e)
         {
-            // FIX: Stop the logic if the user just clicked "New" (cleared selection)
             if (dgvEmployees.SelectedRows.Count == 0) return;
 
             if (bdsEmployees.Current is User selectedUser)
@@ -235,7 +228,6 @@ namespace UserManagementSystem.Forms
                 txtEmployeeEmail.Text = selectedUser.Email;
                 mskPhoneNumber.Text = selectedUser.PhoneNumber.ToString();
 
-                // Check for null Credential to prevent crashes
                 bool isManager = selectedUser.Credential?.Manager ?? false;
 
                 if (isManager)
@@ -244,7 +236,7 @@ namespace UserManagementSystem.Forms
                     cboEmployeeRoles.SelectedItem = "Salesperson";
                 else if (selectedUser is Cashier)
                     cboEmployeeRoles.SelectedItem = "Cashier";
-                // Default fallback if nothing matches
+                // default fallback if nothing matches
                 else
                     cboEmployeeRoles.SelectedIndex = -1;
 
@@ -262,7 +254,7 @@ namespace UserManagementSystem.Forms
 
         private void ClearInputs()
         {
-            // Clear text fields
+            // clear text fields
             txtEmployeeName.Clear();
             txtEmployeeNickname.Clear();
             txtEmployeeEmail.Clear();
@@ -271,9 +263,9 @@ namespace UserManagementSystem.Forms
             txtRepeatPassword.Clear();
             cboEmployeeRoles.SelectedIndex = 0;
 
-            // Reset UI state
-            btnSave.Text = "Save";          // Reset button text
-            dgvEmployees.ClearSelection();  // Deselect grid row
+            // reset UI state
+            btnSave.Text = "Save";
+            dgvEmployees.ClearSelection();
         }
     }
 }

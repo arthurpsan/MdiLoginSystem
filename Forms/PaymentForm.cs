@@ -23,11 +23,9 @@ namespace UserManagementSystem.Forms
             dgvReports.AutoGenerateColumns = true;
             dgvReports.DataSource = bdsPayments;
 
-            // Wire events
             txtSearchCustomer.TextChanged += TxtSearchCustomer_TextChanged;
             dgvReports.CellFormatting += DgvReports_CellFormatting;
 
-            // Load initial data
             this.Load += (s, e) => TxtSearchCustomer_TextChanged(s, e);
         }
 
@@ -38,18 +36,16 @@ namespace UserManagementSystem.Forms
 
             try
             {
-                // FIX: Use a custom query here to ensure we get Purchases and Customers included
-                // (Repository.FindAll() usually doesn't include deep children)
                 using (var db = new Repository())
                 {
-                    // Fetch all payments that are NOT paid (DatePayment is null)
+                    // fetch all payments that are NOT paid (DatePayment is null)
                     var pendingPayments = db.Payments
                         .Include(p => p.Purchase)
                         .ThenInclude(pur => pur.Customer)
                         .Where(p => p.DatePayment == null)
                         .ToList();
 
-                    // Filter in memory (easier for complex object graphs)
+                    // filter in memory (easier for complex object graphs)
                     if (!string.IsNullOrEmpty(term))
                     {
                         pendingPayments = pendingPayments
@@ -57,12 +53,10 @@ namespace UserManagementSystem.Forms
                             .ToList();
                     }
 
-                    // Map to ViewModel
+                    // map to ViewModel
                     foreach (var payment in pendingPayments)
                     {
-                        // Calculate total with fine if overdue
                         decimal total = payment.CalcTotalPayment() ?? 0;
-                        // If logic returns 0 for unpaid, fallback to purchase total or handle logic
                         if (total == 0 && payment.Purchase != null)
                             total = payment.Purchase.CalcTotal() ?? 0;
 
@@ -91,8 +85,6 @@ namespace UserManagementSystem.Forms
             {
                 try
                 {
-                    // We need to re-attach the object to the context to save it, 
-                    // or fetch it again by ID to avoid tracking issues.
                     var paymentId = selectedVM.RealPaymentObject.Id;
                     var payment = PaymentRepository.FindById(paymentId);
 
@@ -101,7 +93,7 @@ namespace UserManagementSystem.Forms
                         payment.DatePayment = DateTime.Now;
                         PaymentRepository.SaveOrUpdate(payment);
                         MessageBox.Show("Payment confirmed!", "Success");
-                        TxtSearchCustomer_TextChanged(null, null); // Refresh
+                        TxtSearchCustomer_TextChanged(null, null);
                     }
                 }
                 catch (Exception ex)

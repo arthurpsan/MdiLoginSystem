@@ -36,9 +36,9 @@
             lblDescription = new Label();
             chkShowDelinquents = new CheckBox();
             dgvCustomers = new DataGridView();
-            dgvPurchases = new DataGridView();
             Name = new DataGridViewTextBoxColumn();
             Email = new DataGridViewTextBoxColumn();
+            dgvPurchases = new DataGridView();
             Date = new DataGridViewTextBoxColumn();
             colSeller = new DataGridViewTextBoxColumn();
             colTotal = new DataGridViewTextBoxColumn();
@@ -156,6 +156,7 @@
             // dgvCustomers
             // 
             dgvCustomers.AllowUserToAddRows = false;
+            dgvCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { Name, Email });
             pnlMainLayout.SetColumnSpan(dgvCustomers, 2);
@@ -164,21 +165,11 @@
             dgvCustomers.MultiSelect = false;
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.ReadOnly = true;
+            dgvCustomers.RowHeadersVisible = false;
             pnlMainLayout.SetRowSpan(dgvCustomers, 2);
             dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCustomers.Size = new Size(394, 84);
             dgvCustomers.TabIndex = 9;
-            // 
-            // dgvPurchases
-            // 
-            dgvPurchases.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPurchases.Columns.AddRange(new DataGridViewColumn[] { Date, colSeller, colTotal });
-            pnlMainLayout.SetColumnSpan(dgvPurchases, 4);
-            dgvPurchases.Dock = DockStyle.Fill;
-            dgvPurchases.Location = new Point(3, 228);
-            dgvPurchases.Name = "dgvPurchases";
-            dgvPurchases.Size = new Size(794, 219);
-            dgvPurchases.TabIndex = 10;
             // 
             // Name
             // 
@@ -186,7 +177,6 @@
             Name.HeaderText = "Name";
             Name.Name = "Name";
             Name.ReadOnly = true;
-            Name.Width = 126;
             // 
             // Email
             // 
@@ -194,7 +184,19 @@
             Email.HeaderText = "Email";
             Email.Name = "Email";
             Email.ReadOnly = true;
-            Email.Width = 225;
+            // 
+            // dgvPurchases
+            // 
+            dgvPurchases.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvPurchases.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPurchases.Columns.AddRange(new DataGridViewColumn[] { Date, colSeller, colTotal });
+            pnlMainLayout.SetColumnSpan(dgvPurchases, 4);
+            dgvPurchases.Dock = DockStyle.Fill;
+            dgvPurchases.Location = new Point(3, 228);
+            dgvPurchases.Name = "dgvPurchases";
+            dgvPurchases.RowHeadersVisible = false;
+            dgvPurchases.Size = new Size(794, 219);
+            dgvPurchases.TabIndex = 10;
             // 
             // Date
             // 
@@ -202,21 +204,18 @@
             Date.HeaderText = "Date";
             Date.Name = "Date";
             Date.ReadOnly = true;
-            Date.Width = 190;
             // 
             // colSeller
             // 
             colSeller.HeaderText = "Seller";
             colSeller.Name = "colSeller";
             colSeller.ReadOnly = true;
-            colSeller.Width = 380;
             // 
             // colTotal
             // 
             colTotal.HeaderText = "Total";
             colTotal.Name = "colTotal";
             colTotal.ReadOnly = true;
-            colTotal.Width = 181;
             // 
             // CustomerReportForm
             // 
@@ -226,6 +225,7 @@
             Controls.Add(pnlMainLayout);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
+            Name = "CustomerReportForm";
             ShowIcon = false;
             Text = "Customers Report";
             pnlMainLayout.ResumeLayout(false);

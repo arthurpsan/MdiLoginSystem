@@ -54,7 +54,7 @@ namespace UserManagementSystem.Models
                 return totalPurchase * _paymentMonthTax * delayedMonths;
             }
 
-            // In case the payment is still not made and is past due (today)
+            // in case the payment is still not made and is past due (today)
             else if (DatePayment != null && DatePayment > ExpirationDate)
             { 
                 TimeSpan delay = DateTime.Now - ExpirationDate.Value;

@@ -22,7 +22,7 @@ namespace UserManagementSystem.Forms
             InitializeComponent();
             this.Load += Form_Load;
 
-            // Link input population to grid selection
+            // link input population to grid selection
             dgvCustomers.SelectionChanged += (s, e) => PopulateInputs();
         }
 
@@ -40,7 +40,7 @@ namespace UserManagementSystem.Forms
             dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCustomers.DataSource = _bindingSource;
 
-            // Ensure mappings exist
+            // ensure mappings exist
             if (dgvCustomers.Columns["ColumnCustomerName"] != null)
                 dgvCustomers.Columns["ColumnCustomerName"].DataPropertyName = nameof(Customer.Name);
 
@@ -99,7 +99,7 @@ namespace UserManagementSystem.Forms
                 };
 
                 CustomerRepository.SaveOrUpdate(newCustomer);
-                _bindingSource.Add(newCustomer); // Updates grid automatically
+                _bindingSource.Add(newCustomer); // updates grid automatically
                 _bindingSource.MoveLast();
 
                 Alerts.ShowSuccess("Customer registered successfully!");

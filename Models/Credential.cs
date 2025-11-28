@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UserManagementSystem.Models
 {
-    // The [Index] attribute for columns should be placed on the class in EF Core 
-    // to configure the database index.
     [Index(nameof(Email), IsUnique = true)]
     [Table("tbl_credencial")]
     public class Credential
@@ -17,7 +15,7 @@ namespace UserManagementSystem.Models
 
         public const String SALT = "1FnM6_";
 
-        [Required] // Added [Required] back based on common usage for email
+        [Required]
         [StringLength(250)]
         public String? Email { get; set; }
 
@@ -33,7 +31,7 @@ namespace UserManagementSystem.Models
             }
             set
             {
-                // The setter calculates the hash using the provided value and salt.
+                // the setter calculates the hash using the provided value and salt.
                 _password = ComputeSHA256(value, SALT);
             }
         }

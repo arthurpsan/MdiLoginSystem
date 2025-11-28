@@ -1,6 +1,5 @@
-﻿// ... imports
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Data;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
 
@@ -9,7 +8,7 @@ namespace UserManagementSystem.Forms
     public partial class StockReportForm : Form
     {
         private static StockReportForm? _instance;
-        private bool _isFilterActive = false; // Toggle state
+        private bool _isFilterActive = false;
 
         public static StockReportForm GetInstance(User? user)
         {
@@ -22,17 +21,16 @@ namespace UserManagementSystem.Forms
             InitializeComponent();
             SetupGrid();
 
-            // Wire event
             btnLowStock.Click += btnLowStock_Click;
 
-            // Load all data by default
-            LoadStockData(false);
+            txtSearch.TextChanged += (s, e) => LoadStockData();
+
+            LoadStockData();
         }
 
         private void SetupGrid()
         {
             dgvStock.AutoGenerateColumns = false;
-            dgvStock.AllowUserToAddRows = false; // FIX: Removes the empty "ghost" row at the bottom
             dgvStock.ReadOnly = true;
             dgvStock.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
@@ -41,26 +39,34 @@ namespace UserManagementSystem.Forms
             ColumunMinStock.DataPropertyName = nameof(Product.MinimumStock);
         }
 
-        private void LoadStockData(bool showLowStockOnly)
+        private void LoadStockData()
         {
             try
             {
-                var allProducts = ProductRepository.FindAll();
-                List<Product> displayList;
+                var query = ProductRepository.FindAll().AsEnumerable();
 
-                if (showLowStockOnly)
+                // low stock filter
+                if (_isFilterActive)
                 {
-                    displayList = allProducts.Where(p => p.StockQuantity <= p.MinimumStock).ToList();
-                    btnLowStock.Text = "Show All"; // Update button text
-                    if (displayList.Count == 0) MessageBox.Show("No low stock items found.");
+                    query = query.Where(p => p.StockQuantity <= p.MinimumStock);
+                    btnLowStock.Text = "Show All";
                 }
                 else
                 {
-                    displayList = allProducts;
-                    btnLowStock.Text = "Filter Low Stock"; // Update button text
+                    btnLowStock.Text = "Filter Low Stock";
                 }
 
-                dgvStock.DataSource = new BindingList<Product>(displayList);
+                // search filter
+                string searchTerm = txtSearch.Text.Trim();
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    query = query.Where(p => p.Name != null &&
+                                             p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+                }
+
+                var resultList = query.ToList();
+
+                dgvStock.DataSource = new BindingList<Product>(resultList);
             }
             catch (Exception ex)
             {
@@ -70,8 +76,8 @@ namespace UserManagementSystem.Forms
 
         private void btnLowStock_Click(object? sender, EventArgs e)
         {
-            _isFilterActive = !_isFilterActive; // Toggle
-            LoadStockData(_isFilterActive);
+            _isFilterActive = !_isFilterActive;
+            LoadStockData();
         }
     }
 }

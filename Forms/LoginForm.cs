@@ -1,6 +1,6 @@
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
-using UserManagementSystem.Utils; // Import Utils
+using UserManagementSystem.Utils;
 
 namespace UserManagementSystem
 {
@@ -29,17 +29,14 @@ namespace UserManagementSystem
                 string email = txtUserEmail.Text.Trim();
                 string password = txtUserPassword.Text;
 
-                // 1. Search for credential
                 Credential? dbCredential = CredentialRepository.FindByEmail(email);
 
-                // 2. Validate existence
                 if (dbCredential == null)
                 {
                     ShowLoginError();
                     return;
                 }
 
-                // 3. Validate Password
                 string hashedInput = Credential.ComputeSHA256(password, Credential.SALT);
                 if (dbCredential.Password != hashedInput)
                 {
@@ -47,7 +44,6 @@ namespace UserManagementSystem
                     return;
                 }
 
-                // 4. Success - Update Access
                 PerformLogin(dbCredential);
             }
             catch (Exception ex)
@@ -65,17 +61,14 @@ namespace UserManagementSystem
                 credential.LastAccess = DateTime.Now;
                 CredentialRepository.SaveOrUpdate(credential);
 
-                // Ensure the User object has the Credential link
                 if (credential.User != null)
                 {
                     credential.User.Credential = credential;
 
-                    // Clear and Hide
                     txtUserEmail.Clear();
                     txtUserPassword.Clear();
                     this.Hide();
 
-                    // Open Main Menu
                     SystemMainMenu.GetInstance(credential.User).Show();
                 }
             }
@@ -104,13 +97,13 @@ namespace UserManagementSystem
 
         #region UI Events (Highlighting & Navigation)
 
-        // Highlighting
+        // highlighting
         private void TxtUserEmail_Enter(object sender, EventArgs e) => txtUserEmail.BackColor = Color.LightCyan;
         private void TxtUserEmail_Leave(object sender, EventArgs e) => txtUserEmail.BackColor = Color.White;
         private void TxtUserPassword_Enter(object sender, EventArgs e) => txtUserPassword.BackColor = Color.LightCyan;
         private void TxtUserPassword_Leave(object sender, EventArgs e) => txtUserPassword.BackColor = Color.White;
 
-        // Navigation
+        // navigation
         private void UserLoginScreen_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

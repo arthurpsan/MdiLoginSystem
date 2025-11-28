@@ -54,7 +54,6 @@ namespace UserManagementSystem.Forms
 
             dgvCustomers.DataSource = _customerList;
 
-            // safeguard
             if (dgvCustomers.Columns["Id"] != null)
             {
                 dgvCustomers.Columns["Id"].Visible = false;
@@ -71,12 +70,10 @@ namespace UserManagementSystem.Forms
             {
                 List<Customer> sourceData;
 
-                // ... (existing logic for checkboxes) ...
                 if (chkShowDelinquents.Checked)
                 {
                     sourceData = CustomerRepository.FindDelinquents();
                     UpdateStatusLabel("Delinquent Customers (Action Required)", Color.DarkRed);
-                    // ...
                 }
                 else
                 {
@@ -89,7 +86,6 @@ namespace UserManagementSystem.Forms
                 _customerList = new BindingList<Customer>(sourceData);
                 dgvCustomers.DataSource = _customerList;
 
-                // FIX: Clear the automatic selection made by WinForms
                 dgvCustomers.ClearSelection();
                 dgvCustomers.CurrentCell = null;
 
@@ -114,7 +110,6 @@ namespace UserManagementSystem.Forms
 
             dgvCustomers.DataSource = new BindingList<Customer>(filteredList);
 
-            // FIX: Clear selection after search too
             dgvCustomers.ClearSelection();
             dgvCustomers.CurrentCell = null;
         }
