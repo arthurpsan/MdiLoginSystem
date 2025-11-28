@@ -29,17 +29,19 @@ namespace UserManagementSystem.Forms
             DateTime start = dtpInitialDate.Value.Date;
             DateTime end = dtpFinalDate.Value.Date.AddDays(1).AddTicks(-1);
             decimal totalComm = 0;
+            decimal totalSales = 0; // FIX: Track total sales
 
             try
             {
-                // FIXED: Removed dependency on missing cboSalesperson
-                // We simply load all data in range and filter by text later
                 List<Purchase> purchases = PurchaseRepository.FindByDateRange(start, end);
 
                 _originalList = purchases.Select(p =>
                 {
                     decimal comm = p.CalcComission() ?? 0;
+                    decimal sale = p.CalcTotal() ?? 0; // Calculate sale total
+
                     totalComm += comm;
+                    totalSales += sale;
 
                     return new CommissionViewModel
                     {
@@ -47,12 +49,15 @@ namespace UserManagementSystem.Forms
                         SellerName = p.Seller?.Name ?? "N/A",
                         PurchaseId = p.Id,
                         Date = p.Implementation?.ToString("d") ?? "-",
+                        SaleTotal = sale.ToString("C"), // FIX: Populate new column
                         Commission = comm.ToString("C")
                     };
                 }).ToList();
 
                 FilterData();
-                lblTotalComission.Text = $"Total Commission: {totalComm:C}";
+
+                // FIX: Display both Total Sales and Total Commission
+                lblTotalComission.Text = $"Total Sales: {totalSales:C} | Total Commission: {totalComm:C}";
             }
             catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
         }

@@ -60,6 +60,9 @@ namespace UserManagementSystem.Models.ViewModels
         [DisplayName("Date")]
         public string Date { get; set; } = string.Empty;
 
+        [DisplayName("Sale Value")]
+        public string SaleTotal { get; set; } = string.Empty;
+
         [DisplayName("Commission")]
         public string Commission { get; set; } = string.Empty;
     }

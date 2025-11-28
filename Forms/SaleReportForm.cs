@@ -28,7 +28,7 @@ namespace UserManagementSystem.Forms
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            dtpStartDate.Value = DateTime.Now.AddDays(-30); // Go back 1 month
+            dtpStartDate.Value = DateTime.Now.AddDays(-60);
             dtpEndDate.Value = DateTime.Now;
             btnRefresh_Click(null, null);
         }

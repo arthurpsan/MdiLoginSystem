@@ -30,14 +30,14 @@
         {
             tableLayoutPanel1 = new TableLayoutPanel();
             dgvStock = new DataGridView();
+            ColumnProductName = new DataGridViewTextBoxColumn();
+            ColumnProductStock = new DataGridViewTextBoxColumn();
+            ColumunMinStock = new DataGridViewTextBoxColumn();
             lblStockTitle = new Label();
             grpActions = new GroupBox();
             pnlActions = new TableLayoutPanel();
             lblShowLowStock = new Label();
             btnLowStock = new Button();
-            ColumnProductName = new DataGridViewTextBoxColumn();
-            ColumnProductStock = new DataGridViewTextBoxColumn();
-            ColumunMinStock = new DataGridViewTextBoxColumn();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStock).BeginInit();
             grpActions.SuspendLayout();
@@ -67,15 +67,45 @@
             // 
             // dgvStock
             // 
+            dgvStock.AllowUserToAddRows = false;
+            dgvStock.AllowUserToDeleteRows = false;
+            dgvStock.AllowUserToResizeColumns = false;
+            dgvStock.AllowUserToResizeRows = false;
+            dgvStock.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvStock.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvStock.Columns.AddRange(new DataGridViewColumn[] { ColumnProductName, ColumnProductStock, ColumunMinStock });
             tableLayoutPanel1.SetColumnSpan(dgvStock, 4);
             dgvStock.Dock = DockStyle.Fill;
             dgvStock.Location = new Point(3, 50);
+            dgvStock.MultiSelect = false;
             dgvStock.Name = "dgvStock";
+            dgvStock.ReadOnly = true;
+            dgvStock.RowHeadersVisible = false;
             tableLayoutPanel1.SetRowSpan(dgvStock, 2);
+            dgvStock.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvStock.Size = new Size(794, 230);
             dgvStock.TabIndex = 0;
+            // 
+            // ColumnProductName
+            // 
+            ColumnProductName.HeaderText = "Product Name";
+            ColumnProductName.Name = "ColumnProductName";
+            ColumnProductName.ReadOnly = true;
+            ColumnProductName.Resizable = DataGridViewTriState.False;
+            // 
+            // ColumnProductStock
+            // 
+            ColumnProductStock.HeaderText = "Current Stock";
+            ColumnProductStock.Name = "ColumnProductStock";
+            ColumnProductStock.ReadOnly = true;
+            ColumnProductStock.Resizable = DataGridViewTriState.False;
+            // 
+            // ColumunMinStock
+            // 
+            ColumunMinStock.HeaderText = "Minimum Stock";
+            ColumunMinStock.Name = "ColumunMinStock";
+            ColumunMinStock.ReadOnly = true;
+            ColumunMinStock.Resizable = DataGridViewTriState.False;
             // 
             // lblStockTitle
             // 
@@ -152,38 +182,14 @@
             btnLowStock.Text = "Show";
             btnLowStock.UseVisualStyleBackColor = true;
             // 
-            // ColumnProductName
-            // 
-            ColumnProductName.HeaderText = "Product Name";
-            ColumnProductName.Name = "ColumnProductName";
-            ColumnProductName.ReadOnly = true;
-            ColumnProductName.Resizable = DataGridViewTriState.False;
-            ColumnProductName.Width = 400;
-            // 
-            // ColumnProductStock
-            // 
-            ColumnProductStock.HeaderText = "Current Stock";
-            ColumnProductStock.Name = "ColumnProductStock";
-            ColumnProductStock.ReadOnly = true;
-            ColumnProductStock.Resizable = DataGridViewTriState.False;
-            ColumnProductStock.Width = 190;
-            // 
-            // ColumunMinStock
-            // 
-            ColumunMinStock.HeaderText = "Minimum Stock";
-            ColumunMinStock.Name = "ColumunMinStock";
-            ColumunMinStock.ReadOnly = true;
-            ColumunMinStock.Resizable = DataGridViewTriState.False;
-            ColumunMinStock.Width = 161;
-            // 
-            // StockReformForm
+            // StockReportForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(tableLayoutPanel1);
             MaximizeBox = false;
-            Name = "StockReformForm";
+            Name = "StockReportForm";
             ShowIcon = false;
             Text = "StockReformForm";
             tableLayoutPanel1.ResumeLayout(false);

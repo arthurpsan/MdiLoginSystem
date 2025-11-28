@@ -55,10 +55,10 @@
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlReports.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlReports.Controls.Add(lblDashboard, 0, 0);
-            pnlReports.Controls.Add(txtSearch, 0, 3);
+            pnlReports.Controls.Add(txtSearch, 2, 3);
             pnlReports.Controls.Add(lblReports, 0, 5);
             pnlReports.Controls.Add(dgvReports, 0, 1);
-            pnlReports.Controls.Add(lblSearch, 0, 2);
+            pnlReports.Controls.Add(lblSearch, 2, 2);
             pnlReports.Dock = DockStyle.Fill;
             pnlReports.Location = new Point(0, 0);
             pnlReports.Name = "pnlReports";
@@ -92,7 +92,7 @@
             // 
             txtSearch.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             pnlReports.SetColumnSpan(txtSearch, 2);
-            txtSearch.Location = new Point(3, 326);
+            txtSearch.Location = new Point(403, 326);
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(394, 23);
             txtSearch.TabIndex = 1;
@@ -179,7 +179,7 @@
             pnlReports.SetColumnSpan(lblSearch, 2);
             lblSearch.Dock = DockStyle.Fill;
             lblSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSearch.Location = new Point(3, 270);
+            lblSearch.Location = new Point(403, 270);
             lblSearch.Name = "lblSearch";
             lblSearch.Size = new Size(394, 45);
             lblSearch.TabIndex = 4;

@@ -32,6 +32,7 @@ namespace UserManagementSystem.Forms
         private void SetupGrid()
         {
             dgvStock.AutoGenerateColumns = false;
+            dgvStock.AllowUserToAddRows = false; // FIX: Removes the empty "ghost" row at the bottom
             dgvStock.ReadOnly = true;
             dgvStock.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
