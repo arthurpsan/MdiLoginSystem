@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
-using UserManagementSystem.Utils; // 1. Import Utils
+using UserManagementSystem.Utils;
 
 namespace UserManagementSystem.Forms
 {
@@ -74,7 +73,7 @@ namespace UserManagementSystem.Forms
 
             // --- ComboBox ---
             cboProductCategory.DataSource = _bdsCategories;
-            cboProductCategory.DisplayMember = nameof(Category.Name);
+            cboProductCategory.DisplayMember = "Name";
             // cboProductCategory.ValueMember = "Id"; // Optional if needed
         }
 
@@ -116,6 +115,7 @@ namespace UserManagementSystem.Forms
                 nudStock.Value = selected.StockQuantity ?? 0;
                 nudMinStock.Value = selected.MinimumStock ?? 0;
                 chkIsActive.Checked = selected.IsActive;
+
                 cboProductCategory.SelectedItem = selected.Category;
             }
             else

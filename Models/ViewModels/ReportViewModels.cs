@@ -83,4 +83,5 @@ namespace UserManagementSystem.Models.ViewModels
         [Browsable(false)]
         public Payment RealPaymentObject { get; set; }
     }
+
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             tabControlMain = new TabControl();
             tabPageCategories = new TabPage();
             pnlCategorieManagement = new TableLayoutPanel();
@@ -61,6 +62,8 @@
             chkIsActive = new CheckBox();
             lblProductManager = new Label();
             dgvProduct = new DataGridView();
+            bdsCategories = new BindingSource(components);
+            bdsProducts = new BindingSource(components);
             tabControlMain.SuspendLayout();
             tabPageCategories.SuspendLayout();
             pnlCategorieManagement.SuspendLayout();
@@ -75,6 +78,8 @@
             ((System.ComponentModel.ISupportInitialize)nudStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudProductPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvProduct).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bdsCategories).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bdsProducts).BeginInit();
             SuspendLayout();
             // 
             // tabControlMain
@@ -130,6 +135,8 @@
             dgvCategory.AllowUserToAddRows = false;
             dgvCategory.AllowUserToDeleteRows = false;
             dgvCategory.AllowUserToOrderColumns = true;
+            dgvCategory.AllowUserToResizeColumns = false;
+            dgvCategory.AllowUserToResizeRows = false;
             dgvCategory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCategory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             pnlCategorieManagement.SetColumnSpan(dgvCategory, 4);
@@ -503,6 +510,8 @@
             dgvProduct.AllowUserToAddRows = false;
             dgvProduct.AllowUserToDeleteRows = false;
             dgvProduct.AllowUserToOrderColumns = true;
+            dgvProduct.AllowUserToResizeColumns = false;
+            dgvProduct.AllowUserToResizeRows = false;
             pnlProductManagement.SetColumnSpan(dgvProduct, 4);
             dgvProduct.Dock = DockStyle.Fill;
             dgvProduct.Location = new Point(3, 44);
@@ -542,6 +551,8 @@
             ((System.ComponentModel.ISupportInitialize)nudStock).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudProductPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvProduct).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bdsCategories).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bdsProducts).EndInit();
             ResumeLayout(false);
         }
 
@@ -581,5 +592,7 @@
         private NumericUpDown nudProductPrice;
         private CheckBox chkIsActive;
         private Label lblIsActive;
+        private BindingSource bdsCategories;
+        private BindingSource bdsProducts;
     }
 }

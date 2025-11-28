@@ -6,7 +6,7 @@ namespace UserManagementSystem.Data
     public class Repository : DbContext
     {
         // 1. Simple Static Configuration (No JSON needed)
-        public const string ConnectionString = @"server=127.0.0.1;port=3306;uid=root;pwd=;database=StoreManagementSystem";
+        public const string ConnectionString = @"server=127.0.0.1;port=3308;uid=root;pwd=;database=StoreManagementSystem";
 
         // 2. DbSets (Fixed 'Itens' to 'Items')
         public DbSet<User> Users { get; set; }
