@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+using System.Globalization;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
 using UserManagementSystem.Models.ViewModels;
@@ -17,99 +13,112 @@ namespace UserManagementSystem.Forms
 
         public static PaymentForm GetInstance(User? user)
         {
-            if (_instance == null || _instance.IsDisposed)
-            {
-                _instance = new PaymentForm();
-            }
+            if (_instance == null || _instance.IsDisposed) _instance = new PaymentForm();
             return _instance;
         }
 
         public PaymentForm()
         {
             InitializeComponent();
-
             dgvReports.AutoGenerateColumns = true;
             dgvReports.DataSource = bdsPayments;
 
-            // Wire up the Search event manually since the button is gone
+            // Wire events
             txtSearchCustomer.TextChanged += TxtSearchCustomer_TextChanged;
-
-            // Optional: Format the grid logic
             dgvReports.CellFormatting += DgvReports_CellFormatting;
+
+            // Load initial data
+            this.Load += (s, e) => TxtSearchCustomer_TextChanged(s, e);
         }
 
-        // Logic 1: Real-time Search
         private void TxtSearchCustomer_TextChanged(object? sender, EventArgs e)
         {
             string term = txtSearchCustomer.Text.Trim();
-
-            // REMOVED the check that returns if empty. 
-            // We WANT to show data even if term is empty.
+            var displayList = new List<PaymentViewModel>();
 
             try
             {
-                // 1. Find Customer(s) 
-                // Logic: If term is empty, get ALL customers. If not, filter.
-                var allCustomers = CustomerRepository.FindAll();
-                var customers = string.IsNullOrEmpty(term)
-                    ? allCustomers
-                    : allCustomers.Where(c => c.Name.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList();
+                // FIX: Use a custom query here to ensure we get Purchases and Customers included
+                // (Repository.FindAll() usually doesn't include deep children)
+                using (var db = new Repository())
+                {
+                    // Fetch all payments that are NOT paid (DatePayment is null)
+                    var pendingPayments = db.Payments
+                        .Include(p => p.Purchase)
+                        .ThenInclude(pur => pur.Customer)
+                        .Where(p => p.DatePayment == null)
+                        .ToList();
 
-                var displayList = new List<PaymentViewModel>();
+                    // Filter in memory (easier for complex object graphs)
+                    if (!string.IsNullOrEmpty(term))
+                    {
+                        pendingPayments = pendingPayments
+                            .Where(p => p.Purchase.Customer.Name.Contains(term, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
+                    }
 
-                // ... (Keep the rest of your loop logic exactly the same) ...
+                    // Map to ViewModel
+                    foreach (var payment in pendingPayments)
+                    {
+                        // Calculate total with fine if overdue
+                        decimal total = payment.CalcTotalPayment() ?? 0;
+                        // If logic returns 0 for unpaid, fallback to purchase total or handle logic
+                        if (total == 0 && payment.Purchase != null)
+                            total = payment.Purchase.CalcTotal() ?? 0;
 
-                // Update DataSource
+                        displayList.Add(new PaymentViewModel
+                        {
+                            PaymentId = payment.Id,
+                            PurchaseId = payment.Purchase?.Id ?? 0,
+                            ExpirationDate = payment.ExpirationDate?.ToShortDateString() ?? "-",
+                            TotalAmount = total.ToString("C", new CultureInfo("pt-BR")),
+                            RealPaymentObject = payment
+                        });
+                    }
+                }
+
                 bdsPayments.DataSource = new BindingList<PaymentViewModel>(displayList);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error searching: " + ex.Message);
+                MessageBox.Show("Error loading payments: " + ex.Message);
             }
         }
 
-        // Logic 2: Process Payment
         private void btnPay_Click(object sender, EventArgs e)
         {
-            // Get the selected object safely from the BindingSource
             if (bdsPayments.Current is PaymentViewModel selectedVM)
             {
                 try
                 {
-                    Payment payment = selectedVM.RealPaymentObject;
+                    // We need to re-attach the object to the context to save it, 
+                    // or fetch it again by ID to avoid tracking issues.
+                    var paymentId = selectedVM.RealPaymentObject.Id;
+                    var payment = PaymentRepository.FindById(paymentId);
 
-                    // Finalize Payment
-                    payment.DatePayment = DateTime.Now;
-                    // Note: You might want to save the calculated fine amount here specifically if your logic requires it
-
-                    PaymentRepository.SaveOrUpdate(payment);
-
-                    MessageBox.Show("Payment confirmed successfully!", "Success");
-
-                    // Refresh the list immediately
-                    TxtSearchCustomer_TextChanged(null, null);
+                    if (payment != null)
+                    {
+                        payment.DatePayment = DateTime.Now;
+                        PaymentRepository.SaveOrUpdate(payment);
+                        MessageBox.Show("Payment confirmed!", "Success");
+                        TxtSearchCustomer_TextChanged(null, null); // Refresh
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error processing payment: " + ex.Message);
+                    MessageBox.Show("Error: " + ex.Message);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Please select a payment to process.");
             }
         }
 
-        // Logic 3: Visual Polish (Red text for overdue items)
         private void DgvReports_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex >= 0 && dgvReports.Rows[e.RowIndex].DataBoundItem is PaymentViewModel vm)
             {
-                // Check if date is parsed correctly and compares
                 if (DateTime.TryParse(vm.ExpirationDate, out DateTime expDate) && expDate < DateTime.Now)
                 {
                     e.CellStyle.ForeColor = Color.Red;
-                    e.CellStyle.SelectionForeColor = Color.Red; // Keep it red even when selected
+                    e.CellStyle.SelectionForeColor = Color.Red;
                 }
             }
         }

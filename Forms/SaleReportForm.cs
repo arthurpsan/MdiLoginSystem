@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models.ViewModels;
 
@@ -18,17 +19,21 @@ namespace UserManagementSystem.Forms
         public SaleReportForm()
         {
             InitializeComponent();
-
             dgvSales.AutoGenerateColumns = true;
             dgvSales.DataSource = bdsSales;
-
-
             txtSearch.TextChanged += (s, e) => FilterData();
-
-            this.Load += (s, e) => btnRefresh_Click(s, e);
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        // FIX: Use OnLoad to set dates back 30 days so you can see older data
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            dtpStartDate.Value = DateTime.Now.AddDays(-30); // Go back 1 month
+            dtpEndDate.Value = DateTime.Now;
+            btnRefresh_Click(null, null);
+        }
+
+        private void btnRefresh_Click(object? sender, EventArgs e)
         {
             DateTime start = dtpStartDate.Value.Date;
             DateTime end = dtpEndDate.Value.Date.AddDays(1).AddTicks(-1);
@@ -37,6 +42,7 @@ namespace UserManagementSystem.Forms
             try
             {
                 var purchases = PurchaseRepository.FindByDateRange(start, end);
+                var brCulture = new CultureInfo("pt-BR"); // FIX: Force Brazil Currency
 
                 _originalList = purchases.Select(p =>
                 {
@@ -46,14 +52,14 @@ namespace UserManagementSystem.Forms
                     return new SaleReportViewModel
                     {
                         SaleId = p.Id,
-                        Date = p.Implementation?.ToString("g") ?? "-",
+                        Date = p.Implementation?.ToString("g", brCulture) ?? "-",
                         SellerName = p.Seller?.Name ?? "Unknown",
-                        TotalValue = total.ToString("C")
+                        TotalValue = total.ToString("C", brCulture) // FIX: Use explicit culture
                     };
                 }).ToList();
 
                 FilterData();
-                lblTotalSales.Text = $"Total Period Sales: {totalValue:C}";
+                lblTotalSales.Text = $"Total Period Sales: {totalValue.ToString("C", brCulture)}";
             }
             catch (Exception ex)
             {
@@ -65,7 +71,7 @@ namespace UserManagementSystem.Forms
         {
             string term = txtSearch.Text.ToLower().Trim();
             var filtered = _originalList.Where(x => x.SellerName.ToLower().Contains(term)).ToList();
-            bdsSales.DataSource = new BindingList<SaleReportViewModel>(filtered); // Assuming you named BindingSource 'bdsSales'
+            bdsSales.DataSource = new BindingList<SaleReportViewModel>(filtered);
         }
     }
 }

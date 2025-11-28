@@ -19,7 +19,7 @@ namespace UserManagementSystem.Forms
 
         // Flags de Lógica
         private bool _managerOverride = false;
-        private bool _isSearchOperation = false; // NOVA FLAG: Bloqueia eventos durante busca/carregamento
+        private bool _isSearchOperation = false; // Prevents event logic during data ops
         private const decimal MAX_DISCOUNT_NO_AUTH = 0.05m;
 
         public static SaleForm GetInstance(User? seller)
@@ -48,18 +48,8 @@ namespace UserManagementSystem.Forms
             // 1. Configurar UI
             BindControls();
 
-            // 2. Carregar Dados Iniciais (Com a flag ativada para não disparar eventos)
-            _isSearchOperation = true;
-            LoadInitialData();
-            _isSearchOperation = false;
-
-            // 3. Forçar estado inicial limpo
-            TabControlMain.SelectedTab = tabPageCustomer;
-            lblSelectedCustomerName.Text = "Customer: (None)";
-            _selectedCustomer = null;
-            dgvCustomers.ClearSelection(); // Garante que nada esteja selecionado visualmente
-
-            // 4. Ligar Eventos (APENAS UMA VEZ AQUI)
+            // 4. Ligar Eventos
+            // It is safe to wire these here now, because we load data in OnLoad
             txtSearchProduct.TextChanged += (s, e) => SearchProducts();
             cboCategories.SelectedIndexChanged += (s, e) => SearchProducts();
             dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
@@ -67,6 +57,31 @@ namespace UserManagementSystem.Forms
         }
 
         public SaleForm() : this(null) { }
+
+        // FIX: Move data loading to OnLoad to prevent Constructor/Show event race conditions
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            _isSearchOperation = true; // Lock events
+            try
+            {
+                LoadInitialData();
+            }
+            finally
+            {
+                // Force clean state AFTER data is bound and form is ready
+                TabControlMain.SelectedTab = tabPageCustomer;
+                lblSelectedCustomerName.Text = "Customer: (None)";
+                _selectedCustomer = null;
+
+                // Critical: Unselect the default first row selected by CurrencyManager
+                dgvCustomers.CurrentCell = null;
+                dgvCustomers.ClearSelection();
+
+                _isSearchOperation = false; // Unlock events
+            }
+        }
 
         private void BindControls()
         {
@@ -118,6 +133,7 @@ namespace UserManagementSystem.Forms
 
                 // Limpa a seleção automática do DataGridView
                 dgvCustomers.ClearSelection();
+                dgvCustomers.CurrentCell = null; // Extra safety
                 _selectedCustomer = null;
             }
             catch (Exception ex)
@@ -136,17 +152,27 @@ namespace UserManagementSystem.Forms
             // CRÍTICO: Se estivermos pesquisando ou carregando, NÃO execute a lógica de seleção
             if (_isSearchOperation) return;
 
-            if (dgvCustomers.CurrentRow == null || dgvCustomers.CurrentRow.DataBoundItem is not Customer shallow)
+            // If nothing is selected, reset and return
+            if (dgvCustomers.CurrentRow == null)
             {
                 _selectedCustomer = null;
                 return;
             }
 
+            if (dgvCustomers.CurrentRow.DataBoundItem is not Customer shallow)
+            {
+                return;
+            }
+
+            // Optimization: Don't re-run logic if clicking the same customer
+            if (_selectedCustomer != null && _selectedCustomer.Id == shallow.Id) return;
+
             // Busca dados completos (incluindo compras para verificar inadimplência)
-            _selectedCustomer = CustomerRepository.FindByIdWithPurchases(shallow.Id);
+            var fullCustomer = CustomerRepository.FindByIdWithPurchases(shallow.Id);
 
-            if (_selectedCustomer == null) return;
+            if (fullCustomer == null) return;
 
+            _selectedCustomer = fullCustomer;
             lblSelectedCustomerName.Text = _selectedCustomer.Name;
             _managerOverride = false;
 
