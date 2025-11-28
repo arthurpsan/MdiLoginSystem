@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.Linq; // Necessário para o LINQ (.Where)
+using System.Windows.Forms; // Necessário para MessageBox, Form, etc
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
 
@@ -11,8 +13,8 @@ namespace UserManagementSystem.Forms
         private static StockReportForm? _instance;
         private User? _loggedInUser;
 
-        // Use BindingList for automatic UI updates (optional, but good practice)
-        private BindingList<Product> _lowStockProducts;
+        // Use BindingList for automatic UI updates
+        private BindingList<Product> _stockList;
 
         public static StockReportForm GetInstance(User? user)
         {
@@ -23,7 +25,7 @@ namespace UserManagementSystem.Forms
             return _instance;
         }
 
-        // 1. Constructor that accepts User (matching other forms)
+        // 1. Constructor
         public StockReportForm(User? user)
         {
             InitializeComponent();
@@ -31,53 +33,59 @@ namespace UserManagementSystem.Forms
 
             SetupGrid();
 
-            // 2. Wire up the button from your Designer
+            // Wire up the button
             btnLowStock.Click += btnLowStock_Click;
 
-            // Load data immediately on open
-            LoadLowStockData();
+            // FIX: Load ALL data by default (false) instead of filtering immediately
+            LoadStockData(false);
         }
 
-        // Default constructor if needed by Designer
+        // Default constructor
         public StockReportForm() : this(null) { }
 
         private void SetupGrid()
         {
-            // IMPORTANT: Stop the grid from creating its own columns.
-            // We want to use the ones you created: ColumnProductName, ColumnProductStock, etc.
             dgvStock.AutoGenerateColumns = false;
-
             dgvStock.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvStock.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvStock.ReadOnly = true;
             dgvStock.AllowUserToAddRows = false;
 
-            // 3. Map Your Designer Columns to the Data Properties
-            // These names "Name", "Stockpile", "MinimumStock" must match your Product.cs model exactly.
+            // Map Designer Columns to Data Properties
             ColumnProductName.DataPropertyName = nameof(Product.Name);
             ColumnProductStock.DataPropertyName = nameof(Product.StockQuantity);
             ColumunMinStock.DataPropertyName = nameof(Product.MinimumStock);
         }
 
-        private void LoadLowStockData()
+        // FIX: Added boolean parameter to control filtering
+        private void LoadStockData(bool showLowStockOnly)
         {
             try
             {
                 var allProducts = ProductRepository.FindAll();
+                List<Product> displayList;
 
-                // 4. Filter: Products where Stockpile <= MinimumStock
-                var lowStockList = allProducts
+                if (showLowStockOnly)
+                {
+                    // Filter: Products where StockQuantity <= MinimumStock
+                    displayList = allProducts
                                     .Where(p => p.StockQuantity <= p.MinimumStock)
                                     .ToList();
 
-                // Bind directly to the list of Products
-                _lowStockProducts = new BindingList<Product>(lowStockList);
-                dgvStock.DataSource = _lowStockProducts;
-
-                if (lowStockList.Count == 0)
-                {
-                    MessageBox.Show("Great news! No products are running low on stock.");
+                    if (displayList.Count == 0)
+                    {
+                        MessageBox.Show("Great news! No products are running low on stock.");
+                    }
                 }
+                else
+                {
+                    // Show Everything
+                    displayList = allProducts;
+                }
+
+                // Bind the result
+                _stockList = new BindingList<Product>(displayList);
+                dgvStock.DataSource = _stockList;
             }
             catch (Exception ex)
             {
@@ -85,10 +93,14 @@ namespace UserManagementSystem.Forms
             }
         }
 
-        // 5. The event handler for your specific button
+        // 5. Event handler for the "Show Low Stock" button
         private void btnLowStock_Click(object? sender, EventArgs e)
         {
-            LoadLowStockData();
+            // When clicked, we explicitly ask for the filtered list
+            LoadStockData(true);
         }
+
+        // Opcional: Se você quiser um botão para "Mostrar Todos" novamente, 
+        // você pode adicionar outro botão no Designer e chamar LoadStockData(false);
     }
 }

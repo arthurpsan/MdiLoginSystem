@@ -43,54 +43,23 @@ namespace UserManagementSystem.Forms
         {
             string term = txtSearchCustomer.Text.Trim();
 
-            // Don't search if empty to save performance, or clear list
-            if (string.IsNullOrEmpty(term))
-            {
-                bdsPayments.DataSource = null;
-                return;
-            }
+            // REMOVED the check that returns if empty. 
+            // We WANT to show data even if term is empty.
 
             try
             {
-                // 1. Find Customer(s)
-                var customers = CustomerRepository.FindAll()
-                    .Where(c => c.Name.Contains(term, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
+                // 1. Find Customer(s) 
+                // Logic: If term is empty, get ALL customers. If not, filter.
+                var allCustomers = CustomerRepository.FindAll();
+                var customers = string.IsNullOrEmpty(term)
+                    ? allCustomers
+                    : allCustomers.Where(c => c.Name.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList();
 
                 var displayList = new List<PaymentViewModel>();
 
-                foreach (var customer in customers)
-                {
-                    // 2. Get Unpaid Purchases
-                    var purchases = PurchaseRepository.FindByCustomerIdAndDate(customer.Id, DateTime.MinValue);
+                // ... (Keep the rest of your loop logic exactly the same) ...
 
-                    foreach (var purchase in purchases)
-                    {
-                        if (purchase.Payments == null) continue;
-
-                        foreach (var pay in purchase.Payments)
-                        {
-                            if (pay.DatePayment == null) // Only show unpaid
-                            {
-                                // Calculate Fine/Total
-                                pay.DatePayment = DateTime.Now;
-                                decimal total = pay.CalcTotalPayment() ?? 0;
-                                pay.DatePayment = null;
-
-                                displayList.Add(new PaymentViewModel
-                                {
-                                    PaymentId = pay.Id,
-                                    PurchaseId = purchase.Id,
-                                    ExpirationDate = pay.ExpirationDate?.ToShortDateString() ?? "-",
-                                    TotalAmount = total.ToString("C"), // Formatted Currency
-                                    RealPaymentObject = pay // Hidden object for logic
-                                });
-                            }
-                        }
-                    }
-                }
-
-                // 3. Update the BindingSource (Grid updates automatically)
+                // Update DataSource
                 bdsPayments.DataSource = new BindingList<PaymentViewModel>(displayList);
             }
             catch (Exception ex)

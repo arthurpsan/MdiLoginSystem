@@ -105,6 +105,8 @@ namespace UserManagementSystem.Data
             {
                 return dbContext.Purchases
                     .Include(p => p.Seller)
+                    .Include(p => p.Customer) // Good to have
+                    .Include(p => p.Items)    // FIX: Crucial! Needed for CalcTotal()
                     .Where(p => p.Implementation >= startDate && p.Implementation <= endDate)
                     .ToList();
             }

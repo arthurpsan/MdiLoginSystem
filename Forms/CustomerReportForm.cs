@@ -48,6 +48,10 @@ namespace UserManagementSystem.Forms
         {
             // prevent auto generation
             dgvCustomers.AutoGenerateColumns = false;
+
+            if (dgvCustomers.Columns["Name"] != null) dgvCustomers.Columns["Name"].DataPropertyName = "Name";
+            if (dgvCustomers.Columns["Email"] != null) dgvCustomers.Columns["Email"].DataPropertyName = "Email";
+
             dgvCustomers.DataSource = _customerList;
 
             // safeguard
