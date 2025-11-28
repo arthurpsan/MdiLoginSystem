@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
+using UserManagementSystem.Utils; // 1. Import Utils
 
 namespace UserManagementSystem.Forms
 {
@@ -11,17 +12,14 @@ namespace UserManagementSystem.Forms
         private static ProductForm? _instance;
         private readonly User? _loggedInUser;
 
-        private readonly BindingList<Product> _products;
-        private readonly BindingList<Category> _categories;
+        // 2. Define BindingSources
+        private readonly BindingSource _bdsProducts = new BindingSource();
+        private readonly BindingSource _bdsCategories = new BindingSource();
 
         public static ProductForm GetInstance(User user)
         {
             if (_instance == null || _instance.IsDisposed)
-            {
                 _instance = new ProductForm(user);
-            }
-
-
             return _instance;
         }
 
@@ -29,211 +27,266 @@ namespace UserManagementSystem.Forms
         {
             InitializeComponent();
             _loggedInUser = user;
+            this.Load += Form_Load;
 
-            _categories = new BindingList<Category>(CategoryRepository.FindAll());
-            _products = new BindingList<Product>(ProductRepository.FindAll());
-
-            BindControls();
-
-            dgvProduct.AllowUserToAddRows = false;
-            dgvCategory.AllowUserToAddRows = false;
+            // Wire grid selections to inputs
+            dgvCategory.SelectionChanged += (s, e) => PopulateCategoryInputs();
+            dgvProduct.SelectionChanged += (s, e) => PopulateProductInputs();
         }
 
-        private void BindControls()
+        public ProductForm() : this(null) { }
+
+        private void Form_Load(object? sender, EventArgs e)
         {
-            // Categories
+            SetupGrids();
+            LoadData();
+        }
+
+        private void SetupGrids()
+        {
+            // --- Categories Grid ---
             dgvCategory.AutoGenerateColumns = false;
-            dgvCategory.DataSource = _categories;
+            dgvCategory.AllowUserToAddRows = false;
+            dgvCategory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCategory.DataSource = _bdsCategories;
 
-            cboProductCategory.DataSource = _categories;
-            cboProductCategory.DisplayMember = nameof(Category.Name);
+            if (dgvCategory.Columns["ColumnCategoryName"] != null)
+                dgvCategory.Columns["ColumnCategoryName"].DataPropertyName = nameof(Category.Name);
 
-            ColumnCategoryName.DataPropertyName = nameof(Category.Name);
-
-            // Products
+            // --- Products Grid ---
             dgvProduct.AutoGenerateColumns = false;
-            dgvProduct.DataSource = _products;
+            dgvProduct.AllowUserToAddRows = false;
+            dgvProduct.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvProduct.DataSource = _bdsProducts;
 
-            ColumnProductName.DataPropertyName = nameof(Product.Name);
-            ColumnProductPrice.DataPropertyName = nameof(Product.Price);
-            ColumnProductCurrentStock.DataPropertyName = nameof(Product.Stockpile);
-            ColumnProductMinStock.DataPropertyName = nameof(Product.MinimumStock);
-            ColumnProductCategory.DataPropertyName = nameof(Product.Category);
-            ColumnProductIsActive.DataPropertyName = nameof(Product.IsActive);
+            if (dgvProduct.Columns["ColumnProductName"] != null)
+                dgvProduct.Columns["ColumnProductName"].DataPropertyName = nameof(Product.Name);
+            if (dgvProduct.Columns["ColumnProductPrice"] != null)
+                dgvProduct.Columns["ColumnProductPrice"].DataPropertyName = nameof(Product.Price);
+            if (dgvProduct.Columns["ColumnProductCurrentStock"] != null)
+                dgvProduct.Columns["ColumnProductCurrentStock"].DataPropertyName = nameof(Product.Stockpile);
+            if (dgvProduct.Columns["ColumnProductMinStock"] != null)
+                dgvProduct.Columns["ColumnProductMinStock"].DataPropertyName = nameof(Product.MinimumStock);
+            if (dgvProduct.Columns["ColumnProductCategory"] != null)
+                dgvProduct.Columns["ColumnProductCategory"].DataPropertyName = nameof(Product.Category);
+            if (dgvProduct.Columns["ColumnProductIsActive"] != null)
+                dgvProduct.Columns["ColumnProductIsActive"].DataPropertyName = nameof(Product.IsActive);
+
+            // --- ComboBox ---
+            cboProductCategory.DataSource = _bdsCategories;
+            cboProductCategory.DisplayMember = nameof(Category.Name);
+            // cboProductCategory.ValueMember = "Id"; // Optional if needed
         }
 
-        #region CRUD methods for category
-
-        private void RegisterCategory()
+        private void LoadData()
         {
-            var category = new Category();
             try
             {
-                category.Name = txtCategoryName.Text;
-                CategoryRepository.SaveOrUpdate(category);
+                var categories = CategoryRepository.FindAll();
+                _bdsCategories.DataSource = new BindingList<Category>(categories);
 
-                _categories.Add(category);
-            }
-            catch (ArgumentNullException)
-            {
-                MessageBox.Show("Category name cannot be empty.");
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                MessageBox.Show("Category name must have 3-50 characters.");
+                var products = ProductRepository.FindAll();
+                _bdsProducts.DataSource = new BindingList<Product>(products);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An unexpected error occurred: " + ex.Message);
+                Alerts.ShowError("Failed to load data: " + ex.Message);
             }
         }
 
-        private void UpdateCategory()
+        #region Input Population
+        private void PopulateCategoryInputs()
         {
-            if (dgvCategory.CurrentRow?.DataBoundItem is not Category currentCategory)
+            if (_bdsCategories.Current is Category selected)
             {
-                MessageBox.Show("No category selected for update.");
-                return;
+                txtCategoryName.Text = selected.Name;
             }
-
-            try
+            else
             {
-                currentCategory.Name = txtCategoryName.Text;
-                CategoryRepository.SaveOrUpdate(currentCategory);
-                dgvCategory.Refresh();
-                cboProductCategory.Refresh();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Category update failed: " + ex.Message);
+                txtCategoryName.Clear();
             }
         }
 
-        private void DeleteCategory()
+        private void PopulateProductInputs()
         {
-            if (dgvCategory.CurrentRow?.DataBoundItem is not Category currentCategory)
-                return;
-
-            try
+            if (_bdsProducts.Current is Product selected)
             {
-                CategoryRepository.Delete(currentCategory);
-                _categories.Remove(currentCategory);
+                txtProductName.Text = selected.Name;
+                nudProductPrice.Value = selected.Price ?? 0;
+                nudStock.Value = selected.Stockpile ?? 0;
+                nudMinStock.Value = selected.MinimumStock ?? 0;
+                chkIsActive.Checked = selected.IsActive;
+                cboProductCategory.SelectedItem = selected.Category;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Category deletion failed: " + ex.Message);
+                ClearProductInputs();
             }
         }
 
+        private void ClearProductInputs()
+        {
+            txtProductName.Clear();
+            nudProductPrice.Value = 0;
+            nudStock.Value = 0;
+            nudMinStock.Value = 0;
+            chkIsActive.Checked = true;
+            if (cboProductCategory.Items.Count > 0) cboProductCategory.SelectedIndex = 0;
+            dgvProduct.ClearSelection();
+        }
         #endregion
 
-        #region CRUD methods for product
+        #region Category CRUD
+        private void btnRegisterCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var category = new Category { Name = txtCategoryName.Text };
+                CategoryRepository.SaveOrUpdate(category);
 
-        private void RegisterProduct()
+                _bdsCategories.Add(category);
+                _bdsCategories.MoveLast();
+                Alerts.ShowSuccess("Category registered!");
+                txtCategoryName.Clear();
+            }
+            catch (Exception ex)
+            {
+                Alerts.ShowError(ex.Message);
+            }
+        }
+
+        private void btnUpdateCategory_Click(object sender, EventArgs e)
+        {
+            if (_bdsCategories.Current is not Category current)
+            {
+                Alerts.ShowWarning("Select a category to update.");
+                return;
+            }
+
+            try
+            {
+                current.Name = txtCategoryName.Text;
+                CategoryRepository.SaveOrUpdate(current);
+
+                _bdsCategories.ResetCurrentItem(); // Refreshes grid
+                // Also refresh products grid as categories might have changed names
+                dgvProduct.Refresh();
+
+                Alerts.ShowSuccess("Category updated!");
+            }
+            catch (Exception ex)
+            {
+                Alerts.ShowError(ex.Message);
+            }
+        }
+
+        private void btnDeleteCategory_Click(object sender, EventArgs e)
+        {
+            if (_bdsCategories.Current is not Category current) return;
+
+            if (Alerts.ConfirmAction($"Delete category '{current.Name}'?"))
+            {
+                try
+                {
+                    CategoryRepository.Delete(current);
+                    _bdsCategories.RemoveCurrent();
+                    Alerts.ShowSuccess("Category deleted.");
+                }
+                catch (Exception ex)
+                {
+                    Alerts.ShowError("Cannot delete: " + ex.Message);
+                }
+            }
+        }
+        #endregion
+
+        #region Product CRUD
+        private void btnRegisterProduct_Click(object sender, EventArgs e)
         {
             if (cboProductCategory.SelectedItem is not Category selectedCategory)
             {
-                MessageBox.Show("Please select a valid category.");
+                Alerts.ShowWarning("Please select a valid category.");
                 return;
             }
 
-            var product = new Product();
             try
             {
-                product.Name = txtProductName.Text;
-                product.Price = decimal.Parse(nudProductPrice.Text);
-                product.Stockpile = uint.Parse(nudStock.Text);
-                product.MinimumStock = uint.Parse(nudMinStock.Text);
-                product.Category = selectedCategory;
-                product.IsActive = chkIsActive.Checked;
+                var product = new Product
+                {
+                    Name = txtProductName.Text,
+                    Price = nudProductPrice.Value,
+                    Stockpile = (uint)nudStock.Value,
+                    MinimumStock = (uint)nudMinStock.Value,
+                    Category = selectedCategory,
+                    IsActive = chkIsActive.Checked
+                };
 
                 ProductRepository.SaveOrUpdate(product);
-                _products.Add(product);
-            }
-            catch (ArgumentNullException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                MessageBox.Show(ex.Message);
+                _bdsProducts.Add(product);
+                _bdsProducts.MoveLast();
+
+                Alerts.ShowSuccess("Product registered!");
+                ClearProductInputs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An unexpected error occurred: " + ex.Message);
+                Alerts.ShowError("Error: " + ex.Message);
             }
         }
 
-        private void UpdateProduct()
+        private void btnUpdateProduct_Click(object sender, EventArgs e)
         {
-            if (cboProductCategory.SelectedItem is not Category selectedCategory ||
-                dgvProduct.CurrentRow?.DataBoundItem is not Product currentProduct)
+            if (_bdsProducts.Current is not Product current)
             {
-                MessageBox.Show("Please select a valid product and category.");
+                Alerts.ShowWarning("Select a product to update.");
                 return;
             }
 
             try
             {
-                currentProduct.Name = txtProductName.Text;
-                currentProduct.Price = decimal.Parse(nudProductPrice.Text);
-                currentProduct.Stockpile = uint.Parse(nudStock.Text);
-                currentProduct.MinimumStock = uint.Parse(nudMinStock.Text);
-                currentProduct.Category = selectedCategory;
-                currentProduct.IsActive = chkIsActive.Checked;
+                current.Name = txtProductName.Text;
+                current.Price = nudProductPrice.Value;
+                current.Stockpile = (uint)nudStock.Value;
+                current.MinimumStock = (uint)nudMinStock.Value;
+                current.Category = cboProductCategory.SelectedItem as Category;
+                current.IsActive = chkIsActive.Checked;
 
-                ProductRepository.SaveOrUpdate(currentProduct);
-                dgvProduct.Refresh();
+                ProductRepository.SaveOrUpdate(current);
+                _bdsProducts.ResetCurrentItem();
+
+                Alerts.ShowSuccess("Product updated!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Product update failed: " + ex.Message);
+                Alerts.ShowError("Update failed: " + ex.Message);
             }
         }
 
-        private void DeleteProduct()
+        private void btnDeleteProduct_Click(object sender, EventArgs e)
         {
-            // 1. Define 'currentProduct' by getting it from the grid
-            if (dgvProduct.CurrentRow?.DataBoundItem is not Product currentProduct)
-            {
-                MessageBox.Show("Please select a product to delete.");
-                return;
-            }
+            if (_bdsProducts.Current is not Product current) return;
 
-            try
+            if (Alerts.ConfirmAction($"Delete product '{current.Name}'?"))
             {
-                // 2. Attempt deletion (now handles the Soft Delete logic we added)
-                ProductRepository.Delete(currentProduct);
-
-                // 3. Remove from the UI list
-                _products.Remove(currentProduct);
-            }
-            catch (InvalidOperationException ex)
-            {
-                // Handle the "Product has sales history" case gracefully
-                MessageBox.Show(ex.Message, "System Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Refresh the grid to show the change (e.g., if it was marked Inactive)
-                dgvProduct.Refresh();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Product deletion failed: " + ex.Message);
+                try
+                {
+                    ProductRepository.Delete(current);
+                    _bdsProducts.RemoveCurrent();
+                    Alerts.ShowSuccess("Product deleted.");
+                    ClearProductInputs();
+                }
+                catch (InvalidOperationException ex)
+                {
+                    // Soft delete notification
+                    Alerts.ShowWarning(ex.Message);
+                    _bdsProducts.ResetCurrentItem(); // Update IsActive visual
+                }
+                catch (Exception ex)
+                {
+                    Alerts.ShowError("Deletion failed: " + ex.Message);
+                }
             }
         }
-
-        #endregion
-
-        #region event handlers
-
-        private void btnRegisterCategory_Click(object sender, EventArgs e) => RegisterCategory();
-        private void btnUpdateCategory_Click(object sender, EventArgs e) => UpdateCategory();
-        private void btnDeleteCategory_Click(object sender, EventArgs e) => DeleteCategory();
-
-        private void btnRegisterProduct_Click(object sender, EventArgs e) => RegisterProduct();
-        private void btnUpdateProduct_Click(object sender, EventArgs e) => UpdateProduct();
-        private void btnDeleteProduct_Click(object sender, EventArgs e) => DeleteProduct();
-
         #endregion
     }
 }

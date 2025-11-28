@@ -61,13 +61,6 @@
             chkIsActive = new CheckBox();
             lblProductManager = new Label();
             dgvProduct = new DataGridView();
-            ColumnCategoryName = new DataGridViewTextBoxColumn();
-            ColumnProductName = new DataGridViewTextBoxColumn();
-            ColumnProductPrice = new DataGridViewTextBoxColumn();
-            ColumnProductCurrentStock = new DataGridViewTextBoxColumn();
-            ColumnProductMinStock = new DataGridViewTextBoxColumn();
-            ColumnProductCategory = new DataGridViewTextBoxColumn();
-            ColumnProductIsActive = new DataGridViewTextBoxColumn();
             tabControlMain.SuspendLayout();
             tabPageCategories.SuspendLayout();
             pnlCategorieManagement.SuspendLayout();
@@ -134,13 +127,20 @@
             // 
             // dgvCategory
             // 
+            dgvCategory.AllowUserToAddRows = false;
+            dgvCategory.AllowUserToDeleteRows = false;
+            dgvCategory.AllowUserToOrderColumns = true;
+            dgvCategory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCategory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvCategory.Columns.AddRange(new DataGridViewColumn[] { ColumnCategoryName });
             pnlCategorieManagement.SetColumnSpan(dgvCategory, 4);
             dgvCategory.Dock = DockStyle.Fill;
             dgvCategory.Location = new Point(3, 44);
+            dgvCategory.MultiSelect = false;
             dgvCategory.Name = "dgvCategory";
+            dgvCategory.ReadOnly = true;
+            dgvCategory.RowHeadersVisible = false;
             pnlCategorieManagement.SetRowSpan(dgvCategory, 2);
+            dgvCategory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCategory.Size = new Size(780, 201);
             dgvCategory.TabIndex = 4;
             // 
@@ -500,68 +500,20 @@
             // 
             // dgvProduct
             // 
-            dgvProduct.Columns.AddRange(new DataGridViewColumn[] { ColumnProductName, ColumnProductPrice, ColumnProductCurrentStock, ColumnProductMinStock, ColumnProductCategory, ColumnProductIsActive });
+            dgvProduct.AllowUserToAddRows = false;
+            dgvProduct.AllowUserToDeleteRows = false;
+            dgvProduct.AllowUserToOrderColumns = true;
             pnlProductManagement.SetColumnSpan(dgvProduct, 4);
             dgvProduct.Dock = DockStyle.Fill;
             dgvProduct.Location = new Point(3, 44);
+            dgvProduct.MultiSelect = false;
             dgvProduct.Name = "dgvProduct";
+            dgvProduct.ReadOnly = true;
+            dgvProduct.RowHeadersVisible = false;
             pnlProductManagement.SetRowSpan(dgvProduct, 2);
+            dgvProduct.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProduct.Size = new Size(780, 201);
             dgvProduct.TabIndex = 3;
-            // 
-            // ColumnCategoryName
-            // 
-            ColumnCategoryName.HeaderText = "Name";
-            ColumnCategoryName.Name = "ColumnCategoryName";
-            ColumnCategoryName.ReadOnly = true;
-            ColumnCategoryName.Resizable = DataGridViewTriState.False;
-            ColumnCategoryName.Width = 737;
-            // 
-            // ColumnProductName
-            // 
-            ColumnProductName.HeaderText = "Name";
-            ColumnProductName.Name = "ColumnProductName";
-            ColumnProductName.ReadOnly = true;
-            ColumnProductName.Resizable = DataGridViewTriState.False;
-            ColumnProductName.Width = 160;
-            // 
-            // ColumnProductPrice
-            // 
-            ColumnProductPrice.HeaderText = "Price";
-            ColumnProductPrice.Name = "ColumnProductPrice";
-            ColumnProductPrice.ReadOnly = true;
-            ColumnProductPrice.Resizable = DataGridViewTriState.False;
-            ColumnProductPrice.Width = 117;
-            // 
-            // ColumnProductCurrentStock
-            // 
-            ColumnProductCurrentStock.HeaderText = "Current Stock";
-            ColumnProductCurrentStock.Name = "ColumnProductCurrentStock";
-            ColumnProductCurrentStock.ReadOnly = true;
-            ColumnProductCurrentStock.Resizable = DataGridViewTriState.False;
-            // 
-            // ColumnProductMinStock
-            // 
-            ColumnProductMinStock.HeaderText = "Min. Stock";
-            ColumnProductMinStock.Name = "ColumnProductMinStock";
-            ColumnProductMinStock.ReadOnly = true;
-            ColumnProductMinStock.Resizable = DataGridViewTriState.False;
-            ColumnProductMinStock.Width = 120;
-            // 
-            // ColumnProductCategory
-            // 
-            ColumnProductCategory.HeaderText = "Category";
-            ColumnProductCategory.Name = "ColumnProductCategory";
-            ColumnProductCategory.ReadOnly = true;
-            ColumnProductCategory.Resizable = DataGridViewTriState.False;
-            ColumnProductCategory.Width = 140;
-            // 
-            // ColumnProductIsActive
-            // 
-            ColumnProductIsActive.HeaderText = "Is Active";
-            ColumnProductIsActive.Name = "ColumnProductIsActive";
-            ColumnProductIsActive.ReadOnly = true;
-            ColumnProductIsActive.Resizable = DataGridViewTriState.False;
             // 
             // ProductForm
             // 
@@ -633,12 +585,5 @@
         private NumericUpDown nudProductPrice;
         private CheckBox chkIsActive;
         private Label lblIsActive;
-        private DataGridViewTextBoxColumn ColumnCategoryName;
-        private DataGridViewTextBoxColumn ColumnProductName;
-        private DataGridViewTextBoxColumn ColumnProductPrice;
-        private DataGridViewTextBoxColumn ColumnProductCurrentStock;
-        private DataGridViewTextBoxColumn ColumnProductMinStock;
-        private DataGridViewTextBoxColumn ColumnProductCategory;
-        private DataGridViewTextBoxColumn ColumnProductIsActive;
     }
 }
