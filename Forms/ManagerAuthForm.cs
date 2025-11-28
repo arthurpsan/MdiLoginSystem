@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using UserManagementSystem.Data;
+using UserManagementSystem.Utils; // Import Utils
 
 namespace UserManagementSystem.Forms
 {
@@ -10,8 +11,9 @@ namespace UserManagementSystem.Forms
         {
             InitializeComponent();
 
+            // Wire events
             btnAuthorize.Click += btnAuthorize_Click;
-            btnCancel.Click += (sender, e) => { this.DialogResult = DialogResult.Cancel; };
+            btnCancel.Click += btnCancel_Click;
         }
 
         private void btnAuthorize_Click(object? sender, EventArgs e)
@@ -24,23 +26,26 @@ namespace UserManagementSystem.Forms
                 if (CredentialRepository.ValidateManagerCredentials(email, password))
                 {
                     this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {
                     lblErrorAlert.Visible = true;
-                    this.DialogResult = DialogResult.None;
+                    // Don't close, let them try again
+                    txtPassword.Clear();
+                    txtPassword.Focus();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao autorizar: {ex.Message}", "Erro");
+                Alerts.ShowError($"Authorization Error: {ex.Message}");
             }
         }
 
         private void btnCancel_Click(object? sender, EventArgs e)
         {
-            this.DialogResult= DialogResult.Cancel;
-            this.ClearAllFields();
+            this.DialogResult = DialogResult.Cancel;
+            ClearAllFields();
             this.Close();
         }
 
@@ -48,6 +53,7 @@ namespace UserManagementSystem.Forms
         {
             txtEmail.Clear();
             txtPassword.Clear();
+            lblErrorAlert.Visible = false;
         }
     }
 }

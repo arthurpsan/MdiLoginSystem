@@ -1,5 +1,6 @@
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
+using UserManagementSystem.Utils; // Import Utils
 
 namespace UserManagementSystem
 {
@@ -10,7 +11,6 @@ namespace UserManagementSystem
         private LoginForm()
         {
             InitializeComponent();
-
         }
 
         public static LoginForm GetInstance()
@@ -19,71 +19,80 @@ namespace UserManagementSystem
             {
                 _instance = new LoginForm();
             }
-
             return _instance;
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
-            // Get email and password from text boxes
-            String email = txtUserEmail.Text;
-            String password = txtUserPassword.Text;
-
-            // Search for the model in the database (Credential)
-
-            Credential? dbCredential = CredentialRepository.FindByEmail(email);
-
-            // Verify if the credential exists
-
-            if (dbCredential == null)
+            try
             {
-                lblErrorAlert.Visible = true;
-                txtUserPassword.Clear();
-                txtUserEmail.Focus();
-                return;
-            }
+                string email = txtUserEmail.Text.Trim();
+                string password = txtUserPassword.Text;
 
-            // If the user exists, verify the password
+                // 1. Search for credential
+                Credential? dbCredential = CredentialRepository.FindByEmail(email);
 
-            string hashedInputPassword = Credential.ComputeSHA256(password, Credential.SALT);
-
-            // Compare the hashed password with the stored hashed password
-
-            if (dbCredential.Password == hashedInputPassword)
-            {
-                // Sucessful login!
-                lblErrorAlert.Visible = false;
-
-                //  Save or Update the last access time
-                try
+                // 2. Validate existence
+                if (dbCredential == null)
                 {
-                    dbCredential.LastAccess = DateTime.Now;
-                    CredentialRepository.SaveOrUpdate(dbCredential);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error updating last access time: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ShowLoginError();
+                    return;
                 }
 
-                dbCredential.User.Credential = dbCredential;
+                // 3. Validate Password
+                string hashedInput = Credential.ComputeSHA256(password, Credential.SALT);
+                if (dbCredential.Password != hashedInput)
+                {
+                    ShowLoginError();
+                    return;
+                }
 
-                txtUserEmail.Clear();
-                txtUserPassword.Clear();
-                this.Hide();
-
-                // Pass the model User to the System Menu
-                SystemMainMenu.GetInstance(dbCredential.User).Show();
+                // 4. Success - Update Access
+                PerformLogin(dbCredential);
             }
-            else
+            catch (Exception ex)
             {
-                // Invalid password
-                lblErrorAlert.Visible = true;
-                txtUserPassword.Clear();
-                txtUserPassword.Focus();
+                Alerts.ShowError("System Error during login: " + ex.Message);
             }
         }
 
-        // Method to Clear fields and error messages
+        private void PerformLogin(Credential credential)
+        {
+            lblErrorAlert.Visible = false;
+
+            try
+            {
+                credential.LastAccess = DateTime.Now;
+                CredentialRepository.SaveOrUpdate(credential);
+
+                // Ensure the User object has the Credential link
+                if (credential.User != null)
+                {
+                    credential.User.Credential = credential;
+
+                    // Clear and Hide
+                    txtUserEmail.Clear();
+                    txtUserPassword.Clear();
+                    this.Hide();
+
+                    // Open Main Menu
+                    SystemMainMenu.GetInstance(credential.User).Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                Alerts.ShowError("Could not update login time: " + ex.Message);
+            }
+        }
+
+        private void ShowLoginError()
+        {
+            lblErrorAlert.Visible = true;
+            txtUserPassword.Clear();
+            if (txtUserEmail.Focused) txtUserEmail.Focus();
+            else txtUserPassword.Focus();
+        }
+
         public void ClearFieldsAndShow()
         {
             txtUserEmail.Clear();
@@ -93,46 +102,26 @@ namespace UserManagementSystem
             txtUserEmail.Focus();
         }
 
-        #region Input Field Highlighting Methods
-        private void TxtUserEmail_Enter(object sender, EventArgs e)
-        {
-            txtUserEmail.BackColor = Color.LightCyan;
-        }
+        #region UI Events (Highlighting & Navigation)
 
-        private void TxtUserEmail_Leave(object sender, EventArgs e)
-        {
-            txtUserEmail.BackColor = Color.White;
-        }
+        // Highlighting
+        private void TxtUserEmail_Enter(object sender, EventArgs e) => txtUserEmail.BackColor = Color.LightCyan;
+        private void TxtUserEmail_Leave(object sender, EventArgs e) => txtUserEmail.BackColor = Color.White;
+        private void TxtUserPassword_Enter(object sender, EventArgs e) => txtUserPassword.BackColor = Color.LightCyan;
+        private void TxtUserPassword_Leave(object sender, EventArgs e) => txtUserPassword.BackColor = Color.White;
 
-        private void TxtUserPassword_Enter(object sender, EventArgs e)
-        {
-            txtUserPassword.BackColor = Color.LightCyan;
-        }
-
-        private void TxtUserPassword_Leave(object sender, EventArgs e)
-        {
-            txtUserPassword.BackColor = Color.White;
-        }
-        #endregion 
-
-        // Method to handle Enter key navigation
+        // Navigation
         private void UserLoginScreen_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (txtUserEmail.Focused)
-                {
-                    txtUserPassword.Focus();
-                    e.Handled = true;
-                    e.SuppressKeyPress = true;
-                }
-                else if (txtUserPassword.Focused)
-                {
-                    btnLogin.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
 
-                    e.Handled = true;
-                    e.SuppressKeyPress = true;
-                }
+                if (txtUserEmail.Focused)
+                    txtUserPassword.Focus();
+                else if (txtUserPassword.Focused)
+                    btnLogin.PerformClick();
             }
         }
 
@@ -140,9 +129,11 @@ namespace UserManagementSystem
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnLogin.PerformClick();
                 e.Handled = true;
+                e.SuppressKeyPress = true;
+                btnLogin.PerformClick();
             }
         }
+        #endregion
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Data
@@ -8,104 +7,61 @@ namespace UserManagementSystem.Data
     {
         public static void SaveOrUpdate(Credential credential)
         {
-            try
+            using (Repository dbContext = new Repository())
             {
-                using (Repository dbContext = new Repository())
+                if (credential.Id == 0)
                 {
-                    if (credential.Id == 0)
-                    {
-                        dbContext.Credentials.Add(credential);
-                    }
-                    else
-                    {
-                        dbContext.Entry(credential).State
-                            = EntityState.Modified;
-                    }
-
-                    dbContext.SaveChanges();
+                    dbContext.Credentials.Add(credential);
                 }
-            }
-            catch (Exception)
-            {
-                throw;
+                else
+                {
+                    dbContext.Entry(credential).State = EntityState.Modified;
+                }
+
+                dbContext.SaveChanges();
             }
         }
 
         public static Credential? FindById(long id)
         {
-            try
+            using (Repository dbContext = new Repository())
             {
-                using (Repository DbContext = new Repository())
-                {
-                    return DbContext.Credentials.Find(id);
-
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                return dbContext.Credentials.Find(id);
             }
         }
 
         public static Credential? FindByEmail(string email)
         {
-            try
+            using (Repository dbContext = new Repository())
             {
-                using (Repository DbContext = new Repository())
-                {
-                    return DbContext.Credentials
-                        .Include(c => c.User)
-                        .FirstOrDefault(c => c.Email == email);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                return dbContext.Credentials
+                    .Include(c => c.User)
+                    .FirstOrDefault(c => c.Email == email);
             }
         }
 
         public static List<Credential> FindAll()
         {
-            try
+            using (Repository dbContext = new Repository())
             {
-                using (Repository DbContext = new Repository())
-                {
-                    return DbContext.Credentials
-                        .Include(c => c.User)
-                        .ToList();
-                }
-
-            }
-            catch (Exception)
-            {
-                throw;
+                return dbContext.Credentials
+                    .Include(c => c.User)
+                    .ToList();
             }
         }
 
-        public static Boolean ValidateManagerCredentials(string email, string password)
+        public static bool ValidateManagerCredentials(string email, string password)
         {
-            try
+            // Re-use existing method to avoid code duplication
+            Credential? dbCredential = FindByEmail(email);
+
+            if (dbCredential == null || !dbCredential.Manager)
             {
-                Credential? dbCredential = FindByEmail(email);
-
-                if (dbCredential == null)
-                {
-                    return false;
-                }
-
-                if (dbCredential.Manager == false)
-                {
-                    return false;
-                }
-
-                string hashedInputPassword = Credential.ComputeSHA256(password, Credential.SALT);
-
-                return dbCredential.Password == hashedInputPassword;
+                return false;
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            string hashedInputPassword = Credential.ComputeSHA256(password, Credential.SALT);
+            return dbCredential.Password == hashedInputPassword;
         }
     }
 }
