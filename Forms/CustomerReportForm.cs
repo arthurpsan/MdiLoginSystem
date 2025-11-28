@@ -71,15 +71,12 @@ namespace UserManagementSystem.Forms
             {
                 List<Customer> sourceData;
 
+                // ... (existing logic for checkboxes) ...
                 if (chkShowDelinquents.Checked)
                 {
                     sourceData = CustomerRepository.FindDelinquents();
                     UpdateStatusLabel("Delinquent Customers (Action Required)", Color.DarkRed);
-
-                    if (sourceData.Count == 0)
-                    {
-                        MessageBox.Show("Great! No delinquent customers found.", "Report");
-                    }
+                    // ...
                 }
                 else
                 {
@@ -91,6 +88,10 @@ namespace UserManagementSystem.Forms
                 _cacheAllCustomers = sourceData;
                 _customerList = new BindingList<Customer>(sourceData);
                 dgvCustomers.DataSource = _customerList;
+
+                // FIX: Clear the automatic selection made by WinForms
+                dgvCustomers.ClearSelection();
+                dgvCustomers.CurrentCell = null;
 
                 // clear details
                 dgvPurchases.DataSource = null;
@@ -112,6 +113,10 @@ namespace UserManagementSystem.Forms
                 .ToList();
 
             dgvCustomers.DataSource = new BindingList<Customer>(filteredList);
+
+            // FIX: Clear selection after search too
+            dgvCustomers.ClearSelection();
+            dgvCustomers.CurrentCell = null;
         }
 
         private void LoadCustomerPurchases()

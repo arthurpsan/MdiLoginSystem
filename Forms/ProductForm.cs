@@ -31,6 +31,15 @@ namespace UserManagementSystem.Forms
             // Wire grid selections to inputs
             dgvCategory.SelectionChanged += (s, e) => PopulateCategoryInputs();
             dgvProduct.SelectionChanged += (s, e) => PopulateProductInputs();
+
+            dgvProduct.CellFormatting += (s, e) =>
+            {
+                if (dgvProduct.Columns[e.ColumnIndex].Name == "ColumnProductCategory" && e.Value is Category cat)
+                {
+                    e.Value = cat.Name;
+                    e.FormattingApplied = true;
+                }
+            };
         }
 
         public ProductForm() : this(null) { }
@@ -38,6 +47,14 @@ namespace UserManagementSystem.Forms
         private void Form_Load(object? sender, EventArgs e)
         {
             SetupGrids();
+
+            // CORREÇÃO: Aumentar o valor máximo permitido para o campo de preço e estoque
+            nudProductPrice.Maximum = 9999999; // Permite preços até ~10 milhões
+            nudProductPrice.DecimalPlaces = 2; // Garante 2 casas decimais
+
+            nudStock.Maximum = 999999;     // Aumenta limite de estoque se necessário
+            nudMinStock.Maximum = 999999;  // Aumenta limite de estoque mínimo
+
             LoadData();
         }
 
@@ -47,29 +64,39 @@ namespace UserManagementSystem.Forms
             dgvCategory.AutoGenerateColumns = false;
             dgvCategory.AllowUserToAddRows = false;
             dgvCategory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCategory.DataSource = _bdsCategories;
+            dgvCategory.ReadOnly = true;
 
-            if (dgvCategory.Columns["ColumnCategoryName"] != null)
-                dgvCategory.Columns["ColumnCategoryName"].DataPropertyName = nameof(Category.Name);
+            // FIX: Clear and manually add columns to ensure they exist
+            dgvCategory.Columns.Clear();
+            dgvCategory.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "ColumnCategoryName",
+                HeaderText = "Category Name",
+                DataPropertyName = nameof(Category.Name),
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvCategory.DataSource = _bdsCategories;
 
             // --- Products Grid ---
             dgvProduct.AutoGenerateColumns = false;
             dgvProduct.AllowUserToAddRows = false;
             dgvProduct.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProduct.DataSource = _bdsProducts;
+            dgvProduct.ReadOnly = true;
 
-            if (dgvProduct.Columns["ColumnProductName"] != null)
-                dgvProduct.Columns["ColumnProductName"].DataPropertyName = nameof(Product.Name);
-            if (dgvProduct.Columns["ColumnProductPrice"] != null)
-                dgvProduct.Columns["ColumnProductPrice"].DataPropertyName = nameof(Product.Price);
-            if (dgvProduct.Columns["ColumnProductCurrentStock"] != null)
-                dgvProduct.Columns["ColumnProductCurrentStock"].DataPropertyName = nameof(Product.StockQuantity);
-            if (dgvProduct.Columns["ColumnProductMinStock"] != null)
-                dgvProduct.Columns["ColumnProductMinStock"].DataPropertyName = nameof(Product.MinimumStock);
-            if (dgvProduct.Columns["ColumnProductCategory"] != null)
-                dgvProduct.Columns["ColumnProductCategory"].DataPropertyName = nameof(Product.Category);
-            if (dgvProduct.Columns["ColumnProductIsActive"] != null)
-                dgvProduct.Columns["ColumnProductIsActive"].DataPropertyName = nameof(Product.IsActive);
+            // FIX: Clear and manually add columns to ensure they exist
+            dgvProduct.Columns.Clear();
+            dgvProduct.Columns.Add(new DataGridViewTextBoxColumn { Name = "ColumnProductName", HeaderText = "Name", DataPropertyName = nameof(Product.Name), Width = 200 });
+            dgvProduct.Columns.Add(new DataGridViewTextBoxColumn { Name = "ColumnProductPrice", HeaderText = "Price", DataPropertyName = nameof(Product.Price), Width = 80, DefaultCellStyle = new DataGridViewCellStyle { Format = "C2" } });
+            dgvProduct.Columns.Add(new DataGridViewTextBoxColumn { Name = "ColumnProductCurrentStock", HeaderText = "Stock", DataPropertyName = nameof(Product.StockQuantity), Width = 70 });
+            dgvProduct.Columns.Add(new DataGridViewTextBoxColumn { Name = "ColumnProductMinStock", HeaderText = "Min.", DataPropertyName = nameof(Product.MinimumStock), Width = 70 });
+            dgvProduct.Columns.Add(new DataGridViewCheckBoxColumn { Name = "ColumnProductIsActive", HeaderText = "Active", DataPropertyName = nameof(Product.IsActive), Width = 50 });
+
+            // Note: Displaying complex objects like 'Category' directly in a text column often results in "UserManagementSystem.Models.Category". 
+            // Ideally, map this to Category.Name, but for now we bind the object.
+            dgvProduct.Columns.Add(new DataGridViewTextBoxColumn { Name = "ColumnProductCategory", HeaderText = "Category", DataPropertyName = nameof(Product.Category), AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+
+            dgvProduct.DataSource = _bdsProducts;
 
             // --- ComboBox ---
             cboProductCategory.DataSource = _bdsCategories;

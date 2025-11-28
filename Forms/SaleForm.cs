@@ -17,9 +17,8 @@ namespace UserManagementSystem.Forms
         private readonly BindingList<Item> _cartItems;
         private Customer? _selectedCustomer;
 
-        // Flags de Lógica
         private bool _managerOverride = false;
-        private bool _isSearchOperation = false; // Prevents event logic during data ops
+        private bool _isSearchOperation = false;
         private const decimal MAX_DISCOUNT_NO_AUTH = 0.05m;
 
         public static SaleForm GetInstance(User? seller)
@@ -37,7 +36,7 @@ namespace UserManagementSystem.Forms
             _loggedInSeller = seller;
             _cartItems = new BindingList<Item>();
 
-            // Configuração dos Inputs Numéricos
+            // setup numeric controls
             numQuantity.Minimum = 0;
             numQuantity.Maximum = 9999;
             numQuantity.DecimalPlaces = 0;
@@ -45,11 +44,10 @@ namespace UserManagementSystem.Forms
             numDiscount.Minimum = 0;
             numDiscount.Maximum = 100;
 
-            // 1. Configurar UI
+            // setup data bindings
             BindControls();
 
-            // 4. Ligar Eventos
-            // It is safe to wire these here now, because we load data in OnLoad
+            // wire events
             txtSearchProduct.TextChanged += (s, e) => SearchProducts();
             cboCategories.SelectedIndexChanged += (s, e) => SearchProducts();
             dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
@@ -58,28 +56,26 @@ namespace UserManagementSystem.Forms
 
         public SaleForm() : this(null) { }
 
-        // FIX: Move data loading to OnLoad to prevent Constructor/Show event race conditions
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            _isSearchOperation = true; // Lock events
+            _isSearchOperation = true; // lock events
             try
             {
                 LoadInitialData();
             }
             finally
             {
-                // Force clean state AFTER data is bound and form is ready
+                // force clean state after data is bound
                 TabControlMain.SelectedTab = tabPageCustomer;
                 lblSelectedCustomerName.Text = "Customer: (None)";
                 _selectedCustomer = null;
 
-                // Critical: Unselect the default first row selected by CurrencyManager
                 dgvCustomers.CurrentCell = null;
                 dgvCustomers.ClearSelection();
 
-                _isSearchOperation = false; // Unlock events
+                _isSearchOperation = false; // unlock events
             }
         }
 
@@ -88,6 +84,11 @@ namespace UserManagementSystem.Forms
             dgvCart.AutoGenerateColumns = false;
             dgvCustomers.AutoGenerateColumns = false;
             dgvProducts.AutoGenerateColumns = false;
+
+            if (dgvProducts.Columns["colProdStock"] != null)
+            {
+                dgvProducts.Columns["colProdStock"].DataPropertyName = "StockQuantity";
+            }
 
             dgvCart.DataSource = _cartItems;
 

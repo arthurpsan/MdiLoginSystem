@@ -100,6 +100,7 @@ namespace UserManagementSystem.Data
                 using (Repository dbContext = new Repository())
                 {
                     return dbContext.Products
+                        .Include(p => p.Category)
                         .Where(p => p.Name.ToLower().Contains(partialName.ToLower()))
                         .ToList();
                 }
@@ -111,7 +112,9 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    return dbContext.Products.ToList();
+                    return dbContext.Products
+                        .Include(p => p.Category)
+                        .ToList();
                 }
             }
             catch (Exception)

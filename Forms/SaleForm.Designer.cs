@@ -140,6 +140,7 @@
             dgvCustomers.MultiSelect = false;
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.ReadOnly = true;
+            dgvCustomers.RowHeadersVisible = false;
             pnlCustomer.SetRowSpan(dgvCustomers, 2);
             dgvCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCustomers.Size = new Size(246, 330);
@@ -156,14 +157,14 @@
             // lblSearchCustomer
             // 
             lblSearchCustomer.AutoSize = true;
-            pnlCustomer.SetColumnSpan(lblSearchCustomer, 2);
+            pnlCustomer.SetColumnSpan(lblSearchCustomer, 4);
             lblSearchCustomer.Dock = DockStyle.Fill;
             lblSearchCustomer.Location = new Point(3, 0);
             lblSearchCustomer.Name = "lblSearchCustomer";
-            lblSearchCustomer.Size = new Size(120, 39);
+            lblSearchCustomer.Size = new Size(246, 39);
             lblSearchCustomer.TabIndex = 4;
             lblSearchCustomer.Text = "Search Customer:";
-            lblSearchCustomer.TextAlign = ContentAlignment.MiddleRight;
+            lblSearchCustomer.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // txtSearchCustomer
             // 
@@ -243,6 +244,7 @@
             // lblSearchProduct
             // 
             lblSearchProduct.AutoSize = true;
+            lblSearchProduct.BorderStyle = BorderStyle.FixedSingle;
             tableLayoutPanel1.SetColumnSpan(lblSearchProduct, 2);
             lblSearchProduct.Dock = DockStyle.Fill;
             lblSearchProduct.Location = new Point(3, 0);
@@ -335,6 +337,7 @@
             dgvProducts.MultiSelect = false;
             dgvProducts.Name = "dgvProducts";
             dgvProducts.ReadOnly = true;
+            dgvProducts.RowHeadersVisible = false;
             dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProducts.Size = new Size(246, 242);
             dgvProducts.TabIndex = 16;
@@ -346,6 +349,7 @@
             colProdName.Name = "colProdName";
             colProdName.ReadOnly = true;
             colProdName.SortMode = DataGridViewColumnSortMode.NotSortable;
+            colProdName.Width = 103;
             // 
             // colProdPrice
             // 
@@ -513,6 +517,7 @@
             dgvCart.Location = new Point(3, 48);
             dgvCart.Name = "dgvCart";
             dgvCart.ReadOnly = true;
+            dgvCart.RowHeadersVisible = false;
             dgvCart.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCart.Size = new Size(524, 264);
             dgvCart.TabIndex = 14;
@@ -637,9 +642,6 @@
         private DataGridView dgvCart;
         private DataGridView dgvCustomers;
         private DataGridView dgvProducts;
-        private DataGridViewTextBoxColumn colProdName;
-        private DataGridViewTextBoxColumn colProdPrice;
-        private DataGridViewTextBoxColumn colProdStock;
         private DataGridViewTextBoxColumn colCustName;
         private DataGridViewTextBoxColumn colProduct;
         private DataGridViewTextBoxColumn Quantity;
@@ -647,5 +649,8 @@
         private DataGridViewTextBoxColumn Discount;
         private DataGridViewTextBoxColumn colTotal;
         private Button btnRemoveItem;
+        private DataGridViewTextBoxColumn colProdName;
+        private DataGridViewTextBoxColumn colProdPrice;
+        private DataGridViewTextBoxColumn colProdStock;
     }
 }
