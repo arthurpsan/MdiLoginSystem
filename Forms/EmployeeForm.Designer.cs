@@ -28,13 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pnlEmployeeManagement = new TableLayoutPanel();
             lblEmployeeManagement = new Label();
             dgvEmployees = new DataGridView();
-            ColumnEmployeeName = new DataGridViewTextBoxColumn();
-            ColumnEmployeeNickname = new DataGridViewTextBoxColumn();
-            ColumnEmployeeEmail = new DataGridViewTextBoxColumn();
-            ColumnEmployeePhone = new DataGridViewTextBoxColumn();
             grpEmployeeCredentials = new GroupBox();
             pnlEmployeeCredentials = new TableLayoutPanel();
             btnRemoveEmployee = new Button();
@@ -53,10 +50,12 @@
             cboEmployeeRoles = new ComboBox();
             btnSave = new Button();
             mskPhoneNumber = new MaskedTextBox();
+            bdsEmployees = new BindingSource(components);
             pnlEmployeeManagement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmployees).BeginInit();
             grpEmployeeCredentials.SuspendLayout();
             pnlEmployeeCredentials.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bdsEmployees).BeginInit();
             SuspendLayout();
             // 
             // pnlEmployeeManagement
@@ -98,45 +97,13 @@
             // dgvEmployees
             // 
             dgvEmployees.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEmployees.Columns.AddRange(new DataGridViewColumn[] { ColumnEmployeeName, ColumnEmployeeNickname, ColumnEmployeeEmail, ColumnEmployeePhone });
             pnlEmployeeManagement.SetColumnSpan(dgvEmployees, 4);
             dgvEmployees.Dock = DockStyle.Fill;
             dgvEmployees.Location = new Point(3, 318);
             dgvEmployees.Name = "dgvEmployees";
+            dgvEmployees.RowHeadersVisible = false;
             dgvEmployees.Size = new Size(794, 129);
             dgvEmployees.TabIndex = 1;
-            // 
-            // ColumnEmployeeName
-            // 
-            ColumnEmployeeName.HeaderText = "Name";
-            ColumnEmployeeName.Name = "ColumnEmployeeName";
-            ColumnEmployeeName.ReadOnly = true;
-            ColumnEmployeeName.Resizable = DataGridViewTriState.False;
-            ColumnEmployeeName.Width = 192;
-            // 
-            // ColumnEmployeeNickname
-            // 
-            ColumnEmployeeNickname.HeaderText = "Nickname";
-            ColumnEmployeeNickname.Name = "ColumnEmployeeNickname";
-            ColumnEmployeeNickname.ReadOnly = true;
-            ColumnEmployeeNickname.Resizable = DataGridViewTriState.False;
-            ColumnEmployeeNickname.Width = 130;
-            // 
-            // ColumnEmployeeEmail
-            // 
-            ColumnEmployeeEmail.HeaderText = "E-mail";
-            ColumnEmployeeEmail.Name = "ColumnEmployeeEmail";
-            ColumnEmployeeEmail.ReadOnly = true;
-            ColumnEmployeeEmail.Resizable = DataGridViewTriState.False;
-            ColumnEmployeeEmail.Width = 260;
-            // 
-            // ColumnEmployeePhone
-            // 
-            ColumnEmployeePhone.HeaderText = "Phone number";
-            ColumnEmployeePhone.Name = "ColumnEmployeePhone";
-            ColumnEmployeePhone.ReadOnly = true;
-            ColumnEmployeePhone.Resizable = DataGridViewTriState.False;
-            ColumnEmployeePhone.Width = 169;
             // 
             // grpEmployeeCredentials
             // 
@@ -363,6 +330,10 @@
             mskPhoneNumber.Size = new Size(151, 22);
             mskPhoneNumber.TabIndex = 16;
             // 
+            // bdsEmployees
+            // 
+            bdsEmployees.DataSource = typeof(Models.ViewModels.UserViewModel);
+            // 
             // EmployeeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -380,6 +351,7 @@
             grpEmployeeCredentials.ResumeLayout(false);
             pnlEmployeeCredentials.ResumeLayout(false);
             pnlEmployeeCredentials.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bdsEmployees).EndInit();
             ResumeLayout(false);
         }
 
@@ -405,10 +377,7 @@
         private ComboBox cboEmployeeRoles;
         private Button btnRemoveEmployee;
         private Button btnSave;
-        private DataGridViewTextBoxColumn ColumnEmployeeName;
-        private DataGridViewTextBoxColumn ColumnEmployeeNickname;
-        private DataGridViewTextBoxColumn ColumnEmployeeEmail;
-        private DataGridViewTextBoxColumn ColumnEmployeePhone;
         private MaskedTextBox mskPhoneNumber;
+        private BindingSource bdsEmployees;
     }
 }

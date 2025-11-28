@@ -1,127 +1,101 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
+using System.Data;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using UserManagementSystem.Utils;
 
 namespace UserManagementSystem.Forms
 {
     public partial class EmployeeForm : Form
     {
         private static EmployeeForm? _instance;
-        private User? _loggedInUser;
-
-        private BindingList<User> _employees;
+        // The BindingSource is now in the Designer file as 'bdsEmployees'
 
         public static EmployeeForm GetInstance(User? user)
         {
             if (_instance == null || _instance.IsDisposed)
-            {
-                _instance = new EmployeeForm(user);
-            }
+                _instance = new EmployeeForm();
             return _instance;
         }
 
-        public EmployeeForm(User? user)
+        public EmployeeForm()
         {
             InitializeComponent();
-            _loggedInUser = user;
-
-            InitializeForm();
+            this.Load += Form_Load;
         }
-        public EmployeeForm() : this(null) { }
 
-        private void InitializeForm()
+        private void Form_Load(object? sender, EventArgs e)
         {
-            // setup Role ComboBox
-            cboEmployeeRoles.Items.Clear();
-            cboEmployeeRoles.Items.Add("Manager");
-            cboEmployeeRoles.Items.Add("Salesperson");
-            cboEmployeeRoles.Items.Add("Cashier");
-            cboEmployeeRoles.SelectedIndex = 0;
+            InitializeRoles();
+            SetupGrid();
+            LoadData();
+        }
 
+        private void InitializeRoles()
+        {
+            cboEmployeeRoles.Items.Clear();
+            cboEmployeeRoles.Items.AddRange(new object[] { "Manager", "Salesperson", "Cashier" });
+            cboEmployeeRoles.SelectedIndex = 0;
+        }
+
+        private void SetupGrid()
+        {
             dgvEmployees.AutoGenerateColumns = false;
             dgvEmployees.AllowUserToAddRows = false;
             dgvEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            // Map Columns (Ensure these match your Designer names)
+            // The Designer already does: dgvEmployees.DataSource = bdsEmployees;
+            // But good to ensure columns match properties
             if (dgvEmployees.Columns["ColumnEmployeeName"] != null)
                 dgvEmployees.Columns["ColumnEmployeeName"].DataPropertyName = nameof(User.Name);
-
             if (dgvEmployees.Columns["ColumnEmployeeNickname"] != null)
                 dgvEmployees.Columns["ColumnEmployeeNickname"].DataPropertyName = nameof(User.Nickname);
-
             if (dgvEmployees.Columns["ColumnEmployeeEmail"] != null)
                 dgvEmployees.Columns["ColumnEmployeeEmail"].DataPropertyName = nameof(User.Email);
-
             if (dgvEmployees.Columns["ColumnEmployeePhone"] != null)
-            {
                 dgvEmployees.Columns["ColumnEmployeePhone"].DataPropertyName = nameof(User.PhoneNumber);
-            }
-            else
-            {
-                MessageBox.Show("Error: ColumnEmployeePhone not found in grid.");
-            }
-
-            LoadEmployees();
         }
 
-        private void LoadEmployees()
-        {
-            var list = UserRepository.FindAll();
-            _employees = new BindingList<User>(list);
-
-            dgvEmployees.DataSource = null;
-            dgvEmployees.DataSource = _employees;
-        }
-
-        
-
-        private void BtnSave_Click(object? sender, EventArgs e)
+        private void LoadData()
         {
             try
             {
-                // determine role and create appropriate user type
+                var list = UserRepository.FindAll();
+                // Assign list to the Designer's BindingSource
+                bdsEmployees.DataSource = new BindingList<User>(list);
+            }
+            catch (Exception ex)
+            {
+                Alerts.ShowError("Failed to load employees: " + ex.Message);
+            }
+        }
+
+        private void BtnSave_Click(object? sender, EventArgs e)
+        {
+            if (txtEmployeePassword.Text != txtRepeatPassword.Text)
+            {
+                Alerts.ShowWarning("Passwords do not match.");
+                return;
+            }
+
+            try
+            {
                 string role = cboEmployeeRoles.SelectedItem?.ToString() ?? "Salesperson";
-                User newUser;
-
-                if (txtEmployeePassword.Text != txtRepeatPassword.Text)
-                {
-                    MessageBox.Show("Passwords do not match.");
-                    return;
-                }
-
-                // generate a random enrollment number since we don't allow user input for it
                 uint defaultEnrollment = (uint)new Random().Next(1000, 9999);
 
-                switch (role)
+                User newUser = role switch
                 {
-                    case "Manager":
-                        newUser = new User();
-                        break;
-                    case "Salesperson":
-                        newUser = new Salesperson { SellerEnrollment = defaultEnrollment };
-                        break;
-                    case "Cashier":
-                        newUser = new Cashier { CashierEnrollment = defaultEnrollment };
-                        break;
-                    default:
-                        newUser = new User();
-                        break;
-                }
+                    "Salesperson" => new Salesperson { SellerEnrollment = defaultEnrollment },
+                    "Cashier" => new Cashier { CashierEnrollment = defaultEnrollment },
+                    _ => new User()
+                };
 
                 newUser.Name = txtEmployeeName.Text;
                 newUser.Nickname = txtEmployeeNickname.Text;
                 newUser.Email = txtEmployeeEmail.Text;
 
                 string cleanPhone = new string(mskPhoneNumber.Text.Where(char.IsDigit).ToArray());
-
-                if (ulong.TryParse(cleanPhone, out ulong phone))
-                {
-                    newUser.PhoneNumber = phone;
-                }
+                if (ulong.TryParse(cleanPhone, out ulong phone)) newUser.PhoneNumber = phone;
 
                 Credential credential = new Credential
                 {
@@ -133,43 +107,39 @@ namespace UserManagementSystem.Forms
 
                 CredentialRepository.SaveOrUpdate(credential);
 
-                _employees.Add(newUser);
-                ClearInputs();
+                // Add to the Designer's BindingSource
+                bdsEmployees.Add(newUser);
 
-                MessageBox.Show($"{role} registered successfully!");
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Alerts.ShowSuccess($"{role} registered successfully!");
+                ClearInputs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error saving: " + ex.Message, "Error");
+                Alerts.ShowError("Error saving: " + ex.Message);
             }
         }
 
         private void BtnRemoveEmployee_Click(object? sender, EventArgs e)
         {
-            if (dgvEmployees.CurrentRow?.DataBoundItem is User selectedUser)
+            if (bdsEmployees.Current is not User selectedUser)
             {
-                var confirm = MessageBox.Show($"Delete {selectedUser.Name}?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (confirm == DialogResult.Yes)
-                {
-                    try
-                    {
-                        UserRepository.Delete(selectedUser);
-                        _employees.Remove(selectedUser);
-                        ClearInputs();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error deleting: " + ex.Message);
-                    }
-                }
+                Alerts.ShowWarning("Please select an employee to delete.");
+                return;
             }
-            else
+
+            if (Alerts.ConfirmAction($"Delete {selectedUser.Name}?"))
             {
-                MessageBox.Show("Please select an employee to delete.");
+                try
+                {
+                    UserRepository.Delete(selectedUser);
+                    bdsEmployees.RemoveCurrent();
+                    ClearInputs();
+                    Alerts.ShowSuccess("Employee deleted.");
+                }
+                catch (Exception ex)
+                {
+                    Alerts.ShowError("Error deleting: " + ex.Message);
+                }
             }
         }
 
