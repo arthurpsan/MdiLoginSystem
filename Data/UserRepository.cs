@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq; // Required for LINQ methods like Where and FirstOrDefault
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Models;
 
@@ -20,7 +20,6 @@ namespace UserManagementSystem.Data
                     }
                     else
                     {
-                        // If updating, attach and mark as modified
                         dbContext.Entry(user).State = EntityState.Modified;
                     }
 
@@ -39,7 +38,6 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    // Ensure the object is tracked by this specific context context before removing
                     dbContext.Attach(user);
                     dbContext.Users.Remove(user);
                     dbContext.SaveChanges();
@@ -72,7 +70,6 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    // FIX: .Find() expects an ID. Use FirstOrDefault to search by Name.
                     return dbContext.Users.FirstOrDefault(u => u.Name == name);
                 }
             }

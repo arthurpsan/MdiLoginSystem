@@ -27,7 +27,7 @@ namespace UserManagementSystem.Models
             }
         }
 
-        public override string ToString()
+        public override String ToString()
         {
             return Name;
         }

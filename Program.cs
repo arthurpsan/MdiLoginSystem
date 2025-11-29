@@ -28,6 +28,7 @@ namespace UserManagementSystem
             Application.Run(LoginForm.GetInstance());
         }
 
+        // verifies if the database exists and is populated; if not, creates and seeds it.
         private static void VerifyDatabase()
         {
             using (Repository dbContext = new Repository())
@@ -36,26 +37,87 @@ namespace UserManagementSystem
                 if (dbContext.Database.EnsureCreated() || !dbContext.Credentials.Any())
                 {
                     // create Users
-                    var adminUser = new User { Name = "Administrator", Nickname = "Admin", PhoneNumber = 5538998103030, Email = "admin@system.com" };
-                    CredentialRepository.SaveOrUpdate(new Credential { Email = adminUser.Email, Password = "admin123", Manager = true, User = adminUser });
 
-                    var sellerUser = new Salesperson { Name = "John Seller", Nickname = "Seller", PhoneNumber = 5538997654321, Email = "seller@system.com", SellerEnrollment = 1001 };
-                    CredentialRepository.SaveOrUpdate(new Credential { Email = sellerUser.Email, Password = "seller123", Manager = false, User = sellerUser });
+                    var adminUser = new User 
+                    { Name = "Administrator", Nickname = "Admin", PhoneNumber = 5538998103030, Email = "admin@system.com" };
+                    CredentialRepository.SaveOrUpdate(new Credential 
+                    { 
+                        Email = adminUser.Email, 
+                        Password = "admin123", 
+                        Manager = true, 
+                        User = adminUser 
+                    }
+                    );
 
-                    var cashierUser = new Cashier { Name = "Karen Cashier", Nickname = "Cashier", PhoneNumber = 5538993456789, Email = "cashier@system.com", CashierEnrollment = 2001 };
-                    CredentialRepository.SaveOrUpdate(new Credential { Email = cashierUser.Email, Password = "cashier123", Manager = false, User = cashierUser });
+                    var sellerUser = new Salesperson 
+                    { 
+                        Name = "John Seller", 
+                        Nickname = "Seller", 
+                        PhoneNumber = 5538997654321, 
+                        Email = "seller@system.com", 
+                        SellerEnrollment = 1001 
+                    };
+
+                    CredentialRepository.SaveOrUpdate(new Credential 
+                    { 
+                        Email = sellerUser.Email, 
+                        Password = "seller123", 
+                        Manager = false, 
+                        User = sellerUser 
+                    }
+                    );
+
+                    var cashierUser = new Cashier 
+                    { 
+                        Name = "Karen Cashier", 
+                        Nickname = "Cashier", 
+                        PhoneNumber = 5538993456789, 
+                        Email = "cashier@system.com", 
+                        CashierEnrollment = 2001 
+                    };
+
+                    CredentialRepository.SaveOrUpdate(new Credential 
+                    { 
+                        Email = cashierUser.Email, 
+                        Password = "cashier123", 
+                        Manager = false, 
+                        User = cashierUser 
+                    }
+                    );
 
                     // create Products
                     var catElectronics = new Category { Name = "Electronics" };
 
-                    var prodLaptop = new Product { Name = "Dell Laptop", Price = 3500.00m, StockQuantity = 10, MinimumStock = 2, Category = catElectronics, IsActive = true };
-                    var prodMouse = new Product { Name = "Wireless Mouse", Price = 50.00m, StockQuantity = 2, MinimumStock = 5, Category = catElectronics, IsActive = true };
+                    var prodLaptop = new Product 
+                    { 
+                        Name = "Dell Laptop", 
+                        Price = 3500.00m, 
+                        StockQuantity = 10, 
+                        MinimumStock = 2, 
+                        Category = catElectronics, 
+                        IsActive = true 
+                    };
+
+                    var prodMouse = new Product 
+                    { 
+                        Name = "Wireless Mouse", 
+                        Price = 50.00m, 
+                        StockQuantity = 2, 
+                        MinimumStock = 5, 
+                        Category = catElectronics, 
+                        IsActive = true 
+                    };
 
                     ProductRepository.SaveOrUpdate(prodLaptop);
                     ProductRepository.SaveOrUpdate(prodMouse);
 
                     // create good purchase (Alice)
-                    var goodCustomer = new Customer { Name = "Alice Reliable", Email = "alice@example.com" };
+                    var goodCustomer = new Customer 
+                    { 
+                        Name = "Alice Reliable", 
+                        Email = "alice@example.com" 
+                    };
+
                     CustomerRepository.SaveOrUpdate(goodCustomer);
 
                     var goodPurchaseDate = DateTime.Now.AddDays(-20);
@@ -100,8 +162,13 @@ namespace UserManagementSystem
                         ctx.SaveChanges();
                     }
 
-                    // 4. create bad purchase (bob)
-                    var badCustomer = new Customer { Name = "Bob Delinquent", Email = "bob@example.com" };
+                    // create bad purchase (bob)
+                    var badCustomer = new Customer 
+                    { 
+                        Name = "Bob Delinquent", 
+                        Email = "bob@example.com" 
+                    };
+
                     CustomerRepository.SaveOrUpdate(badCustomer);
 
                     var pastDate = DateTime.Now.AddDays(-40);

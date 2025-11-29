@@ -15,6 +15,8 @@ namespace UserManagementSystem.Forms
             btnCancel.Click += btnCancel_Click;
         }
 
+        #region EVENT HANDLERS
+
         private void btnAuthorize_Click(object? sender, EventArgs e)
         {
             try
@@ -54,5 +56,7 @@ namespace UserManagementSystem.Forms
             txtPassword.Clear();
             lblErrorAlert.Visible = false;
         }
+
+        #endregion
     }
 }

@@ -42,7 +42,7 @@ namespace UserManagementSystem.Models
 
         public Decimal? CalcComission()
         {
-            decimal? total = CalcTotal();
+            Decimal? total = CalcTotal();
             return (total ?? 0) * ComissionTax;
         }
     }

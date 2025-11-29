@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Data;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
@@ -9,7 +10,6 @@ namespace UserManagementSystem.Forms
     public partial class EmployeeForm : Form
     {
         private static EmployeeForm? _instance;
-
         public static EmployeeForm GetInstance(User? user)
         {
             if (_instance == null || _instance.IsDisposed)
@@ -23,15 +23,6 @@ namespace UserManagementSystem.Forms
             this.Load += Form_Load;
         }
 
-        private void Form_Load(object? sender, EventArgs e)
-        {
-            InitializeRoles();
-            SetupGrid();
-            LoadData();
-
-            ClearInputs();
-        }
-
         private void InitializeRoles()
         {
             cboEmployeeRoles.Items.Clear();
@@ -39,6 +30,7 @@ namespace UserManagementSystem.Forms
             cboEmployeeRoles.SelectedIndex = 0;
         }
 
+        // setup datagridview
         private void SetupGrid()
         {
             // grid settings
@@ -115,6 +107,16 @@ namespace UserManagementSystem.Forms
             }
         }
 
+        private void Form_Load(object? sender, EventArgs e)
+        {
+            InitializeRoles();
+            SetupGrid();
+            LoadData();
+
+            ClearInputs();
+        }
+
+        #region EVENT HANDLERS
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             if (txtEmployeePassword.Text != txtRepeatPassword.Text)
@@ -287,5 +289,7 @@ namespace UserManagementSystem.Forms
             btnSave.Text = "Save";
             dgvEmployees.ClearSelection();
         }
+
+        #endregion
     }
 }

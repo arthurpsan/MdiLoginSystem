@@ -10,7 +10,7 @@ namespace UserManagementSystem.Models.ViewModels
         public UInt64? Id { get; set; }
 
         [DisplayName("Full Name")]
-        public string Name { get; set; } = string.Empty;
+        public String Name { get; set; } = string.Empty;
             
         [DisplayName("Username / Nick")]
         public String Nickname { get; set; } = String.Empty;

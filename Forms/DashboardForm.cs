@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Data;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models.ViewModels;
@@ -28,8 +29,7 @@ namespace UserManagementSystem.Forms
             txtSearch.TextChanged += (s, e) => FilterData();
         }
 
-        private void ReportScreen_Load(object sender, EventArgs e) => LoadData();
-        private void btnRefresh_Click(object sender, EventArgs e) => LoadData();
+        #region DATA METHODS
 
         private void LoadData()
         {
@@ -72,5 +72,11 @@ namespace UserManagementSystem.Forms
             bdsReports.DataSource = new BindingList<UserViewModel>(filtered);
             lblReports.Text = $"User Reports ({filtered.Count})";
         }
+
+        #endregion
+
+        // event handlers
+        private void ReportScreen_Load(object sender, EventArgs e) => LoadData();
+        private void btnRefresh_Click(object sender, EventArgs e) => LoadData();
     }
 }

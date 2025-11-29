@@ -1,3 +1,4 @@
+using System;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
 using UserManagementSystem.Utils;
@@ -22,34 +23,21 @@ namespace UserManagementSystem
             return _instance;
         }
 
-        private void BtnLogin_Click(object sender, EventArgs e)
+        private void ShowLoginError()
         {
-            try
-            {
-                string email = txtUserEmail.Text.Trim();
-                string password = txtUserPassword.Text;
+            lblErrorAlert.Visible = true;
+            txtUserPassword.Clear();
+            if (txtUserEmail.Focused) txtUserEmail.Focus();
+            else txtUserPassword.Focus();
+        }
 
-                Credential? dbCredential = CredentialRepository.FindByEmail(email);
-
-                if (dbCredential == null)
-                {
-                    ShowLoginError();
-                    return;
-                }
-
-                string hashedInput = Credential.ComputeSHA256(password, Credential.SALT);
-                if (dbCredential.Password != hashedInput)
-                {
-                    ShowLoginError();
-                    return;
-                }
-
-                PerformLogin(dbCredential);
-            }
-            catch (Exception ex)
-            {
-                Alerts.ShowError("System Error during login: " + ex.Message);
-            }
+        public void ClearFieldsAndShow()
+        {
+            txtUserEmail.Clear();
+            txtUserPassword.Clear();
+            lblErrorAlert.Visible = false;
+            this.Show();
+            txtUserEmail.Focus();
         }
 
         private void PerformLogin(Credential credential)
@@ -76,23 +64,6 @@ namespace UserManagementSystem
             {
                 Alerts.ShowError("Could not update login time: " + ex.Message);
             }
-        }
-
-        private void ShowLoginError()
-        {
-            lblErrorAlert.Visible = true;
-            txtUserPassword.Clear();
-            if (txtUserEmail.Focused) txtUserEmail.Focus();
-            else txtUserPassword.Focus();
-        }
-
-        public void ClearFieldsAndShow()
-        {
-            txtUserEmail.Clear();
-            txtUserPassword.Clear();
-            lblErrorAlert.Visible = false;
-            this.Show();
-            txtUserEmail.Focus();
         }
 
         #region UI Events (Highlighting & Navigation)
@@ -127,6 +98,37 @@ namespace UserManagementSystem
                 btnLogin.PerformClick();
             }
         }
+
+        private void BtnLogin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string email = txtUserEmail.Text.Trim();
+                string password = txtUserPassword.Text;
+
+                Credential? dbCredential = CredentialRepository.FindByEmail(email);
+
+                if (dbCredential == null)
+                {
+                    ShowLoginError();
+                    return;
+                }
+
+                string hashedInput = Credential.ComputeSHA256(password, Credential.SALT);
+                if (dbCredential.Password != hashedInput)
+                {
+                    ShowLoginError();
+                    return;
+                }
+
+                PerformLogin(dbCredential);
+            }
+            catch (Exception ex)
+            {
+                Alerts.ShowError("System Error during login: " + ex.Message);
+            }
+        }
+
         #endregion
     }
 }

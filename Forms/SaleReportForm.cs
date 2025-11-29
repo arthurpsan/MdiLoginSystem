@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models.ViewModels;
@@ -27,6 +28,14 @@ namespace UserManagementSystem.Forms
             dtpEndDate.ValueChanged += btnRefresh_Click;
         }
 
+        private void FilterData()
+        {
+            string term = txtSearch.Text.ToLower().Trim();
+            var filtered = _originalList.Where(x => x.SellerName.ToLower().Contains(term)).ToList();
+            bdsSales.DataSource = new BindingList<SaleReportViewModel>(filtered);
+        }
+
+        #region EVENT HANDLERS
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -70,12 +79,7 @@ namespace UserManagementSystem.Forms
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+        #endregion
 
-        private void FilterData()
-        {
-            string term = txtSearch.Text.ToLower().Trim();
-            var filtered = _originalList.Where(x => x.SellerName.ToLower().Contains(term)).ToList();
-            bdsSales.DataSource = new BindingList<SaleReportViewModel>(filtered);
-        }
     }
 }

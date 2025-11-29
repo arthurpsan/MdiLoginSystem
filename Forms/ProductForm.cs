@@ -43,19 +43,8 @@ namespace UserManagementSystem.Forms
 
         public ProductForm() : this(null) { }
 
-        private void Form_Load(object? sender, EventArgs e)
-        {
-            SetupGrids();
 
-            nudProductPrice.Maximum = 9999999;
-            nudProductPrice.DecimalPlaces = 2;
-
-            nudStock.Maximum = 999999;
-            nudMinStock.Maximum = 999999;
-
-            LoadData();
-        }
-
+        // Setup DataGrids
         private void SetupGrids()
         {
             // categories grid
@@ -389,6 +378,22 @@ namespace UserManagementSystem.Forms
                 }
             }
         }
+        #endregion
+
+        #region FORM LOAD EVENT
+        private void Form_Load(object? sender, EventArgs e)
+        {
+            SetupGrids();
+
+            nudProductPrice.Maximum = 9999999;
+            nudProductPrice.DecimalPlaces = 2;
+
+            nudStock.Maximum = 999999;
+            nudMinStock.Maximum = 999999;
+
+            LoadData();
+        }
+
         #endregion
     }
 }

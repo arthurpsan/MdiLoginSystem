@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Globalization;
 using UserManagementSystem.Data;
@@ -33,6 +34,22 @@ namespace UserManagementSystem.Forms
             this.Load += (s, e) => TxtSearchCustomer_TextChanged(s, e);
         }
 
+        // helper to calculate fine based on Date.Now (made so it simulates Payment.cs logic)
+        private Decimal CalculateSimulatedFine(Payment payment, Decimal purchaseTotal)
+        {
+            if (payment.ExpirationDate == null) return 0;
+
+            if (DateTime.Now.Date > payment.ExpirationDate.Value.Date)
+            {
+                TimeSpan delay = DateTime.Now.Date - payment.ExpirationDate.Value.Date;
+                Int32 delayedMonths = (Int32)Math.Ceiling(delay.TotalDays / 30.0);
+
+                return purchaseTotal * MonthlyTax * delayedMonths;
+            }
+            return 0;
+        }
+
+        #region EVENT HANDLERS
         private void TxtSearchCustomer_TextChanged(object? sender, EventArgs e)
         {
             String term = txtSearchCustomer.Text.Trim();
@@ -117,20 +134,6 @@ namespace UserManagementSystem.Forms
             }
         }
 
-        // Helper to calculate fine based on Date.Now (Simulates Payment.cs logic)
-        private Decimal CalculateSimulatedFine(Payment payment, Decimal purchaseTotal)
-        {
-            if (payment.ExpirationDate == null) return 0;
-
-            if (DateTime.Now.Date > payment.ExpirationDate.Value.Date)
-            {
-                TimeSpan delay = DateTime.Now.Date - payment.ExpirationDate.Value.Date;
-                Int32 delayedMonths = (Int32)Math.Ceiling(delay.TotalDays / 30.0);
-
-                return purchaseTotal * MonthlyTax * delayedMonths;
-            }
-            return 0;
-        }
         private void btnPay_Click(object sender, EventArgs e)
         {
             if (bdsPayments.Current is PaymentViewModel selectedVM)
@@ -185,5 +188,6 @@ namespace UserManagementSystem.Forms
                 }
             }
         }
+        #endregion
     }
 }

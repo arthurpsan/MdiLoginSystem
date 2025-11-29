@@ -377,21 +377,7 @@ namespace UserManagementSystem.Forms
             TabControlMain.SelectedTab = tabPageCustomer;
         }
 
-        private void FormatCartGrid(DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.RowIndex >= _cartItems.Count) return;
 
-            Item item = _cartItems[e.RowIndex];
-
-            if (dgvCart.Columns[e.ColumnIndex].Name == "colProduct")
-            {
-                e.Value = item.Product?.Name ?? "Unknown";
-            }
-            else if (dgvCart.Columns[e.ColumnIndex].Name == "colTotal")
-            {
-                e.Value = item.CalcTotal()?.ToString("C");
-            }
-        }
 
         private void UpdateTotals()
         {
@@ -461,6 +447,22 @@ namespace UserManagementSystem.Forms
                 dgvCustomers.ClearSelection();
 
                 _isSearchOperation = false;
+            }
+        }
+
+        private void FormatCartGrid(DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= _cartItems.Count) return;
+
+            Item item = _cartItems[e.RowIndex];
+
+            if (dgvCart.Columns[e.ColumnIndex].Name == "colProduct")
+            {
+                e.Value = item.Product?.Name ?? "Unknown";
+            }
+            else if (dgvCart.Columns[e.ColumnIndex].Name == "colTotal")
+            {
+                e.Value = item.CalcTotal()?.ToString("C");
             }
         }
 

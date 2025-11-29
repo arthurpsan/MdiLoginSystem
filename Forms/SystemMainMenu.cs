@@ -1,4 +1,5 @@
-﻿using UserManagementSystem.Data;
+﻿using System;
+using UserManagementSystem.Data;
 using UserManagementSystem.Forms;
 using UserManagementSystem.Models;
 using UserManagementSystem.Utils;
@@ -101,11 +102,6 @@ namespace UserManagementSystem
             }
         }
 
-        private void LblStockAlert_Click(object? sender, EventArgs e)
-        {
-            OpenMdiForm(() => StockReportForm.GetInstance(_loggedInUser));
-        }
-
         #region MENU EVENTS
 
         // management
@@ -149,6 +145,12 @@ namespace UserManagementSystem
             {
                 this.Close();
             }
+        }
+
+        // stock
+        private void LblStockAlert_Click(object? sender, EventArgs e)
+        {
+            OpenMdiForm(() => StockReportForm.GetInstance(_loggedInUser));
         }
 
         private void SystemMenu_FormClosing(object sender, FormClosingEventArgs e)

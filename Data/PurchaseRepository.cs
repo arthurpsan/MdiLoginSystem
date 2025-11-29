@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq; // Added for queries
 using Microsoft.EntityFrameworkCore;
 using UserManagementSystem.Models;
 
@@ -14,7 +12,6 @@ namespace UserManagementSystem.Data
             {
                 using (Repository dbContext = new Repository())
                 {
-                    // 1. Attach Existing Data (Crucial!)
                     if (purchase.Seller != null && purchase.Seller.Id > 0)
                         dbContext.Attach(purchase.Seller);
 
@@ -28,19 +25,17 @@ namespace UserManagementSystem.Data
                             if (item.Product != null && item.Product.Id > 0)
                             {
                                 dbContext.Attach(item.Product);
-                                // If Category is loaded, attach it too to prevent duplicates
                                 if (item.Product.Category != null)
                                     dbContext.Attach(item.Product.Category);
                             }
                         }
                     }
 
-                    // 2. Save
-                    if (purchase.Id == 0) // New
+                    if (purchase.Id == 0)
                     {
                         dbContext.Purchases.Add(purchase);
                     }
-                    else // Update
+                    else
                     {
                         dbContext.Entry(purchase).State = EntityState.Modified;
                     }
@@ -105,8 +100,8 @@ namespace UserManagementSystem.Data
             {
                 return dbContext.Purchases
                     .Include(p => p.Seller)
-                    .Include(p => p.Customer) // Good to have
-                    .Include(p => p.Items)    // FIX: Crucial! Needed for CalcTotal()
+                    .Include(p => p.Customer)
+                    .Include(p => p.Items)
                     .Where(p => p.Implementation >= startDate && p.Implementation <= endDate)
                     .ToList();
             }
@@ -151,33 +146,27 @@ namespace UserManagementSystem.Data
             {
                 try
                 {
-                    // 1. Safe Attach Products (Handles duplicate products in cart from different searches)
                     foreach (var item in purchase.Items)
                     {
                         if (item.Product != null)
                         {
-                            // Check if this Product ID is already known to this Context
                             var existingProduct = dbContext.Products.Local
                                 .FirstOrDefault(p => p.Id == item.Product.Id);
 
                             if (existingProduct != null)
                             {
-                                // Use the existing tracker instead of the duplicate
                                 item.Product = existingProduct;
                             }
                             else
                             {
-                                // Not tracked yet, so attach it
                                 dbContext.Attach(item.Product);
                             }
 
-                            // Deduct stock (This logic works on whichever instance is active)
                             item.Product.StockQuantity -= item.Quantity;
                             dbContext.Entry(item.Product).State = EntityState.Modified;
                         }
                     }
 
-                    // 2. Safe Attach Seller
                     if (purchase.Seller != null)
                     {
                         var existingSeller = dbContext.Sellers.Local
@@ -187,29 +176,22 @@ namespace UserManagementSystem.Data
                         else dbContext.Attach(purchase.Seller);
                     }
 
-                    // 3. Safe Attach Customer (Fixes your specific error)
                     if (purchase.Customer != null)
                     {
-                        // Check if the Seller or Products dragged this Customer in already
                         var existingCustomer = dbContext.Customers.Local
                             .FirstOrDefault(c => c.Id == purchase.Customer.Id);
 
                         if (existingCustomer != null)
                         {
-                            // If tracked, USE the tracked instance
                             purchase.Customer = existingCustomer;
                         }
                         else
                         {
-                            // If not tracked, attach the one from the form
                             dbContext.Attach(purchase.Customer);
                         }
                     }
 
-                    // 4. Add the Purchase
                     dbContext.Purchases.Add(purchase);
-
-                    // 5. Save and Commit
                     dbContext.SaveChanges();
                     transaction.Commit();
                 }

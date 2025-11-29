@@ -22,7 +22,6 @@ namespace UserManagementSystem.Models
             }
         }
 
-        // Relationship with Purchase class
         [Required]
         public List<Purchase>? ProcessedPurchases { get; set; }
     }
