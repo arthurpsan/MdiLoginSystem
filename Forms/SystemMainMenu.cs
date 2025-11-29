@@ -24,23 +24,33 @@ namespace UserManagementSystem
             InitializeComponent();
             _loggedInUser = user;
             SetupPermissions();
+
+            if (_loggedInUser.Credential != null && _loggedInUser.Credential.Manager)
+            {
+                CheckStockAlert();
+            }
         }
 
         // method to manage setup permissions
         private void SetupPermissions()
         {
             Text = $"System - User Management - User: {_loggedInUser.Name} - [v0.0.1]";
-
-            bool isManager = _loggedInUser.Credential?.Manager ?? false;
-
-            employeeToolStripMenuItem.Enabled = isManager;
-            customerToolStripMenuItem.Enabled = isManager;
-            producttoolStripMenuItem.Enabled = isManager;
-
             lblLastAccess.Text = $"Last Access: {_loggedInUser.Credential?.LastAccess?.ToString("g") ?? "First Access!"}";
+
+            Boolean isManager = _loggedInUser.Credential?.Manager ?? false;
+            Boolean isSalesperson = _loggedInUser is Salesperson;
+            Boolean isCashier = _loggedInUser is Cashier;
+
+            reportToolStripMenuItem.Visible = isManager;
+            employeeToolStripMenuItem.Enabled = isManager;
+            producttoolStripMenuItem.Visible = isManager;
+
+            saleToolStripMenuItem.Visible = isSalesperson;
+            paymentToolStripMenuItem.Visible = isCashier;
+            customerToolStripMenuItem.Visible = isManager || isSalesperson;
         }
 
-        // --- generic MDI opener ---
+        // generic method to open MDI forms
         private void OpenMdiForm<T>(Func<T> factory) where T : Form
         {
             var form = this.MdiChildren.OfType<T>().FirstOrDefault();
@@ -59,8 +69,46 @@ namespace UserManagementSystem
             }
         }
 
+        private void CheckStockAlert()
+        {
+            try
+            {
+                if (lblStockAlert == null) return;
+
+                int lowStockCount = ProductRepository.FindAll()
+                    .Count(p => p.StockQuantity <= p.MinimumStock);
+
+                if (lowStockCount > 0)
+                {
+                    lblStockAlert.Text = $"⚠ ALERTA: {lowStockCount} Produtos com Estoque Baixo!";
+                    lblStockAlert.ForeColor = Color.Red;
+                    lblStockAlert.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                    lblStockAlert.Visible = true;
+
+                    lblStockAlert.IsLink = true;
+                    lblStockAlert.Click -= LblStockAlert_Click;
+                    lblStockAlert.Click += LblStockAlert_Click;
+                }
+                else
+                {
+                    lblStockAlert.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Em produção logaríamos, aqui apenas evitamos travar o menu
+                System.Diagnostics.Debug.WriteLine("Erro ao verificar estoque: " + ex.Message);
+            }
+        }
+
+        private void LblStockAlert_Click(object? sender, EventArgs e)
+        {
+            OpenMdiForm(() => StockReportForm.GetInstance(_loggedInUser));
+        }
+
         #region MENU EVENTS
 
+        // management
         private void employeeToolStripMenuItem_Click(object sender, EventArgs e)
             => OpenMdiForm(() => EmployeeForm.GetInstance(_loggedInUser));
 
@@ -76,7 +124,7 @@ namespace UserManagementSystem
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
             => OpenMdiForm(() => PaymentForm.GetInstance(_loggedInUser));
 
-        // Reports
+        // reports
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
             => OpenMdiForm(() => DashboardForm.GetInstance());
 

@@ -37,7 +37,7 @@
             saleToolStripMenuItem = new ToolStripMenuItem();
             producttoolStripMenuItem = new ToolStripMenuItem();
             paymentToolStripMenuItem = new ToolStripMenuItem();
-            reporToolStripMenuItem = new ToolStripMenuItem();
+            reportToolStripMenuItem = new ToolStripMenuItem();
             usersToolStripMenuItem = new ToolStripMenuItem();
             salesDataToolStripMenuItem = new ToolStripMenuItem();
             stockDataToolStripMenuItem = new ToolStripMenuItem();
@@ -48,13 +48,14 @@
             statusStripAcess = new StatusStrip();
             staAccess = new ToolStripStatusLabel();
             lblLastAccess = new ToolStripStatusLabel();
+            lblStockAlert = new ToolStripStatusLabel();
             mnuSystem.SuspendLayout();
             statusStripAcess.SuspendLayout();
             SuspendLayout();
             // 
             // mnuSystem
             // 
-            mnuSystem.Items.AddRange(new ToolStripItem[] { fIleToolStripMenuItem, registerToolStripMenuItem, reporToolStripMenuItem, helpToolStripMenuItem });
+            mnuSystem.Items.AddRange(new ToolStripItem[] { fIleToolStripMenuItem, registerToolStripMenuItem, reportToolStripMenuItem, helpToolStripMenuItem });
             mnuSystem.Location = new Point(0, 0);
             mnuSystem.Name = "mnuSystem";
             mnuSystem.Padding = new Padding(7, 2, 0, 2);
@@ -72,7 +73,7 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Size = new Size(92, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -120,10 +121,10 @@
             // 
             // reporToolStripMenuItem
             // 
-            reporToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usersToolStripMenuItem, salesDataToolStripMenuItem, stockDataToolStripMenuItem, CustomerDataToolStripMenuItem, comissionDataToolStripMenuItem });
-            reporToolStripMenuItem.Name = "reporToolStripMenuItem";
-            reporToolStripMenuItem.Size = new Size(59, 20);
-            reporToolStripMenuItem.Text = "Reports";
+            reportToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usersToolStripMenuItem, salesDataToolStripMenuItem, stockDataToolStripMenuItem, CustomerDataToolStripMenuItem, comissionDataToolStripMenuItem });
+            reportToolStripMenuItem.Name = "reporToolStripMenuItem";
+            reportToolStripMenuItem.Size = new Size(59, 20);
+            reportToolStripMenuItem.Text = "Reports";
             // 
             // usersToolStripMenuItem
             // 
@@ -176,7 +177,7 @@
             // 
             // statusStripAcess
             // 
-            statusStripAcess.Items.AddRange(new ToolStripItem[] { staAccess, lblLastAccess });
+            statusStripAcess.Items.AddRange(new ToolStripItem[] { staAccess, lblLastAccess, lblStockAlert });
             statusStripAcess.Location = new Point(0, 488);
             statusStripAcess.Name = "statusStripAcess";
             statusStripAcess.Padding = new Padding(1, 0, 16, 0);
@@ -195,6 +196,12 @@
             lblLastAccess.Name = "lblLastAccess";
             lblLastAccess.Size = new Size(131, 17);
             lblLastAccess.Text = "toolStripStatusLabel1";
+            // 
+            // lblStockAlert
+            // 
+            lblStockAlert.Name = "lblStockAlert";
+            lblStockAlert.Size = new Size(118, 17);
+            lblStockAlert.Text = "toolStripStatusLabel1";
             // 
             // SystemMainMenu
             // 
@@ -226,7 +233,7 @@
         private MenuStrip mnuSystem;
         private ToolStripMenuItem fIleToolStripMenuItem;
         private ToolStripMenuItem registerToolStripMenuItem;
-        private ToolStripMenuItem reporToolStripMenuItem;
+        private ToolStripMenuItem reportToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
@@ -243,5 +250,6 @@
         private ToolStripMenuItem producttoolStripMenuItem;
         private ToolStripMenuItem paymentToolStripMenuItem;
         private ToolStripMenuItem stockDataToolStripMenuItem;
+        private ToolStripStatusLabel lblStockAlert;
     }
 }
