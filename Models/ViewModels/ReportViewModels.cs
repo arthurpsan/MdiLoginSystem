@@ -1,88 +1,93 @@
 ﻿using System;
 using System.ComponentModel;
-using UserManagementSystem.Models;
 
 namespace UserManagementSystem.Models.ViewModels
 {
-    // --- 1. User Dashboard ---
+    // user dashboard
     public class UserViewModel
     {
-        [Browsable(false)] // Hides from Grid automatically
-        public ulong? Id { get; set; }
+        [Browsable(false)] // makes it hide from the grid automatically
+        public UInt64? Id { get; set; }
 
         [DisplayName("Full Name")]
         public string Name { get; set; } = string.Empty;
             
         [DisplayName("Username / Nick")]
-        public string Nickname { get; set; } = string.Empty;
+        public String Nickname { get; set; } = String.Empty;
 
         [DisplayName("Email Address")]
-        public string Email { get; set; } = string.Empty;
+        public String Email { get; set; } = String.Empty;
 
         [DisplayName("Phone")]
-        public string Phone { get; set; } = string.Empty;
+        public String Phone { get; set; } = String.Empty;
 
         [DisplayName("Role")]
-        public string Role { get; set; } = string.Empty;
+        public String Role { get; set; } = String.Empty;
 
         [DisplayName("Last Access")]
-        public string LastAccess { get; set; } = string.Empty;
+        public String LastAccess { get; set; } = String.Empty;
     }
 
-    // --- 2. Sales Report ---
+    // sales report
     public class SaleReportViewModel
     {
         [Browsable(false)]
-        public ulong SaleId { get; set; }
+        public UInt64 SaleId { get; set; }
 
         [DisplayName("Date")]
-        public string Date { get; set; } = string.Empty;
+        public String Date { get; set; } = String.Empty;
 
         [DisplayName("Seller")]
-        public string SellerName { get; set; } = string.Empty;
+        public String SellerName { get; set; } = String.Empty;
 
         [DisplayName("Total Value")]
-        public string TotalValue { get; set; } = string.Empty;
+        public String TotalValue { get; set; } = String.Empty;
     }
 
-    // --- 3. Commission Report ---
+    // comission report
     public class CommissionViewModel
     {
         [Browsable(false)]
-        public ulong? SellerId { get; set; }
+        public UInt64? SellerId { get; set; }
 
         [DisplayName("Seller Name")]
-        public string SellerName { get; set; } = string.Empty;
+        public String SellerName { get; set; } = String.Empty;
 
         [DisplayName("Purchase #")]
-        public ulong PurchaseId { get; set; }
+        public UInt64 PurchaseId { get; set; }
 
         [DisplayName("Date")]
-        public string Date { get; set; } = string.Empty;
+        public String Date { get; set; } = String.Empty;
 
         [DisplayName("Sale Value")]
-        public string SaleTotal { get; set; } = string.Empty;
+        public String TotalSaleValue { get; set; }
 
         [DisplayName("Commission")]
-        public string Commission { get; set; } = string.Empty;
+        public String Commission { get; set; } = String.Empty;
     }
 
-    // --- 4. Payment (Cashier) ---
+    // payment (cashier)
     public class PaymentViewModel
     {
         [Browsable(false)]
-        public ulong PaymentId { get; set; }
+        public UInt64 PaymentId { get; set; }
 
         [DisplayName("Purchase #")]
-        public ulong PurchaseId { get; set; }
+        public UInt64 PurchaseId { get; set; }
+
+        [DisplayName("Customer")]
+        public String CustomerName { get; set; } = String.Empty;
 
         [DisplayName("Due Date")]
-        public string ExpirationDate { get; set; } = string.Empty;
+        public String ExpirationDate { get; set; } = String.Empty;
 
-        [DisplayName("Total Amount")] // This will show Value + Fine
-        public string TotalAmount { get; set; } = string.Empty;
+        [DisplayName("Instalment Value")]
+        public String InstallmentValue { get; set; } = String.Empty;
 
-        // We store the real object here to use in logic, but hide it from the grid
+        [DisplayName("Total Amount")] // shows value + fine
+        public String TotalAmount { get; set; } = String.Empty;
+
+        // storing of the real object + hide from grid
         [Browsable(false)]
         public Payment RealPaymentObject { get; set; }
     }

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
-using UserManagementSystem.Utils;
 
 namespace UserManagementSystem.Forms
 {
@@ -17,9 +13,9 @@ namespace UserManagementSystem.Forms
         private readonly BindingList<Item> _cartItems;
         private Customer? _selectedCustomer;
 
-        private bool _managerOverride = false;
-        private bool _isSearchOperation = false;
-        private const decimal MAX_DISCOUNT_NO_AUTH = 0.05m;
+        private Boolean _managerOverride = false;
+        private Boolean _isSearchOperation = false;
+        private const Decimal MAX_DISCOUNT_NO_AUTH = 0.05m;
 
         public static SaleForm GetInstance(User? seller)
         {
@@ -119,7 +115,7 @@ namespace UserManagementSystem.Forms
 
         private void SearchCustomers()
         {
-            bool wasSearching = _isSearchOperation;
+            Boolean wasSearching = _isSearchOperation;
             _isSearchOperation = true;
 
             try
@@ -239,9 +235,9 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            decimal discountPercent = numDiscount.Value;
-            decimal discountDecimal = discountPercent / 100.0m;
-            decimal rawQty = numQuantity.Value;
+            Decimal discountPercent = numDiscount.Value;
+            Decimal discountDecimal = discountPercent / 100.0m;
+            Decimal rawQty = numQuantity.Value;
 
             if (rawQty <= 0)
             {
@@ -284,6 +280,8 @@ namespace UserManagementSystem.Forms
             numQuantity.Value = 0;
             numDiscount.Value = 0;
             dgvProducts.ClearSelection();
+            txtSearchProduct.Focus();
+            txtSearchProduct.SelectAll();
         }
 
         private void FinishSale()
@@ -301,10 +299,11 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            decimal totalSale = _cartItems.Sum(i => i.CalcTotal() ?? 0);
-            int installments = (int)numInstallments.Value;
+            Decimal totalSale = _cartItems.Sum(i => i.CalcTotal() ?? 0);
+            Int32 installmentsCount = (int)numInstallments.Value;
+            Decimal installmentValue = totalSale / installmentsCount;
 
-            if (!ValidateSaleRules(totalSale, installments)) return;
+            if (!ValidateSaleRules(totalSale, installmentsCount)) return;
 
             if (_loggedInSeller is not Salesperson seller)
             {
@@ -324,11 +323,29 @@ namespace UserManagementSystem.Forms
                     State = State.FINISHED
                 };
 
-                for (int i = 1; i <= installments; i++)
+                Decimal currentTotalDistributed = 0;
+
+                for (int i = 1; i <= installmentsCount; i++)
                 {
+                    decimal valToPay;
+
+                    if (i == installmentsCount) // check if this is the last installment
+                    {
+                        // last installment takes whatever is left to match the exact Total
+                        valToPay = totalSale - currentTotalDistributed;
+                    }
+                    else
+                    {
+                        // standard rounding to 2 decimal places
+                        valToPay = Math.Round(totalSale / installmentsCount, 2);
+                    }
+
+                    currentTotalDistributed += valToPay;
+
                     purchase.Payments.Add(new Payment
                     {
                         ExpirationDate = DateTime.Now.AddMonths(i),
+                        Amount = valToPay, // saves the corrected value
                         PaymentFine = 0,
                         Purchase = purchase
                     });
@@ -345,7 +362,7 @@ namespace UserManagementSystem.Forms
             }
         }
 
-        private bool ValidateSaleRules(decimal totalValue, int installments)
+        private Boolean ValidateSaleRules(decimal totalValue, int installments)
         {
             decimal installmentValue = totalValue / installments;
 
@@ -429,7 +446,7 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            int selectedIndex = dgvCart.CurrentRow.Index;
+            Int32 selectedIndex = dgvCart.CurrentRow.Index;
 
             if (selectedIndex < _cartItems.Count)
             {

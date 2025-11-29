@@ -151,37 +151,72 @@ namespace UserManagementSystem.Data
             {
                 try
                 {
-                    // 1. Attach and Update Stock for all products
+                    // 1. Safe Attach Products (Handles duplicate products in cart from different searches)
                     foreach (var item in purchase.Items)
                     {
                         if (item.Product != null)
                         {
-                            // Attach the product to this specific context to track changes
-                            dbContext.Attach(item.Product);
+                            // Check if this Product ID is already known to this Context
+                            var existingProduct = dbContext.Products.Local
+                                .FirstOrDefault(p => p.Id == item.Product.Id);
 
-                            // Deduct stock (ensure logic prevents negative stock before this)
+                            if (existingProduct != null)
+                            {
+                                // Use the existing tracker instead of the duplicate
+                                item.Product = existingProduct;
+                            }
+                            else
+                            {
+                                // Not tracked yet, so attach it
+                                dbContext.Attach(item.Product);
+                            }
+
+                            // Deduct stock (This logic works on whichever instance is active)
                             item.Product.StockQuantity -= item.Quantity;
-
-                            // Mark as modified
                             dbContext.Entry(item.Product).State = EntityState.Modified;
                         }
                     }
 
-                    // 2. Attach Relationships (Seller, Customer) to avoid duplication
-                    if (purchase.Seller != null) dbContext.Attach(purchase.Seller);
-                    if (purchase.Customer != null) dbContext.Attach(purchase.Customer);
+                    // 2. Safe Attach Seller
+                    if (purchase.Seller != null)
+                    {
+                        var existingSeller = dbContext.Sellers.Local
+                            .FirstOrDefault(s => s.Id == purchase.Seller.Id);
 
-                    // 3. Add the Purchase (Items and Payments will be added by cascade)
+                        if (existingSeller != null) purchase.Seller = existingSeller;
+                        else dbContext.Attach(purchase.Seller);
+                    }
+
+                    // 3. Safe Attach Customer (Fixes your specific error)
+                    if (purchase.Customer != null)
+                    {
+                        // Check if the Seller or Products dragged this Customer in already
+                        var existingCustomer = dbContext.Customers.Local
+                            .FirstOrDefault(c => c.Id == purchase.Customer.Id);
+
+                        if (existingCustomer != null)
+                        {
+                            // If tracked, USE the tracked instance
+                            purchase.Customer = existingCustomer;
+                        }
+                        else
+                        {
+                            // If not tracked, attach the one from the form
+                            dbContext.Attach(purchase.Customer);
+                        }
+                    }
+
+                    // 4. Add the Purchase
                     dbContext.Purchases.Add(purchase);
 
-                    // 4. Save and Commit
+                    // 5. Save and Commit
                     dbContext.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception)
                 {
                     transaction.Rollback();
-                    throw; // Re-throw to handle UI error message
+                    throw;
                 }
             }
         }

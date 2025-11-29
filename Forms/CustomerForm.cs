@@ -26,12 +26,6 @@ namespace UserManagementSystem.Forms
             dgvCustomers.SelectionChanged += (s, e) => PopulateInputs();
         }
 
-        private void Form_Load(object? sender, EventArgs e)
-        {
-            SetupGrid();
-            LoadData();
-        }
-
         private void SetupGrid()
         {
             dgvCustomers.AutoGenerateColumns = false;
@@ -82,6 +76,13 @@ namespace UserManagementSystem.Forms
             dgvCustomers.ClearSelection();
         }
 
+        #region EVENT HANDLERS
+        private void Form_Load(object? sender, EventArgs e)
+        {
+            SetupGrid();
+            LoadData();
+        }
+
         private void btnRegisterCustomer_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCustomerName.Text) || string.IsNullOrWhiteSpace(txtCustomerEmail.Text))
@@ -90,8 +91,19 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
+            string emailToCheck = txtCustomerEmail.Text.Trim();
+
             try
             {
+                bool emailExists = CustomerRepository.FindAll()
+                    .Any(c => c.Email.Equals(emailToCheck, StringComparison.OrdinalIgnoreCase));
+
+                if (emailExists)
+                {
+                    Alerts.ShowWarning("A customer with this E-mail already exists.");
+                    return;
+                }
+
                 var newCustomer = new Customer
                 {
                     Name = txtCustomerName.Text.Trim(),
@@ -158,5 +170,7 @@ namespace UserManagementSystem.Forms
                 }
             }
         }
+
+        #endregion 
     }
 }

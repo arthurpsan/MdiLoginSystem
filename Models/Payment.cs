@@ -14,6 +14,9 @@ namespace UserManagementSystem.Models
         [Required]
         public Purchase? Purchase { get; set; }
 
+        [Required]
+        public Decimal Amount { get; set; }
+
         private const Decimal _paymentMonthTax = 0.02m; // 2% monthly tax for late payments
 
         [Required]
@@ -39,32 +42,29 @@ namespace UserManagementSystem.Models
 
         public Decimal? CalcTotalPayment()
         {
+            if (ExpirationDate == null || Purchase == null) return 0;
 
-            if (ExpirationDate == null || Purchase == null || Purchase.CalcTotal() == null)
-            {
-                return 0;
-            }
+            Decimal? totalPurchase = Purchase.CalcTotal();
+            if (totalPurchase == null) totalPurchase = 0;
 
             if (DatePayment != null && DatePayment > ExpirationDate)
             {
+                // paid Late
                 TimeSpan delay = DatePayment.Value - ExpirationDate.Value;
-                int delayedMonths = (int)Math.Ceiling(delay.TotalDays / 30);
+                Int32 delayedMonths = (Int32)Math.Ceiling(delay.TotalDays / 30.0);
 
-                Decimal? totalPurchase = Purchase.CalcTotal();
                 return totalPurchase * _paymentMonthTax * delayedMonths;
             }
-
-            // in case the payment is still not made and is past due (today)
-            else if (DatePayment != null && DatePayment > ExpirationDate)
-            { 
+            else if (DatePayment == null && DateTime.Now > ExpirationDate)
+            {
+                // currently late (simulation)
                 TimeSpan delay = DateTime.Now - ExpirationDate.Value;
-                int delayedMonths = (int)Math.Ceiling(delay.TotalDays / 30);
+                Int32 delayedMonths = (Int32)Math.Ceiling(delay.TotalDays / 30.0);
 
-                Decimal? totalPurchase = Purchase.CalcTotal();
                 return totalPurchase * _paymentMonthTax * delayedMonths;
             }
-            
-            return 0;
+
+            return 0; // no fine
         }
 
     }

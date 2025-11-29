@@ -19,36 +19,47 @@ namespace UserManagementSystem.Forms
         public CommissionForm()
         {
             InitializeComponent();
-            dgvCommissions.AutoGenerateColumns = true;
+
+            // setupgrid
+            dgvCommissions.AutoGenerateColumns = false;
+
+            if (dgvCommissions.Columns["colSaleValue"] == null)
+            {
+                var colSaleValue = new DataGridViewTextBoxColumn();
+                colSaleValue.Name = "colSaleValue";
+                colSaleValue.HeaderText = "Sale Value";
+                colSaleValue.DataPropertyName = "TotalSaleValue"; // link to viewmodel
+                colSaleValue.ReadOnly = true;
+                dgvCommissions.Columns.Insert(3, colSaleValue);
+            }
+
             dgvCommissions.DataSource = bdsCommissions;
+
+            // setup events
             txtSearch.TextChanged += (s, e) => FilterData();
 
-            dtpInitialDate.ValueChanged += btnRefresh_Click;
-            dtpFinalDate.ValueChanged += btnRefresh_Click;
+            // when dates change update data
+            dtpInitialDate.ValueChanged += (s, e) => LoadCommissionData();
+            dtpFinalDate.ValueChanged += (s, e) => LoadCommissionData();
         }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            dtpInitialDate.Value = DateTime.Now.AddDays(-30);
-            dtpFinalDate.Value = DateTime.Now;
-            btnRefresh_Click(null, null);
-        }
-
-        private void btnRefresh_Click(object? sender, EventArgs e)
+        #region DATA LOADING + FILTERING
+        private void LoadCommissionData()
         {
             DateTime start = dtpInitialDate.Value.Date;
             DateTime end = dtpFinalDate.Value.Date.AddDays(1).AddTicks(-1);
-            decimal totalComm = 0;
+            Decimal totalComm = 0;
 
             try
             {
-                // fetch purchases within date range
                 List<Purchase> purchases = PurchaseRepository.FindByDateRange(start, end);
 
                 _originalList = purchases.Select(p =>
                 {
-                    decimal comm = p.CalcComission() ?? 0;
+                    // calc totals
+                    Decimal saleTotal = p.CalcTotal() ?? 0;
+                    Decimal comm = p.CalcComission() ?? 0;
+
                     totalComm += comm;
 
                     return new CommissionViewModel
@@ -57,6 +68,8 @@ namespace UserManagementSystem.Forms
                         SellerName = p.Seller?.Name ?? "N/A",
                         PurchaseId = p.Id,
                         Date = p.Implementation?.ToString("d") ?? "-",
+                        TotalSaleValue = saleTotal.ToString("C"),
+
                         Commission = comm.ToString("C")
                     };
                 }).ToList();
@@ -64,14 +77,28 @@ namespace UserManagementSystem.Forms
                 FilterData();
                 lblTotalComission.Text = $"Total Commission: {totalComm:C}";
             }
-            catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading data: " + ex.Message);
+            }
         }
 
         private void FilterData()
         {
-            string term = txtSearch.Text.ToLower().Trim();
+            String term = txtSearch.Text.ToLower().Trim();
             var filtered = _originalList.Where(x => x.SellerName.ToLower().Contains(term)).ToList();
             bdsCommissions.DataSource = new BindingList<CommissionViewModel>(filtered);
+        }
+
+        #endregion
+
+        // Event handlers
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            // set defaults
+            dtpInitialDate.Value = DateTime.Now.AddDays(-30);
+            dtpFinalDate.Value = DateTime.Now;
         }
     }
 }

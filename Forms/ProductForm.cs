@@ -159,11 +159,28 @@ namespace UserManagementSystem.Forms
         }
         #endregion
 
-        #region Category CRUD
+        #region CATEGORY EVENT HANDLERS
         private void btnRegisterCategory_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtCategoryName.Text))
+            {
+                Alerts.ShowWarning("Please enter a category name.");
+                return;
+            }
+
+            string nameToCheck = txtCategoryName.Text.Trim();
+
             try
             {
+                bool exists = CategoryRepository.FindAll()
+                    .Any(c => c.Name.Equals(nameToCheck, StringComparison.OrdinalIgnoreCase));
+
+                if (exists)
+                {
+                    Alerts.ShowWarning("A category with this name already exists.");
+                    return;
+                }
+
                 var category = new Category { Name = txtCategoryName.Text };
                 CategoryRepository.SaveOrUpdate(category);
 
@@ -186,13 +203,30 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
+            if (String.IsNullOrWhiteSpace(txtCategoryName.Text))
+            {
+                Alerts.ShowWarning("Category name cannot be empty.");
+                return;
+            }
+
+            String newName = txtCategoryName.Text.Trim();
+
             try
             {
-                current.Name = txtCategoryName.Text;
+                bool exists = CategoryRepository.FindAll()
+                    .Any(c => c.Name.Equals(newName, StringComparison.OrdinalIgnoreCase) 
+                    && c.Id != current.Id);
+
+                if (exists)
+                {
+                    Alerts.ShowWarning("Another category already uses this name.");
+                    return;
+                }
+
+                current.Name = newName;
                 CategoryRepository.SaveOrUpdate(current);
 
-                _bdsCategories.ResetCurrentItem(); // Refreshes grid
-                // Also refresh products grid as categories might have changed names
+                _bdsCategories.ResetCurrentItem();
                 dgvProduct.Refresh();
 
                 Alerts.ShowSuccess("Category updated!");
@@ -223,7 +257,7 @@ namespace UserManagementSystem.Forms
         }
         #endregion
 
-        #region Product CRUD
+        #region PRODUCT EVENT HANDLERS
         private void btnRegisterProduct_Click(object sender, EventArgs e)
         {
             if (cboProductCategory.SelectedItem is not Category selectedCategory)
@@ -232,11 +266,28 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(txtProductName.Text))
+            {
+                Alerts.ShowWarning("Please enter a product name.");
+                return;
+            }
+
+            string nameToCheck = txtProductName.Text.Trim();
+
             try
             {
+                bool exists = ProductRepository.FindAll()
+                    .Any(p => p.Name.Equals(nameToCheck, StringComparison.OrdinalIgnoreCase));
+
+                if (exists)
+                {
+                    Alerts.ShowWarning("A product with this name already exists.");
+                    return;
+                }
+
                 var product = new Product
                 {
-                    Name = txtProductName.Text,
+                    Name = nameToCheck,
                     Price = nudProductPrice.Value,
                     StockQuantity = (uint)nudStock.Value,
                     MinimumStock = (uint)nudMinStock.Value,
@@ -265,9 +316,27 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(txtProductName.Text))
+            {
+                Alerts.ShowWarning("Product name cannot be empty.");
+                return;
+            }
+
+            string newName = txtProductName.Text.Trim();
+
             try
             {
-                current.Name = txtProductName.Text;
+                bool exists = ProductRepository.FindAll()
+                    .Any(p => p.Name.Equals(newName, StringComparison.OrdinalIgnoreCase) 
+                    && p.Id != current.Id);
+
+                if (exists)
+                {
+                    Alerts.ShowWarning("Another product already uses this name.");
+                    return;
+                }
+
+                current.Name = newName;
                 current.Price = nudProductPrice.Value;
                 current.StockQuantity = (uint)nudStock.Value;
                 current.MinimumStock = (uint)nudMinStock.Value;

@@ -110,7 +110,7 @@
             lblSearchCustomer.Size = new Size(336, 36);
             lblSearchCustomer.TabIndex = 4;
             lblSearchCustomer.Text = "Search Customer:";
-            lblSearchCustomer.TextAlign = ContentAlignment.MiddleRight;
+            lblSearchCustomer.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label1
             // 

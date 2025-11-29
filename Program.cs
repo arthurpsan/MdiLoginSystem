@@ -1,9 +1,7 @@
 using System;
 using System.Globalization;
-using System.Windows.Forms;
 using UserManagementSystem.Data;
 using UserManagementSystem.Models;
-// Adicione outros usings se necessário (ex: UserManagementSystem.Forms)
 
 namespace UserManagementSystem
 {
@@ -34,10 +32,10 @@ namespace UserManagementSystem
         {
             using (Repository dbContext = new Repository())
             {
-                // Se o banco não existir ou não houver credenciais, cria os dados padrão
+                // seed the database if it is empty
                 if (dbContext.Database.EnsureCreated() || !dbContext.Credentials.Any())
                 {
-                    // 1. Create Users
+                    // create Users
                     var adminUser = new User { Name = "Administrator", Nickname = "Admin", PhoneNumber = 5538998103030, Email = "admin@system.com" };
                     CredentialRepository.SaveOrUpdate(new Credential { Email = adminUser.Email, Password = "admin123", Manager = true, User = adminUser });
 
@@ -47,7 +45,7 @@ namespace UserManagementSystem
                     var cashierUser = new Cashier { Name = "Karen Cashier", Nickname = "Cashier", PhoneNumber = 5538993456789, Email = "cashier@system.com", CashierEnrollment = 2001 };
                     CredentialRepository.SaveOrUpdate(new Credential { Email = cashierUser.Email, Password = "cashier123", Manager = false, User = cashierUser });
 
-                    // 2. Create Products
+                    // create Products
                     var catElectronics = new Category { Name = "Electronics" };
 
                     var prodLaptop = new Product { Name = "Dell Laptop", Price = 3500.00m, StockQuantity = 10, MinimumStock = 2, Category = catElectronics, IsActive = true };
@@ -56,7 +54,7 @@ namespace UserManagementSystem
                     ProductRepository.SaveOrUpdate(prodLaptop);
                     ProductRepository.SaveOrUpdate(prodMouse);
 
-                    // 3. Create History with Items (FIX: Added Items)
+                    // create good purchase (Alice)
                     var goodCustomer = new Customer { Name = "Alice Reliable", Email = "alice@example.com" };
                     CustomerRepository.SaveOrUpdate(goodCustomer);
 
@@ -70,7 +68,7 @@ namespace UserManagementSystem
                         Implementation = goodPurchaseDate
                     };
 
-                    // FIX: Add Items to the purchase so it has a Value
+                    // add Items
                     goodPurchase.Items.Add(new Item
                     {
                         Product = prodMouse,
@@ -80,19 +78,21 @@ namespace UserManagementSystem
                         Purchase = goodPurchase
                     });
 
+                    // add Payment
                     var goodPayment = new Payment
                     {
                         ExpirationDate = goodPurchaseDate.AddDays(15),
                         PaymentFine = 0,
                         Purchase = goodPurchase,
-                        DatePayment = goodPurchaseDate.AddDays(10)
+                        DatePayment = goodPurchaseDate.AddDays(10),
+
+                        Amount = 100.00m
                     };
 
                     using (var ctx = new Repository())
                     {
                         ctx.Attach(goodCustomer);
                         ctx.Attach(sellerUser);
-                        // Ensure products are attached so we don't duplicate them
                         ctx.Attach(prodMouse);
 
                         goodPurchase.Payments.Add(goodPayment);
@@ -100,7 +100,7 @@ namespace UserManagementSystem
                         ctx.SaveChanges();
                     }
 
-                    // Create bad purchase (This one is 40 days old, so it might not show due to the 30-day filter, but if it does, it needs items too)
+                    // 4. create bad purchase (bob)
                     var badCustomer = new Customer { Name = "Bob Delinquent", Email = "bob@example.com" };
                     CustomerRepository.SaveOrUpdate(badCustomer);
 
@@ -114,7 +114,7 @@ namespace UserManagementSystem
                         Implementation = pastDate
                     };
 
-                    // FIX: Add Items here too
+                    // add items
                     badPurchase.Items.Add(new Item
                     {
                         Product = prodLaptop,
@@ -124,12 +124,15 @@ namespace UserManagementSystem
                         Purchase = badPurchase
                     });
 
+                    // add late payment
                     var badPayment = new Payment
                     {
                         ExpirationDate = pastDate.AddDays(30),
                         PaymentFine = 0,
                         Purchase = badPurchase,
-                        DatePayment = null
+                        DatePayment = null,
+
+                        Amount = 3500.00m
                     };
 
                     using (var ctx = new Repository())

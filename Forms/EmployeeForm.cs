@@ -123,15 +123,26 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
+            string emailToCheck = txtEmployeeEmail.Text.Trim();
+
             try
             {
                 string role = cboEmployeeRoles.SelectedItem?.ToString() ?? "Salesperson";
-
                 bool isManager = (role == "Manager");
 
                 // update existing user
                 if (btnSave.Text == "Update" && bdsEmployees.Current is User currentUser)
                 {
+                    bool emailTaken = UserRepository.FindAll()
+                        .Any(u => u.Email.Equals(emailToCheck, 
+                        StringComparison.OrdinalIgnoreCase) && u.Id != currentUser.Id);
+
+                    if (emailTaken)
+                    {
+                        Alerts.ShowWarning("This E-mail is already used by another employee.");
+                        return;
+                    }
+
                     currentUser.Name = txtEmployeeName.Text;
                     currentUser.Nickname = txtEmployeeNickname.Text;
                     currentUser.Email = txtEmployeeEmail.Text;
@@ -154,6 +165,15 @@ namespace UserManagementSystem.Forms
                 // create new user
                 else
                 {
+                    bool emailExists = UserRepository.FindAll()
+                        .Any(u => u.Email.Equals(emailToCheck, StringComparison.OrdinalIgnoreCase));
+
+                    if (emailExists)
+                    {
+                        Alerts.ShowWarning("An employee with this E-mail already exists.");
+                        return;
+                    }
+
                     uint defaultEnrollment = (uint)new Random().Next(1000, 9999);
                     User newUser = role switch
                     {

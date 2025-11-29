@@ -225,7 +225,6 @@
             Controls.Add(pnlMainLayout);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "CustomerReportForm";
             ShowIcon = false;
             Text = "Customers Report";
             pnlMainLayout.ResumeLayout(false);
