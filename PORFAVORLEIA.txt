@@ -1,11 +1,20 @@
 ﻿POR FAVOR, LEIA ANTES DE USAR O SISTEMA:
 
--- O login padrão do programa tem os seguintes campos:
+-- O sistema já vem populado com usuários para cada perfil de acesso.
+-- Utilize as credenciais abaixo para testar as diferentes funcionalidades:
 
-	Login padrão:
-		// Email: admin@system.com
-		// Senha: admin123
+1. GERENTE (Acesso Total: Relatórios, Cadastros, Autorizações)
+   Email: admin@system.com
+   Senha: admin123
 
-- Para acessar o sistema pela primeira vez, utilize o login padrão acima.
-- O mesmo detém permissão de administrador e pode criar novos usuários com diferentes níveis de acesso.
-- Sem estas credenciais, o primeiro acesso ao sistema não será possível.
+2. VENDEDOR (Acesso: Vendas, Cadastro de Clientes)
+   Email: seller@system.com
+   Senha: seller123
+
+3. OPERADOR DE CAIXA (Acesso: Recebimento de Pagamentos)
+   Email: cashier@system.com
+   Senha: cashier123
+
+-- Notas Importantes:
+- O primeiro acesso deve ser feito preferencialmente como Gerente para verificar o Alerta de Estoque.
+- Para testar a "Autorização de Gerente" na tela de Vendas, use a senha do admin (admin123).

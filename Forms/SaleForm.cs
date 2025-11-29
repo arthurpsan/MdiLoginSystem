@@ -52,29 +52,6 @@ namespace UserManagementSystem.Forms
 
         public SaleForm() : this(null) { }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
-            _isSearchOperation = true;
-            try
-            {
-                LoadInitialData();
-            }
-            finally
-            {
-                // force clean state after data is bound
-                TabControlMain.SelectedTab = tabPageCustomer;
-                lblSelectedCustomerName.Text = "Customer: (None)";
-                _selectedCustomer = null;
-
-                dgvCustomers.CurrentCell = null;
-                dgvCustomers.ClearSelection();
-
-                _isSearchOperation = false;
-            }
-        }
-
         private void BindControls()
         {
             dgvCart.AutoGenerateColumns = false;
@@ -120,7 +97,7 @@ namespace UserManagementSystem.Forms
 
             try
             {
-                string filter = txtSearchCustomer.Text.Trim();
+                String filter = txtSearchCustomer.Text.Trim();
                 var customers = CustomerRepository.FindAll()
                     .Where(c => c.Name.Contains(filter, StringComparison.OrdinalIgnoreCase))
                     .ToList();
@@ -200,7 +177,7 @@ namespace UserManagementSystem.Forms
         {
             try
             {
-                string filter = txtSearchProduct.Text.Trim();
+                String filter = txtSearchProduct.Text.Trim();
                 var products = ProductRepository.FindByPartialName(filter);
 
                 if (cboCategories.SelectedItem is Category cat)
@@ -245,7 +222,7 @@ namespace UserManagementSystem.Forms
                 return;
             }
 
-            uint quantity = (uint)rawQty;
+            UInt32 quantity = (UInt32)rawQty;
 
             if (quantity > selectedProduct.StockQuantity)
             {
@@ -300,7 +277,7 @@ namespace UserManagementSystem.Forms
             }
 
             Decimal totalSale = _cartItems.Sum(i => i.CalcTotal() ?? 0);
-            Int32 installmentsCount = (int)numInstallments.Value;
+            Int32 installmentsCount = (Int32)numInstallments.Value;
             Decimal installmentValue = totalSale / installmentsCount;
 
             if (!ValidateSaleRules(totalSale, installmentsCount)) return;
@@ -325,9 +302,9 @@ namespace UserManagementSystem.Forms
 
                 Decimal currentTotalDistributed = 0;
 
-                for (int i = 1; i <= installmentsCount; i++)
+                for (Int32 i = 1; i <= installmentsCount; i++)
                 {
-                    decimal valToPay;
+                    Decimal valToPay;
 
                     if (i == installmentsCount) // check if this is the last installment
                     {
@@ -362,9 +339,9 @@ namespace UserManagementSystem.Forms
             }
         }
 
-        private Boolean ValidateSaleRules(decimal totalValue, int installments)
+        private Boolean ValidateSaleRules(Decimal totalValue, Int32 installments)
         {
-            decimal installmentValue = totalValue / installments;
+            Decimal installmentValue = totalValue / installments;
 
             if (installmentValue < 50)
             {
@@ -434,7 +411,15 @@ namespace UserManagementSystem.Forms
 
         private void btnAddItem_Click(object sender, EventArgs e) => AddItemToCart();
 
-        private void btnFinishSale_Click(object sender, EventArgs e) => FinishSale();
+        private void btnFinishSale_Click(object sender, EventArgs e)
+        {
+            FinishSale();
+
+            if (this.MdiParent is SystemMainMenu mainMenu)
+            {
+                mainMenu.CheckStockAlert();
+            }
+        }
 
         private void DgvCart_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) => FormatCartGrid(e);
 
@@ -453,6 +438,29 @@ namespace UserManagementSystem.Forms
                 Item itemToRemove = _cartItems[selectedIndex];
                 _cartItems.Remove(itemToRemove);
                 UpdateTotals();
+            }
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            _isSearchOperation = true;
+            try
+            {
+                LoadInitialData();
+            }
+            finally
+            {
+                // force clean state after data is bound
+                TabControlMain.SelectedTab = tabPageCustomer;
+                lblSelectedCustomerName.Text = "Customer: (None)";
+                _selectedCustomer = null;
+
+                dgvCustomers.CurrentCell = null;
+                dgvCustomers.ClearSelection();
+
+                _isSearchOperation = false;
             }
         }
 

@@ -41,13 +41,13 @@ namespace UserManagementSystem
             Boolean isSalesperson = _loggedInUser is Salesperson;
             Boolean isCashier = _loggedInUser is Cashier;
 
-            reportToolStripMenuItem.Visible = isManager;
+            reportToolStripMenuItem.Enabled = isManager;
             employeeToolStripMenuItem.Enabled = isManager;
-            producttoolStripMenuItem.Visible = isManager;
+            producttoolStripMenuItem.Enabled = isManager;
 
-            saleToolStripMenuItem.Visible = isSalesperson;
-            paymentToolStripMenuItem.Visible = isCashier;
-            customerToolStripMenuItem.Visible = isManager || isSalesperson;
+            saleToolStripMenuItem.Enabled = isSalesperson;
+            paymentToolStripMenuItem.Enabled = isCashier;
+            customerToolStripMenuItem.Enabled = isManager || isSalesperson;
         }
 
         // generic method to open MDI forms
@@ -69,7 +69,7 @@ namespace UserManagementSystem
             }
         }
 
-        private void CheckStockAlert()
+        public void CheckStockAlert()
         {
             try
             {
@@ -80,7 +80,7 @@ namespace UserManagementSystem
 
                 if (lowStockCount > 0)
                 {
-                    lblStockAlert.Text = $"⚠ ALERTA: {lowStockCount} Produtos com Estoque Baixo!";
+                    lblStockAlert.Text = $"⚠ WARNING: {lowStockCount} Product(s) in Low Stock!";
                     lblStockAlert.ForeColor = Color.Red;
                     lblStockAlert.Font = new Font("Segoe UI", 9, FontStyle.Bold);
                     lblStockAlert.Visible = true;

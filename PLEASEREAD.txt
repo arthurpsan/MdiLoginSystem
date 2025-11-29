@@ -1,11 +1,20 @@
 ﻿PLEASE READ BEFORE USING THE SYSTEM:
 
--- The program's default login has the following fields:
+-- The system comes pre-populated with users for each access role.
+-- Use the credentials below to test different features:
 
-Default login:
-	// Email: admin@system.com
-	// Password: admin123
+1. MANAGER (Full Access: Reports, Registrations, Authorizations)
+   Email: admin@system.com
+   Password: admin123
 
--- To access the system for the first time, use the default login above.
--- It holds administrator permissions and can create new users with different access levels.
-- Without these credentials, the first access to the system will not be possible.
+2. SALESPERSON (Access: Sales, Customer Registration)
+   Email: seller@system.com
+   Password: seller123
+
+3. CASHIER (Access: Payment Processing)
+   Email: cashier@system.com
+   Password: cashier123
+
+-- Important Notes:
+- Log in as Manager first to verify the Low Stock Alert feature.
+- To test "Manager Authorization" during a Sale, use the admin password (admin123).

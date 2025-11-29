@@ -301,6 +301,11 @@ namespace UserManagementSystem.Forms
 
                 Alerts.ShowSuccess("Product registered!");
                 ClearProductInputs();
+
+                if (this.MdiParent is SystemMainMenu mainMenu)
+                {
+                    mainMenu.CheckStockAlert();
+                }
             }
             catch (Exception ex)
             {
@@ -347,6 +352,11 @@ namespace UserManagementSystem.Forms
                 _bdsProducts.ResetCurrentItem();
 
                 Alerts.ShowSuccess("Product updated!");
+
+                if (this.MdiParent is SystemMainMenu mainMenu)
+                {
+                    mainMenu.CheckStockAlert();
+                }
             }
             catch (Exception ex)
             {

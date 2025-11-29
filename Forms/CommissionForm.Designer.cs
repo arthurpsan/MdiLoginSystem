@@ -75,7 +75,7 @@
             pnlReports.Controls.Add(lblPeriod, 2, 3);
             pnlReports.Controls.Add(dtpFinalDate, 3, 4);
             pnlReports.Controls.Add(dtpInitialDate, 2, 4);
-            pnlReports.Controls.Add(lblTotalComission, 2, 5);
+            pnlReports.Controls.Add(lblTotalComission, 0, 5);
             pnlReports.Controls.Add(dgvCommissions, 0, 1);
             pnlReports.Controls.Add(txtSearch, 0, 4);
             pnlReports.Dock = DockStyle.Fill;
@@ -150,7 +150,7 @@
             lblTotalComission.AutoSize = true;
             pnlReports.SetColumnSpan(lblTotalComission, 2);
             lblTotalComission.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            lblTotalComission.Location = new Point(403, 417);
+            lblTotalComission.Location = new Point(3, 417);
             lblTotalComission.Name = "lblTotalComission";
             lblTotalComission.Size = new Size(394, 21);
             lblTotalComission.TabIndex = 23;

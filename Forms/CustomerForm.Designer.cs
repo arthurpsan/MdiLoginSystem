@@ -159,6 +159,7 @@
             gpoCustomerCredentials.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gpoCustomerCredentials.Location = new Point(3, 48);
             gpoCustomerCredentials.Name = "gpoCustomerCredentials";
+            gpoCustomerCredentials.RightToLeft = RightToLeft.No;
             gpoCustomerCredentials.Size = new Size(794, 183);
             gpoCustomerCredentials.TabIndex = 8;
             gpoCustomerCredentials.TabStop = false;
@@ -169,10 +170,10 @@
             pnlCustomerCredentials.ColumnCount = 2;
             pnlCustomerCredentials.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             pnlCustomerCredentials.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            pnlCustomerCredentials.Controls.Add(txtCustomerEmail, 1, 1);
-            pnlCustomerCredentials.Controls.Add(lblCustomerEmail, 0, 1);
+            pnlCustomerCredentials.Controls.Add(txtCustomerEmail, 0, 3);
+            pnlCustomerCredentials.Controls.Add(lblCustomerEmail, 0, 2);
             pnlCustomerCredentials.Controls.Add(lblCustomerName, 0, 0);
-            pnlCustomerCredentials.Controls.Add(txtCustomerName, 1, 0);
+            pnlCustomerCredentials.Controls.Add(txtCustomerName, 0, 1);
             pnlCustomerCredentials.Dock = DockStyle.Fill;
             pnlCustomerCredentials.Location = new Point(3, 25);
             pnlCustomerCredentials.Name = "pnlCustomerCredentials";
@@ -188,7 +189,7 @@
             // 
             txtCustomerEmail.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtCustomerEmail.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCustomerEmail.Location = new Point(397, 46);
+            txtCustomerEmail.Location = new Point(3, 123);
             txtCustomerEmail.Name = "txtCustomerEmail";
             txtCustomerEmail.Size = new Size(388, 22);
             txtCustomerEmail.TabIndex = 3;
@@ -197,12 +198,12 @@
             // 
             lblCustomerEmail.AutoSize = true;
             lblCustomerEmail.Dock = DockStyle.Fill;
-            lblCustomerEmail.Location = new Point(3, 38);
+            lblCustomerEmail.Location = new Point(3, 76);
             lblCustomerEmail.Name = "lblCustomerEmail";
             lblCustomerEmail.Size = new Size(388, 38);
             lblCustomerEmail.TabIndex = 2;
             lblCustomerEmail.Text = "E-mail:";
-            lblCustomerEmail.TextAlign = ContentAlignment.MiddleRight;
+            lblCustomerEmail.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblCustomerName
             // 
@@ -213,13 +214,13 @@
             lblCustomerName.Size = new Size(388, 38);
             lblCustomerName.TabIndex = 1;
             lblCustomerName.Text = "Name:";
-            lblCustomerName.TextAlign = ContentAlignment.MiddleRight;
+            lblCustomerName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // txtCustomerName
             // 
             txtCustomerName.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtCustomerName.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCustomerName.Location = new Point(397, 8);
+            txtCustomerName.Location = new Point(3, 46);
             txtCustomerName.Name = "txtCustomerName";
             txtCustomerName.Size = new Size(388, 22);
             txtCustomerName.TabIndex = 0;
